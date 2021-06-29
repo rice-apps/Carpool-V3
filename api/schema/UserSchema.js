@@ -1,5 +1,21 @@
-import { User, UserTC } from '../models';
+import { User, UserTC, RideTC } from '../models';
 import { authenticateTicket, verifyToken, createToken } from '../utils/authenticationUtils';
+
+/**
+ * Custom fields and relations
+ */
+UserTC.addFields({
+    rides: [RideTC]
+});
+
+UserTC.addRelation("rides", {
+    "resolver": () => RideTC.getResolver('findByUser'),
+    args: RideTC.getInputTypeComposer(),
+    prepareArgs: {
+        _id: (source) => source._id
+    },
+    projection: { rides: 1 }
+});
 
 /**
  * Custom Resolvers
@@ -61,7 +77,8 @@ UserTC.addResolver({
 
 // Using auth middleware for sensitive info: https://github.com/graphql-compose/graphql-compose-mongoose/issues/158
 const UserQuery = {
-    userOne: UserTC.getResolver('findOne', [authMiddleware]),
+    // userOne: UserTC.getResolver('findOne', [authMiddleware]),
+    userOne: UserTC.getResolver('findOne'), // later we'll customize authMiddleware so that a user can view SOME fields of another user, but not others (like phone #s)
 };
 
 const UserMutation = {

@@ -5,15 +5,21 @@ require('../db');
 const schemaComposer = new SchemaComposer();
 
 import { UserQuery, UserMutation } from './UserSchema';
+import { RideQuery, RideMutation } from './RideSchema';
+import { LocationQuery, LocationMutation } from './LocationSchema';
 import { AuthQuery, AuthMutation } from './AuthSchema';
 
 schemaComposer.Query.addFields({
     ...UserQuery,
+    ...RideQuery,
+    ...LocationQuery,
     ...AuthQuery
 });
 
 schemaComposer.Mutation.addFields({
     ...UserMutation,
+    ...RideMutation,
+    ...LocationMutation,
     ...AuthMutation
 });
 
