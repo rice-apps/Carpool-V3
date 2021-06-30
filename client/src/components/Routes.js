@@ -88,12 +88,12 @@ const routesArray = [
     {
         path: "/home",
         component: Home,
-        privateRoute: true
+        privateRoute: false
     },
     {
         path: "/", // catch all handler, redirect to Home
         component: Home,
-        privateRoute: true
+        privateRoute: false
     }
 ];
 
@@ -102,23 +102,6 @@ const routesArray = [
  * @param {*} param0 
  */
 export const Routes = ({ }) => {
-    // const client = useApolloClient();
-    
-    // Initially, we need to get the "serviceURL" (used for IDP authentication) from the backend
-    // useEffect(
-    //     () => {
-    //         fetch(backendURL + "/deploy/service")
-    //         .then(response => {
-    //             response.text().then(service => {
-    //                 // Directly writes the service url to the cache
-    //                 client.writeQuery({
-    //                     query: gql`query GetService { service }`,
-    //                     data: { service: service }
-    //                 });
-    //             });
-    //         });
-    //     }, []
-    // );
 
 
     return (
@@ -129,12 +112,12 @@ export const Routes = ({ }) => {
             <Route path={"/auth"}>
                 <Auth />
             </Route>
-            <PrivateRoute path={"/home"}>
+            <Route path={"/home"}>
                 <Home />
-            </PrivateRoute>
-            <PrivateRoute path={"/"}>
+            </Route>
+            <Route path={"/"}>
                 <Home />
-            </PrivateRoute>
+            </Route>
             {/* {routesArray.map(routeObject => {
                 let { path, component, privateRoute } = routeObject;
                 if (privateRoute) {

@@ -1,53 +1,42 @@
-import React, { useEffect } from "react";
-import { useQuery, gql, useMutation } from "@apollo/client";
-import { useToasts } from "react-toast-notifications";
-
-/**
- * This simply fetches from our cache whether a recent update has occurred
- * TODO: CREATE FRAGMENTS / PLACE TO STORE ALL OF THESE SINCE THIS ONE IS ALSO IN ROUTES.JS
- */
-const GET_RECENT_UPDATE = gql`
-    query GetRecentUpdate {
-        recentUpdate @client
-    }
-`
-
-/**
- * Updates the user object field of recentUpdate
- */
-const SEEN_RECENT_UPDATE = gql`
-    mutation SeenRecentUpdate {
-        userUpdateOne(record: { recentUpdate: false } ) {
-            recordId
-        }
-    }
-`
+import React from "react";
+import logo from '../../logo.svg';
+import '../../App.css';
+import styled from 'styled-components'
+import { useMediaQuery } from 'react-responsive'
 
 const Home = () => {
-    // Check for recent update from cache
-    let { data: storeData } = useQuery(GET_RECENT_UPDATE);
-    let { recentUpdate } = storeData;
+    const MainHeader = styled.header`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: calc(10px + 2vmin);
+        min-height: 100vh;
+        background-color: #282c34;
+        color: white;
+        @media (max-width: 480px) {
+            background-color: #553d67;
+        }
+    `
 
-    // Need to be able to update recentUpdate field on the user when they dismiss
-    let [ seenRecentUpdate, ] = useMutation(SEEN_RECENT_UPDATE);
-
-    // Add toast
-    let { addToast } = useToasts();
-
-    useEffect(
-        () => {
-            if (recentUpdate) {
-                let message = "Recent Update Message.";
-                addToast(message, { appearance: 'info', onDismiss: () => seenRecentUpdate() });
-            }
-        }, [recentUpdate]
-    )
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 480px)' })
 
     return (
-        <div style={{ height: '100vh', width: '100vw', display: 'flex', position: 'relative', textAlign: 'center', alignItems: 'center', justifyContent: 'center', backgroundColor: "#FBFBFB" }}>
-            <div style={{ display: "inline-block", color: "#272D2D" }}>
-                <h3>Home Screen</h3>
-            </div>
+        <div className="App">
+        <MainHeader>
+            <img src={logo} className="App-logo" alt="logo" />
+            <p>
+                Edit <code>src/Pages/Hoome/index.js</code> and save to reload.
+            </p>
+            <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+            Learn React { isTabletOrMobile && <p>Yo we on mobile</p>}
+            </a>
+        </MainHeader>
         </div>
     )
 }
