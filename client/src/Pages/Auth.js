@@ -21,6 +21,7 @@ const parseTicket = (url) => {
     let ticketStartIndex = url.indexOf(ticketParamName) + ticketParamName.length;
     // Only returns the ticket portion
     return url.substring(ticketStartIndex);
+    
 }
 
 const Auth = () => {
