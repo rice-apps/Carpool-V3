@@ -1,14 +1,7 @@
 import React from "react";
-import { useQuery, gql } from "@apollo/client";
-import { SERVICE_URL } from '../../config';
+import { SERVICE_URL } from '../config';
 
 const casLoginURL = "https://idp.rice.edu/idp/profile/cas/login";
-
-// const GET_SERVICE_LOCAL = gql`
-//     query GetService {
-//         service @client # @client indicates that this is a local field; we're just looking at our cache, NOT our backend!
-//     }
-// `;
 
 const Login = () => {
     // Fetch service from cache since it depends on where this app is deployed

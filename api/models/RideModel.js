@@ -15,8 +15,8 @@ var RideSchema = new Schema({
     riders: [ { type: Schema.Types.ObjectId, ref: User } ],
     note: String, // notes section for personal message from ride creator       
     spots: { type: Number, default: 3 },
-    cost: { type: Number },
-    ownerDriving: { type: Boolean, default: false },
+    //cost: { type: Number },
+    //ownerDriving: { type: Boolean, default: false },
 });
 
 export const Ride = mongoose.model("rides", RideSchema);

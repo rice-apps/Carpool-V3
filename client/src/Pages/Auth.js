@@ -1,5 +1,5 @@
-import React, { Component, useEffect } from "react";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import React, { useEffect } from "react";
+import { gql, useMutation } from "@apollo/client";
 import { Redirect } from "react-router";
 
 const AUTHENTICATE_USER = gql`
@@ -23,7 +23,7 @@ const parseTicket = (url) => {
     return url.substring(ticketStartIndex);
 }
 
-const Auth = ({}) => {
+const Auth = () => {
     // First parse out ticket from URL href
     let ticket = parseTicket(window.location.href);
 
@@ -36,14 +36,15 @@ const Auth = ({}) => {
     useEffect(() => {
         // We only want this mutation to run once; if we hit any errors we redirect to login
         authenticateUser().catch(err => <Redirect path={"/login"} />);
-    }, []);
+    });
 
     if (error) return <Redirect path={"/login"} />;
     if (loading) return <p>Bad.</p>;
     if (!data) return <p>Bad.</p>;
 
     let { netid, token, recentUpdate } = data.authenticateUser;
-
+    console.log("Authenticated netid: ", netid)
+    console.log("RecentUpdate: ", recentUpdate)
     // Set token in local storage
     localStorage.setItem('token', token);
 

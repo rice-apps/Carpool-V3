@@ -1,9 +1,9 @@
-import React, { Component, useEffect } from "react"
+import React from "react"
 import { Switch, Route, Redirect } from 'react-router'
 import { gql, useQuery, useApolloClient } from '@apollo/client';
-import Login from '../Pages/Login';
-import Auth from '../Pages/Auth';
-import Home from '../Pages/Home';
+import Login from '../Pages/Login.js';
+import Auth from '../Pages/Auth.js';
+import Home from '../Pages/Home.js';
 
 /**
  * Requests to verify the user's token on the backend
@@ -74,34 +74,11 @@ const PrivateRoute = ({ children, ...rest }) => {
     );
 }
 
-const routesArray = [
-    {
-        path: "/login",
-        component: Login,
-        privateRoute: false
-    },
-    {
-        path: "/auth",
-        component: Auth,
-        privateRoute: false
-    },
-    {
-        path: "/home",
-        component: Home,
-        privateRoute: false
-    },
-    {
-        path: "/", // catch all handler, redirect to Home
-        component: Home,
-        privateRoute: false
-    }
-];
-
 /**
  * Defines all the routes for our system.
  * @param {*} param0 
  */
-export const Routes = ({ }) => {
+export const Routes = () => {
 
 
     return (
@@ -109,23 +86,15 @@ export const Routes = ({ }) => {
             <Route path={"/login"}>
                 <Login />
             </Route>
-            <Route path={"/auth"}>
+            <PrivateRoute path={"/auth"}>
                 <Auth />
-            </Route>
+            </PrivateRoute>
             <Route path={"/home"}>
                 <Home />
             </Route>
             <Route path={"/"}>
                 <Home />
             </Route>
-            {/* {routesArray.map(routeObject => {
-                let { path, component, privateRoute } = routeObject;
-                if (privateRoute) {
-                    return (<PrivateRoute path={path} children={component} />);
-                } else {
-                return (<Route path={path} children={component} />);
-                }
-            })} */}
         </Switch>
     )
 }
