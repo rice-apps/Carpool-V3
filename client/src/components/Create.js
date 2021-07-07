@@ -3,6 +3,7 @@ import {useState} from "react";
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import { DateTimePicker } from '@material-ui/pickers';
 
 const Create = ({onCreate}) => {
 
@@ -77,14 +78,21 @@ const Create = ({onCreate}) => {
     const onEndLocChange = (e) => {
         e.preventDefault()
 
-        console.log("Changed Locations!")
+        console.log("Changed Start Locations!")
+
+        setEndLoc(e.target.value);
+    };
+
+    const onEndLocChange = (e) => {
+        e.preventDefault()
+
+        console.log("Changed Destinations!")
 
         setEndLoc(e.target.value);
     };
 
     return (
         <form onSubmit = {onSubmit}>
-            {/* With Material UI */}
 
             <TextField
                 id="Start Location Search Bar"
@@ -103,18 +111,6 @@ const Create = ({onCreate}) => {
                     ))
                 }
             </TextField>
-
-            {/* Without Material UI */}
-            {/* <div>
-                <label>StartLocation</label>
-                <input type = 'text' placeholder = 'IAH'
-                value = {startLoc} onChange = {(e) => setStartLoc(e.target.value)}/>
-            </div> */}
-            {/* <div>
-                <label>EndLocation</label>
-                <input type = 'text' placeholder = 'Greenbriar Lot'
-                value = {endLoc} onChange = {(e) => setEndLoc(e.target.value)}/>
-            </div> */}
 
             <TextField
                 id="End Location Search Bar"
