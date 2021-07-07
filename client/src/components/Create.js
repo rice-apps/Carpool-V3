@@ -3,7 +3,7 @@ import {useState} from "react";
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import { DateTimePicker } from '@material-ui/pickers';
+// import { DateTimePicker } from '@material-ui/pickers';
 
 const Create = ({onCreate}) => {
 
@@ -70,18 +70,11 @@ const Create = ({onCreate}) => {
     const onStartLocChange = (e) => {
         e.preventDefault()
 
-        console.log("Changed Locations!")
+        console.log("Changed Start Locations!")
 
         setStartLoc(e.target.value);
     };
 
-    const onEndLocChange = (e) => {
-        e.preventDefault()
-
-        console.log("Changed Start Locations!")
-
-        setEndLoc(e.target.value);
-    };
 
     const onEndLocChange = (e) => {
         e.preventDefault()
@@ -129,6 +122,12 @@ const Create = ({onCreate}) => {
                     ))
                 }
             </TextField>
+
+            {/* <DateTimePicker
+                id='Date and Time Picker'
+            >
+                console.log("Date and time is picked")
+            </DateTimePicker> */}
 
             <div>
                 <label>Day</label>
