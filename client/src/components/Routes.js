@@ -4,6 +4,7 @@ import { gql, useQuery, useApolloClient } from '@apollo/client';
 import Login from '../Pages/Login.js';
 import Auth from '../Pages/Auth.js';
 import Home from '../Pages/Home.js';
+import CreateRide from '../Pages/CreateRide.js';
 
 /**
  * Requests to verify the user's token on the backend
@@ -91,6 +92,9 @@ export const Routes = () => {
             </PrivateRoute>
             <Route path={"/home"}>
                 <Home />
+            </Route>
+            <Route path={"/create-ride"}>
+                <CreateRide />
             </Route>
             <Route path={"/"}>
                 <Home />
