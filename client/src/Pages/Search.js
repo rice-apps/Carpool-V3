@@ -2,8 +2,13 @@ import React from 'react'
 import { useState } from 'react'
 //import MultipleDatePicker from 'react-multiple-datepicker'
 //import 'react-datepicker/dist/react-datepicker.css'
-
+import { useMediaQuery } from 'react-responsive'
+import Header from '../components/Header';
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+
+import "@fontsource/source-sans-pro";
 
 
 /*
@@ -37,16 +42,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import './Search.css'
 
 //destArr is Database
-const destArr = [{text: 'IAH', numberPeople: 3}, {text: 'Shop1', numberPeople: 5}, {text: 'Shop2', numberPeople: 8}, {text: 'Shop3', numberPeople: 10}];
+const destArr = [{dest: 'IAH', date: new Date("7/13/21"), numberPeople: 3}, {dest: 'Shop1', date: new Date("7/17/21"), numberPeople: 5}, {dest: 'Shop2', date: new Date("7/18/21"), numberPeople: 8}, {dest: 'Shop3', date: new Date("7/25/21"), numberPeople: 10}];
 
-//DefaultDestinations should only contain the text property of each element ideally (can use map function for this)
+//DefaultDestinations should only contain the deset property of each element ideally (can use map function for this)
 const DefaultDestinations = destArr;
 
 const Search = () => {
+  let temp = 3;
+
   const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), 14);
   const endValue = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 15);
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 8);
   const maxDate = new Date(new Date().getFullYear(), new Date().getMonth()+1, 20);
+
+  const testValue = [new Date("7/12/21"), new Date("7/15/21")]
 
     const dictNames = {dest: 0, date: 1, time: 2, numberPeople: 3}
     
@@ -54,18 +63,19 @@ const Search = () => {
 
     //const [date, setDate] = useState('2020-09-11T12:00:00')
     const [date, setDate] = useState(new Date())
-    
+    const [dateRange, setDateRange] = useState(testValue)
+
     const [open, setOpen] = useState(false)
     
     const [time, setTime] = useState('')
     const [numberPeople, setNumberPeople] = useState(1)
 
     const [isSelected, setIsSelected] = useState({dest: [false, false, false], date: [false]})
-    const [selectedColors, setSelectedColors] = useState(['white', 'blue'])
-
-    //const [isSelectedDestAny, setIsSelectedDestAny] = useState(false)
+    const selectedColors = ['white', 'blue']
 
     const [indSelected, setIndSelected] = useState(-1)
+
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 480px)' })
 
     const SearchDiv = styled.div`
     position: absolute;
@@ -75,7 +85,10 @@ const Search = () => {
     border: 5px solid #FFFF00;
     padding: 10vw;
     display: flex;
-    align-content: space-between;;
+    align-content: space-between ;;
+    @media (max-width: 480px) {
+      background-color: #a9d5e8;
+    }
     `;
 
     //Got rid of overflow-x: auto. overflox-x determines what happens when the content of an element is too big for the element to display within its boundaries
@@ -95,11 +108,35 @@ const Search = () => {
     background-color: #ff7777;
     `;
 
+    const SubHeading = styled.div`
+    
+    `;
+
+    const compareDates = (date1, date2, equals) => {
+      //date1 = 1st date, date2 = 2nd date, equals = boolean variable if equals is true then the function returns true for date1 >= date2, not just date1 > date2
+      const d1 = [date1.getDate(), date1.getMonth(), date1.getFullYear()]
+      const d2 = [date2.getDate(), date2.getMonth(), date2.getFullYear()]
+
+      if (d1[2] == d2[2]) {
+        if (d1[1] == d2[1]) {
+          return d1[0] > d2[0] || (equals && d1[0] == d2[0]);
+        }
+        return d1[1] > d2[1] || (equals && d1[1] == d2[1]);
+      }
+
+      return d1[2] > d2[2] || (equals && d1[2] == d2[2]);
+    }
+    
+    //console.log(compareDates(testValue[1], testValue[0], true));
+    
     const onSubmit = (e) => {
         e.preventDefault();
         console.log("Search form submitted.");
+        console.log("Search query = [ dest=" + destination + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
 
-        const resultDestArr = destArr.filter((ele) => { return (ele.numberPeople > numberPeople);});
+        let resultDestArr = destArr.filter((ele) => { return (ele.dest == destination);});
+        resultDestArr = resultDestArr.filter((ele) => { return compareDates(ele.date, dateRange[0], true) && !compareDates(ele.date, dateRange[1], false);});
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.numberPeople >= numberPeople);});
         console.log(resultDestArr);
     }
 
@@ -140,28 +177,29 @@ const Search = () => {
     }
 
     const handleChangeTime = (time) => {
+      console.log("handleChangeTime() run, time=" +  time + " temp=" + temp);
       setTime(time);
 
       setIndSelected(dictNames.time);
+
+      console.log("handleChangeTime() run, time=" +  time + " temp=" + temp);
+
     }
     
     return (
+      <React.Fragment>
+      <div><Header subtitle  ="Search Rides"/></div>
         <SearchDiv>
-        <form className='search-form' onSubmit={onSubmit}>
-          <SearchControl>
-            <label>Destination</label>
-            
-            
-            <input
-              type='text'
-              placeholder='Destination'
-              value={destination} 
-              onChange={(e) => handleChangeDest(e.target.value)}
-              style = {{ marginLeft: '5vw', display: 'inline-block', backgroundColor: ((indSelected === dictNames.dest) ? selectedColors[1] : selectedColors[0]),
-              color: ((indSelected === dictNames.dest) ? selectedColors[0] : selectedColors[1])}}
-            />
-          
+          <FormControl className= 'search-form'>
+          <SearchControl> 
+          <TextField id="filled-basic" label="Destination" variant="filled" 
+                        value={destination} 
+                        onChange={(e) => handleChangeDest(e.target.value)}
+                        style = {{  backgroundColor: ((indSelected === dictNames.dest) ? selectedColors[1] : selectedColors[0]),
+                        color: ((indSelected === dictNames.dest) ? selectedColors[0] : selectedColors[1])}}
+          />           
           {/*
+          fontFamily: 'Source Sans Pro',fontStyle: 'normal',fontWeight: 'normal',marginLeft: '5vw', display: 'inline-block',
           Adding a button element will trigger onSubmit when it is clicked (idk why)
           */}
           {/*
@@ -170,8 +208,8 @@ const Search = () => {
 
             <div>
               {DefaultDestinations.map((e, ind) => {
-                return <Button key={e.text} variant="outlined" color="primary" onClick={() => {handleClickDest(e.text, ind);}} style={{backgroundColor: (isSelected.dest[ind] ? selectedColors[1] : selectedColors[0]),
-                  color: (isSelected.dest[ind] ? selectedColors[0] : selectedColors[1])}}>{e.text}</Button>
+                return <Button key={e.dest} variant="outlined" color="primary" onClick={() => {handleClickDest(e.dest, ind);}} style={{backgroundColor: (isSelected.dest[ind] ? selectedColors[1] : selectedColors[0]),
+                  color: (isSelected.dest[ind] ? selectedColors[0] : selectedColors[1])}}>{e.dest}</Button>
               })}
             </div>
           
@@ -202,14 +240,16 @@ const Search = () => {
                 <DateRangePickerComponent placeholder="Enter Date Range"
       startDate={startValue}
       endDate={endValue}
-      min={minDate}
-      max={maxDate}
-      minDays={3}
-      maxDays={5}
+      //min={minDate}
+      //max={maxDate}
+      //minDays={3}
+      ///maxDays={5}
       format="dd-MMM-yy"
+      value={dateRange}
+      change={(e) => {setDateRange([e.startDate, e.endDate]); console.log(e);}}
       //Uncomment below code to show month range picker. Also comment the properties min, max, mindays and maxdays
-      // start="Year"
-      // depth="Year"
+      start="Year"
+      depth="Year"
       ></DateRangePickerComponent>
 
                 {/*
@@ -262,7 +302,7 @@ const Search = () => {
           </SearchControl>
           <SearchControl2>
             <label>Number_People</label>
-            <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value);}}>
+            <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value); temp=e.target.value; console.log("temp=" + temp)}}>
               { [1,2,3,4,5,6,7,8,9,10,11,12,13].map((ele) => (
                 <MenuItem key={ele} value={ele}>{ele}</MenuItem>
               ))}
@@ -278,11 +318,20 @@ const Search = () => {
             */}
           </SearchControl2>
     
-          <input type='submit' value='Search Ride' className='btn btn-block' />
-        </form>
+              <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        onClick={onSubmit}
+        >
+            Search RIDE
+        </Button>
+
+          </FormControl>
         
         </SearchDiv>
-           
+           </React.Fragment>
       )
 }
 
