@@ -3,7 +3,40 @@ import {useState} from "react";
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-// import { DateTimePicker } from '@material-ui/pickers';
+
+const Form = styled.form`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: space-between;
+    flex-direction: column;
+
+    padding: 40px;
+`;
+
+const TextBox = styled(TextField)`
+    display: flex
+    align-items: center;
+    width: 250px;
+    background: #F4F6F9;
+    padding: 50px;
+`;
+
+const MenuBox = styled(MenuItem)`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 16px;
+
+    position: static;
+    width: 264px;
+    height: 36px;
+    left: 0px;
+    top: 0px;
+
+    background: #F4F6F9;
+    border-radius: 8px;
+`; 
 
 const Create = ({onCreate}) => {
 
@@ -85,43 +118,41 @@ const Create = ({onCreate}) => {
     };
 
     return (
-        <form onSubmit = {onSubmit}>
+        <Form onSubmit = {onSubmit}>
 
-            <TextField
+            <TextBox
                 id="Start Location Search Bar"
                 select
                 value={startLoc}
                 onChange={onStartLocChange}
-                helperText="Please select your start location"
                 variant="outlined"
                 label='Your Location'
             >
                 {
                     locations.map((option) => (
-                        <MenuItem key = {option.value} value = {option.value}>
+                        <MenuBox key = {option.value} value = {option.value}>
                             {option.value}
-                        </MenuItem>
+                        </MenuBox>
                     ))
                 }
-            </TextField>
+            </TextBox>
 
-            <TextField
+            <TextBox
                 id="End Location Search Bar"
                 select
                 value={endLoc}
                 onChange={onEndLocChange}
-                helperText="Please select your destination"
                 variant="outlined"
                 label='Destination'
             >
                 {
                     locations.map((option) => (
-                        <MenuItem key = {option.value} value = {option.value}>
+                        <MenuBox key = {option.value} value = {option.value}>
                             {option.value}
-                        </MenuItem>
+                        </MenuBox>
                     ))
                 }
-            </TextField>
+            </TextBox>
 
             {/* <DateTimePicker
                 id='Date and Time Picker'
@@ -146,7 +177,7 @@ const Create = ({onCreate}) => {
             </div>
 
             <input type = 'submit' value = 'Create New Ride' /> 
-        </form>
+        </Form>
     )
 }
 
