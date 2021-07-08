@@ -1,0 +1,10 @@
+.datePicker {
+    margin-left: '5vw';
+    display: 'inline-block';
+    background-color: white;
+    color: blue;
+  }
+  .datePicker.selected {
+      background-color: blue;
+      color: white;
+  }
