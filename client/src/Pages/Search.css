@@ -1,3 +1,5 @@
+@import url("https://cdn.syncfusion.com/ej2/material.css");
+
 .datePicker {
     margin-left: '5vw';
     display: 'inline-block';

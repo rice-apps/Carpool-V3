@@ -3,6 +3,9 @@ import { useState } from 'react'
 //import MultipleDatePicker from 'react-multiple-datepicker'
 //import 'react-datepicker/dist/react-datepicker.css'
 
+import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
+
+
 /*
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
@@ -17,23 +20,35 @@ import {
 //import MultipleDatesPicker from '@randex/material-ui-multiple-dates-picker'
 
 import TextField from '@material-ui/core/TextField';
+
+/*
 import DateRangePicker from '@material-ui/lab/DateRangePicker';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import Box from '@material-ui/core/Box';
+*/
+
+//import Box from '@material-ui/core/Box';
 
 import styled from 'styled-components'
 
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
-//import './Search.css'
+import './Search.css'
 
-const DefaultDestinations = [{text: 'IAH'}, {text: 'Shop1'}, {text: 'Shop2'}];
+//destArr is Database
+const destArr = [{text: 'IAH', numberPeople: 3}, {text: 'Shop1', numberPeople: 5}, {text: 'Shop2', numberPeople: 8}, {text: 'Shop3', numberPeople: 10}];
+
+//DefaultDestinations should only contain the text property of each element ideally (can use map function for this)
+const DefaultDestinations = destArr;
 
 const Search = () => {
-    const dictNames = {dest: 0, date: 1}
-    const test = 0;
+  const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), 14);
+  const endValue = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 15);
+  const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 8);
+  const maxDate = new Date(new Date().getFullYear(), new Date().getMonth()+1, 20);
+
+    const dictNames = {dest: 0, date: 1, time: 2, numberPeople: 3}
     
     const [destination, setDestination] = useState('')
 
@@ -84,6 +99,8 @@ const Search = () => {
         e.preventDefault();
         console.log("Search form submitted.");
 
+        const resultDestArr = destArr.filter((ele) => { return (ele.numberPeople > numberPeople);});
+        console.log(resultDestArr);
     }
 
     const handleClickDest = (text, ind) => {
@@ -92,7 +109,8 @@ const Search = () => {
 
       //setIsSelectedDestAny(true);
       setIndSelected(dictNames.dest);
-      
+      console.log(JSON.parse(JSON.stringify(indSelected)));
+
       const isSelectedDest = Array.from(isSelected.dest);
       isSelectedDest.fill(false);
       isSelectedDest[ind] = true;
@@ -100,8 +118,14 @@ const Search = () => {
       //console.log(JSON.parse(JSON.stringify(isSelected)));
     }
 
-    const handleClickDate = (date) => {
-      console.log("handleClickDate() run, date=", date);
+    const handleChangeDest = (dest) => {
+      setDestination(dest);
+
+      setIndSelected(dictNames.dest);
+    }
+
+    const handleChangeDate = (date) => {
+      console.log("handleChangeDate() run, date=", date);
       setDate(date);
 
       setIndSelected(dictNames.date);
@@ -115,6 +139,12 @@ const Search = () => {
       */
     }
 
+    const handleChangeTime = (time) => {
+      setTime(time);
+
+      setIndSelected(dictNames.time);
+    }
+    
     return (
         <SearchDiv>
         <form className='search-form' onSubmit={onSubmit}>
@@ -126,7 +156,7 @@ const Search = () => {
               type='text'
               placeholder='Destination'
               value={destination} 
-              onChange={(e) => setDestination(e.target.value)}
+              onChange={(e) => handleChangeDest(e.target.value)}
               style = {{ marginLeft: '5vw', display: 'inline-block', backgroundColor: ((indSelected === dictNames.dest) ? selectedColors[1] : selectedColors[0]),
               color: ((indSelected === dictNames.dest) ? selectedColors[0] : selectedColors[1])}}
             />
@@ -149,6 +179,7 @@ const Search = () => {
           <SearchControl>
             <label>Date</label>
 
+    {/*
             <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateRangePicker
               startText="Check-in"
@@ -166,6 +197,20 @@ const Search = () => {
               )}
             />
           </LocalizationProvider>
+                */}
+                
+                <DateRangePickerComponent placeholder="Enter Date Range"
+      startDate={startValue}
+      endDate={endValue}
+      min={minDate}
+      max={maxDate}
+      minDays={3}
+      maxDays={5}
+      format="dd-MMM-yy"
+      //Uncomment below code to show month range picker. Also comment the properties min, max, mindays and maxdays
+      // start="Year"
+      // depth="Year"
+      ></DateRangePickerComponent>
 
                 {/*
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -177,7 +222,7 @@ const Search = () => {
                 id='date-picker'
                 label='Date Picker'
                 value={date}
-                onChange={handleClickDate}
+                onChange={handleChangeDate}
                 KeyboardButtonProps={{
                   'aria-label': 'change date'
                 }}
@@ -209,23 +254,18 @@ const Search = () => {
               type='text'
               placeholder='Time'
               value={time}
-              onChange={(e) => setTime(e.target.value)}
-              style = {{ marginLeft: '5vw', display: 'inline-block', backgroundColor: 'red'}}
+              onChange={(e) => handleChangeTime(e.target.value)}
+              style = {{ marginLeft: '5vw', display: 'inline-block', backgroundColor: ((indSelected === dictNames.time) ? selectedColors[1] : selectedColors[0]),
+              color: ((indSelected === dictNames.time) ? selectedColors[0] : selectedColors[1])}}
             />
             
           </SearchControl>
           <SearchControl2>
             <label>Number_People</label>
             <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value);}}>
-              <MenuItem value='1'>
-                1
-              </MenuItem>
-              <MenuItem value='2'>
-                2
-              </MenuItem>
-              <MenuItem value='3'>
-                3
-              </MenuItem>
+              { [1,2,3,4,5,6,7,8,9,10,11,12,13].map((ele) => (
+                <MenuItem key={ele} value={ele}>{ele}</MenuItem>
+              ))}
             </TextField>
             {/*
             <input
