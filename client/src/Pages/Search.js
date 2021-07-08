@@ -3,6 +3,7 @@ import { useState } from 'react'
 //import MultipleDatePicker from 'react-multiple-datepicker'
 //import 'react-datepicker/dist/react-datepicker.css'
 
+/*
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 
@@ -11,12 +12,19 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker
 } from '@material-ui/pickers'
+*/
 
-import MultipleDatesPicker from '@randex/material-ui-multiple-dates-picker'
+//import MultipleDatesPicker from '@randex/material-ui-multiple-dates-picker'
+
+import TextField from '@material-ui/core/TextField';
+import DateRangePicker from '@material-ui/lab/DateRangePicker';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import Box from '@material-ui/core/Box';
+
 import styled from 'styled-components'
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
 //import './Search.css'
@@ -141,6 +149,25 @@ const Search = () => {
           <SearchControl>
             <label>Date</label>
 
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateRangePicker
+              startText="Check-in"
+              endText="Check-out"
+              value={date}
+              onChange={(newDate) => {
+                setDate(newDate);
+              }}
+              renderInput={(startProps, endProps) => (
+                <React.Fragment>
+                  <TextField {...startProps} />
+                  <Box sx={{ mx: 2 }}> to </Box>
+                  <TextField {...endProps} />
+                </React.Fragment>
+              )}
+            />
+          </LocalizationProvider>
+
+                {/*
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                 disableToolbar
@@ -156,7 +183,8 @@ const Search = () => {
                 }}
                 />
               </MuiPickersUtilsProvider>
-            
+              */}
+
             {/*
             <MultipleDatesPicker
         open={open}
