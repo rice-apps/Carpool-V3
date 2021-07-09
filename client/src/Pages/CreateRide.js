@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../components/Header.js';
 import Create from '../components/Create.js'; 
 // import Button from '@material-ui/core/Button'; 
 
@@ -12,7 +11,6 @@ const CreateRide = () => {
     return (
 
         <div> 
-            <Header subtitle = {'Create Ride'}/> 
             <Create onCreate = {addRide} />
             {/* <Button variant = 'contained' color = 'primary' onClick = {handleOpen}>
                 Create New Ride

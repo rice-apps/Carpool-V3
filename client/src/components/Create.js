@@ -1,5 +1,6 @@
 import React from 'react';
 import {useState} from "react";
+import Header from '../components/Header.js';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -192,9 +193,11 @@ const Create = ({onCreate}) => {
                 alignItems='center'
                 spacing = '4'
             >
+                <Header subtitle = {'Create Ride'}/> 
                 <Grid 
                     item
                     justifyContent='center'
+                    alignItems='center'
                     xs = {12}
                 >   
                     <InputBox id = 'StartLoc'>Departure Location</InputBox>
@@ -220,6 +223,7 @@ const Create = ({onCreate}) => {
                 <Grid
                     item
                     justifyContent='center'
+                    alignItems='center'
                     xs = {12}
                 >
                     <InputBox id = 'EndLoc'>Destination</InputBox>
