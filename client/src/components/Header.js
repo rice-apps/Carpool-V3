@@ -11,9 +11,10 @@ const Heading = styled.h1`
     font-style: normal;
     font-weight: normal;
     font-size: 48px;
-    line-height: 48px;
+    line-height: 20px;
 
     color: #002140;
+    padding: 40px 0px 0px 0px;
 `;
 
 const Subheading = styled.h2`
@@ -25,9 +26,10 @@ const Subheading = styled.h2`
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
-    line-height: 20px;
+    line-height: 0px;
 
     color: #BBDAFF;
+    padding: 0px 0px 20px 0px;
 `;
 
 const Header = ({title, subtitle}) => {
