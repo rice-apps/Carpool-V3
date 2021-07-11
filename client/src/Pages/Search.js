@@ -10,7 +10,6 @@ import FormControl from '@material-ui/core/FormControl';
 
 import "@fontsource/source-sans-pro";
 
-
 /*
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
@@ -41,13 +40,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import './Search.css'
 
+const PossibleLocations = ['IAH', 'Greenbriar Lot', 'Rice Village', 'S1', 'S2', 'S3', 'S4', 'Shop1', 'Shop2', 'Shop3']
+
 //destArr is Database
-const destArr = [{dest: 'IAH', date: new Date("7/13/21"), numberPeople: 3}, {dest: 'Shop1', date: new Date("7/17/21"), numberPeople: 5}, {dest: 'Shop2', date: new Date("7/18/21"), numberPeople: 8}, {dest: 'Shop3', date: new Date("7/25/21"), numberPeople: 10}];
+const destArr = [{startLoc: 'S2', endLoc: 'IAH', date: new Date("7/13/21"), numberPeople: 3}, {startLoc: 'S1', endLoc: 'Shop1', date: new Date("7/17/21"), numberPeople: 5}, {startLoc: 'S3', endLoc: 'Shop2', date: new Date("7/18/21"), numberPeople: 8}, {startLoc: 'S4', endLoc: 'Shop3', date: new Date("7/25/21"), numberPeople: 10}];
 
-//DefaultDestinations should only contain the deset property of each element ideally (can use map function for this)
-const DefaultDestinations = destArr;
+//DefaultDestinations should only contain the dest property of each element ideally (can use map function for this)
+const DefaultLocations = {
+  startLoc: PossibleLocations,
+  endLoc: PossibleLocations
+};
 
-const Search = () => {
+function Search() {
+  let resultDestArr = null;
+
   let temp = 3;
 
   const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), 14);
@@ -57,9 +63,10 @@ const Search = () => {
 
   const testValue = [new Date("7/12/21"), new Date("7/15/21")]
 
-    const dictNames = {dest: 0, date: 1, time: 2, numberPeople: 3}
+    const dictNames = {startLoc: 0, endLoc: 1, date: 2, time: 3, numberPeople: 4}
     
-    const [destination, setDestination] = useState('')
+    const [startLoc, setStartLoc] = useState('')
+    const [endLoc, setEndLoc] = useState('')
 
     //const [date, setDate] = useState('2020-09-11T12:00:00')
     const [date, setDate] = useState(new Date())
@@ -70,7 +77,7 @@ const Search = () => {
     const [time, setTime] = useState('')
     const [numberPeople, setNumberPeople] = useState(1)
 
-    const [isSelected, setIsSelected] = useState({dest: [false, false, false], date: [false]})
+    const [isSelected, setIsSelected] = useState({startLoc: new Array(DefaultLocations.startLoc.length).fill(false), endLoc: new Array(DefaultLocations.endLoc.length).fill(false), date: [false]})
     const selectedColors = ['white', 'blue']
 
     const [indSelected, setIndSelected] = useState(-1)
@@ -112,6 +119,10 @@ const Search = () => {
     
     `;
 
+    const ChoiceContainer = styled.div`
+    display: block;
+    `;
+
     const compareDates = (date1, date2, equals) => {
       //date1 = 1st date, date2 = 2nd date, equals = boolean variable if equals is true then the function returns true for date1 >= date2, not just date1 > date2
       const d1 = [date1.getDate(), date1.getMonth(), date1.getFullYear()]
@@ -132,33 +143,58 @@ const Search = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         console.log("Search form submitted.");
-        console.log("Search query = [ dest=" + destination + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
+        console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
 
-        let resultDestArr = destArr.filter((ele) => { return (ele.dest == destination);});
+        resultDestArr = destArr.filter((ele) => { return (ele.startLoc == startLoc);});
+        resultDestArr = destArr.filter((ele) => { return (ele.endLoc == endLoc);});
         resultDestArr = resultDestArr.filter((ele) => { return compareDates(ele.date, dateRange[0], true) && !compareDates(ele.date, dateRange[1], false);});
         resultDestArr = resultDestArr.filter((ele) => { return (ele.numberPeople >= numberPeople);});
         console.log(resultDestArr);
     }
 
-    const handleClickDest = (text, ind) => {
-      console.log("handleClickDest() run, text=", text);
-      setDestination(text);
+    const handleClickStartLoc = (text, ind) => {
+      console.log("handleClickStartLoc() run, text=", text);
+      setStartLoc(text);
 
       //setIsSelectedDestAny(true);
-      setIndSelected(dictNames.dest);
+      setIndSelected(dictNames.startLoc);
       console.log(JSON.parse(JSON.stringify(indSelected)));
 
-      const isSelectedDest = Array.from(isSelected.dest);
+      const isSelectedDest = Array.from(isSelected.startLoc);
       isSelectedDest.fill(false);
       isSelectedDest[ind] = true;
-      setIsSelected({...isSelected, dest: isSelectedDest, });
+      console.log("isSelectedDest=", isSelectedDest);
+      setIsSelected({...isSelected, startLoc: isSelectedDest, });
       //console.log(JSON.parse(JSON.stringify(isSelected)));
     }
 
-    const handleChangeDest = (dest) => {
-      setDestination(dest);
+    const handleChangeStartLoc = (dest) => {
+      setStartLoc(dest);
 
-      setIndSelected(dictNames.dest);
+      setIndSelected(dictNames.startLoc);
+    }
+
+    const handleClickEndLoc = (text, ind) => {
+      console.log("handleClickEndLoc() run, text=", text);
+      setEndLoc(text);
+
+      //setIsSelectedDestAny(true);
+      setIndSelected(dictNames.endLoc);
+      console.log(JSON.parse(JSON.stringify(indSelected)));
+
+      const isSelectedDest = Array.from(isSelected.endLoc);
+      isSelectedDest.fill(false);
+      isSelectedDest[ind] = true;
+      console.log("isSelectedDest=", isSelectedDest);
+
+      setIsSelected({...isSelected, endLoc: isSelectedDest, });
+      //console.log(JSON.parse(JSON.stringify(isSelected)));
+    }
+
+    const handleChangeEndLoc = (dest) => {
+      setEndLoc(dest);
+
+      setIndSelected(dictNames.endLoc);
     }
 
     const handleChangeDate = (date) => {
@@ -186,17 +222,73 @@ const Search = () => {
 
     }
     
+    const handleClickPropName = (text, ind, propName) => {
+      console.log("handleClickPropName() run, text=", text);
+      this["set" + propName](text);
+      //Error: "Search.js:218 Uncaught TypeError: Cannot read property 'setstartLoc' of undefined"
+
+      //setIsSelectedDestAny(true);
+      setIndSelected(dictNames[propName]);
+      console.log(JSON.parse(JSON.stringify(indSelected)));
+
+      const isSelectedDest = Array.from(isSelected[propName]);
+      isSelectedDest.fill(false);
+      isSelectedDest[ind] = true;
+      const newIsSelected = Array.from(isSelected)
+      newIsSelected[propName] = isSelectedDest
+      setIsSelected(newIsSelected);
+      //console.log(JSON.parse(JSON.stringify(isSelected)));
+    }
+
+    const displayDefaultProps = (arr, propName) => {
+      return arr.map((ele, ind) => {
+        return <Button key={ele} variant="outlined" color="primary" onClick={() => {handleClickPropName(ele, ind, propName);}} style={{backgroundColor: (isSelected[propName][ind] ? selectedColors[1] : selectedColors[0]),
+          color: (isSelected[propName][ind] ? selectedColors[0] : selectedColors[1])}}>{ele}</Button>
+      })
+    }
+
+    const displayRides = (rides) => {
+      return rides.map((ride, ind) => (<div key={ride.uid}>
+        {"Ride #" + ride.uid + " startLoc=" + ride.startLoc + " endLoc=" + ride.endLoc + " date=" + ride.date + " time=" + ride.time + " numberPeople=" + ride.numberPeople}
+        </div>))
+    }
+
     return (
       <React.Fragment>
       <div><Header subtitle  ="Search Rides"/></div>
         <SearchDiv>
           <FormControl className= 'search-form'>
+            <SearchControl>
+              <label>Start Location</label>
+              <TextField id="filled-basic" label="Starting Location" variant="filled" 
+                        value={startLoc} 
+                        onChange={(e) => handleChangeStartLoc(e.target.value)}
+                        style = {{  backgroundColor: ((indSelected === dictNames.startLoc) ? selectedColors[1] : selectedColors[0]),
+                        color: ((indSelected === dictNames.startLoc) ? selectedColors[0] : selectedColors[1])}}
+              /> 
+              <ChoiceContainer>
+                {
+                  /*
+                  displayDefaultProps(DefaultLocations.startLoc, "startLoc")
+                  */
+                }
+              {
+                DefaultLocations.startLoc.map((ele, ind) => {
+                  return <Button key={ele} variant="outlined" color="primary" onClick={() => {handleClickStartLoc(ele, ind);}} style={{backgroundColor: (isSelected.startLoc[ind] ? selectedColors[1] : selectedColors[0]),
+                    color: (isSelected.startLoc[ind] ? selectedColors[0] : selectedColors[1])}}>{ele}</Button>
+                })
+              }
+            </ChoiceContainer>
+              
+            </SearchControl>
           <SearchControl> 
+          <label>End Location</label>
+
           <TextField id="filled-basic" label="Destination" variant="filled" 
-                        value={destination} 
-                        onChange={(e) => handleChangeDest(e.target.value)}
-                        style = {{  backgroundColor: ((indSelected === dictNames.dest) ? selectedColors[1] : selectedColors[0]),
-                        color: ((indSelected === dictNames.dest) ? selectedColors[0] : selectedColors[1])}}
+                        value={endLoc} 
+                        onChange={(e) => handleChangeEndLoc(e.target.value)}
+                        style = {{  backgroundColor: ((indSelected === dictNames.endLoc) ? selectedColors[1] : selectedColors[0]),
+                        color: ((indSelected === dictNames.endLoc) ? selectedColors[0] : selectedColors[1])}}
           />           
           {/*
           fontFamily: 'Source Sans Pro',fontStyle: 'normal',fontWeight: 'normal',marginLeft: '5vw', display: 'inline-block',
@@ -207,9 +299,12 @@ const Search = () => {
           */}
 
             <div>
-              {DefaultDestinations.map((e, ind) => {
-                return <Button key={e.dest} variant="outlined" color="primary" onClick={() => {handleClickDest(e.dest, ind);}} style={{backgroundColor: (isSelected.dest[ind] ? selectedColors[1] : selectedColors[0]),
-                  color: (isSelected.dest[ind] ? selectedColors[0] : selectedColors[1])}}>{e.dest}</Button>
+              {/*
+                displayDefaultProps(DefaultDestinations, "endLoc")
+              */}
+              {DefaultLocations.endLoc.map((ele, ind) => {
+                return <Button key={ele} variant="outlined" color="primary" onClick={() => {handleClickEndLoc(ele, ind);}} style={{backgroundColor: (isSelected.endLoc[ind] ? selectedColors[1] : selectedColors[0]),
+                  color: (isSelected.endLoc[ind] ? selectedColors[0] : selectedColors[1])}}>{ele}</Button>
               })}
             </div>
           
@@ -329,7 +424,15 @@ const Search = () => {
         </Button>
 
           </FormControl>
-        
+            
+            {
+            !(resultDestArr==null) &&
+            <div id="display-filtered-rides">
+              {
+                displayRides(resultDestArr)
+              }
+            </div>
+            }
         </SearchDiv>
            </React.Fragment>
       )
