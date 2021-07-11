@@ -57,12 +57,12 @@ const SelectBox = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'white',
-        width: '264px',
+        width: '55vw',
         borderRadius: 8,
         border: 0,
         borderColor: '#0B3669',
         color: '#0B3669',
-        height: '24px',
+        height: '2vh',
         fontFamily: 'Josefin Sans',
         fontSize: '13px',
         padding: '8px 16px 8px 16px'
@@ -88,7 +88,7 @@ const MenuBox = withStyles({
 const ColorButton = withStyles({
     root: {
         background: '#2075D8',
-        width: '350px',
+        width: '70vw',
         borderRadius: 8,
         border: 0,
         color: 'white',
