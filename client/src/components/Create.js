@@ -55,7 +55,8 @@ const SelectBox = withStyles({
         width: '264px',
         borderRadius: 8,
         border: 0,
-        color: '#09101D 55%',
+        borderColor: '#0B3669',
+        color: '#0B3669',
         height: '24px',
         fontFamily: 'Josefin Sans',
         fontSize: '13px',
@@ -71,7 +72,7 @@ const MenuBox = withStyles({
         background: 'white',
         width: '264px',
         border: 0,
-        color: 'black',
+        color: '#0B3669',
         height: 36,
         fontFamily: 'Josefin Sans',
         fontSize: '13px',
@@ -98,11 +99,24 @@ const ColorButton = withStyles({
     root: {
         display: 'flex',
         alignItems: 'center',
-        color: '#09101D',
+        color: '#0B3669',
         fontFamily: 'Josefin Sans',
         fontSize: '13px',
     }
   })(InputLabel);
+
+  const DateBox = styled(DateTimePickerComponent)`
+
+    &&{
+        font-family: Josefin Sans;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 24px;
+
+        color: #0B3669;
+    }
+  `; 
 
 const Create = ({onCreate}) => {
 
@@ -249,12 +263,12 @@ const Create = ({onCreate}) => {
                     item
                     xs = {12}
                 >
-                    <DateTimePickerComponent
+                    <DateBox
                         placeholder='Select Date and Time'
                         value={date}
                         onChange={onDateChange}
                     >
-                    </DateTimePickerComponent>
+                    </DateBox>
                 </Grid>
 
                 {/* <div>
