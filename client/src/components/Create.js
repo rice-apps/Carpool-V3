@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from '@material-ui/core/styles';
-import { flexbox } from '@material-ui/system';
+import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 const Form = styled.form`
     display: flex;
@@ -51,13 +51,13 @@ const SelectBox = withStyles({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: '#F4F6F9',
+        background: 'white',
         width: '264px',
         borderRadius: 8,
         border: 0,
         color: '#09101D 55%',
         height: '24px',
-        fontFamily: 'Source Sans Pro',
+        fontFamily: 'Josefin Sans',
         fontSize: '13px',
         padding: '8px 16px 8px 16px'
     }
@@ -73,7 +73,7 @@ const MenuBox = withStyles({
         border: 0,
         color: 'black',
         height: 36,
-        fontFamily: 'Source Sans Pro',
+        fontFamily: 'Josefin Sans',
         fontSize: '13px',
         padding: '8px 16px'
     }
@@ -124,8 +124,7 @@ const Create = ({onCreate}) => {
     // Variables for Tracking Attributes of the Form
     const [startLoc, setStartLoc] = useState('')
     const [endLoc, setEndLoc] = useState('')
-    const [day, setDay] = useState('')
-    const [time, setTime] = useState('')
+    const [date, setDate] = useState(new Date)
     const [passengers, setPassengers] = useState(0)
     const [confirmation, setConfirmation] = useState(false)
 
@@ -151,17 +150,16 @@ const Create = ({onCreate}) => {
 
         console.log("Submitted!")
 
-        if (!startLoc || !endLoc || !day || !time) { 
+        if (!startLoc || !endLoc) { 
             alert('Please fill in fields')
             return
         }
 
-        onCreate({ startLoc, endLoc, day, time, passengers, confirmation })
+        onCreate({ startLoc, endLoc, date, passengers, confirmation })
 
         setStartLoc('')
         setEndLoc('')
-        setDay('')
-        setTime('')
+        setDate(new Date)
         setPassengers(0)
         setConfirmation(false)
     }
@@ -183,6 +181,12 @@ const Create = ({onCreate}) => {
         setEndLoc(e.target.value);
     };
 
+    const onDateChange = (e) => {
+        console.log("Date is changed to " + e.target.value)
+
+        setDate(e.target.value);
+    };
+
     return (
         <Form onSubmit = {onSubmit}>
 
@@ -191,13 +195,11 @@ const Create = ({onCreate}) => {
                 direction='column'
                 justifyContent='center'
                 alignItems='center'
-                spacing = '4'
+                spacing='4'
             >
                 <Header subtitle = {'Create Ride'}/> 
                 <Grid 
                     item
-                    justifyContent='center'
-                    alignItems='center'
                     xs = {12}
                 >   
                     <InputBox id = 'StartLoc'>Departure Location</InputBox>
@@ -222,8 +224,6 @@ const Create = ({onCreate}) => {
                 
                 <Grid
                     item
-                    justifyContent='center'
-                    alignItems='center'
                     xs = {12}
                 >
                     <InputBox id = 'EndLoc'>Destination</InputBox>
@@ -245,7 +245,19 @@ const Create = ({onCreate}) => {
                     </SelectBox>
                 </Grid>
 
-                <div>
+                <Grid
+                    item
+                    xs = {12}
+                >
+                    <DateTimePickerComponent
+                        placeholder='Select Date and Time'
+                        value={date}
+                        onChange={onDateChange}
+                    >
+                    </DateTimePickerComponent>
+                </Grid>
+
+                {/* <div>
                     <label>Day</label>
                     <input type = 'text' placeholder = 'Jan 2'
                     value = {day} onChange = {(e) => setDay(e.target.value)}/>
@@ -254,7 +266,7 @@ const Create = ({onCreate}) => {
                     <label>Passengers</label>
                     <input type = 'number' placeholder = {2}
                     value = {passengers} onChange = {(e) => setPassengers(e.target.value)}/>
-                </div>
+                </div> */}
                 <div>
                     <label>Confirmation</label>
                     <input type = 'checkbox' checked = {confirmation}
