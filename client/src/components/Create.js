@@ -2,12 +2,17 @@ import React from 'react';
 import {useState} from "react";
 import Header from '../components/Header.js';
 import styled from 'styled-components';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
+import {
+    TextField,
+    MenuItem,
+    Grid, 
+    Button, 
+    Select, 
+    InputLabel,
+    FormControlLabel, 
+    Checkbox
+} from '@material-ui/core';
+
 import { withStyles } from '@material-ui/core/styles';
 import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 
@@ -83,7 +88,7 @@ const MenuBox = withStyles({
 const ColorButton = withStyles({
     root: {
         background: '#2075D8',
-        width: '367px',
+        width: '350px',
         borderRadius: 8,
         border: 0,
         color: 'white',
@@ -105,6 +110,16 @@ const ColorButton = withStyles({
     }
   })(InputLabel);
 
+  const FormControlLabelBox = withStyles({
+    label: {
+        display: 'flex',
+        alignItems: 'center',
+        color: '#0B3669',
+        fontFamily: 'Josefin Sans',
+        fontSize: '13px',
+    }
+  })(FormControlLabel);
+
   const DateBox = styled(DateTimePickerComponent)`
 
     &&{
@@ -117,6 +132,13 @@ const ColorButton = withStyles({
         color: #0B3669;
     }
   `; 
+
+  const CheckBox = withStyles({
+      root: {
+        color: '#0B3669', 
+        backgroundColor: 'transparent'
+      }
+  })(Checkbox);
 
 const Create = ({onCreate}) => {
 
@@ -196,9 +218,17 @@ const Create = ({onCreate}) => {
     };
 
     const onDateChange = (e) => {
+
         console.log("Date is changed to " + e.target.value)
 
         setDate(e.target.value);
+    };
+
+    const onCheck = (e) => {
+
+        console.log("Confirmation changed to " + e.target.checked)
+
+        setConfirmation(e.target.checked);
     };
 
     return (
@@ -281,17 +311,23 @@ const Create = ({onCreate}) => {
                     <input type = 'number' placeholder = {2}
                     value = {passengers} onChange = {(e) => setPassengers(e.target.value)}/>
                 </div> */}
-                <div>
-                    <label>Confirmation</label>
-                    <input type = 'checkbox' checked = {confirmation}
-                    value = {confirmation} onChange = {(e) => setConfirmation(e.currentTarget.checked)}/>
-                </div>
+
+                <Grid
+                    item
+                    xs = {12}
+                >
+                    <FormControlLabelBox
+                        control={<CheckBox color='primary' checked={confirmation} onChange={onCheck}/>}
+                        label="Confirm for leading the ride, etc."
+                    />
+                </Grid>
 
                 <Grid 
                     item
-                    justify-content = 'center'
+                    xs = {12}
                 >
                     <ColorButton
+                        type='submit'
                         variant='contained'
                         size='medium'
                     >
