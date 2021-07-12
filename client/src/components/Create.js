@@ -75,7 +75,7 @@ const MenuBox = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'white',
-        width: '264px',
+        width: '65vw',
         border: 0,
         color: '#0B3669',
         height: 36,
@@ -140,6 +140,55 @@ const ColorButton = withStyles({
       }
   })(Checkbox);
 
+  const SelectSquare = withStyles({
+    root: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        background: 'white',
+        width: '5vw',
+        borderRadius: 8,
+        border: 0,
+        borderColor: '#0B3669',
+        color: '#0B3669',
+        height: '2vh',
+        fontFamily: 'Josefin Sans',
+        fontSize: '13px',
+        padding: '8px 16px 8px 16px'
+    }
+  })(Select);
+
+  const MenuSquare = withStyles({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'white',
+        width: '15vw',
+        border: 0,
+        color: '#0B3669',
+        height: '2vh',
+        fontFamily: 'Josefin Sans',
+        fontSize: '13px',
+        padding: '8px 16px'
+    }
+  })(MenuItem);
+
+  const BodyText = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Josefin Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2vh;
+    line-height: 2vh;
+
+    color: #002140;
+    padding: 10px 0px 0px 0px;
+  `;
+
 const Create = ({onCreate}) => {
 
     const locations = [
@@ -154,6 +203,27 @@ const Create = ({onCreate}) => {
         {
             id: 3, 
             value: 'Rice Village'
+        }
+    ]
+
+    const seats = [
+        {
+            value: 0
+        }, 
+        {
+            value: 1
+        }, 
+        {
+            value: 2
+        }, 
+        {
+            value: 3
+        }, 
+        {
+            value: 4
+        }, 
+        {
+            value: 5
         }
     ]
 
@@ -231,13 +301,21 @@ const Create = ({onCreate}) => {
         setConfirmation(e.target.checked);
     };
 
+    const onPassengerChange = (e) => {
+        e.preventDefault()
+
+        console.log("Changed Passengers")
+
+        setPassengers(e.target.value);
+    };
+
     return (
         <Form onSubmit = {onSubmit}>
 
             <Grid
                 container
                 direction='column'
-                justifyContent='center'
+                justifyContent='space-evenly'
                 alignItems='center'
                 spacing='4'
             >
@@ -301,16 +379,35 @@ const Create = ({onCreate}) => {
                     </DateBox>
                 </Grid>
 
-                {/* <div>
-                    <label>Day</label>
-                    <input type = 'text' placeholder = 'Jan 2'
-                    value = {day} onChange = {(e) => setDay(e.target.value)}/>
-                </div>
-                <div>
-                    <label>Passengers</label>
-                    <input type = 'number' placeholder = {2}
-                    value = {passengers} onChange = {(e) => setPassengers(e.target.value)}/>
-                </div> */}
+                <Grid
+                container
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
+                spacing = '1'
+                >
+                    <Grid item>   
+                        <SelectSquare
+                            id="Number of Passengers Occupied"
+                            value={passengers}
+                            onChange={onPassengerChange}
+                            variant='outlined'
+                            size='small'
+                        >
+                            {
+                                seats.map((option) => (
+                                    <MenuSquare key = {option.value} value = {option.value}>
+                                        {option.value}
+                                    </MenuSquare>
+                                ))
+                            }
+                        </SelectSquare> 
+                    </Grid>
+                    <Grid item>
+                        <BodyText>{"passengers (s)"}</BodyText> 
+                    </Grid>
+
+                </Grid>
 
                 <Grid
                     item
