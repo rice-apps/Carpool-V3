@@ -3,7 +3,6 @@ import {useState} from "react";
 import Header from '../components/Header.js';
 import styled from 'styled-components';
 import {
-    TextField,
     MenuItem,
     Grid, 
     Button, 
@@ -208,9 +207,6 @@ const Create = ({onCreate}) => {
 
     const seats = [
         {
-            value: 0
-        }, 
-        {
             value: 1
         }, 
         {
@@ -231,7 +227,7 @@ const Create = ({onCreate}) => {
     const [startLoc, setStartLoc] = useState('')
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date)
-    const [passengers, setPassengers] = useState(0)
+    const [passengers, setPassengers] = useState(1)
     const [confirmation, setConfirmation] = useState(false)
 
     // const textfield = styled(TextField)`
@@ -266,7 +262,7 @@ const Create = ({onCreate}) => {
         setStartLoc('')
         setEndLoc('')
         setDate(new Date)
-        setPassengers(0)
+        setPassengers(1)
         setConfirmation(false)
     }
 
