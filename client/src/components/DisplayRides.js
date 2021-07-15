@@ -55,7 +55,7 @@ class DisplayRides extends Component {
             boxShadow={3}
             m={1}
             p={1}
-         
+            style={{padding: '10vh 0vw'}}
           >
           {"Ride #" + ride.uid + " startLoc=" + ride.startLoc + " endLoc=" + ride.endLoc + " date=" + ride.date + " time=" + ride.time + " numberPeople=" + ride.numberPeople}
           </Box>
