@@ -13,7 +13,11 @@ import {
 } from '@material-ui/core';
 
 import { withStyles } from '@material-ui/core/styles';
-import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
+import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
+import LuxonUtils from '@date-io/luxon';
+
+// import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
+// import DateTimePicker from 'react-datetime-picker';
 
 const Form = styled.form`
     display: flex;
@@ -119,18 +123,29 @@ const ColorButton = withStyles({
     }
   })(FormControlLabel);
 
-  const DateBox = styled(DateTimePickerComponent)`
-
-    &&{
-        font-family: Josefin Sans;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 13px;
-        line-height: 24px;
-
-        color: #0B3669;
+  const DateBox = withStyles({
+    root: {
+        width: '55vw',
+        height: '10vh'
     }
-  `; 
+  })(DateTimePicker);
+
+//   const DateBox = styled(DateTimePickerComponent)`
+
+//     &&{
+//         width: 55vw;  
+//         font-family: Josefin Sans;
+//         color: #0B3669;
+//         input{
+//             text-align: center;
+//             color: #0B3669;
+//             font-style: normal;
+//             font-size: 13px;
+//             border: none;
+//         }
+        
+//     }
+//   `; 
 
   const CheckBox = withStyles({
       root: {
@@ -226,7 +241,7 @@ const Create = ({onCreate}) => {
     // Variables for Tracking Attributes of the Form
     const [startLoc, setStartLoc] = useState('')
     const [endLoc, setEndLoc] = useState('')
-    const [date, setDate] = useState(new Date)
+    const [date, setDate] = useState(new Date())
     const [passengers, setPassengers] = useState(1)
     const [confirmation, setConfirmation] = useState(false)
 
@@ -283,12 +298,20 @@ const Create = ({onCreate}) => {
         setEndLoc(e.target.value);
     };
 
+    // const onDateChange = (e) => {
+
+    //     console.log("Date is changed to " + e)
+
+    //     setDate(e);
+    // };
+
     const onDateChange = (e) => {
 
         console.log("Date is changed to " + e.target.value)
 
         setDate(e.target.value);
     };
+
 
     const onCheck = (e) => {
 
@@ -363,7 +386,7 @@ const Create = ({onCreate}) => {
                     </SelectBox>
                 </Grid>
 
-                <Grid
+                {/* <Grid
                     item
                     xs = {12}
                 >
@@ -373,6 +396,25 @@ const Create = ({onCreate}) => {
                         onChange={onDateChange}
                     >
                     </DateBox>
+                </Grid> */}
+
+                <Grid
+                    item
+                    xs = {12}
+                >
+                    <InputBox id = 'Date and Time'>Date and Time</InputBox>
+                    <MuiPickersUtilsProvider utils={LuxonUtils}>
+                        <DateBox
+                            labelId='Date and Time'
+                            format="MM/dd/yyyy"
+                            value={date}
+                            onChange={setDate}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                              }}
+                        >
+                        </DateBox>
+                    </MuiPickersUtilsProvider>
                 </Grid>
 
                 <Grid
