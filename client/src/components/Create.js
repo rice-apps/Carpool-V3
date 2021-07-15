@@ -9,15 +9,31 @@ import {
     Select, 
     InputLabel,
     FormControlLabel, 
-    Checkbox
+    Checkbox, 
+    MuiThemeProvider, 
+    createMuiTheme
 } from '@material-ui/core';
 
 import { withStyles } from '@material-ui/core/styles';
-import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
 import LuxonUtils from '@date-io/luxon';
 
-// import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
-// import DateTimePicker from 'react-datetime-picker';
+const customTheme = createMuiTheme({
+	palette: {
+		primary: {
+			main: '#0B3669',
+		}
+	},
+    overrides: {
+        MuiInputBase: {
+            input: {
+                fontFamily: 'Josefin Sans',
+                color: '#0B3669',
+                padding: '0px 0px 0px 0px'
+            }
+        }
+    },
+})
 
 const Form = styled.form`
     display: flex;
@@ -28,31 +44,6 @@ const Form = styled.form`
 
     padding: 40px;
 `;
-
-// const TextBox = styled(TextField)`
-//     display: flex
-//     align-items: center;
-//     width: 300px;
-//     background: #F4F6F9;
-//     padding: 50px;
-// `;
-
-// const MenuBox = styled(MenuItem)`
-//     display: flex;
-//     flex-direction: column;
-//     align-items: flex-start;
-//     padding: 8px 16px;
-
-//     position: static;
-//     width: 264px;
-//     height: 36px;
-//     left: 0px;
-//     top: 0px;
-
-//     font-family: Source Sans Pro;
-//     background: #F4F6F9;
-//     border-radius: 8px;
-// `; 
 
 const SelectBox = withStyles({
     root: {
@@ -125,27 +116,10 @@ const ColorButton = withStyles({
 
   const DateBox = withStyles({
     root: {
-        width: '55vw',
+        width: '68vw',
         height: '10vh'
-    }
-  })(DateTimePicker);
-
-//   const DateBox = styled(DateTimePickerComponent)`
-
-//     &&{
-//         width: 55vw;  
-//         font-family: Josefin Sans;
-//         color: #0B3669;
-//         input{
-//             text-align: center;
-//             color: #0B3669;
-//             font-style: normal;
-//             font-size: 13px;
-//             border: none;
-//         }
-        
-//     }
-//   `; 
+    }, 
+  })(KeyboardDateTimePicker);
 
   const CheckBox = withStyles({
       root: {
@@ -199,7 +173,7 @@ const ColorButton = withStyles({
     font-size: 2vh;
     line-height: 2vh;
 
-    color: #002140;
+    color: #0B3669;
     padding: 10px 0px 0px 0px;
   `;
 
@@ -386,35 +360,23 @@ const Create = ({onCreate}) => {
                     </SelectBox>
                 </Grid>
 
-                {/* <Grid
-                    item
-                    xs = {12}
-                >
-                    <DateBox
-                        placeholder='Select Date and Time'
-                        value={date}
-                        onChange={onDateChange}
-                    >
-                    </DateBox>
-                </Grid> */}
-
                 <Grid
                     item
                     xs = {12}
                 >
                     <InputBox id = 'Date and Time'>Date and Time</InputBox>
-                    <MuiPickersUtilsProvider utils={LuxonUtils}>
-                        <DateBox
-                            labelId='Date and Time'
-                            format="MM/dd/yyyy"
-                            value={date}
-                            onChange={setDate}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                              }}
-                        >
-                        </DateBox>
-                    </MuiPickersUtilsProvider>
+                    <MuiThemeProvider theme={customTheme}>
+                        <MuiPickersUtilsProvider utils={LuxonUtils}>
+                            <DateBox
+                                labelId='Date and Time'
+                                inputVariant='outlined'
+                                format="MM/dd/yyyy"
+                                value={date}
+                                onChange={setDate}
+                            >
+                            </DateBox>
+                        </MuiPickersUtilsProvider>
+                    </MuiThemeProvider>
                 </Grid>
 
                 <Grid
