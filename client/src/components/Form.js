@@ -43,7 +43,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 const PossibleLocations = ['IAH', 'Greenbriar Lot', 'Rice Village', 'S1', 'S2', 'S3', 'S4', 'Shop1', 'Shop2', 'Shop3']
 
 //rides is Database of current rides (to be more specific, all rides after the current IRL time)
-const rides = [{startLoc: 'S2', endLoc: 'IAH', date: new Date("7/13/21"), numberPeople: 3}, {startLoc: 'Shop3', endLoc: 'Shop1', date: new Date("7/17/21"), numberPeople: 5}, {startLoc: 'S3', endLoc: 'IAH', date: new Date("7/18/21"), numberPeople: 8}, {startLoc: 'S4', endLoc: 'Shop3', date: new Date("7/25/21"), numberPeople: 10}];
+const rides = [{startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3}, {startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5}, {startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8}, {startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}];
 
 //DefaultDestinations should only contain the dest property of each element ideally (can use map function for this)
 const DefaultLocations = {
@@ -127,25 +127,54 @@ const Form = (props) => {
 
     const compareDates = (date1, date2, equals) => {
       //date1 = 1st date, date2 = 2nd date, equals = boolean variable if equals is true then the function returns true for date1 >= date2, not just date1 > date2
-      const d1 = [date1.getDate(), date1.getMonth(), date1.getFullYear()]
-      const d2 = [date2.getDate(), date2.getMonth(), date2.getFullYear()]
+      const d1 = [date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getHours(), date1.getMinutes()]
+      const d2 = [date2.getFullYear(), date2.getMonth(), date2.getDate(), date2.getHours(), date2.getMinutes()]
 
-      if (d1[2] == d2[2]) {
+      if (d1[0] == d2[0]) {
         if (d1[1] == d2[1]) {
-          return d1[0] > d2[0] || (equals && d1[0] == d2[0]);
+          if (d1[2] == d2[2]) {
+            if (d1[3] == d2[3]) {
+              return d1[4] > d2[4] || (equals && d1[4] == d2[4]);
+            }
+            return d1[3] > d2[3] || (equals && d1[3] == d2[3]);
+          }
+          return d1[2] > d2[2] || (equals && d1[2] == d2[2]);
         }
         return d1[1] > d2[1] || (equals && d1[1] == d2[1]);
       }
 
-      return d1[2] > d2[2] || (equals && d1[2] == d2[2]);
+      return d1[0] > d2[0] || (equals && d1[0] == d2[0]);
     }
     
     //console.log(compareDates(testValue[1], testValue[0], true));
     
+    const combineDateWithTime = (d, t) => {
+      if (d == null) {
+        return null;
+      }
+      let useT = t;
+      if (t == null) {
+        useT = "00:00";
+      }
+
+      const splitT = useT.split(":");
+      
+      return new Date(
+      d.getFullYear(),
+      d.getMonth(),
+      d.getDate(),
+      parseInt(splitT[0]),
+      parseInt(splitT[1]),
+      );
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
         console.log("Search form submitted.");
         console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
+
+        const dateTimeRange = [combineDateWithTime(dateRange[0], time), combineDateWithTime(dateRange[1], time)];
+        console.log("dateTimeRange=", dateTimeRange);
 
         resultDestArr = rides;
         if (startLoc != null) {
@@ -154,8 +183,8 @@ const Form = (props) => {
         if (endLoc != null) {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.endLoc == endLoc);});
         }
-        if (dateRange[0] != null && dateRange[1] != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return compareDates(ele.date, dateRange[0], true) && !compareDates(ele.date, dateRange[1], false);});
+        if (dateTimeRange[0] != null && dateTimeRange[1] != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return compareDates(ele.date, dateTimeRange[0], true) && !compareDates(ele.date, dateTimeRange[1], false);});
         }
         if (numberPeople != null) {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.numberPeople >= numberPeople);});
@@ -390,7 +419,24 @@ const Form = (props) => {
           </SearchControl>
           <SearchControl>
             <label>Time</label>
+            <TextField
+            id="time"
+            label="Alarm clock"
+            type="time"
+            defaultValue={time}
+            onChange={(e) => {
+              handleChangeTime(e.target.time);
+              console.log("Time field e.target=", e.target); console.log("Time field e.target.value=", typeof(e.target.value));
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            inputProps={{
+              step: 300, // 5 min
+            }}
             
+          />
+            {/*
             <input
               type='text'
               placeholder='Time'
@@ -399,6 +445,7 @@ const Form = (props) => {
               style = {{ marginLeft: '5vw', display: 'inline-block', backgroundColor: ((indSelected === dictNames.time) ? selectedColors[1] : selectedColors[0]),
               color: ((indSelected === dictNames.time) ? selectedColors[0] : selectedColors[1])}}
             />
+            */}
             
           </SearchControl>
           <SearchControl2>
