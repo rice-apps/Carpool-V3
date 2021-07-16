@@ -17,7 +17,7 @@ import './Search.css'
 
 const Search = () => {
 
-    const [resultDestArr, setResultDestArr] = useState([{startLoc: 'S2', endLoc: 'IAH', date: new Date("7/13/21"), numberPeople: 3}, {startLoc: 'Shop3', endLoc: 'Shop1', date: new Date("7/17/21"), numberPeople: 5}, {startLoc: 'S3', endLoc: 'Shop2', date: new Date("7/18/21"), numberPeople: 8}, {startLoc: 'S4', endLoc: 'Shop3', date: new Date("7/25/21"), numberPeople: 10}])
+    const [resultDestArr, setResultDestArr] = useState([{startLoc: 'S2', endLoc: 'IAH', date: new Date("7/13/21"), numberPeople: 3}, {startLoc: 'Shop3', endLoc: 'Shop1', date: new Date("7/17/21"), numberPeople: 5}])
 
     const displayRef = React.useRef();
 
@@ -31,8 +31,10 @@ const Search = () => {
 
         <Form resultRides={resultDestArr} displayRef={displayRef}/>
 
+      {/*
         <button onClick={changeDisplay}>CLICK TO CHANGE DISPLAY RIDES</button>
-
+      */}
+      
         <DisplayRides ref={displayRef} rides={resultDestArr} testVar={3}/>
 
            </React.Fragment>

@@ -432,12 +432,6 @@ const Form = (props) => {
           </FormControl>
             
         </SearchDiv>
-
-        
-        <div>
-              Testing After FormControl
-
-            </div>
             
            </React.Fragment>
       )

@@ -7,6 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
 /*
+const useStylesContainer = makeStyles(theme => ({
+    root: {
+      height: '100vh',
+    }
+  }));
+*/
+
+/*
 const RideContainer = styled.div`
     background-color: #1111aa;
     padding-top: 10vh;
@@ -50,32 +58,35 @@ class DisplayRides extends Component {
         */
 
         return <GridT container
-        direction="column"
         alignItems="center"
+        height="100vh"
+        spacing={3}
         >
             {
             ridesT.map((ride, ind) => (
-                <Grid item xs={10}>
-            <Box
-            key={ride.uid}
-            boxShadow={3}
-            style={{padding: '10vh 0vw'}}
-          >
-          <GridInside container height={'100%'}>
-              <Grid item xs={3}>
-                2 Passengers
+                <Grid item container key={ride.uid} xs={12} alignItems='stretch' style={{backgroundColor: 'yellow', height: '100%', display: 'flex'}}>
+
+              <Grid item xs={3} display="flex" justify="center" align='center'>
+                  <Box width={"10vw"} height={"15vh"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'red'}}>
+                    <div style={{height: '1.5vw'}}></div>
+                    <span style={{fontSize: '3vw'}}>{ride.numberPeople}</span>
+                    
+                    <span style={{fontSize: '1.5vw'}}>seats left</span>
+                    
+                </Box>
               </Grid>
-              <Grid item xs={3}>
-                RMC Start Loc
+              <Grid item xs={3} display="flex" justify="center" align='center'>
+               <Box width={"10vw"} style={{backgroundColor: 'red'}}>
+                   {ride.startLoc}
+               </Box>
               </Grid>
-              <Grid item xs={3}>
-                IAH Start Loc
+              <Grid item xs={3} style={{height: '100%', flex: 1}}>
+                {ride.endLoc}
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={3} style={{height: '100%', flex: 1}}>
                 Jan 2
               </Grid>
-          </GridInside>
-          </Box>
+
           </Grid>
           ))
             }
@@ -101,8 +112,6 @@ class DisplayRides extends Component {
       render() {
     return (
         <div>
-            Display Rides Component
-            testVar = {this.state.testVar}.
             <div>
                 {
             this.displayRides(this.state.rides)
