@@ -15,8 +15,9 @@ import "@fontsource/source-sans-pro";
 
 import './Search.css'
 
-const Search = () => {
+export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+const Search = () => {
     const [resultDestArr, setResultDestArr] = useState([{startLoc: 'S2', endLoc: 'IAH', date: new Date("7/13/21"), numberPeople: 3}, {startLoc: 'Shop3', endLoc: 'Shop1', date: new Date("7/17/21"), numberPeople: 5}])
 
     const displayRef = React.useRef();
@@ -34,7 +35,7 @@ const Search = () => {
       {/*
         <button onClick={changeDisplay}>CLICK TO CHANGE DISPLAY RIDES</button>
       */}
-      
+
         <DisplayRides ref={displayRef} rides={resultDestArr} testVar={3}/>
 
            </React.Fragment>

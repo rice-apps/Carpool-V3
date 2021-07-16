@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 
+import {monthToStr} from '../Pages/Search.js'
+
 import styled from 'styled-components'
 import { styled as styledM } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 /*
 const useStylesContainer = makeStyles(theme => ({
@@ -32,6 +35,8 @@ const GridInside = styledM(Grid)({
 })
 
 //{"Ride #" + ride.uid + " startLoc=" + ride.startLoc + " endLoc=" + ride.endLoc + " date=" + ride.date + " time=" + ride.time + " numberPeople=" + ride.numberPeople}
+
+//const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 class DisplayRides extends Component {
     constructor(props) {
@@ -76,15 +81,26 @@ class DisplayRides extends Component {
                 </Box>
               </Grid>
               <Grid item xs={3} display="flex" justify="center" align='center'>
-               <Box width={"10vw"} style={{backgroundColor: 'red'}}>
-                   {ride.startLoc}
+               <Box width={"10vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                       {ride.startLoc}
+                    
                </Box>
               </Grid>
-              <Grid item xs={3} style={{height: '100%', flex: 1}}>
-                {ride.endLoc}
+              <Grid item xs={3} display="flex" justify="center" align='center'>
+               <Box width={"10vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                       {ride.endLoc}
+                    
+               </Box>
               </Grid>
-              <Grid item xs={3} style={{height: '100%', flex: 1}}>
-                Jan 2
+              <Grid item xs={3} display="flex" justify="center" align='center' style={{border: '2px solid black'}}>
+               <Box width={"15vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                <CalendarTodayIcon />
+                <span>
+                    {monthToStr[ride.date.getMonth()-1] + " " + ride.date.getDate()}
+                    <br/>
+                    <div style={{fontSize: '1vw'}}>{ride.date.getHours() + ":" + ride.date.getMinutes()}</div>
+                </span>
+                </Box>
               </Grid>
 
           </Grid>
@@ -95,6 +111,8 @@ class DisplayRides extends Component {
       }
     
       setRides(ridesTest) {
+          //console.log("monthToStr=", monthToStr);
+
         this.setState({
             ...this.state,
             rides: ridesTest
