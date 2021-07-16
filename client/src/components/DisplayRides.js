@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 
 import {monthToStr} from '../Pages/Search.js'
+import {rides as ridesPossible} from './Form.js'
 
 import styled from 'styled-components'
 import { styled as styledM } from '@material-ui/core/styles';
@@ -8,6 +9,8 @@ import { styled as styledM } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button'
 
 /*
 const useStylesContainer = makeStyles(theme => ({
@@ -34,9 +37,47 @@ const GridInside = styledM(Grid)({
     backgroundColor: '#007777',
 })
 
+const BoxRide = styledM(Box)({
+    width: '10vw',
+    height: '100%',
+    backgroundColor: '#999',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+})
+
 //{"Ride #" + ride.uid + " startLoc=" + ride.startLoc + " endLoc=" + ride.endLoc + " date=" + ride.date + " time=" + ride.time + " numberPeople=" + ride.numberPeople}
 
 //const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const isEqualRides = (ride1, ride2) => {
+    if (ride1.id == null || ride2.id == null) {
+        return false;
+    }
+
+    return ride1.id == ride2.id;
+}
+
+const handleClickCreateRide = () => {
+    console.log("handleClickCreateRide() run");
+}
+
+const displayRideButtons = () => {
+    return <Grid container spacing={5} direction="column" alignItems="center" style={{fontFamily: 'Josefin Sans', marginBottom: '5vh'}}>
+        <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd'}}>
+            no more results
+        </Grid>
+        <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
+            Continue searching
+        </Grid>
+        <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
+            OR
+        </Grid>
+        <Grid item xs={11} justify="center" align='center' style={{width: '35vw', display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
+            <Button onClick={() => handleClickCreateRide()} style={{width: '100%'}}><div style={{fontFamily: 'Josefin Sans'}}>Create New Ride</div></Button>
+        </Grid>
+    </Grid>
+}
 
 class DisplayRides extends Component {
     constructor(props) {
@@ -46,6 +87,46 @@ class DisplayRides extends Component {
             rides: props.rides,
             testVar: props.testVar
         }
+    }
+
+    displayRideRows(ride) {
+        
+        return <Grid item container key={ride.uid} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
+        <Grid item container style={{backgroundColor: '#cccccc', borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
+  <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
+      <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF', borderRadius: '5px'}}>
+        <div style={{height: '1.5vw'}}></div>
+        <span style={{fontSize: '3vw'}}>{ride.numberPeople}</span>
+        
+        <span style={{fontSize: '1.5vw'}}>seats left</span>
+        
+    </Box>
+  </Grid>
+  <Grid item xs={3} justify="center" align='center'>
+   <BoxRide >
+           {ride.startLoc}
+        
+   </BoxRide>
+  </Grid>
+  <Grid item xs={3} justify="center" align='center'>
+      <BoxRide>
+           {ride.endLoc}
+      </BoxRide>
+  </Grid>
+  <Grid item xs={3} justify="center" align='center'>
+   <Box width={"15vw"} height={"100%"} style={{backgroundColor: '#999', display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+    <CalendarTodayIcon />
+    <span>
+        {monthToStr[ride.date.getMonth()-1] + " " + ride.date.getDate()}
+        <br/>
+        <div style={{fontSize: '1vw'}}>{ride.date.getHours() + ":" + ride.date.getMinutes()}</div>
+    </span>
+    </Box>
+  </Grid>
+    
+    </Grid>
+</Grid>
+
     }
 
     displayRides(ridesT)  {
@@ -79,45 +160,16 @@ class DisplayRides extends Component {
         return <GridT container spacing={5}  direction="column"
         alignItems="center">
             {
-            ridesT.map((ride, ind) => (
-                <Grid item container key={ride.uid} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
-                    <Grid item container style={{backgroundColor: '#cccccc', borderRadius: '10px'}}>
-              <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
-                  <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF'}}>
-                    <div style={{height: '1.5vw'}}></div>
-                    <span style={{fontSize: '3vw'}}>{ride.numberPeople}</span>
-                    
-                    <span style={{fontSize: '1.5vw'}}>seats left</span>
-                    
-                </Box>
-              </Grid>
-              <Grid item xs={3} justify="center" align='center'>
-               <Box width={"10vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                       {ride.startLoc}
-                    
-               </Box>
-              </Grid>
-              <Grid item xs={3} justify="center" align='center'>
-               <Box width={"10vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                       {ride.endLoc}
-                    
-               </Box>
-              </Grid>
-              <Grid item xs={3} justify="center" align='center'>
-               <Box width={"15vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                <CalendarTodayIcon />
-                <span>
-                    {monthToStr[ride.date.getMonth()-1] + " " + ride.date.getDate()}
-                    <br/>
-                    <div style={{fontSize: '1vw'}}>{ride.date.getHours() + ":" + ride.date.getMinutes()}</div>
-                </span>
-                </Box>
-              </Grid>
-                
+            ridesT.map((ride, ind) => (this.displayRideRows(ride)))
+            }
+            {
+                <Grid item xs={11} style={{width: '100%', borderRadius: '10px', backgroundColor: 'red'}} >
+                          DIVIDER (DIVIDER ISN'T TAKING UP FULL HORIZONTAL SPACE IDK WHY)
                 </Grid>
-          </Grid>
-          
-          ))
+            }
+            {
+                
+            ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
             }
             </GridT>;
 
@@ -141,16 +193,21 @@ class DisplayRides extends Component {
       }
 
       render() {
-    return (
-        <div>
-            <div>
-                {
-            this.displayRides(this.state.rides)
-            }
-            </div>
-        </div>
-    )
-        }
+            return (
+                <div>
+                    <div>
+                        {
+                    this.displayRides(this.state.rides)
+                    }
+                    </div>
+                    <div>
+                        {
+                    displayRideButtons()
+                        }
+                    </div>
+                </div>
+            )
+      }
 }
 
 export default DisplayRides
