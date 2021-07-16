@@ -19,6 +19,12 @@ const GridT = styledM(Grid)({
         backgroundColor: '#00ffff',
 })
 
+const GridInside = styledM(Grid)({
+    backgroundColor: '#007777',
+})
+
+//{"Ride #" + ride.uid + " startLoc=" + ride.startLoc + " endLoc=" + ride.endLoc + " date=" + ride.date + " time=" + ride.time + " numberPeople=" + ride.numberPeople}
+
 class DisplayRides extends Component {
     constructor(props) {
         super(props);
@@ -53,11 +59,22 @@ class DisplayRides extends Component {
             <Box
             key={ride.uid}
             boxShadow={3}
-            m={1}
-            p={1}
             style={{padding: '10vh 0vw'}}
           >
-          {"Ride #" + ride.uid + " startLoc=" + ride.startLoc + " endLoc=" + ride.endLoc + " date=" + ride.date + " time=" + ride.time + " numberPeople=" + ride.numberPeople}
+          <GridInside container height={'100%'}>
+              <Grid item xs={3}>
+                2 Passengers
+              </Grid>
+              <Grid item xs={3}>
+                RMC Start Loc
+              </Grid>
+              <Grid item xs={3}>
+                IAH Start Loc
+              </Grid>
+              <Grid item xs={3}>
+                Jan 2
+              </Grid>
+          </GridInside>
           </Box>
           </Grid>
           ))
