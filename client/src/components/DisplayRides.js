@@ -79,6 +79,16 @@ const displayRideButtons = () => {
     </Grid>
 }
 
+const renderTime = (date) => {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const hoursStr = (String)(hours).padStart(2, '0');
+    const minutesStr = (String)(minutes).padStart(2, '0');
+
+    return hoursStr+':'+minutesStr;
+}
+
 class DisplayRides extends Component {
     constructor(props) {
         super(props);
@@ -119,7 +129,7 @@ class DisplayRides extends Component {
     <span>
         {monthToStr[ride.date.getMonth()-1] + " " + ride.date.getDate()}
         <br/>
-        <div style={{fontSize: '1vw'}}>{ride.date.getHours() + ":" + ride.date.getMinutes()}</div>
+        <div style={{fontSize: '1vw'}}>{renderTime(ride.date)}</div>
     </span>
     </Box>
   </Grid>
