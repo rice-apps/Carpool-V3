@@ -18,9 +18,9 @@ import './Search.css'
 export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const Search = () => {
-    const [resultDestArr, setResultDestArr] = useState([{startLoc: 'S2', endLoc: 'IAH', date: new Date("2021-07-13T09:00:00"), numberPeople: 3}, {startLoc: 'Shop3', endLoc: 'Shop1', date: new Date("2021-07-17T10:00:00"), numberPeople: 5}])
+    const [resultDestArr, setResultDestArr] = useState([{startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3}, {startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5}, {startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8}, {startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}])
     //console.log("resultDestArr at the start=", resultDestArr);
-
+    
     const displayRef = React.useRef();
 
     const changeDisplay = () => {

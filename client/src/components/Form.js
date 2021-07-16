@@ -89,7 +89,7 @@ const Form = (props) => {
     //const isTabletOrMobile = useMediaQuery({ query: '(max-width: 480px)' })
 
     const SearchDiv = styled.div`
-    border: 5px solid #FFFF00;
+    border: 5px solid #ddddff;
     padding: 10vw;
     display: flex;
     align-content: space-between;

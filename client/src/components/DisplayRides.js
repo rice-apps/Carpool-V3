@@ -27,7 +27,7 @@ const RideContainer = styled.div`
 */
 
 const GridT = styledM(Grid)({
-        backgroundColor: '#00ffff',
+        backgroundColor: '#eeeeee',
 })
 
 const GridInside = styledM(Grid)({
@@ -62,17 +62,28 @@ class DisplayRides extends Component {
        
         */
 
-        return <GridT container
-        alignItems="center"
-        height="100vh"
-        spacing={3}
+        /*
+        return <Grid container
+        spacing={5}
+        style={{backgroundColor: '#eeffff'}}
         >
+            <Grid item>
+                <div style={{backgroundColor: 'yellow'}}>TESTING 1</div>
+            </Grid>
+            <Grid item>
+                <div style={{backgroundColor: 'red'}}>TESTING 2</div>
+            </Grid>
+        </Grid>;
+        */
+
+        return <GridT container spacing={5}  direction="column"
+        alignItems="center">
             {
             ridesT.map((ride, ind) => (
-                <Grid item container key={ride.uid} xs={12} alignItems='stretch' style={{backgroundColor: 'yellow', height: '100%', display: 'flex'}}>
-
-              <Grid item xs={3} display="flex" justify="center" align='center'>
-                  <Box width={"10vw"} height={"15vh"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'red'}}>
+                <Grid item container key={ride.uid} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
+                    <Grid item container style={{backgroundColor: '#cccccc', borderRadius: '10px'}}>
+              <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
+                  <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF'}}>
                     <div style={{height: '1.5vw'}}></div>
                     <span style={{fontSize: '3vw'}}>{ride.numberPeople}</span>
                     
@@ -80,19 +91,19 @@ class DisplayRides extends Component {
                     
                 </Box>
               </Grid>
-              <Grid item xs={3} display="flex" justify="center" align='center'>
+              <Grid item xs={3} justify="center" align='center'>
                <Box width={"10vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                        {ride.startLoc}
                     
                </Box>
               </Grid>
-              <Grid item xs={3} display="flex" justify="center" align='center'>
+              <Grid item xs={3} justify="center" align='center'>
                <Box width={"10vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                        {ride.endLoc}
                     
                </Box>
               </Grid>
-              <Grid item xs={3} display="flex" justify="center" align='center' style={{border: '2px solid black'}}>
+              <Grid item xs={3} justify="center" align='center'>
                <Box width={"15vw"} height={"100%"} style={{backgroundColor: 'red', display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                 <CalendarTodayIcon />
                 <span>
@@ -102,12 +113,14 @@ class DisplayRides extends Component {
                 </span>
                 </Box>
               </Grid>
-
+                
+                </Grid>
           </Grid>
+          
           ))
             }
-            </GridT>
-        
+            </GridT>;
+
       }
     
       setRides(ridesTest) {
