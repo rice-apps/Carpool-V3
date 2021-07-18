@@ -1,5 +1,6 @@
 import React from 'react';
 import {useState} from "react";
+import { gql, useQuery } from "@apollo/client";
 import Header from '../components/Header.js';
 import styled from 'styled-components';
 import {
