@@ -6,25 +6,30 @@ const Heading = styled.h1`
     display: flex;
     justify-content: center;
     align-items: center;
+
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 48px;
-    line-height: 48px;
+    font-size: 6vh;
+    line-height: 5vh;
+
     color: #002140;
+    padding: 40px 0px 0px 0px;
 `;
 
 const Subheading = styled.h2`
     display: flex;
     justify-content: center;
     align-items: center;
+
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 3vh;
+    line-height: 0px;
+
     color: #BBDAFF;
-    margin-top: -6vw;
+    padding: 0px 0px 20px 0px;
 `;
 
 const Header = ({title, subtitle}) => {
