@@ -1,33 +1,27 @@
 import React from 'react';
 import Create from '../components/Create.js'; 
-import { gql, useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+import { useToasts } from "react-toast-notifications";
 
 const CreateRide = () => {
 
+    const { addToast } = useToasts();
+
     const CREATE_RIDE = gql`
         mutation CreateRide(
-            $owner: MongoID!, $deptLoc: MongoID!, $arrLoc: MongoID!, $deptDate: Date, 
-            $spots: Float, $note: String, $ownerDriving: Boolean) {
-            rideCreateOne(record: {
-                owner: $owner,
-                departureLocation: $deptLoc,
-                arrivalLocation: $arrLoc,
-                departureDate: $deptDate,
-                spots: $spots,
-                note: $note,
-                ownerDriving: $ownerDriving
-            }) {
-                recordId
-                record {
-                    _id
-                    __typename
-                }
+            $startLoc: Float, $endLoc: Float, $date: Date, $passengers: Float) 
+            {
+                rideCreateOne(record: {
+                    departureLocation: 1,
+                    arrivalLocation: 2,
+                    departureDate: $date,
+                    spots: $passengers,
+                }) 
             }
-        }
     `
 
     const [createRide, { data, loading, error }] = useMutation(
-        CREATE_RIDE,
+        CREATE_RIDE
     );
 
     const addRide = (ride) => {
@@ -47,9 +41,6 @@ const CreateRide = () => {
 
         <div> 
             <Create onCreate = {addRide} />
-            {/* <Button variant = 'contained' color = 'primary' onClick = {handleOpen}>
-                Create New Ride
-            </Button> */}
         </div>
 
     )
