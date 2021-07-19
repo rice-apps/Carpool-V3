@@ -23,45 +23,23 @@ const MenuBarsLink = styled(Link)`
   background: none;
   to='#'
 `
-//cannot close the navbar
+
 const NavMenu = styled.nav`
   left: 0;
   transition: 350ms;
-  ${(props) => props.sidebar !== 'true'} {
-    background-color: #152238;
-    width: 250px;
-    height: 100vh;
-    display: flex-start;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    transition: 850ms;
-  }
-`
-// left: ${(sidebar) => (sidebar ? '0' : '-100%')}
-// transition: ${(sidebar) => (sidebar ? '350ms' : '850ms')
-
-// const NavMenu2 = styled.nav`
-//   left: 0;
-//   transition: 350ms;
-//   ${props.sidebar &&
-//   css`
-//     background-color: #152238;
-//     width: 250px;
-//     height: 100vh;
-//     display: flex-start;
-//     justify-content: center;
-//     position: fixed;
-//     top: 0;
-//     left: -100%;
-//     transition: 850ms;
-//   `}
-// `
-
-const NavMenuActive = styled.nav`
-  left: 0;
-  transition: 350ms;
+  ${(sidebar) =>
+    !sidebar &
+    css`
+      background-color: #152238;
+      width: 250px;
+      height: 100vh;
+      display: flex-start;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: -100%;
+      transition: 850ms;
+    `}
 `
 
 //nav text etc
@@ -92,7 +70,6 @@ const NavTextA = styled.a`
 const NavMenuItemsContainer = styled.div`
   width: 100%;
 `
-
 const spanDiv = styled.div`
   margin-left: 16px;
 `
@@ -117,8 +94,7 @@ function Navbar() {
             <FaIcons.FaBars onClick={showSidebar} />
           </MenuBarsLink>
         </NavBarDiv>
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          {/* <NavMenu sidebar> */}
+        <NavMenu sidebar={sidebar}>
           <NavMenuItemsContainer>
             <ul onClick={showSidebar}>
               <NavbarToggleDiv>
@@ -142,8 +118,7 @@ function Navbar() {
               })}
             </ul>
           </NavMenuItemsContainer>
-        </nav>
-        {/* </NavMenu> */}
+        </NavMenu>
       </IconContext.Provider>
     </>
   )
