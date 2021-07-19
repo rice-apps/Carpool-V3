@@ -26,9 +26,10 @@ const CreateRide = () => {
         }
     `
 
-    const [createRide] = useMutation(
+    const [createRide, {data, loading, error}] = useMutation(
         CREATE_RIDE
     );
+
 
     const addRide = (ride) => {
         console.log("Ride Create: ", ride);
