@@ -180,21 +180,6 @@ const ColorButton = withStyles({
 
 const Create = ({onCreate}) => {
 
-    const locations = [
-        {
-            id: 1, 
-            value: 'IAH'
-        },
-        {
-            id: 2, 
-            value: 'Greenbriar Lot'
-        },
-        {
-            id: 3, 
-            value: 'Rice Village'
-        }
-    ]
-
     const seats = [
         {
             value: 1
@@ -237,6 +222,7 @@ const Create = ({onCreate}) => {
     // `;
 
     // On Submitting the Fields aka. Button is Clicked...
+
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -256,10 +242,13 @@ const Create = ({onCreate}) => {
         setConfirmation(false)
     }
 
+    // OnChange Functions 
+
     const onStartLocChange = (e) => {
         e.preventDefault()
 
         console.log("Changed Start Locations!")
+        console.log("It is now at ", e.target.key, ' and the ID is ', e.target.value)
 
         setStartLoc(e.target.value);
     };
@@ -268,25 +257,11 @@ const Create = ({onCreate}) => {
     const onEndLocChange = (e) => {
         e.preventDefault()
 
-        console.log("Changed Destinations!")
+        console.log("Changed End Locations!")
+        console.log("It is now at ", e.target.key, ' and the ID is ', e.target.value)
 
         setEndLoc(e.target.value);
     };
-
-    // const onDateChange = (e) => {
-
-    //     console.log("Date is changed to " + e)
-
-    //     setDate(e);
-    // };
-
-    const onDateChange = (e) => {
-
-        console.log("Date is changed to " + e.target.value)
-
-        setDate(e.target.value);
-    };
-
 
     const onCheck = (e) => {
 
@@ -302,6 +277,24 @@ const Create = ({onCreate}) => {
 
         setPassengers(e.target.value);
     };
+
+    // Access Locations List with GraphQL Query
+
+    const GET_LOCATIONS = gql`
+    query GetLocations {
+        locationMany {
+            _id
+            title
+        }
+    }`
+
+    const {data: locationData, loading, error} = useQuery(GET_LOCATIONS);
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
+
+    const {locationMany: locations} = locationData
+
+    // Form Construction
 
     return (
         <Form onSubmit = {onSubmit}>
@@ -329,8 +322,8 @@ const Create = ({onCreate}) => {
                     >
                         {
                             locations.map((option) => (
-                                <MenuBox key = {option.value} value = {option.value}>
-                                    {option.value}
+                                <MenuBox key = {option.title} value = {option._id}>
+                                    {option.title}
                                 </MenuBox>
                             ))
                         }
@@ -353,8 +346,8 @@ const Create = ({onCreate}) => {
                     >
                         {
                             locations.map((option) => (
-                                <MenuBox key = {option.value} value = {option.value}>
-                                    {option.value}
+                                <MenuBox key = {option.title} value = {option._id}>
+                                    {option.title}
                                 </MenuBox>
                             ))
                         }
