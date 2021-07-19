@@ -8,16 +8,22 @@ const CreateRide = () => {
     const { addToast } = useToasts();
 
     const CREATE_RIDE = gql`
-        mutation CreateRide(
-            $startLoc: Float, $endLoc: Float, $date: Date, $passengers: Float) 
-            {
-                rideCreateOne(record: {
-                    departureLocation: 1,
-                    arrivalLocation: 2,
-                    departureDate: $date,
-                    spots: $passengers,
-                }) 
+        mutation CreateRide (
+            $owner: MongoID!, $deptLoc: MongoID!, $arrLoc: MongoID!, $deptDate: Date, 
+            $spots: Float) 
+        {
+            rideCreateOne(record: {
+            owner: "60dd1f128211a44ac40b33ee",
+            departureLocation: $startLoc,
+            arrivalLocation: $endLoc,
+            departureDate: $date,
+            spots: $passengers,
+            }) {
+            record {
+                _id
             }
+            }
+        }
     `
 
     const [createRide] = useMutation(
@@ -26,6 +32,7 @@ const CreateRide = () => {
 
     const addRide = (ride) => {
         console.log("Ride Create: ", ride);
+        console.log("The date is ", ride.date);
         createRide({
             variables: ride
         })
