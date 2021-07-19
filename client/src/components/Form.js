@@ -12,6 +12,8 @@ import DisplayRides from '../components/DisplayRides'
 
 import "@fontsource/source-sans-pro";
 
+import { gql, useQuery } from "@apollo/client";
+
 /*
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
@@ -40,6 +42,10 @@ import styled from 'styled-components'
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
+
+
+
+
 const PossibleLocations = ['IAH', 'Greenbriar Lot', 'Rice Village', 'S1', 'S2', 'S3', 'S4', 'Shop1', 'Shop2', 'Shop3']
 
 //rides is Database of current rides (to be more specific, all rides after the current IRL time)
@@ -52,6 +58,45 @@ const DefaultLocations = {
 };
 
 const Form = (props) => {
+  
+  /*
+const GET_RIDES = gql`
+query GetRides(
+    $startLoc: Float, $endLoc: Float, $date: Date, $passengers: Float) 
+    {
+      ride
+      departureDate,
+      spots
+    }
+`
+*/
+
+const GET_RIDES = gql`
+query {
+  rideMany {
+    _id
+    departureDate
+    riders
+    spots
+    ownerDriving
+    departureLocation
+    arrivalLocation
+    owner
+  }
+}
+`;
+
+const { loading, error, data, refetch } = useQuery(GET_RIDES);
+console.log("getRides=", data);
+
+  const getAllRides = () => {
+    console.log("getAllRides() run");
+    
+
+  }
+
+  getAllRides();
+  
   const displayRef = props.displayRef;
 
   let resultDestArr = null;
@@ -172,6 +217,13 @@ const Form = (props) => {
         e.preventDefault();
         console.log("Search form submitted.");
         console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
+
+        refetch().
+        then((res) => {console.log("res=", res)})
+        .catch((err) => {
+          console.log("error=", error);
+        });
+        //console.log("data=", data);
 
         const dateTimeRange = [combineDateWithTime(dateRange[0], time), combineDateWithTime(dateRange[1], time)];
         console.log("dateTimeRange=", dateTimeRange);
