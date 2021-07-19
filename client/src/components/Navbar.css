@@ -1,16 +1,16 @@
-.navbar {
+/* .navbar {
   background-color: #152238;
   height: 80px;
   display: flex;
   justify-content: flex-start;
   align-items: left;
-}
+} */
 
-.menu-bars {
+/* .menu-bars {
   margin-left: 2rem;
   font-size: 2rem;
   background: none;
-}
+} */
 
 .nav-menu {
   background-color: #152238;
@@ -28,6 +28,8 @@
   left: 0;
   transition: 350ms;
 }
+
+/* here */
 
 .nav-text {
   display: flex-start;
