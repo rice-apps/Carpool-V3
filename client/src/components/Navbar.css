@@ -31,14 +31,14 @@
 
 /* here */
 
-.nav-text {
+/* .nav-text {
   display: flex-start;
   justify-content: flex-start;
   align-items: center;
   padding: 8px 0px 8px 16px;
   list-style: none;
   height: 60px;
-}
+} */
 
 .nav-text a {
   text-decoration: none;
@@ -52,23 +52,25 @@
   border-radius: 4px;
 }
 
-.nav-text a:hover {
+/* .nav-text a:hover {
   background-color: #0058ab;
-}
+} */
 
+/* 
 .nav-menu-items {
   width: 100%;
-}
+} */
 
-.navbar-toggle {
+/* .navbar-toggle {
   background-color: #152238;
   width: 100%;
   height: 80px;
   display: flex-start;
   justify-content: flex-start;
   align-items: center;
-}
+} */
 
+/* doesn't show effect */
 span {
   margin-left: 16px;
 }

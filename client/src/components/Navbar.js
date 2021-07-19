@@ -65,47 +65,51 @@ const NavMenuActive = styled.nav`
 `
 
 //nav text etc
+const NavText = styled.div`
+  display: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 0px 8px 16px;
+  list-style: none;
+  height: 60px;
+`
+const NavTextA = styled.a`
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 18px;
+  width: 95%;
+  height: 100%;
+  display: flex-start;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #0058ab;
+  }
+`
+
+const NavMenuItemsContainer = styled.div`
+  width: 100%;
+`
+
 const spanDiv = styled.div`
   margin-left: 16px;
+`
+const NavbarToggleDiv = styled.div`
+  background-color: #152238;
+  width: 100%;
+  height: 80px;
+  display: flex-start;
+  justify-content: flex-start;
+  align-items: center;
 `
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false)
-
   const showSidebar = () => setSidebar(!sidebar)
 
   return (
-    // <>
-    //   <IconContext.Provider value={{ color: '#fff' }}>
-    //     <NavBarDiv>
-    //       <MenuBarsLink to='#'>
-    //         <FaIcons.FaBars onClick={showSidebar} />
-    //       </MenuBarsLink>
-    //     </NavBarDiv>
-    //     <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-    //       <NavMenuDiv>
-    //         <ul onClick={showSidebar}>
-    //           <li className='navbar-toggle'>
-    //             <Link to='#' className='menu-bars'>
-    //               <AiIcons.AiOutlineClose />
-    //             </Link>
-    //           </li>
-    //           {SidebarData.map((item, index) => {
-    //             return (
-    //               <li key={index} className={item.cName}>
-    //                 <Link to={item.path}>
-    //                   {item.icon}
-    //                   <spanDiv>{item.title}</spanDiv>
-    //                 </Link>
-    //               </li>
-    //             )
-    //           })}
-    //         </ul>
-    //       </NavMenuDiv>
-    //     </nav>
-    //   </IconContext.Provider>
-    // </>
-
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <NavBarDiv>
@@ -113,32 +117,33 @@ function Navbar() {
             <FaIcons.FaBars onClick={showSidebar} />
           </MenuBarsLink>
         </NavBarDiv>
-        {/* {sidebar ? <NavMenuActive> : <NavMenu>} */}
-        <NavMenu sidebar='true'>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
-              <Link to='#' className='menu-bars'>
-                <AiIcons.AiOutlineClose />
-              </Link>
-            </li>
-            {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link
-                    to={item.path}
-                    // onClick={() => {
-                    //   window.location.href = `http://localhost:3002${item.path}`
-                    // }}
-                  >
-                    {item.icon}
-                    <span>{item.title}</span>
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+          {/* <NavMenu sidebar> */}
+          <NavMenuItemsContainer>
+            <ul onClick={showSidebar}>
+              <NavbarToggleDiv>
+                <li>
+                  <Link to='#' className='menu-bars'>
+                    <AiIcons.AiOutlineClose />
                   </Link>
                 </li>
-              )
-            })}
-          </ul>
-          {/* {sidebar ? </NavMenuActive> : </NavMenu>} */}
-        </NavMenu>
+              </NavbarToggleDiv>
+              {SidebarData.map((item, index) => {
+                return (
+                  <NavText>
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <spanDiv>{item.title}</spanDiv>
+                      </Link>
+                    </li>
+                  </NavText>
+                )
+              })}
+            </ul>
+          </NavMenuItemsContainer>
+        </nav>
+        {/* </NavMenu> */}
       </IconContext.Provider>
     </>
   )
