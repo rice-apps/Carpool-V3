@@ -9,8 +9,7 @@ const CreateRide = () => {
 
     const CREATE_RIDE = gql`
         mutation CreateRide (
-            $owner: MongoID!, $deptLoc: MongoID!, $arrLoc: MongoID!, $deptDate: Date, 
-            $spots: Float) 
+            $startLoc: MongoID!, $endLoc: MongoID!, $date: Date, $passengers: Float) 
         {
             rideCreateOne(record: {
             owner: "60dd1f128211a44ac40b33ee",
