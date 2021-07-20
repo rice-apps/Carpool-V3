@@ -27,16 +27,16 @@ const MenuBarsLink = styled(Link)`
 const NavMenu = styled.nav`
   left: 0;
   transition: 350ms;
-  ${(sidebar) =>
-    !sidebar &
+  background-color: #152238;
+  width: 250px;
+  height: 100vh;
+  display: flex-start;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  ${({ sidebar }) =>
+    !sidebar &&
     css`
-      background-color: #152238;
-      width: 250px;
-      height: 100vh;
-      display: flex-start;
-      justify-content: center;
-      position: fixed;
-      top: 0;
       left: -100%;
       transition: 850ms;
     `}
@@ -50,29 +50,30 @@ const NavText = styled.div`
   padding: 8px 0px 8px 16px;
   list-style: none;
   height: 60px;
-`
-const NavTextA = styled.a`
-  text-decoration: none;
-  color: #f5f5f5;
-  font-size: 18px;
-  width: 95%;
-  height: 100%;
-  display: flex-start;
-  align-items: center;
-  padding: 0 16px;
-  border-radius: 4px;
 
-  &:hover {
-    background-color: #0058ab;
+  a {
+    text-decoration: none;
+    color: #f5f5f5;
+    font-size: 18px;
+    width: 95%;
+    height: 100%;
+    display: flex-start;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #0058ab;
+    }
   }
 `
 
 const NavMenuItemsContainer = styled.div`
   width: 100%;
 `
-const spanDiv = styled.div`
-  margin-left: 16px;
-`
+// const SpanContainer = styled.div`
+//   margin-left: 16px;
+// `
 const NavbarToggleDiv = styled.div`
   background-color: #152238;
   width: 100%;
@@ -90,27 +91,29 @@ function Navbar() {
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <NavBarDiv>
-          <MenuBarsLink>
+          <Link to='#' className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
-          </MenuBarsLink>
+          </Link>
         </NavBarDiv>
+
         <NavMenu sidebar={sidebar}>
           <NavMenuItemsContainer>
             <ul onClick={showSidebar}>
               <NavbarToggleDiv>
                 <li>
-                  <Link to='#' className='menu-bars'>
+                  <MenuBarsLink to='#'>
                     <AiIcons.AiOutlineClose />
-                  </Link>
+                  </MenuBarsLink>
                 </li>
               </NavbarToggleDiv>
+
               {SidebarData.map((item, index) => {
                 return (
                   <NavText>
-                    <li key={index} className={item.cName}>
+                    <li key={index}>
                       <Link to={item.path}>
                         {item.icon}
-                        <spanDiv>{item.title}</spanDiv>
+                        {item.title}
                       </Link>
                     </li>
                   </NavText>

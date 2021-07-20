@@ -1,18 +1,18 @@
-/* .navbar {
+.navbar {
   background-color: #152238;
   height: 80px;
   display: flex;
   justify-content: flex-start;
   align-items: left;
-} */
+}
 
-/* .menu-bars {
+.menu-bars {
   margin-left: 2rem;
   font-size: 2rem;
   background: none;
-} */
+}
 
-/* .nav-menu {
+.nav-menu {
   background-color: #152238;
   width: 250px;
   height: 100vh;
@@ -22,23 +22,21 @@
   top: 0;
   left: -100%;
   transition: 850ms;
-} */
+}
 
-/* .nav-menu.active {
+.nav-menu.active {
   left: 0;
   transition: 350ms;
-} */
+}
 
-/* here */
-
-/* .nav-text {
+.nav-text {
   display: flex-start;
   justify-content: flex-start;
   align-items: center;
   padding: 8px 0px 8px 16px;
   list-style: none;
   height: 60px;
-} */
+}
 
 .nav-text a {
   text-decoration: none;
@@ -52,14 +50,13 @@
   border-radius: 4px;
 }
 
-/* .nav-text a:hover {
+.nav-text a:hover {
   background-color: #0058ab;
-} */
+}
 
-/* 
 .nav-menu-items {
   width: 100%;
-} */
+}
 
 .navbar-toggle {
   background-color: #152238;
@@ -70,7 +67,6 @@
   align-items: center;
 }
 
-/* doesn't show effect */
 span {
   margin-left: 16px;
 }
