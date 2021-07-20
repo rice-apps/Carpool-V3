@@ -3,20 +3,19 @@ import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { SidebarData } from './SidebarData'
-import './Navbar.css'
 import { IconContext } from 'react-icons'
 import styled, { css } from 'styled-components'
 
-//working
 const NavBarDiv = styled.div`
   background-color: #152238;
   height: 80px;
+  padding-left: 30px;
+  padding-top: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: left;
 `
 
-//working
 const MenuBarsLink = styled(Link)`
   margin-left: 2rem;
   font-size: 2rem;
@@ -42,7 +41,6 @@ const NavMenu = styled.nav`
     `}
 `
 
-//nav text etc
 const NavText = styled.div`
   display: flex-start;
   justify-content: flex-start;
@@ -67,13 +65,10 @@ const NavText = styled.div`
     }
   }
 `
-
 const NavMenuItemsContainer = styled.div`
   width: 100%;
 `
-// const SpanContainer = styled.div`
-//   margin-left: 16px;
-// `
+
 const NavbarToggleDiv = styled.div`
   background-color: #152238;
   width: 100%;
