@@ -3,7 +3,6 @@ import logo from '../logo.svg'
 import '../App.css'
 import styled from 'styled-components'
 import { useMediaQuery } from 'react-responsive'
-import RideSummary from '../Pages/RideSummary.js'
 
 const Home = () => {
   const MainHeader = styled.header`
@@ -38,7 +37,6 @@ const Home = () => {
           Learn React {isTabletOrMobile && <p>Yo we on mobile</p>}
         </a>
       </MainHeader>
-      <RideSummary></RideSummary>
     </div>
   )
 }

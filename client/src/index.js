@@ -25,7 +25,6 @@ render(
         <Routes />
       </ToastProvider>
     </Router>
-    {/* <RideSummary></RideSummary> */}
   </ApolloProvider>,
   document.querySelector('#app')
 )

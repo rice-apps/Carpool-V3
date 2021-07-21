@@ -1,34 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import { gql, useQuery } from '@apollo/client'
 import { graphql } from 'react-apollo'
-// import { useQuery } from '@apollo/react-hooks'
 
-// {
-//   rideOne {
-//     departureDate
-//     departureLocation {
-//       title
-//     }
-//     arrivalLocation {
-//       title
-//     }
-//     owner {
-//       firstName
-//       lastName
-//     }
-//     riders {
-//       firstName
-//     }
-//     note
-//     spots
-//     _id
-//   }
-// }
+//styling
+const SeatsLeftDiv = styled.div`
+  text-align: right;
+  color: #4b6dd1;
+  padding-right: 1vh;
+`
+const SeatsLeftNum = styled.div`
+  margin-top: 4vh;
+  padding-left: 2vh;
+  color: #4b6dd1;
+  font-size: 4vh;
+`
+const RideSummaryDiv = styled.div`
+  margin-top: 4vh;
+  padding-left: 2vh;
+  color: #4b6dd1;
+  font-size: 4vh;
+`
 
-const getRideQuery = gql`
-  query {
-    rideOne {
+//graphql
+const GET_RIDES = gql`
+  query GetRides($deptLoc: MongoID, $arrLoc: MongoID) {
+    rideMany(
+      filter: { departureLocation: $deptLoc, arrivalLocation: $arrLoc }
+    ) {
+      _id
       departureDate
+      spots
       departureLocation {
         title
       }
@@ -36,64 +38,74 @@ const getRideQuery = gql`
         title
       }
       owner {
-        firstName
-        lastName
+        netid
       }
       riders {
-        firstName
+        netid
       }
-      note
-      spots
-      _id
     }
   }
 `
-const RideSummary = () => {
-  const { loading, error, data } = useQuery(getRideQuery)
-  if (error) return <h1>Something went wrong!</h1>
-  if (loading) return <h1>Loading...</h1>
-  // console.log(props)
 
-  return (
-    <div>
-      <ul>
-        <li>start location:{data.departureLocation.title}</li>
-        <li>destination</li>
-        <li>date/time</li>
-        <li>ride type(Uber, Lyft, Driver)</li>
-      </ul>
-    </div>
-  )
-}
-// export default graphql(getRideQuery)(RideSummary)
-export default RideSummary()
-
-// import { gql, useQuery } from '@apollo/client'
-
-// const GET_DOGS = gql`
-//   query GetDogs {
-//     dogs {
-//       id
-//       breed
+// const GET_USER_INFO = gql`
+//   query GetUserInfo {
+//     user {
+//       _id
+//       firstName
+//       lastName
+//       netid
+//       phone
 //     }
 //   }
 // `
 
-// function Dogs() {
-//   const { loading, error, data } = useQuery(GET_DOGS)
+// const GET_LOCATIONS = gql`
+//   query GetLocations {
+//     locationMany {
+//       _id
+//       title
+//     }
+//   }
+// `
 
-//   if (loading) return 'Loading...'
-//   if (error) return `Error! ${error.message}`
+const RideSummary = ({ ride }) => {
+  const [getVariables, setVariables] = useState({})
+  console.log(getVariables)
+  const { data, loading, error } = useQuery(GET_RIDES, {
+    variables: getVariables,
+  })
 
-//   return (
-//     <select name='dog'>
-//       {data.dogs.map((dog) => (
-//         <option key={dog.id} value={dog.breed}>
-//           {dog.breed}
-//         </option>
-//       ))}
-//     </select>
-//   )
-// }
+  if (error) return <p>Error.</p>
+  if (loading) return <p>Loading...</p>
+  if (!data) return <p>No data...</p>
 
-// export default Dogs()
+  const { rideMany: rides } = data
+
+  let {
+    owner,
+    riders,
+    departureDate,
+    departureLocation,
+    arrivalLocation,
+    spots,
+  } = data
+
+  return (
+    <div>
+      <RideSummaryDiv>Ride Summary</RideSummaryDiv>
+      <SeatsLeftDiv>
+        <SeatsLeftNum>{rides[0].spots}</SeatsLeftNum>
+        seats left
+      </SeatsLeftDiv>
+      <ul>
+        <li>Departure Location: {rides[0].departureLocation.title}</li>
+        <li>Arrival Location: {rides[0].arrivalLocation.title}</li>
+        <li>Departure Time: {rides[0].departureDate}</li>
+        <li>riders: {rides[0].riders}</li>
+      </ul>
+    </div>
+  )
+}
+
+// export default graphql(getRideQuery)(RideSummary
+export default RideSummary
