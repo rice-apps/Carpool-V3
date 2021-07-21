@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { gql, useQuery } from '@apollo/client'
-import { graphql } from 'react-apollo'
+// import { graphql } from 'react-apollo'
+import { useParams } from 'react-router-dom'
+import { BsArrowRight } from 'react-icons/bs'
+import { IoLocationSharp } from 'react-icons/io5'
+import { AiTwotoneCalendar } from 'react-icons/ai'
 
 //styling
 const SeatsLeftDiv = styled.div`
@@ -22,12 +26,28 @@ const RideSummaryDiv = styled.div`
   font-size: 4vh;
 `
 
+const LocationDiv = styled.div`
+  margin-top: 4vh;
+  text-align: center;
+  padding-left: 2vh;
+  color: #00004d;
+  font-family: Monaco;
+  font-weight: bold;
+  font-size: 3 vh;
+`
+
+const RidersDiv = styled.div`
+  margin-top: 4vh;
+  text-align: center;
+  padding-left: 2vh;
+  font-family: Monaco;
+  font-size: 1.5 vh;
+`
+
 //graphql
-const GET_RIDES = gql`
-  query GetRides($deptLoc: MongoID, $arrLoc: MongoID) {
-    rideMany(
-      filter: { departureLocation: $deptLoc, arrivalLocation: $arrLoc }
-    ) {
+const GET_RIDE = gql`
+  query getRide($id: MongoID) {
+    rideOne(filter: { _id: $id }) {
       _id
       departureDate
       spots
@@ -46,32 +66,17 @@ const GET_RIDES = gql`
     }
   }
 `
-
-// const GET_USER_INFO = gql`
-//   query GetUserInfo {
-//     user {
-//       _id
-//       firstName
-//       lastName
-//       netid
-//       phone
-//     }
-//   }
-// `
-
-// const GET_LOCATIONS = gql`
-//   query GetLocations {
-//     locationMany {
-//       _id
-//       title
-//     }
-//   }
-// `
-
-const RideSummary = ({ ride }) => {
+const RideSummary = () => {
+  let { id } = useParams()
+  console.log('id', id)
   const [getVariables, setVariables] = useState({})
-  console.log(getVariables)
-  const { data, loading, error } = useQuery(GET_RIDES, {
+  const [rideId, setRideId] = React.useState(null)
+
+  React.useEffect(() => {
+    fetch(`http://localhost:3000/ridesummary/${id}`).then(setRideId)
+  }, id)
+
+  const { data, loading, error } = useQuery(GET_RIDE, {
     variables: getVariables,
   })
 
@@ -79,7 +84,8 @@ const RideSummary = ({ ride }) => {
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
 
-  const { rideMany: rides } = data
+  const { rideOne: ride } = data
+  console.log('data', data)
 
   let {
     owner,
@@ -94,15 +100,18 @@ const RideSummary = ({ ride }) => {
     <div>
       <RideSummaryDiv>Ride Summary</RideSummaryDiv>
       <SeatsLeftDiv>
-        <SeatsLeftNum>{rides[0].spots}</SeatsLeftNum>
+        <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
         seats left
       </SeatsLeftDiv>
-      <ul>
-        <li>Departure Location: {rides[0].departureLocation.title}</li>
-        <li>Arrival Location: {rides[0].arrivalLocation.title}</li>
-        <li>Departure Time: {rides[0].departureDate}</li>
-        <li>riders: {rides[0].riders}</li>
-      </ul>
+      <LocationDiv>
+        <IoLocationSharp></IoLocationSharp>&nbsp;
+        {ride.departureLocation.title}&nbsp;
+        <BsArrowRight></BsArrowRight>&nbsp;
+        {ride.arrivalLocation.title}
+      </LocationDiv>
+      <p>{ride.departureDate}</p>
+      <AiTwotoneCalendar></AiTwotoneCalendar>
+      <RidersDiv> Riders {ride.riders}</RidersDiv>
     </div>
   )
 }

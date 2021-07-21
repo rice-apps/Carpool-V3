@@ -96,7 +96,7 @@ export const Routes = () => {
       <Route path={'/home'}>
         <Home />
       </Route>
-      <Route path={'/rideSummary'}>
+      <Route path={'/ridesummary/:id'}>
         <RideSummary />
       </Route>
       <Route path={'/'}>
