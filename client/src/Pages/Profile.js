@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const Profile = () => {
     return(
         <div>
-            
-        </div>
+            <h1>This is the Profile Page</h1>
+        </div>   
     )
 }
 
-export default Profile();
+export default Profile;
