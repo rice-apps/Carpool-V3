@@ -88,10 +88,10 @@ const ColorButton = withStyles({
         border: 0,
         color: 'white',
         height: 48,
-        fontFamily: 'Josefin Sans'
     },
     label: {
       textTransform: 'capitalize',
+      fontFamily: 'Josefin Sans'
     },
   })(Button);
 
@@ -237,7 +237,7 @@ const Create = ({onCreate}) => {
 
         setStartLoc('')
         setEndLoc('')
-        setDate(new Date)
+        setDate(new Date())
         setPassengers(1)
         setConfirmation(false)
     }

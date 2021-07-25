@@ -25,7 +25,7 @@ const CreateRide = () => {
         }
     `
 
-    const [createRide, {data, loading, error}] = useMutation(
+    const [createRide] = useMutation(
         CREATE_RIDE
     );
 
@@ -37,7 +37,7 @@ const CreateRide = () => {
             variables: ride
         })
         .then(() => {
-            addToast("Congratulations! Your ride has been successfully created. Make sure to wear a mask, sanitize hands, and follow all safety protocols from the Culture of Care Agreement.", { appearance: 'success'});
+            addToast("Congratulations! Your ride has been successfully created.", { appearance: 'success'});
             console.log("success!");
         })
         .catch((error) => {
