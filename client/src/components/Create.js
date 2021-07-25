@@ -304,7 +304,7 @@ const Create = ({onCreate}) => {
                 direction='column'
                 justifyContent='space-evenly'
                 alignItems='center'
-                spacing='4'
+                spacing={4}
             >
                 <Header subtitle = {'Create Ride'}/> 
                 <Grid 
@@ -362,7 +362,7 @@ const Create = ({onCreate}) => {
                     <MuiThemeProvider theme={customTheme}>
                         <MuiPickersUtilsProvider utils={LuxonUtils}>
                             <DateBox
-                                labelId='Date and Time'
+                                labelid='Date and Time'
                                 inputVariant='outlined'
                                 format="MM/dd/yyyy"
                                 value={date}
@@ -378,7 +378,7 @@ const Create = ({onCreate}) => {
                 direction='row'
                 justifyContent='center'
                 alignItems='center'
-                spacing = '1'
+                spacing = {1}
                 >
                     <Grid item>   
                         <SelectSquare
