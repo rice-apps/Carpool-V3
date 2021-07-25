@@ -511,7 +511,20 @@ console.log("getRides=", data);
           <FormControl className= 'search-form'>
 
             <SearchControl>
-            <InputBox id = 'StartLoc'>Departure Location</InputBox>
+            <Grid
+                container
+                direction='column'
+                justifyContent='space-evenly'
+                alignItems='center'
+                spacing='4'
+            >
+               <Grid 
+                    item
+                    xs = {12}
+                >   
+            <label for="StartLoc">Departure Location </label>
+ 
+            <InputBox id = 'StartLoc'></InputBox>
                     <SelectBox
                         id="Start Location Search Bar"
                         labelId='StartLoc'
@@ -529,10 +542,18 @@ console.log("getRides=", data);
                         }
                     </SelectBox>
             
-              
+              </Grid>
+              </Grid>
+
             </SearchControl>
           <SearchControl> 
-          <InputBox id = 'StartLoc'>End Location</InputBox>
+          <Grid 
+                    item
+                    xs = {12}
+                >   
+            <label for="EndLoc">End Location </label>
+
+          <InputBox id = 'EndLoc'></InputBox>
                     <SelectBox
                         id="End Location Search Bar"
                         labelId='EndLoc'
@@ -550,7 +571,7 @@ console.log("getRides=", data);
                         }
                     </SelectBox>
             
-              
+              </Grid>
           </SearchControl>
           <SearchControl>
             <label>Date</label>
@@ -624,6 +645,7 @@ console.log("getRides=", data);
             onSubmit={curDate => {handleClickDate(curDate);}}
             />
               */}
+
           </SearchControl>
           <SearchControl>
             <label>Time</label>
@@ -655,6 +677,7 @@ console.log("getRides=", data);
             />
             */}
             
+
           </SearchControl>
           <SearchControl2>
             <label>Number_People</label>
@@ -687,7 +710,6 @@ console.log("getRides=", data);
           </FormControl>
             
         </SearchDiv>
-            
            </React.Fragment>
       )
 }
