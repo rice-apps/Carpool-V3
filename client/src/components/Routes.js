@@ -96,6 +96,9 @@ export const Routes = () => {
             <Route path={"/home"}>
                 <Home />
             </Route>
+            <Route path={"/create"}>
+                <Home />
+            </Route>
             <Route path={"/"}>
                 <Home />
             </Route>

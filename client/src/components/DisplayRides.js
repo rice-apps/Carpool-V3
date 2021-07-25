@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-//import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import {monthToStr} from '../Pages/Search.js'
 import {rides as ridesPossible} from './Form.js'
@@ -30,7 +30,6 @@ const RideContainer = styled.div`
     border: 3px solid black;
 `;
 */
-//const history = useHistory();
 
 
 const GridT = styledM(Grid)({
@@ -78,7 +77,9 @@ const displayRideButtons = () => {
             OR
         </Grid>
         <Grid item xs={11} justify="center" align='center' style={{width: '35vw', display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
+        <Link to="/create">
             <Button onClick={() => handleClickCreateRide()} style={{width: '100%'}}><div style={{fontFamily: 'Josefin Sans'}}>Create New Ride</div></Button>
+        </Link>
         </Grid>
     </Grid>
 }
