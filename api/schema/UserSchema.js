@@ -32,6 +32,7 @@ UserTC.addResolver({
     resolve: async ({ source, args, context, info }) => {
         let authenticationResponse = await authenticateTicket(args.ticket);
         if (authenticationResponse.success) {
+            console.log("auth success!")
             let user; // this will be used as the return object
 
             // Get the netid of the authenticated user
@@ -65,6 +66,7 @@ UserTC.addResolver({
     resolve: async ({ source, args, context, info }) => {
         let verificationResponse = await verifyToken(args.token);
         if (verificationResponse.success) {
+            console.log("verify success!")
             let { id } = verificationResponse;
             // Return logged in user's info
             return await User.findById(id);

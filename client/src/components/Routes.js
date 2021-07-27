@@ -94,7 +94,7 @@ export const Routes = () => {
           <Route path={'/login'} component={withRouter(Login)} />
           <Route path={'/'} exact component={withRouter(Home)} />
           <Route path={'/home'} component={withRouter(Home)} />
-          <PrivateRoute path={'/auth'} component={withRouter(Auth)} />
+          <Route path={'/auth'} component={withRouter(Auth)} />
         </Switch>
       </Router>
     </div>
