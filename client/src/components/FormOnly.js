@@ -244,8 +244,8 @@ const ColorButton = withStyles({
 
   let temp = 3;
 
-  const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  const endValue = new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());
+  const startValue = new Date(new Date().getFullYear(), new Date().getMonth() - 1, new Date().getDate());
+  const endValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 8);
   const maxDate = new Date(new Date().getFullYear(), new Date().getMonth()+1, 20);
 

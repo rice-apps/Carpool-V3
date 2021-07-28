@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { useHistory, Link } from 'react-router-dom';
 
 import {monthToStr} from '../Pages/Search.js'
-import ridesPossible from './Form.js'
+//import ridesPossible from './Form.js'
 
 import styled from 'styled-components'
 import { styled as styledM } from '@material-ui/core/styles';
@@ -31,6 +31,12 @@ const RideContainer = styled.div`
 `;
 */
 
+const ridesPossible = [
+    {id: 1, startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3},
+    {id: 2, startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5},
+    {id: 3, startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8},
+    {id: 4, startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}
+];
 
 const GridT = styledM(Grid)({
         backgroundColor: '#eeeeee',
@@ -147,6 +153,7 @@ class DisplayRides extends Component {
 
     displayRides(ridesT)  {
         console.log("ridesT=", ridesT);
+        console.log("Typeof(ridesT)=", typeof(ridesT))
         //return ridesT[0].startLoc;
         
         if (ridesT == null || ridesT == undefined) {
@@ -179,14 +186,13 @@ class DisplayRides extends Component {
             ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
-                /*
+                
                 <Grid item xs={11} style={{width: '100%', borderRadius: '10px', backgroundColor: 'red'}} >
                           DIVIDER (DIVIDER ISN'T TAKING UP FULL HORIZONTAL SPACE IDK WHY)
                 </Grid>
-                */
+            
             }
             {
-                
             ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
             }
             </GridT>;
@@ -215,7 +221,17 @@ class DisplayRides extends Component {
                 <div>
                     <div>
                         {
-                    this.displayRides(this.state.ridesPossible)
+                        this.displayRides(this.state.rides)
+                    }
+                    {
+                        /*
+                        this.displayRides([
+                            {id: 1, startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3},
+                            {id: 2, startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5},
+                            {id: 3, startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8},
+                            {id: 4, startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}
+                          ])
+                          */
                     }
                     </div>
                     <div>
