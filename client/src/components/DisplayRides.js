@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 //import { useHistory } from 'react-router-dom';
 
 import {monthToStr} from '../Pages/Search.js'
-import {rides as ridesPossible} from './Form.js'
+import ridesPossible from './Form.js'
 
 import styled from 'styled-components'
 import { styled as styledM } from '@material-ui/core/styles';
@@ -99,6 +99,7 @@ class DisplayRides extends Component {
 
         this.state = {
             rides: props.rides,
+            ridesPossible: ridesPossible,
             testVar: props.testVar
         }
     }
@@ -177,9 +178,11 @@ class DisplayRides extends Component {
             ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
+                /*
                 <Grid item xs={11} style={{width: '100%', borderRadius: '10px', backgroundColor: 'red'}} >
                           DIVIDER (DIVIDER ISN'T TAKING UP FULL HORIZONTAL SPACE IDK WHY)
                 </Grid>
+                */
             }
             {
                 
@@ -211,7 +214,7 @@ class DisplayRides extends Component {
                 <div>
                     <div>
                         {
-                    this.displayRides(this.state.rides)
+                    this.displayRides(this.state.ridesPossible)
                     }
                     </div>
                     <div>
