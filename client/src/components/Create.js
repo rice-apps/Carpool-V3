@@ -3,6 +3,7 @@ import {useState} from "react";
 import { gql, useQuery } from "@apollo/client";
 import Header from '../components/Header.js';
 import styled from 'styled-components';
+import { useToasts } from "react-toast-notifications";
 import {
     MenuItem,
     Grid, 
@@ -180,6 +181,8 @@ const ColorButton = withStyles({
 
 const Create = ({onCreate}) => {
 
+    const { addToast } = useToasts();
+
     const seats = [
         {
             value: 1
@@ -202,7 +205,7 @@ const Create = ({onCreate}) => {
     const [startLoc, setStartLoc] = useState('')
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date())
-    const [passengers, setPassengers] = useState(1)
+    const [passengers, setPassengers] = useState(3)
     const [confirmation, setConfirmation] = useState(false)
 
     // const textfield = styled(TextField)`
@@ -229,7 +232,12 @@ const Create = ({onCreate}) => {
         console.log("Submitted!")
 
         if (!startLoc || !endLoc) { 
-            alert('Please fill in fields')
+            addToast("Please fill in all fields.", { appearance: 'error' });
+            return
+        }
+
+        if (!confirmation) {
+            addToast("You must agree to lead the ride to create this ride.", { appearance: 'error' });
             return
         }
 
@@ -238,7 +246,7 @@ const Create = ({onCreate}) => {
         setStartLoc('')
         setEndLoc('')
         setDate(new Date())
-        setPassengers(1)
+        setPassengers(3)
         setConfirmation(false)
     }
 
@@ -398,7 +406,7 @@ const Create = ({onCreate}) => {
                         </SelectSquare> 
                     </Grid>
                     <Grid item>
-                        <BodyText>{"passengers (s)"}</BodyText> 
+                        <BodyText>{"# of open seats"}</BodyText> 
                     </Grid>
 
                 </Grid>
@@ -409,7 +417,7 @@ const Create = ({onCreate}) => {
                 >
                     <FormControlLabelBox
                         control={<CheckBox color='primary' checked={confirmation} onChange={onCheck}/>}
-                        label="Confirm for leading the ride, etc."
+                        label="Confirmation for leading this ride"
                     />
                 </Grid>
 
