@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
+import { IconButton, Button } from '@material-ui/core';
 import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
@@ -17,6 +18,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
         align-items: center;
         padding: 10px 10px 10px 10px;
     `;
+
+    const ButtonBox = withStyles({
+        label: {
+            textTransform: 'capitalize',
+        }
+    })(Button);
 
     const BackArrow = withStyles({
         root: {
@@ -70,18 +77,34 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
         color: #002140;
     `;
 
-    const TextBox = styled.div`
-        display: flex; 
-        justify-content: center;
-        align-items: center;
-        margin-top: 25px;
-        width: 75vw;
-        height: 10vh;
-        border-radius: 9px;
+    const TextBox = withStyles({
+        root: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '25px',
+            width: '75vw',
+            height: '10vh',
+            borderRadius: '9px',
+            background: 'rgba(187, 218, 255, 0.22)'
+        }, 
+        label: {
+            textTransform: 'none',
+        }
+    })(Button);
 
-        background: rgba(187, 218, 255, 0.22);
+    // const TextBox = styled.div`
+    //     display: flex; 
+    //     justify-content: center;
+    //     align-items: center;
+    //     margin-top: 25px;
+    //     width: 75vw;
+    //     height: 10vh;
+    //     border-radius: 9px;
+
+    //     background: rgba(187, 218, 255, 0.22);
         
-    `;
+    // `;
 
     const StyledText = styled.p`
         display: flex; 
@@ -141,8 +164,10 @@ const Profile = () => {
     return(
         <div>
             <ReturnHeader>
-                <BackArrow></BackArrow>
-                <StyledText3>Ride Summary</StyledText3>
+                <ButtonBox>
+                    <BackArrow></BackArrow>
+                    <StyledText3>Ride Summary</StyledText3>
+                </ButtonBox>
             </ReturnHeader>
             <ProfileCard>
                 <UserPic></UserPic>
