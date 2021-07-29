@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
-import { IconButton, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
