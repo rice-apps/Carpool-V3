@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import Header from '../components/Header';
 import Form from '../components/Form';
+import Create from '../components/Create'
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
@@ -40,8 +41,8 @@ const Search = () => {
       {/*
         <button onClick={changeDisplay}>CLICK TO CHANGE DISPLAY RIDES</button>
       */}
-
-        <DisplayRides ref={displayRef} rides={resultDestArr} testVar={3}/>
+  
+  <DisplayRides ref={displayRef} rides={resultDestArr} testVar={3}/>
 
            </React.Fragment>
       )

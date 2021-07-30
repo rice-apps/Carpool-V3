@@ -5,7 +5,6 @@ import Login from '../Pages/Login.js';
 import Auth from '../Pages/Auth.js';
 import Home from '../Pages/Home.js';
 import Search from '../Pages/Search.js'
-
 /**
  * Requests to verify the user's token on the backend
  */

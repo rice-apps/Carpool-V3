@@ -18,6 +18,7 @@
     "@testing-library/user-event": "^7.2.1",
     "graphql": "^15.0.0",
     "history": "^4.10.1",
+    "luxon": "^2.0.1",
     "react": "^16.14.0",
     "react-datepicker": "^4.1.1",
     "react-dom": "^16.14.0",

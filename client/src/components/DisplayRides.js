@@ -12,7 +12,7 @@ import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button'
-
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 /*
 const useStylesContainer = makeStyles(theme => ({
@@ -49,7 +49,6 @@ const GridInside = styledM(Grid)({
 const BoxRide = styledM(Box)({
     width: '10vw',
     height: '100%',
-    backgroundColor: '#999',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
@@ -72,7 +71,7 @@ const handleClickCreateRide = () => {
 }
 
 const displayRideButtons = () => {
-    return <Grid container spacing={5} direction="column" alignItems="center" style={{fontFamily: 'Josefin Sans', marginBottom: '5vh'}}>
+    return <Grid container spacing={2} direction="column" alignItems="center" style={{fontFamily: 'Josefin Sans', marginBottom: '5vh'}}>
         <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd'}}>
             no more results
         </Grid>
@@ -82,11 +81,17 @@ const displayRideButtons = () => {
         <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
             OR
         </Grid>
-        <Grid item xs={11} justify="center" align='center' style={{width: '35vw', display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
+        <Grid item xs justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
         <Link to="/create">
-            <Button onClick={() => handleClickCreateRide()} style={{width: '100%'}}><div style={{fontFamily: 'Josefin Sans'}}>Create New Ride</div></Button>
+        <Button
+            
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => handleClickCreateRide()}> Create New Ride </Button>
         </Link>
         </Grid>
+       
     </Grid>
 }
 
@@ -114,7 +119,7 @@ class DisplayRides extends Component {
     displayRideRows(ride) {
         
         return <Grid item container key={ride.uid} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
-        <Grid item container style={{backgroundColor: '#cccccc', borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
+        <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
   <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
       <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF', borderRadius: '5px'}}>
         <div style={{height: '1.5vw'}}></div>
@@ -124,24 +129,27 @@ class DisplayRides extends Component {
         
     </Box>
   </Grid>
-  <Grid item xs={3} justify="center" align='center'>
+  <Grid item xs={2} justify="center" align='center'>
    <BoxRide >
            {ride.startLoc}
         
    </BoxRide>
   </Grid>
-  <Grid item xs={3} justify="center" align='center'>
+  <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
+        <ArrowForwardIcon/>
+  </Grid>
+  <Grid item xs={2} justify="center" align='center'>
       <BoxRide>
            {ride.endLoc}
       </BoxRide>
   </Grid>
   <Grid item xs={3} justify="center" align='center'>
-   <Box width={"15vw"} height={"100%"} style={{backgroundColor: '#999', display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+   <Box width={"15vw"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
     <CalendarTodayIcon />
     <span>
         {monthToStr[ride.date.getMonth()-1] + " " + ride.date.getDate()}
         <br/>
-        <div style={{fontSize: '1vw'}}>{renderTime(ride.date)}</div>
+        <div style={{fontSize: '2vw'}}>{renderTime(ride.date)}</div>
     </span>
     </Box>
   </Grid>
@@ -187,9 +195,6 @@ class DisplayRides extends Component {
             }
             {
                 
-                <Grid item xs={11} style={{width: '100%', borderRadius: '10px', backgroundColor: 'red'}} >
-                          DIVIDER (DIVIDER ISN'T TAKING UP FULL HORIZONTAL SPACE IDK WHY)
-                </Grid>
             
             }
             {
@@ -218,8 +223,8 @@ class DisplayRides extends Component {
 
       render() {
             return (
-                <div>
-                    <div>
+                <div >
+                    <div >
                         {
                         this.displayRides(this.state.rides)
                     }
@@ -234,7 +239,7 @@ class DisplayRides extends Component {
                           */
                     }
                     </div>
-                    <div>
+                    <div >
                         {
                     displayRideButtons()
                         }

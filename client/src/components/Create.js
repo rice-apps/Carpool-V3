@@ -17,7 +17,6 @@ import {
 
 import { withStyles } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
-import LuxonUtils from '@date-io/luxon';
 
 const customTheme = createMuiTheme({
 	palette: {
@@ -355,6 +354,7 @@ const Create = ({onCreate}) => {
                     item
                     xs = {12}
                 >
+{/*                    
                     <InputBox id = 'Date and Time'>Date and Time</InputBox>
                     <MuiThemeProvider theme={customTheme}>
                         <MuiPickersUtilsProvider utils={LuxonUtils}>
@@ -367,7 +367,7 @@ const Create = ({onCreate}) => {
                             >
                             </DateBox>
                         </MuiPickersUtilsProvider>
-                    </MuiThemeProvider>
+                    </MuiThemeProvider> */}
                 </Grid>
 
                 <Grid
