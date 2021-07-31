@@ -53,7 +53,7 @@ UserTC.addResolver({
             // Update the user's token and get their updated information
             return await User.findByIdAndUpdate(user._id, { token: token }, { new: true });
         } else {
-            console.log("Bad auth!");
+            console.log("Bad auth!", authenticationResponse.Error);
             throw Error("Bad authentication.");
         }
     }
