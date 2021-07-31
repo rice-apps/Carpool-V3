@@ -50,6 +50,7 @@ import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 //import Box from '@material-ui/core/Box';
 
 import styled from 'styled-components'
+import Create from './Create';
 
 
 
@@ -105,6 +106,10 @@ const Form = styled.form`
     align-items: space-between;
     flex-direction: column;
     padding: 40px;
+    border-radius: 25px;
+    background: #718fb0;
+
+
 `;
 
 const SelectBox = withStyles({
@@ -492,10 +497,9 @@ const ColorButton = withStyles({
     return (
       <React.Fragment>
 
-        <SearchDiv>
-          <FormControl className= 'search-form'>
+        <Form className= 'search-form'>
 
-            <SearchControl>
+            
             <Grid
                 container
                 direction='column'
@@ -507,9 +511,8 @@ const ColorButton = withStyles({
                     item
                     xs = {12}
                 >   
-            <label for="StartLoc">Departure Location </label>
  
-            <InputBox id = 'StartLoc'></InputBox>
+            <InputBox id = 'StartLoc'>Departure Location</InputBox>
                     <SelectBox
                         id="Start Location Search Bar"
                         labelId='StartLoc'
@@ -528,17 +531,11 @@ const ColorButton = withStyles({
                     </SelectBox>
             
               </Grid>
-              </Grid>
 
-            </SearchControl>
-          <SearchControl> 
-          <Grid 
-                    item
-                    xs = {12}
-                >   
-            <label for="EndLoc">End Location </label>
+          <Grid  item xs = {12}>
+     
 
-          <InputBox id = 'EndLoc'></InputBox>
+          <InputBox id = 'EndLoc'>End Location</InputBox>
                     <SelectBox
                         id="End Location Search Bar"
                         labelId='EndLoc'
@@ -557,9 +554,15 @@ const ColorButton = withStyles({
                     </SelectBox>
             
               </Grid>
-          </SearchControl>
-          <SearchControl>
-            <label>Date</label>
+              <Grid  item xs = {10} >
+              <Grid 
+                container
+                direction='row'
+                justifyContent='space-around'
+                alignItems='center'
+               >
+                  <Grid item xs = {8}>
+              <InputBox id = 'Date'>Date</InputBox>
 
     {/*
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -595,48 +598,12 @@ const ColorButton = withStyles({
       //start="Year"
       //depth="Year"
       ></DateRangePickerComponent>
-
-                {/*
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                disableToolbar
-                variant='inline'
-                format='MM/dd/yy'
-                margin='normal'
-                id='date-picker'
-                label='Date Picker'
-                value={date}
-                onChange={handleChangeDate}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date'
-                }}
-                />
-              </MuiPickersUtilsProvider>
-              */}
-
-            {/*
-            <MultipleDatesPicker
-        open={open}
-        selectedDates={[]}
-        onCancel={() => setOpen(false)}
-        onSubmit={dates => console.log('selected dates', dates)}
-      />
-            */}
-              {/*
-            <MultipleDatesPicker className={'datePicker' + ((indSelected === dictNames.date) ? ( ' selected') : (''))}
-            open={open}
-            selectedDates={[]}
-            onCancel={() => setOpen(false)}
-            onSubmit={curDate => {handleClickDate(curDate);}}
-            />
-              */}
-
-          </SearchControl>
-          <SearchControl>
-            <label>Time</label>
+</Grid>
+<Grid item xs = {3}>
+<InputBox id = 'time'>Time</InputBox>
             <TextField
             id="time"
-            label="Alarm clock"
+            label=""
             type="time"
             defaultValue={time}
             onChange={(e) => {
@@ -651,22 +618,20 @@ const ColorButton = withStyles({
             }}
             
           />
-            {/*
-            <input
-              type='text'
-              placeholder='Time'
-              value={time}
-              onChange={(e) => handleChangeTime(e.target.value)}
-              style = {{ marginLeft: '5vw', display: 'inline-block', backgroundColor: ((indSelected === dictNames.time) ? selectedColors[1] : selectedColors[0]),
-              color: ((indSelected === dictNames.time) ? selectedColors[0] : selectedColors[1])}}
-            />
-            */}
-            
+          </Grid>
+          </Grid>
+            </Grid>
+            <Grid  item xs = {12}>
 
-          </SearchControl>
-          <SearchControl2>
-            <label>Number_People</label>
-            <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value); temp=e.target.value; console.log("temp=" + temp)}}>
+            <Grid
+                container
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
+                spacing = '1'
+                >
+                    <Grid item>   
+                    <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value); temp=e.target.value; console.log("temp=" + temp)}}>
               { [1,2,3,4,5,6,7,8,9,10,11,12,13].map((ele) => (
                 <MenuItem key={ele} value={ele}>{ele}</MenuItem>
               ))}
@@ -680,8 +645,17 @@ const ColorButton = withStyles({
               style = {{ marginLeft: '5vw', display: 'inline-block'}}
             />
             */}
-          </SearchControl2>
-    
+                    </Grid>
+                    <Grid item>
+                        <BodyText>{"Number of People"}</BodyText> 
+                    </Grid>
+
+</Grid>
+
+           
+</Grid>
+<Grid  item xs = {12}>
+
               <Button
         type="submit"
         fullWidth
@@ -691,10 +665,11 @@ const ColorButton = withStyles({
         >
             Search RIDE
         </Button>
+        </Grid>
+        </Grid>
 
-          </FormControl>
+          </Form>
             
-        </SearchDiv>
            </React.Fragment>
       )
 }
