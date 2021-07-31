@@ -18,21 +18,39 @@ const Form = (props) => {
   const displayRef = props.displayRef;
 
   const GET_RIDES = gql`
-query {
-  rideMany {
-    _id
-    departureDate
-    riders
-    spots
-    ownerDriving
-    departureLocation
-    arrivalLocation
-    owner
+  query($spotsNum: Float!) {
+    rideMany(spots: $spotsNum) {
+      _id
+      departureDate
+      riders {
+        netid
+        firstName
+        lastName
+      }
+      spots
+      departureLocation {
+        title
+        address
+      }
+      arrivalLocation {
+        title
+        address
+      }
+      owner {
+        netid
+        firstName
+        lastName
+      }
+    }
   }
-}
 `;
 
-  const { loading, error, data, refetch } = useQuery(GET_RIDES);
+  const { loading, error, data, refetch } = useQuery(GET_RIDES,
+    {
+    variables: {
+      spotsNum: 4.3
+    }
+  });
   console.log("First time on Form.js, getRides=", data);
 
   const getRidesCall = () => {
