@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
+import { useParams } from 'react-router';
 import { Button } from '@material-ui/core';
 import { gql, useQuery } from "@apollo/client";
 import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import id from 'date-fns/esm/locale/id';
 
     const ProfileCard = styled.div`
         display: flex;
@@ -162,6 +164,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 const Profile = () => {
 
+    const {id} = useParams()
+
     const GET_USER = gql`
     query GetUserInfo ($netID: String)
     {
@@ -178,7 +182,7 @@ const Profile = () => {
         {
             variables: 
             {
-              netID: 'sn45',
+              netID: id,
             }
         }
     );
