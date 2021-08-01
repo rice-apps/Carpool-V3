@@ -50,6 +50,10 @@ const Auth = () => {
     console.log("RecentUpdate: ", recentUpdate)
     // Set token in local storage
     localStorage.setItem('token', token);
+    localStorage.setItem('netid', netid)
+    localStorage.setItem('recentUpdate', recentUpdate)
+
+    console.log("netid set: ", localStorage.getItem('netid'))
 
     // Set recent update in client state
     return (
