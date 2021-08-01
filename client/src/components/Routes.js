@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, useParams } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
 import Auth from '../Pages/Auth.js'

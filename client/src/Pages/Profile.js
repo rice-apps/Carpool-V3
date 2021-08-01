@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import { gql, useQuery } from "@apollo/client";
 import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
@@ -161,23 +162,54 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 const Profile = () => {
 
+    const GET_USER = gql`
+    query GetUserInfo ($netID: String)
+    {
+        userOne (filter:{netid : $netID}) {
+            _id
+    				firstName
+    				lastName
+    				netid
+                    phone
+        }
+    }`
+
+    const {data: userData, loading, error} = useQuery(GET_USER, 
+        {
+            variables: 
+            {
+              netID: 'sn45',
+            }
+        }
+    );
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
+
+    const {userOne: user} = userData;
+
+    function goBack() {
+        window.history.back();
+    }
+
     return(
         <div>
             <ReturnHeader>
-                <ButtonBox>
+                <ButtonBox
+                onClick = {goBack}>
                     <BackArrow></BackArrow>
                     <StyledText3>Ride Summary</StyledText3>
                 </ButtonBox>
             </ReturnHeader>
             <ProfileCard>
                 <UserPic></UserPic>
-                <UserName>Luay Nakhleh</UserName>
+                <UserName>{user.firstName + ' ' + user.lastName}</UserName>
                 <PhoneNumber>(123)456-7890</PhoneNumber>
                 <TextBox>
                     <MailBox></MailBox>
-                    <StyledText>dontemailme@rice.edu</StyledText>
+                    <StyledText>{user.netid}@rice.edu</StyledText>
                 </TextBox>
-                <TextBox>
+                <TextBox
+                >
                     <StyledText2>Venmo</StyledText2>
                     <StyledText>@comp182Luay</StyledText>
                 </TextBox>
