@@ -31,12 +31,17 @@ const RideContainer = styled.div`
 `;
 */
 
+/*
 const ridesPossible = [
     {id: 1, startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3},
     {id: 2, startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5},
     {id: 3, startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8},
     {id: 4, startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}
 ];
+*/
+
+const ridesPossible = [];
+const locsPossible = [];
 
 const GridT = styledM(Grid)({
         backgroundColor: '#eeeeee',
@@ -112,18 +117,24 @@ class DisplayRides extends Component {
         this.state = {
             rides: props.rides,
             ridesPossible: ridesPossible,
+            locsPossible: locsPossible,
             testVar: props.testVar
         }
     }
 
     displayRideRows(ride) {
         
-        return <Grid item container key={ride.uid} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
+        //const numLeft = ride.spots - ride.riders.length();
+        const numLeft = ride.spots;
+
+        const date = new Date(ride.departureDate);
+
+        return <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
         <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
   <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
       <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF', borderRadius: '5px'}}>
         <div style={{height: '1.5vw'}}></div>
-        <span style={{fontSize: '3vw'}}>{ride.numberPeople}</span>
+        <span style={{fontSize: '3vw'}}>{numLeft}</span>
         
         <span style={{fontSize: '1.5vw'}}>seats left</span>
         
@@ -131,7 +142,7 @@ class DisplayRides extends Component {
   </Grid>
   <Grid item xs={2} justify="center" align='center'>
    <BoxRide >
-           {ride.startLoc}
+           {ride.departureLocation.title}
         
    </BoxRide>
   </Grid>
@@ -140,16 +151,16 @@ class DisplayRides extends Component {
   </Grid>
   <Grid item xs={2} justify="center" align='center'>
       <BoxRide>
-           {ride.endLoc}
+           {ride.arrivalLocation.title}
       </BoxRide>
   </Grid>
   <Grid item xs={3} justify="center" align='center'>
    <Box width={"15vw"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
     <CalendarTodayIcon />
     <span>
-        {monthToStr[ride.date.getMonth()-1] + " " + ride.date.getDate()}
+        {monthToStr[date.getMonth()-1] + " " + date.getDate()}
         <br/>
-        <div style={{fontSize: '2vw'}}>{renderTime(ride.date)}</div>
+        <div style={{fontSize: '2vw'}}>{renderTime(date)}</div>
     </span>
     </Box>
   </Grid>
@@ -194,24 +205,50 @@ class DisplayRides extends Component {
             ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
-                
-            
+            <div>Divider</div>
             }
             {
-            ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
+            this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
             }
             </GridT>;
 
       }
     
-      setRides(ridesTest) {
-          //console.log("monthToStr=", monthToStr);
+        setRides(ridesTest) {
+        console.log("setRides() run");
+        //console.log("monthToStr=", monthToStr);
 
         this.setState({
             ...this.state,
             rides: ridesTest
         })
-    }
+        }
+
+        setRidesPossible(ridesTest) {
+        console.log("setRidesPossible() run");
+
+        //console.log("monthToStr=", monthToStr);
+
+        this.setState({
+            ...this.state,
+            ridesPossible: ridesTest
+        })
+
+        console.log("this.state.ridesPossible=", this.state.ridesPossible);
+        }
+
+        setLocsPossible(locsTest) {
+            console.log("setLocsPossible() run");
+    
+            //console.log("monthToStr=", monthToStr);
+    
+            this.setState({
+                ...this.state,
+                locsPossible: locsTest
+            })
+    
+            console.log("this.state.locsPossible=", this.state.locsPossible);
+        }
 
       incrementVar() {
         this.setState({

@@ -52,11 +52,6 @@ import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import styled from 'styled-components'
 import Create from './Create';
 
-
-
-
-
-
 const PossibleLocations = ['IAH', 'Greenbriar Lot', 'Rice Village', 'S1', 'S2', 'S3', 'S4', 'Shop1', 'Shop2', 'Shop3']
 
 //rides is Database of current rides (to be more specific, all rides after the current IRL time)
@@ -81,6 +76,19 @@ query GetRides(
     }
 `
 */
+
+const handleGetRides = async () => {
+  console.log("handleGetRides() run");
+
+  const ridesPossible = await props.getRidesCall();
+
+  console.log("ridesPossible=", ridesPossible);
+  if (ridesPossible) {
+    this.displayRef.setRidesPossible(ridesPossible);
+  } else {
+    console.log("Fetch error with this.props.getRidesCall()");
+  }
+}
 
 const customTheme = createMuiTheme({
 	palette: {
@@ -249,12 +257,14 @@ const ColorButton = withStyles({
 
   let temp = 3;
 
-  const startValue = new Date(new Date().getFullYear(), new Date().getMonth() - 1, new Date().getDate());
-  const endValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 8);
-  const maxDate = new Date(new Date().getFullYear(), new Date().getMonth()+1, 20);
+  const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+  const endValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+14);
+  const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+  const maxDate = new Date(new Date().getFullYear()+1, new Date().getMonth(), new Date().getDate());
 
   const testValue = [new Date("7/12/21"), new Date("7/15/21")]
+
+    console.log("startValue=" + startValue + " endValue=" + endValue + " minDate=" + minDate + " maxDate=" + maxDate);
 
     const dictNames = {startLoc: 0, endLoc: 1, date: 2, time: 3, numberPeople: 4}
     
@@ -363,8 +373,56 @@ const ColorButton = withStyles({
         console.log("Search form submitted.");
         console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
 
-        props.getRidesCall();
-        
+        let ridesPossible = null;
+        let locsPossible = null;
+
+        props.getRidesRefetch()
+        .then((res) => {
+          ridesPossible = res;
+          console.log("in getRidesRefetch.then(), ridesPossible=", ridesPossible);
+          displayRef.current.setRidesPossible(ridesPossible.data.rideMany);
+        })
+        .catch((err) => {console.log("getRidesRefetch() err=", err);});
+
+        props.getLocsRefetch()
+        .then((res) => {
+          locsPossible = res;
+          console.log("in getLocsRefetch.then(), locsPossible=", locsPossible);
+          displayRef.current.setLocsPossible(locsPossible.data.locationMany);
+        })
+
+        .catch((err) => {console.log("getRidesRefetch() err=", err);});
+
+        console.log("ridesPossible after props.getRidesRefetch()=", ridesPossible);
+
+        //handleGetRides();
+
+        /*
+        props.getRidesCall()
+        .then((res) => {
+          if (res == undefined || res == null) {
+            console.log("getRidesCall() returned undefined or null response");
+          } else {
+            ridesPossible = res;
+            displayRef.current.setRidesPossible(ridesPossible);
+          }
+        })
+        .catch((err) => {
+          console.log("getRidesCall() error err=", err);
+        });
+        */
+
+        /*
+        const ridesPossible = props.getRidesCall();
+        console.log("in onSubmit() after props.getRidesCall(), ridesPossible=", ridesPossible);
+        //Use the updated list of all rides from database as the new possible rides
+        if (ridesPossible == undefined || ridesPossible == null) {
+
+        } else {
+        displayRef.current.setRidesPossible(ridesPossible);
+        }
+        */
+
         //console.log("data=", data);
 
         const dateTimeRange = [combineDateWithTime(dateRange[0], time), combineDateWithTime(dateRange[1], time)];
@@ -587,8 +645,8 @@ const ColorButton = withStyles({
                 <DateRangePickerComponent placeholder="Enter Date Range"
       startDate={startValue}
       endDate={endValue}
-      //min={minDate}
-      //max={maxDate}
+      min={minDate}
+      max={maxDate}
       //minDays={3}
       ///maxDays={5}
       format="dd-MMM-yy"
