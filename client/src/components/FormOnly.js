@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 //import MultipleDatePicker from 'react-multiple-datepicker'
 //import 'react-datepicker/dist/react-datepicker.css'
 import { useMediaQuery } from 'react-responsive'
@@ -52,19 +52,63 @@ import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import styled from 'styled-components'
 import Create from './Create';
 
-const PossibleLocations = ['IAH', 'Greenbriar Lot', 'Rice Village', 'S1', 'S2', 'S3', 'S4', 'Shop1', 'Shop2', 'Shop3']
-
-//rides is Database of current rides (to be more specific, all rides after the current IRL time)
-export const rides = [{id: 1, startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3}, {id: 2, startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5}, {id: 3, startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8}, {id: 4, startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}];
-
-//DefaultDestinations should only contain the dest property of each element ideally (can use map function for this)
-const DefaultLocations = {
-  startLoc: PossibleLocations,
-  endLoc: PossibleLocations
-};
-
 const FormOnly = (props) => {
+
+  //const PossibleLocations = ['IAH', 'Greenbriar Lot', 'Rice Village', 'S1', 'S2', 'S3', 'S4', 'Shop1', 'Shop2', 'Shop3']
+  //const [PossibleLocations, setPossibleLocations] = useState([]);
+
+  /*
+  props.getLocsRefetch()
+  .then((res) => {
+    setPossibleLocations(res.data.locationMany);
+    console.log("getLocsRefetch().then() PossibleLocations=", PossibleLocations);
+  })
+  .catch((err) => {
+    console.log("getLocsRefetch() err=", err);
+  })
+  */
+
+  const PossibleLocations = props.testLocations;
+
+  //rides is Database of current rides (to be more specific, all rides after the current IRL time)
+  //export const rides = [{id: 1, startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3}, {id: 2, startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5}, {id: 3, startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8}, {id: 4, startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}];
+
+  //DefaultDestinations should only contain the dest property of each element ideally (can use map function for this)
+  const DefaultLocations = {
+    startLoc: PossibleLocations,
+    endLoc: PossibleLocations
+  };
+
   
+
+  const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
+  //let ridesPossibleForm = [];
+
+  useEffect(() => {
+    console.log("useEffect run()");
+    props.getRidesRefetch()
+    .then((res) => {
+      console.log("in useEffect refetchRide().then() res.data.rideMany=", res.data.rideMany);
+      //ridesPossibleForm = res.data.rideMany;
+      setRidesPossibleForm(res.data.rideMany);
+      displayRef.current.setRidesPossible(res.data.rideMany);
+      //props.updateResultRides(res.data.rideMany);
+    })
+    .catch((err) => {
+      console.log("err=", err);
+    });
+  }, []);
+
+  /*
+  props.getRidesRefetch()
+  .then((res) => {
+    ridesPossibleForm = res.data.rideMany;
+    console.log("in getRidesRefetch.then(), ridesPossibleForm=", ridesPossibleForm);
+    displayRef.current.setRidesPossible(ridesPossibleForm);
+  })
+  .catch((err) => {console.log("getRidesRefetch() err=", err);});
+  */
+
   /*
 const GET_RIDES = gql`
 query GetRides(
@@ -373,24 +417,17 @@ const ColorButton = withStyles({
         console.log("Search form submitted.");
         console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
 
+        console.log("ridesPossibleForm before .getRidesRefetch() in onSubmit()=", ridesPossibleForm);
+
         let ridesPossible = null;
-        let locsPossible = null;
 
         props.getRidesRefetch()
         .then((res) => {
-          ridesPossible = res;
+          ridesPossible = res.data.rideMany;
           console.log("in getRidesRefetch.then(), ridesPossible=", ridesPossible);
-          displayRef.current.setRidesPossible(ridesPossible.data.rideMany);
+          //ridesPossibleForm = ridesPossible;
+          displayRef.current.setRidesPossible(ridesPossible);
         })
-        .catch((err) => {console.log("getRidesRefetch() err=", err);});
-
-        props.getLocsRefetch()
-        .then((res) => {
-          locsPossible = res;
-          console.log("in getLocsRefetch.then(), locsPossible=", locsPossible);
-          displayRef.current.setLocsPossible(locsPossible.data.locationMany);
-        })
-
         .catch((err) => {console.log("getRidesRefetch() err=", err);});
 
         console.log("ridesPossible after props.getRidesRefetch()=", ridesPossible);
@@ -428,25 +465,27 @@ const ColorButton = withStyles({
         const dateTimeRange = [combineDateWithTime(dateRange[0], time), combineDateWithTime(dateRange[1], time)];
         console.log("dateTimeRange=", dateTimeRange);
 
-        resultDestArr = rides;
-        console.log("rides=", rides);
+        //Make sure that ridesPossibleForm (FormOnly component's variable that stores the updated all rides from database)
+        //has been updated with a new refetch() already.
+        resultDestArr = ridesPossibleForm;
+        console.log("ridesPossibleForm=", ridesPossibleForm);
 
         if (startLoc != null) {
-          resultDestArr = resultDestArr.filter((ele) => { return (ele.startLoc == PossibleLocations[startLoc]);});
+          resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title == PossibleLocations[startLoc].title);});
         }
         console.log("resultDestArr after startLoc=", resultDestArr);
         if (endLoc != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return (ele.endLoc == PossibleLocations[endLoc]);});
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title == PossibleLocations[endLoc].title);});
         }
         console.log("resultDestArr after endLoc=", resultDestArr);
 
         if (dateTimeRange[0] != null && dateTimeRange[1] != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return compareDates(ele.date, dateTimeRange[0], true) && !compareDates(ele.date, dateTimeRange[1], false);});
+        resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateTimeRange[0], true) && !compareDates(new Date(ele.departureDate), dateTimeRange[1], false);});
         }
         console.log("resultDestArr after dateTimeRange=", resultDestArr);
 
         if (numberPeople != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return (ele.numberPeople >= numberPeople);});
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
         }
         console.log("resultDestArr after numberPeople after every filter=", resultDestArr);
 
@@ -581,8 +620,8 @@ const ColorButton = withStyles({
                     >
                         {
                             PossibleLocations.map((option, locInd) => (
-                                <MenuBox key = {option} value = {locInd}>
-                                    {option}
+                                <MenuBox key = {option._id} value = {locInd}>
+                                    {option.title}
                                 </MenuBox>
                             ))
                         }
@@ -604,8 +643,8 @@ const ColorButton = withStyles({
                     >
                         {
                             PossibleLocations.map((option, locInd) => (
-                                <MenuBox key = {option} value = {locInd}>
-                                    {option}
+                                <MenuBox key = {option._id} value = {locInd}>
+                                    {option.title}
                                 </MenuBox>
                             ))
                         }

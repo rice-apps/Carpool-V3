@@ -64,11 +64,11 @@ const BoxRide = styledM(Box)({
 //const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const isEqualRides = (ride1, ride2) => {
-    if (ride1.id == null || ride2.id == null) {
+    if (ride1._id == null || ride2._id == null) {
         return false;
     }
 
-    return ride1.id == ride2.id;
+    return ride1._id == ride2._id;
 }
 
 const handleClickCreateRide = () => {
@@ -141,7 +141,7 @@ class DisplayRides extends Component {
     </Box>
   </Grid>
   <Grid item xs={2} justify="center" align='center'>
-   <BoxRide >
+   <BoxRide style={{fontSize: '2vw'}}>
            {ride.departureLocation.title}
         
    </BoxRide>
@@ -150,7 +150,7 @@ class DisplayRides extends Component {
         <ArrowForwardIcon/>
   </Grid>
   <Grid item xs={2} justify="center" align='center'>
-      <BoxRide>
+      <BoxRide style={{fontSize: '2vw'}}>
            {ride.arrivalLocation.title}
       </BoxRide>
   </Grid>
@@ -202,7 +202,10 @@ class DisplayRides extends Component {
         return <GridT container spacing={5}  direction="column"
         alignItems="center">
             {
-            ridesT.map((ride, ind) => (this.displayRideRows(ride)))
+            ridesT.length>0 && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
+            }
+            {
+            ridesT.length==0 && <Box style={{fontSize: "1vw"}}>EITHER YOU HAVE NOT CLICKED THE SUBMIT BUTTON YET OR NO RIDES MATCHED.</Box>
             }
             {
             <div>Divider</div>
