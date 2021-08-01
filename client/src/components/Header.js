@@ -29,7 +29,7 @@ const Subheading = styled.h2`
     line-height: 0px;
 
     color: #BBDAFF;
-    padding: 0px 0px 20px 0px;
+    padding: 30px 0px 40px 0px;
 `;
 
 const Header = ({title, subtitle}) => {

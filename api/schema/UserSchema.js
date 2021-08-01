@@ -32,6 +32,7 @@ UserTC.addResolver({
     resolve: async ({ source, args, context, info }) => {
         let authenticationResponse = await authenticateTicket(args.ticket);
         if (authenticationResponse.success) {
+            console.log("auth success!")
             let user; // this will be used as the return object
 
             // Get the netid of the authenticated user
@@ -52,7 +53,7 @@ UserTC.addResolver({
             // Update the user's token and get their updated information
             return await User.findByIdAndUpdate(user._id, { token: token }, { new: true });
         } else {
-            console.log("Bad auth!");
+            console.log("Bad auth!", authenticationResponse.Error);
             throw Error("Bad authentication.");
         }
     }
@@ -65,6 +66,7 @@ UserTC.addResolver({
     resolve: async ({ source, args, context, info }) => {
         let verificationResponse = await verifyToken(args.token);
         if (verificationResponse.success) {
+            console.log("verify success!")
             let { id } = verificationResponse;
             // Return logged in user's info
             return await User.findById(id);
