@@ -190,6 +190,7 @@ const Profile = () => {
     if (error) return `Error! ${error.message}`;
 
     const {userOne: user} = userData;
+    if (!user) return <div>Invalid User ID</div>
 
     function goBack() {
         window.history.back();
@@ -207,7 +208,7 @@ const Profile = () => {
             <ProfileCard>
                 <UserPic></UserPic>
                 <UserName>{user.firstName + ' ' + user.lastName}</UserName>
-                <PhoneNumber>(123)456-7890</PhoneNumber>
+                <PhoneNumber>{user.phone ? user.phone : 'N/A'}</PhoneNumber>
                 <TextBox>
                     <MailBox></MailBox>
                     <StyledText>{user.netid}@rice.edu</StyledText>
