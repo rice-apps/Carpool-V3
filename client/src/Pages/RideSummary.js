@@ -178,6 +178,21 @@ const OneRiderContainer = styled.div`
   width: 280px;
 `
 
+const RiderText = styled.div`
+  position: relative;
+  left: 20.23%;
+  right: 12.24%;
+  top: -30px;
+  height: 0px;
+`
+
+const TextContainer = styled.div`
+  position: absolute;
+  left: 20.23%;
+  right: 12.24%;
+  top: 40.25%;
+`
+
 const ButtonDiv = styled.button`
   position: absolute;
   left: 6%;
@@ -293,21 +308,27 @@ const RideSummary = () => {
           <IoPersonCircleSharpDiv>
             <IoPersonCircleSharp></IoPersonCircleSharp>
           </IoPersonCircleSharpDiv>
-          {ride.owner.firstName}&nbsp;{ride.owner.lastName}
+          <TextContainer>
+            {ride.owner.firstName}&nbsp;{ride.owner.lastName}
+          </TextContainer>
         </OwnerDiv>
         <RidersComponents>
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.map((person) => (
-            <OneRiderContainer>
-              <div key={person.netid}>
-                <IoPersonCircleSharpDiv>
-                  <IoPersonCircleSharp></IoPersonCircleSharp>
-                </IoPersonCircleSharpDiv>
-                {person.firstName}&nbsp;{person.lastName}
-              </div>
-            </OneRiderContainer>
+          {ride.riders.slice(0, 3).map((person) => (
+            <div>
+              <OneRiderContainer>
+                <div key={person.netid}>
+                  <IoPersonCircleSharpDiv>
+                    <IoPersonCircleSharp></IoPersonCircleSharp>
+                  </IoPersonCircleSharpDiv>
+                </div>
+                <RiderText>
+                  {person.firstName}&nbsp;{person.lastName}
+                </RiderText>
+              </OneRiderContainer>
+            </div>
           ))}
         </RidersComponents>
       </RidersDiv>
