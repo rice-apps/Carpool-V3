@@ -4,9 +4,14 @@ import { gql, useQuery } from '@apollo/client'
 // import { graphql } from 'react-apollo'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
-import { IoLocationSharp, IoShareSocialSharp } from 'react-icons/io5'
+import {
+  IoLocationSharp,
+  IoShareSocialSharp,
+  IoPersonCircleSharp,
+} from 'react-icons/io5'
 import { IoIosArrowBack } from 'react-icons/io'
-import { AiTwotoneCalendar } from 'react-icons/ai'
+import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
+import moment from 'moment'
 
 //styling
 const SeatsLeftDiv = styled.div`
@@ -25,6 +30,7 @@ const SeatsLeftDiv = styled.div`
   font-style: normal;
   line-height: 11px;
 `
+
 const SeatsLeftNum = styled.div`
   position: absolute;
   left: -64.3%;
@@ -40,10 +46,8 @@ const SeatsLeftNum = styled.div`
 const SeatsLeftText = styled.div`
   position: absolute;
   left: 35%;
-  right: 25.93%;
+  right: 23.93%;
   top: 30%;
-  bottom: 12%;
-
   font-weight: 300;
   font-size: 11px;
   line-height: 11px;
@@ -53,26 +57,26 @@ const SocialIcon = styled.div`
   left: 70%;
   right: 0%;
   top: 30%;
-  bottom: 0%;
 `
 
 const RideSummaryDiv = styled.div`
-  margin-top: 4vh;
+  padding-top: 4vh;
   padding-left: 2vh;
   color: #2075d8;
-  font-family: Josefin Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 18px;
-  text-align: left;
+  background: #f4f6f9;
 `
 
 const LocationDiv = styled.div`
-  margin-top: 10vh;
-  // text-align: center;
-  // padding-left: 2vh;
-  color: #00004d;
+  height: 190px;
+  background: #ffffff;
+  border-radius: 35px;
+  right: 90%;
+  margin-left: 2.2vh;
+  margin-right: 2.2vh;
+`
+const LocationText = styled.div`
+  margin-top: 15vh;
+  padding: 10% 0;
   font-size: 3 vh;
   font-family: Josefin Sans;
   font-style: normal;
@@ -82,35 +86,123 @@ const LocationDiv = styled.div`
   text-align: center;
 `
 
-const RidersDiv = styled.div`
-  position: absolute;
-  height: 213px;
-  left: 15px;
-  right: 15px;
-  top: 296px;
-  margin-top: 4vh;
-  text-align: center;
-  padding-left: 2vh;
-  font-family: Monaco;
-  font-size: 1.5 vh;
-  background: rgba(228, 233, 241, 0.31);
-  border-radius: 9px;
-`
-
 const DateDiv = styled.div`
-  margin-top: 4vh;
-  text-align: center;
-  padding-left: 2vh;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 16px;
-  display: flex;
-  color: #002140;
 `
 
-//graphql
+const CalendarIcon = styled.div`
+  position: absolute;
+  left: 25%;
+  right: 0%;
+  top: 40%;
+`
+const ClockIcon = styled.div`
+  position: absolute;
+  left: 55%;
+  right: 0%;
+  top: 40%;
+`
+const HostDiv = styled.div`
+  position: absolute;
+  left: 13%;
+  top: 10%;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 12px;
+  color: rgba(187, 199, 221, 0.91);
+`
+
+const RidersDiv = styled.div`
+  position: absolute;
+  height: 213px;
+  left: 0px;
+  right: 0px;
+  top: 339px;
+  margin-top: 4vh;
+  text-align: center;
+  padding-left: 2vh;
+  font-family: Monaco;
+  font-size: 1.5 vh;
+  background: #f4f6f9;
+`
+const OwnerDiv = styled.div`
+  position: absolute;
+  left: 10.23%;
+  right: 10.24%;
+  top: 23.25%;
+  bottom: 47%;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 15px;
+  color: #002140;
+  background: #ffffff;
+  border-radius: 30px 17px 17px 30px;
+  text-align: left;
+  margin: 10px;
+`
+const LineDiv = styled.div`
+  //can't set the color
+`
+
+const RidersComponents = styled.div`
+  position: absolute;
+  left: 8.23%;
+  right: 12.24%;
+  top: 58.25%;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: left;
+  color: #002140;
+  border-radius: 30px 17px 17px 30px;
+  background: #f4f6f9;
+`
+const IoPersonCircleSharpDiv = styled.span`
+  font-size: 43px;
+`
+
+const OneRiderContainer = styled.div`
+  background: #ffffff;
+  border-radius: 30px 17px 17px 30px;
+  margin: 15px;
+  width: 280px;
+`
+
+const ButtonDiv = styled.button`
+  position: absolute;
+  left: 6%;
+  right: 8%;
+  top: 88%;
+  bottom: 15%;
+  color: #ffffff;
+  background: #2075d8;
+  text-align: center;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 8px;
+  width: 330px;
+  height: 48px;
+  onclick='joinRide()';
+`
+
+const AllDiv = styled.div`
+  background: #f4f6f9;
+  height: 100vh;
+`
+
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
     rideOne(filter: { _id: $id }) {
@@ -125,9 +217,14 @@ const GET_RIDE = gql`
       }
       owner {
         netid
+        firstName
+        lastName
       }
       riders {
         netid
+        firstName
+        lastName
+        phone
       }
     }
   }
@@ -152,14 +249,19 @@ const RideSummary = () => {
   if (!data) return <p>No data...</p>
 
   const { rideOne: ride } = data
-  const time = ride.departureDate
-  // const formattedTime = time.format('MMMM Do YYYY, h:mm:ss a')
-  // console.log(formattedTime)
+  const time = moment(ride.departureDate)
+  const mon = time.format('MMM').toString()
+  const day = time.format('DD').toString()
+  const hour = time.format('hh:mm a')
+
+  const joinRide = () => {
+    console.log('joinRide clicked')
+  }
 
   return (
-    <div>
+    <AllDiv>
       <RideSummaryDiv>
-        <IoIosArrowBack></IoIosArrowBack>&nbsp;Ride Summary
+        <IoIosArrowBack></IoIosArrowBack>
       </RideSummaryDiv>
       <SeatsLeftDiv>
         <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
@@ -169,15 +271,48 @@ const RideSummary = () => {
         </SocialIcon>
       </SeatsLeftDiv>
       <LocationDiv>
-        <IoLocationSharp></IoLocationSharp>&nbsp;
-        {ride.departureLocation.title}&nbsp;
-        <BsArrowRight></BsArrowRight>&nbsp;
-        {ride.arrivalLocation.title}
+        <LocationText>
+          <IoLocationSharp></IoLocationSharp>&nbsp;
+          {ride.departureLocation.title}&nbsp;
+          <BsArrowRight></BsArrowRight>&nbsp;
+          {ride.arrivalLocation.title}
+        </LocationText>
+        <DateDiv>
+          <CalendarIcon>
+            <AiTwotoneCalendar></AiTwotoneCalendar> {mon}-{day}
+          </CalendarIcon>
+          <ClockIcon>
+            <AiFillClockCircle></AiFillClockCircle> {hour}
+          </ClockIcon>
+        </DateDiv>
       </LocationDiv>
-      <DateDiv>{ride.departureDate}</DateDiv>
-      <AiTwotoneCalendar></AiTwotoneCalendar>
-      <RidersDiv> Riders {ride.riders.firstName}</RidersDiv>
-    </div>
+
+      <RidersDiv>
+        <HostDiv>Host</HostDiv>
+        <OwnerDiv>
+          <IoPersonCircleSharpDiv>
+            <IoPersonCircleSharp></IoPersonCircleSharp>
+          </IoPersonCircleSharpDiv>
+          {ride.owner.firstName}&nbsp;{ride.owner.lastName}
+        </OwnerDiv>
+        <RidersComponents>
+          <LineDiv>
+            <hr></hr>
+          </LineDiv>
+          {ride.riders.map((person) => (
+            <OneRiderContainer>
+              <div key={person.netid}>
+                <IoPersonCircleSharpDiv>
+                  <IoPersonCircleSharp></IoPersonCircleSharp>
+                </IoPersonCircleSharpDiv>
+                {person.firstName}&nbsp;{person.lastName}
+              </div>
+            </OneRiderContainer>
+          ))}
+        </RidersComponents>
+      </RidersDiv>
+      <ButtonDiv onClick='joinRide()'>Join Ride</ButtonDiv>
+    </AllDiv>
   )
 }
 
