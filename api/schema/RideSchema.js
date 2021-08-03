@@ -96,6 +96,7 @@ const RideQuery = {
   rideMany: RideTC.getResolver('findMany'),
 }
 
+// TODO: Add [authMiddleware] back to all getResolver calls once login is implemented!
 const RideMutation = {
   rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]), // only a registered user can create a ride
   rideUpdateOne: RideTC.getResolver('updateOne', [authMiddleware]), // only a registered user can edit the ride completely

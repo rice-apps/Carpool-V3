@@ -18,8 +18,8 @@ const SeatsLeftDiv = styled.div`
   position: absolute;
   left: 68.36%;
   right: 0%;
-  top: 5.03%;
-  bottom: 88.04%;
+  top: 12.03%;
+  bottom: 82.04%;
   background: rgba(187, 218, 255, 0.22);
   border-radius: 5px 0px 0px 5px;
 
@@ -87,6 +87,7 @@ const LocationText = styled.div`
 `
 
 const DateDiv = styled.div`
+  position: relative;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
@@ -109,7 +110,7 @@ const ClockIcon = styled.div`
 const HostDiv = styled.div`
   position: absolute;
   left: 13%;
-  top: 10%;
+  top: 15%;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
@@ -123,7 +124,7 @@ const RidersDiv = styled.div`
   height: 213px;
   left: 0px;
   right: 0px;
-  top: 339px;
+  top: 420px;
   margin-top: 4vh;
   text-align: center;
   padding-left: 2vh;
@@ -316,7 +317,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.slice(0, 3).map((person) => (
+          {ride.riders.slice(0, 2).map((person) => (
             <div>
               <OneRiderContainer>
                 <div key={person.netid}>

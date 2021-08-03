@@ -5,6 +5,10 @@ import Login from '../Pages/Login.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import RideSummary from '../Pages/RideSummary.js'
+import { BrowserRouter as Router } from 'react-router-dom'
+import Navbar from '../components/Navbar'
+import { withRouter } from 'react-router'
+import CreateRide from '../Pages/CreateRide.js'
 
 // import RideSummary from '../Pages/RideSummary.js'
 /**
@@ -86,22 +90,23 @@ const PrivateRoute = ({ children, ...rest }) => {
  */
 export const Routes = () => {
   return (
-    <Switch>
-      <Route path={'/login'}>
-        <Login />
-      </Route>
-      <PrivateRoute path={'/auth'}>
-        <Auth />
-      </PrivateRoute>
-      <Route path={'/home'}>
-        <Home />
-      </Route>
-      <Route path={'/ridesummary/:id'}>
-        <RideSummary />
-      </Route>
-      <Route path={'/'}>
-        <Home />
-      </Route>
-    </Switch>
+    <div>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path={'/login'} component={withRouter(Login)} />
+          <Route path={'/'} exact component={withRouter(Home)} />
+          <Route path={'/home'} component={withRouter(Home)} />
+          <PrivateRoute
+            path={'/create-ride'}
+            component={withRouter(CreateRide)}
+          />
+          <Route path={'/ridesummary/:id'}>
+            <RideSummary />
+          </Route>
+          <Route path={'/auth'} component={withRouter(Auth)} />
+        </Switch>
+      </Router>
+    </div>
   )
 }
