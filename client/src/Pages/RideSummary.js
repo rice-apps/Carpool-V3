@@ -67,15 +67,17 @@ const RideSummaryDiv = styled.div`
 `
 
 const LocationDiv = styled.div`
+  position: absolute;
+  top: 25%;
   height: 190px;
   background: #ffffff;
   border-radius: 35px;
-  right: 90%;
+  // right: 90%;
   margin-left: 2.2vh;
   margin-right: 2.2vh;
 `
 const LocationText = styled.div`
-  margin-top: 15vh;
+  position: relative;
   padding: 10% 0;
   font-size: 3 vh;
   font-family: Josefin Sans;
@@ -124,7 +126,7 @@ const RidersDiv = styled.div`
   height: 213px;
   left: 0px;
   right: 0px;
-  top: 420px;
+  top: 360px;
   margin-top: 4vh;
   text-align: center;
   padding-left: 2vh;
@@ -198,7 +200,7 @@ const ButtonDiv = styled.button`
   position: absolute;
   left: 6%;
   right: 8%;
-  top: 88%;
+  top: 90%;
   bottom: 15%;
   color: #ffffff;
   background: #2075d8;
@@ -317,7 +319,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.slice(0, 2).map((person) => (
+          {ride.riders.slice(0, 3).map((person) => (
             <div>
               <OneRiderContainer>
                 <div key={person.netid}>

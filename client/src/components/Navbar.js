@@ -24,6 +24,7 @@ const MenuBarsLink = styled(Link)`
 `
 
 const NavMenu = styled.nav`
+  z-index: 9999;
   left: 0;
   transition: 350ms;
   background-color: #152238;
