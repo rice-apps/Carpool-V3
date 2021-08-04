@@ -96,19 +96,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
         }
     })(Button);
 
-    // const TextBox = styled.div`
-    //     display: flex; 
-    //     justify-content: center;
-    //     align-items: center;
-    //     margin-top: 25px;
-    //     width: 75vw;
-    //     height: 10vh;
-    //     border-radius: 9px;
-
-    //     background: rgba(187, 218, 255, 0.22);
-        
-    // `;
-
     const StyledText = styled.p`
         display: flex; 
         padding: 0px 0px 0px 10px;
