@@ -185,19 +185,19 @@ const Create = ({onCreate}) => {
 
     const seats = [
         {
-            value: 1
-        }, 
-        {
-            value: 2
-        }, 
-        {
-            value: 3
-        }, 
-        {
             value: 4
         }, 
         {
             value: 5
+        }, 
+        {
+            value: 6
+        }, 
+        {
+            value: 7
+        }, 
+        {
+            value: 8
         }
     ]
 
@@ -205,8 +205,9 @@ const Create = ({onCreate}) => {
     const [startLoc, setStartLoc] = useState('')
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date())
-    const [passengers, setPassengers] = useState(3)
+    const [passengers, setPassengers] = useState(4)
     const [confirmation, setConfirmation] = useState(false)
+    const [riders, setRiders] = useState([])
 
     // const textfield = styled(TextField)`
     // display: flex;
@@ -229,25 +230,29 @@ const Create = ({onCreate}) => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        console.log("Submitted!")
+        setRiders([user._Id])
 
         if (!startLoc || !endLoc) { 
             addToast("Please fill in all fields.", { appearance: 'error' });
             return
-        }
+        }   
 
         if (!confirmation) {
             addToast("You must agree to lead the ride to create this ride.", { appearance: 'error' });
             return
         }
 
-        onCreate({ startLoc, endLoc, date, passengers, confirmation })
+        // Pass arguments back to the top mutation queue
+        onCreate({ startLoc, endLoc, date, passengers, confirmation, riders })
+        
+        console.log("Submitted!")
 
         setStartLoc('')
         setEndLoc('')
         setDate(new Date())
-        setPassengers(3)
+        setPassengers(4)
         setConfirmation(false)
+        setRiders([])
     }
 
     // OnChange Functions 
@@ -296,11 +301,34 @@ const Create = ({onCreate}) => {
         }
     }`
 
-    const {data: locationData, loading, error} = useQuery(GET_LOCATIONS);
+    // Access Current User's MongoID with GraphQL Query
+
+    const GET_USER = gql`
+    query GetUserInfo ($netID: String)
+    {
+        userOne (filter:{netid : $netID}) {
+                    _id
+        }
+    }`
+
+    const { data: locationData } = useQuery(GET_LOCATIONS);
+
+    const { data: userData, loading, error } = useQuery(GET_USER, 
+        {
+            variables: 
+            {
+              netID: localStorage.getItem('netid'),
+            }
+        }
+    );
+
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
 
     const {locationMany: locations} = locationData
+    const {userOne: user} = userData;
+
+    if (!user) return <div>Invalid User ID</div>
 
     // Form Construction
 
