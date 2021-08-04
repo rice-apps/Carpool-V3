@@ -257,21 +257,17 @@ const Create = ({onCreate}) => {
 
     const onStartLocChange = (e) => {
         e.preventDefault()
-
-        console.log("Changed Start Locations!")
-        console.log("It is now at ", e.target.key, ' and the ID is ', e.target.value)
-
         setStartLoc(e.target.value);
+        console.log("Changed Start Locations!")
+        console.log("It is now at location with the ID of ", e.target.value)
     };
 
 
     const onEndLocChange = (e) => {
         e.preventDefault()
-
-        console.log("Changed End Locations!")
-        console.log("It is now at ", e.target.key, ' and the ID is ', e.target.value)
-
         setEndLoc(e.target.value);
+        console.log("Changed End Locations!")
+        console.log("It is now at location with the ID of ", e.target.value)
     };
 
     const onCheck = (e) => {
