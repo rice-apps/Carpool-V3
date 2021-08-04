@@ -169,10 +169,12 @@ refetchLoc()
   return (
     <React.Fragment>
     <FormOnly resultRides={resultRides} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} testLocations={PossibleLocations}/>
+    {/*}
     <Button onClick={() => {getRidesCall()
     .then((res) => {console.log("getRidesCall() res=", res)})
     .catch((err) => {console.log("getRidesCall() err=", err)})
     }}>Click Me to run getRidesCall() from Form.js</Button>
+  */}
     </React.Fragment>
   )
 }

@@ -159,7 +159,8 @@ const Form = styled.form`
     flex-direction: column;
     padding: 40px;
     border-radius: 25px;
-    background: #718fb0;
+    background: #E4E9F187;
+    ;
 
 
 `;

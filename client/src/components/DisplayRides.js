@@ -44,7 +44,8 @@ const ridesPossible = [];
 const locsPossible = [];
 
 const GridT = styledM(Grid)({
-        backgroundColor: '#eeeeee',
+        backgroundColor: 'clear',
+        
 })
 
 const GridInside = styledM(Grid)({
@@ -74,19 +75,31 @@ const isEqualRides = (ride1, ride2) => {
 const handleClickCreateRide = () => {
     console.log("handleClickCreateRide() run");
 }
+const handleClickSearchAgain = () => {
+    window.scrollTo(0, 0);
+}
 
 const displayRideButtons = () => {
     return <Grid container spacing={2} direction="column" alignItems="center" style={{fontFamily: 'Josefin Sans', marginBottom: '5vh'}}>
-        <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd'}}>
-            no more results
+        <Grid item xs={11} justify="center" align='center' style={{paddingTop: "3vh", display: 'flex', alignItems: 'center'}}>
+            End of Results
         </Grid>
-        <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
-            Continue searching
+        <Grid container spacing = {1} direction="row" alignItems="center"  justifyContent='space-evenly'>
+        <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
+
+        <Link to="/search">
+        <Button
+            
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => handleClickSearchAgain()}> Search Again </Button>
+        </Link>
         </Grid>
-        <Grid item xs={11} justify="center" align='center' style={{display: 'flex', alignItems: 'center', backgroundColor: '#ffdddd', fontSize: '2vw'}}>
+        <Grid item xs={1} justify="center" align='center' style={{display: 'flex', alignItems: 'center',  fontSize: '5vw'}}>
             OR
         </Grid>
-        <Grid item xs justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
+        <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
         <Link to="/create">
         <Button
             
@@ -95,6 +108,7 @@ const displayRideButtons = () => {
             color="primary"
             onClick={() => handleClickCreateRide()}> Create New Ride </Button>
         </Link>
+        </Grid>
         </Grid>
        
     </Grid>
@@ -129,7 +143,7 @@ class DisplayRides extends Component {
 
         const date = new Date(ride.departureDate);
 
-        return <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
+        return  <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
         <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
   <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
       <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF', borderRadius: '5px'}}>
@@ -202,13 +216,16 @@ class DisplayRides extends Component {
         return <GridT container spacing={5}  direction="column"
         alignItems="center">
             {
+            <Box style={{fontSize: "5vw", paddingTop: '3vh' }}>Matching Rides: </Box>
+            }
+            {
             ridesT.length>0 && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
-            ridesT.length==0 && <Box style={{fontSize: "1vw"}}>EITHER YOU HAVE NOT CLICKED THE SUBMIT BUTTON YET OR NO RIDES MATCHED.</Box>
+            ridesT.length==0 
             }
             {
-            <div>Divider</div>
+            <div style = {{fontSize: "5vw"}}>All Rides:</div>
             }
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
