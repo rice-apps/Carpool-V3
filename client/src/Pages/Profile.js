@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router';
 import { Button } from '@material-ui/core';
 import { gql, useQuery } from "@apollo/client";
+import { useToasts } from "react-toast-notifications";
 import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import id from 'date-fns/esm/locale/id';
 
     const ProfileCard = styled.div`
         display: flex;
@@ -166,6 +166,8 @@ const Profile = () => {
 
     const {id} = useParams()
 
+    const { addToast } = useToasts();
+
     const GET_USER = gql`
     query GetUserInfo ($netID: String)
     {
@@ -208,12 +210,14 @@ const Profile = () => {
             <ProfileCard>
                 <UserPic></UserPic>
                 <UserName>{user.firstName + ' ' + user.lastName}</UserName>
-                <PhoneNumber>{user.phone ? user.phone : 'N/A'}</PhoneNumber>
-                <TextBox>
+                <PhoneNumber>{user.phone ? user.phone : 'Phone Number Unavailable'}</PhoneNumber>
+                <TextBox
+                    onClick={() => {navigator.clipboard.writeText(user.netid + '@rice.edu').then(addToast("Email Copied to Clipboard!", { appearance: 'success'}))}}>
                     <MailBox></MailBox>
                     <StyledText>{user.netid}@rice.edu</StyledText>
                 </TextBox>
                 <TextBox
+                    onClick={() => {navigator.clipboard.writeText('@comp182Luay').then(addToast("Venmo ID Copied to Clipboard!", { appearance: 'success'}))}}
                 >
                     <StyledText2>Venmo</StyledText2>
                     <StyledText>@comp182Luay</StyledText>
