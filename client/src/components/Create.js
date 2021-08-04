@@ -207,7 +207,6 @@ const Create = ({onCreate}) => {
     const [date, setDate] = useState(new Date())
     const [passengers, setPassengers] = useState(4)
     const [confirmation, setConfirmation] = useState(false)
-    const [riders, setRiders] = useState([])
 
     // const textfield = styled(TextField)`
     // display: flex;
@@ -229,8 +228,8 @@ const Create = ({onCreate}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-
-        setRiders([user._Id])
+        const riders = [user._id]
+        console.log('Riders is set to... ', riders)
 
         if (!startLoc || !endLoc) { 
             addToast("Please fill in all fields.", { appearance: 'error' });
@@ -252,7 +251,6 @@ const Create = ({onCreate}) => {
         setDate(new Date())
         setPassengers(4)
         setConfirmation(false)
-        setRiders([])
     }
 
     // OnChange Functions 

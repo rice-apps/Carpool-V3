@@ -95,13 +95,8 @@ export const Routes = () => {
           <Route path={'/login'} component={withRouter(Login)} />
           <Route path={'/'} exact component={withRouter(Home)} />
           <Route path={'/home'} component={withRouter(Home)} />
-<<<<<<< HEAD
-          <Route path={'/create-ride'} component={withRouter(CreateRide)} />
-          <PrivateRoute path={'/auth'} component={withRouter(Auth)} />
-=======
           <PrivateRoute path={'/create-ride'} component={withRouter(CreateRide)} />
           <Route path={'/auth'} component={withRouter(Auth)} />
->>>>>>> 15fd81139fd91716aa9f72b6884df2923f2eb4f2
         </Switch>
       </Router>
     </div>
