@@ -1,14 +1,14 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import RideSummary from '../Pages/RideSummary.js'
+import CreateRide from '../Pages/CreateRide.js';
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { withRouter } from 'react-router'
-import CreateRide from '../Pages/CreateRide.js'
 
 // import RideSummary from '../Pages/RideSummary.js'
 /**

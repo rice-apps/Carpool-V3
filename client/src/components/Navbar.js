@@ -20,7 +20,6 @@ const MenuBarsLink = styled(Link)`
   margin-left: 2rem;
   font-size: 2rem;
   background: none;
-  to='#'
 `
 
 const NavMenu = styled.nav`
