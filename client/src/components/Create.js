@@ -228,8 +228,8 @@ const Create = ({onCreate}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        const riders = [user._id]
-        console.log('Riders is set to... ', riders)
+        const users = [user._id]
+        console.log('Riders is set to... ', users)
 
         if (!startLoc || !endLoc) { 
             addToast("Please fill in all fields.", { appearance: 'error' });
@@ -242,7 +242,7 @@ const Create = ({onCreate}) => {
         }
 
         // Pass arguments back to the top mutation queue
-        onCreate({ startLoc, endLoc, date, passengers, confirmation, riders })
+        onCreate({ startLoc, endLoc, date, passengers, confirmation, users })
         
         console.log("Submitted!")
 
