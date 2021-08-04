@@ -29,10 +29,17 @@ const CreateRide = () => {
         CREATE_RIDE
     );
 
+<<<<<<< HEAD
 
     const addRide = (ride) => {
         console.log("Ride Create: ", ride);
         console.log("The date is ", ride.date);
+=======
+    const addRide = (ride) => {
+        console.log("Ride Create: ", ride);
+        console.log("The date is ", ride.date);
+        console.log("User: ", localStorage.getItem('netid'))
+>>>>>>> 15fd81139fd91716aa9f72b6884df2923f2eb4f2
         createRide({
             variables: ride
         })
