@@ -45,7 +45,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
         width: 220px;
         height: 220px;
-        background-image: url("https://profiles.rice.edu/sites/g/files/bxs3881/files/2020-08/LuayNakhleh600x600.jpg");
+        background-image: url("https://www.kindpng.com/picc/m/229-2295555_not-my-art-pikachu-is-eating-pocky-kawaii.png");
         border-radius: 50%;
         background-size: cover;
     `;
@@ -207,7 +207,7 @@ const Profile = () => {
                     onClick={() => {navigator.clipboard.writeText('@comp182Luay').then(addToast("Venmo ID Copied to Clipboard!", { appearance: 'success'}))}}
                 >
                     <StyledText2>Venmo</StyledText2>
-                    <StyledText>@comp182Luay</StyledText>
+                    <StyledText>@kaihung7</StyledText>
                 </TextBox>
             </ProfileCard>
         </div>
