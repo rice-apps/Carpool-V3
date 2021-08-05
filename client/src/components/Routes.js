@@ -5,10 +5,11 @@ import Login from '../Pages/Login.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import Profile from '../Pages/Profile.js'
-import CreateRide from '../Pages/CreateRide.js';
+import CreateRide from '../Pages/CreateRide.js'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { withRouter } from 'react-router'
+import RideSummary from '../Pages/RideSummary.js'
 
 /**
  * Requests to verify the user's token on the backend
@@ -97,7 +98,13 @@ export const Routes = () => {
           <Route path={'/profile/:id'} component={withRouter(Profile)} />
           <Route path={'/'} exact component={withRouter(Home)} />
           <Route path={'/home'} component={withRouter(Home)} />
-          <PrivateRoute path={'/create-ride'} component={withRouter(CreateRide)} />
+          <PrivateRoute
+            path={'/create-ride'}
+            component={withRouter(CreateRide)}
+          />
+          <Route path={'/ridesummary/:id'}>
+            <RideSummary />
+          </Route>
           <Route path={'/auth'} component={withRouter(Auth)} />
         </Switch>
       </Router>
