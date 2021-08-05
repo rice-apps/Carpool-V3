@@ -4,6 +4,7 @@ import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
+import Profile from '../Pages/Profile.js'
 import CreateRide from '../Pages/CreateRide.js';
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../components/Navbar'
@@ -93,6 +94,7 @@ export const Routes = () => {
         <Navbar />
         <Switch>
           <Route path={'/login'} component={withRouter(Login)} />
+          <Route path={'/profile/:id'} component={withRouter(Profile)} />
           <Route path={'/'} exact component={withRouter(Home)} />
           <Route path={'/home'} component={withRouter(Home)} />
           <PrivateRoute path={'/create-ride'} component={withRouter(CreateRide)} />
