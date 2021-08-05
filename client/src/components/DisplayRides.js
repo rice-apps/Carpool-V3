@@ -225,8 +225,8 @@ class DisplayRides extends Component {
             (isValidRidesT) && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
-            (!isValidRidesT) && <Grid item xs={11} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
-                <Box width={"100%"} height={"100%"} style={{fontSize: "3vw", backgroundColor: "#ff0000"}}>
+            (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff", marginTop: "3vw", marginBottom: "3vw"}}>
+                <Box width={"100%"} height={"100%"} style={{fontSize: "3vw"}}>
             Either you have not clicked the submit button yet or no rides matched.
             </Box>
             </Grid>

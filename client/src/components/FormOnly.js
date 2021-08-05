@@ -133,7 +133,7 @@ const handleGetRides = async () => {
 
   console.log("ridesPossible=", ridesPossible);
   if (ridesPossible) {
-    this.displayRef.setRidesPossible(ridesPossible);
+    displayRef.setRidesPossible(ridesPossible);
   } else {
     console.log("Fetch error with this.props.getRidesCall()");
   }
@@ -432,7 +432,16 @@ const ColorButton = withStyles({
           ridesPossible = res.data.rideMany;
           console.log("in getRidesRefetch.then(), ridesPossible=", ridesPossible);
           //ridesPossibleForm = ridesPossible;
-          displayRef.current.setRidesPossible(ridesPossible);
+
+          const ridesPossibleNotBefore = ridesPossible.filter((ride) => {
+            const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
+            //console.log("rideDate=" + ride.departureDate + " rideDateAfterCurrentDate=" + rideDateAfterCurrentDate);
+            return rideDateAfterCurrentDate;
+          });
+          
+          setRidesPossibleForm(ridesPossibleNotBefore);
+          displayRef.current.setRidesPossible(ridesPossibleNotBefore);
+
         })
         .catch((err) => {console.log("getRidesRefetch() err=", err);});
 
