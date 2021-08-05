@@ -131,20 +131,6 @@ title: "Will Rice College",
 address: "6330 Main St, Houston, TX 77005, USA"
 }];
 
-/*
-refetchLoc()
-.then((res) => {
-  PossibleLocations = res.data.locationMany;
-  console.log("getLocsRefetch().then() PossibleLocations=", PossibleLocations);
-})
-.catch((err) => {
-  console.log("getLocsRefetch() err=", err);
-})
-*/
-
-  //console.log("First time on Form.js, getRides=", dataRide);
-  //console.log("errorRide=", errorRide);
-
   const getRidesCall = async () => {
     console.log("getRidesCall() run");
 
@@ -154,14 +140,6 @@ refetchLoc()
     } catch (err) {
       console.log("getRidesCall catch err=", err);
     }
-
-    /*
-        refetchRide()
-        .then((res) => {console.log("res=", res); ridesPossible = res;})
-        .catch((err) => {
-          console.log("error=", err);
-        });
-        */
 
     return null;
   }

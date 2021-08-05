@@ -79,7 +79,7 @@ const FormOnly = (props) => {
     endLoc: PossibleLocations
   };
 
-  
+  const currentDate = new Date();
 
   const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
   //let ridesPossibleForm = [];
@@ -89,10 +89,15 @@ const FormOnly = (props) => {
     props.getRidesRefetch()
     .then((res) => {
       console.log("in useEffect refetchRide().then() res.data.rideMany=", res.data.rideMany);
-      //ridesPossibleForm = res.data.rideMany;
-      setRidesPossibleForm(res.data.rideMany);
-      displayRef.current.setRidesPossible(res.data.rideMany);
-      //props.updateResultRides(res.data.rideMany);
+
+      const ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
+        const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
+        //console.log("rideDate=" + ride.departureDate + " rideDateAfterCurrentDate=" + rideDateAfterCurrentDate);
+        return rideDateAfterCurrentDate;
+      });
+      
+      setRidesPossibleForm(ridesPossibleNotBefore);
+      displayRef.current.setRidesPossible(ridesPossibleNotBefore);
     })
     .catch((err) => {
       console.log("err=", err);

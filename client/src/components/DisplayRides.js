@@ -186,12 +186,15 @@ class DisplayRides extends Component {
 
     displayRides(ridesT)  {
         console.log("ridesT=", ridesT);
+        console.log("ridesT.length=", ridesT.length);
         console.log("Typeof(ridesT)=", typeof(ridesT))
         //return ridesT[0].startLoc;
         
         if (ridesT == null || ridesT == undefined) {
             return null;
         }
+
+        const isValidRidesT = (ridesT!=null && ridesT!=undefined && ridesT.length>0);
 
         /*
  direction="column"
@@ -219,10 +222,14 @@ class DisplayRides extends Component {
             <Box style={{fontSize: "5vw", paddingTop: '3vh' }}>Matching Rides: </Box>
             }
             {
-            ridesT.length>0 && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
+            (isValidRidesT) && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
-            ridesT.length==0 
+            (!isValidRidesT) && <Grid item xs={11} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
+                <Box width={"100%"} height={"100%"} style={{fontSize: "3vw", backgroundColor: "#ff0000"}}>
+            Either you have not clicked the submit button yet or no rides matched.
+            </Box>
+            </Grid>
             }
             {
             <div style = {{fontSize: "5vw"}}>All Rides:</div>
