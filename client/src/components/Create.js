@@ -43,7 +43,6 @@ const Form = styled.form`
     align-items: center;
     align-items: space-between;
     flex-direction: column;
-
     padding: 40px;
 `;
 
@@ -168,13 +167,11 @@ const ColorButton = withStyles({
     display: flex;
     justify-content: center;
     align-items: center;
-
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
     font-size: 2vh;
     line-height: 2vh;
-
     color: #0B3669;
     padding: 10px 0px 0px 0px;
   `;
