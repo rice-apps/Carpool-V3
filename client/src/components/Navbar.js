@@ -24,6 +24,7 @@ const MenuBarsLink = styled(Link)`
 `
 
 const NavMenu = styled.nav`
+  z-index: 9999;
   left: 0;
   transition: 350ms;
   background-color: #152238;
@@ -107,7 +108,7 @@ function Navbar() {
                   <NavText>
                     <li key={index}>
                       <Link to={item.path}>
-                        {item.icon}
+                        {item.icon}&nbsp;
                         {item.title}
                       </Link>
                     </li>
