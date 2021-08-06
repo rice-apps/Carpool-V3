@@ -24,6 +24,7 @@ const Home = () => {
     return (
         <div className="App">
         <MainHeader>
+            
             <img src={logo} className="App-logo" alt="logo" />
             <p>
                 Edit <code>src/Pages/Hoome/index.js</code> and save to reload.
