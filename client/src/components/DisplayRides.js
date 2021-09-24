@@ -1,29 +1,19 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import {monthToStr} from '../Pages/Search.js';
-
-import { styled as styledM } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import {
+    GridT,
+    BoxRide
+} from './DisplayRides.styles'
 
 
 const ridesPossible = [];
 const locsPossible = [];
-
-const GridT = styledM(Grid)({
-        backgroundColor: 'clear',
-})
-
-const BoxRide = styledM(Box)({
-    width: '10vw',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-})
 
 const isEqualRides = (ride1, ride2) => {
     if (ride1._id == null || ride2._id == null) {
