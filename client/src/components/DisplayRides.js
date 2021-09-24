@@ -182,7 +182,6 @@ class DisplayRides extends Component {
     
         setRides(ridesTest) {
         console.log("setRides() run");
-        //console.log("monthToStr=", monthToStr);
 
         this.setState({
             ...this.state,
