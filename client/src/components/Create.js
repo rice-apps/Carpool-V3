@@ -205,24 +205,6 @@ const Create = ({onCreate}) => {
     const [passengers, setPassengers] = useState(4)
     const [confirmation, setConfirmation] = useState(false)
 
-    // const textfield = styled(TextField)`
-    // display: flex;
-    // flex-direction: column;
-    // align-items: flex-start;
-    // padding: 8px 16px;
-
-    // position: static;
-    // width: 264px;
-    // height: 36px;
-    // left: 0px;
-    // top: 0px;
-
-    // background: #F4F6F9;
-    // border-radius: 8px;
-    // `;
-
-    // On Submitting the Fields aka. Button is Clicked...
-
     const onSubmit = (e) => {
         e.preventDefault()
         const users = [user._id]

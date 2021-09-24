@@ -1,55 +1,20 @@
-import React, {Component} from 'react'
-import { useHistory, Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
+import {monthToStr} from '../Pages/Search.js';
 
-import {monthToStr} from '../Pages/Search.js'
-//import ridesPossible from './Form.js'
-
-import styled from 'styled-components'
 import { styled as styledM } from '@material-ui/core/styles';
-
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
-/*
-const useStylesContainer = makeStyles(theme => ({
-    root: {
-      height: '100vh',
-    }
-  }));
-*/
-
-/*
-const RideContainer = styled.div`
-    background-color: #1111aa;
-    padding-top: 10vh;
-    padding-bottom: 10vh;
-    border: 3px solid black;
-`;
-*/
-
-/*
-const ridesPossible = [
-    {id: 1, startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3},
-    {id: 2, startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5},
-    {id: 3, startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8},
-    {id: 4, startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}
-];
-*/
 
 const ridesPossible = [];
 const locsPossible = [];
 
 const GridT = styledM(Grid)({
         backgroundColor: 'clear',
-        
-})
-
-const GridInside = styledM(Grid)({
-    backgroundColor: '#007777',
 })
 
 const BoxRide = styledM(Box)({
@@ -60,16 +25,12 @@ const BoxRide = styledM(Box)({
     alignItems: 'center'
 })
 
-//{"Ride #" + ride.uid + " startLoc=" + ride.startLoc + " endLoc=" + ride.endLoc + " date=" + ride.date + " time=" + ride.time + " numberPeople=" + ride.numberPeople}
-
-//const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
 const isEqualRides = (ride1, ride2) => {
     if (ride1._id == null || ride2._id == null) {
         return false;
     }
 
-    return ride1._id == ride2._id;
+    return ride1._id === ride2._id;
 }
 
 const handleClickCreateRide = () => {
@@ -137,8 +98,7 @@ class DisplayRides extends Component {
     }
 
     displayRideRows(ride) {
-        
-        //const numLeft = ride.spots - ride.riders.length();
+
         const numLeft = ride.spots;
 
         const date = new Date(ride.departureDate);
@@ -188,33 +148,12 @@ class DisplayRides extends Component {
         console.log("ridesT=", ridesT);
         console.log("ridesT.length=", ridesT.length);
         console.log("Typeof(ridesT)=", typeof(ridesT))
-        //return ridesT[0].startLoc;
         
-        if (ridesT == null || ridesT == undefined) {
+        if (ridesT === null || ridesT === undefined) {
             return null;
         }
 
-        const isValidRidesT = (ridesT!=null && ridesT!=undefined && ridesT.length>0);
-
-        /*
- direction="column"
-        alignItems="center"
-       
-        */
-
-        /*
-        return <Grid container
-        spacing={5}
-        style={{backgroundColor: '#eeffff'}}
-        >
-            <Grid item>
-                <div style={{backgroundColor: 'yellow'}}>TESTING 1</div>
-            </Grid>
-            <Grid item>
-                <div style={{backgroundColor: 'red'}}>TESTING 2</div>
-            </Grid>
-        </Grid>;
-        */
+        const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
 
         return <GridT container spacing={5}  direction="column"
         alignItems="center">
@@ -254,8 +193,6 @@ class DisplayRides extends Component {
         setRidesPossible(ridesTest) {
         console.log("setRidesPossible() run");
 
-        //console.log("monthToStr=", monthToStr);
-
         this.setState({
             ...this.state,
             ridesPossible: ridesTest
@@ -266,8 +203,6 @@ class DisplayRides extends Component {
 
         setLocsPossible(locsTest) {
             console.log("setLocsPossible() run");
-    
-            //console.log("monthToStr=", monthToStr);
     
             this.setState({
                 ...this.state,
@@ -291,16 +226,6 @@ class DisplayRides extends Component {
                     <div >
                         {
                         this.displayRides(this.state.rides)
-                    }
-                    {
-                        /*
-                        this.displayRides([
-                            {id: 1, startLoc: 'S2', endLoc: 'IAH', date:  new Date("2021-07-13T09:00:00"), numberPeople: 3},
-                            {id: 2, startLoc: 'Shop3', endLoc: 'Shop1', date:  new Date("2021-07-17T10:00:00"), numberPeople: 5},
-                            {id: 3, startLoc: 'S3', endLoc: 'IAH', date:  new Date("2021-07-18T05:00:00"), numberPeople: 8},
-                            {id: 4, startLoc: 'S4', endLoc: 'Shop3', date:  new Date("2021-07-25T17:00:00"), numberPeople: 10}
-                          ])
-                          */
                     }
                     </div>
                     <div >
