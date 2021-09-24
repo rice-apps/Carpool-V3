@@ -2,179 +2,29 @@ import React from 'react';
 import {useState} from "react";
 import { gql, useQuery } from "@apollo/client";
 import Header from '../components/Header.js';
-import styled from 'styled-components';
 import { useToasts } from "react-toast-notifications";
-import {
-    MenuItem,
-    Grid, 
-    Button, 
-    Select, 
-    InputLabel,
-    FormControlLabel, 
-    Checkbox, 
-    MuiThemeProvider, 
-    createMuiTheme
-} from '@material-ui/core';
-
-import { withStyles } from '@material-ui/core/styles';
-import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import LuxonUtils from '@date-io/luxon';
+import {
+    Grid, 
+    MuiThemeProvider, 
+} from '@material-ui/core';
+import {
+    customTheme,
+    Form,
+    SelectBox,
+    MenuBox,
+    ColorButton,
+    InputBox,
+    FormControlLabelBox,
+    DateBox,
+    CheckBox,
+    SelectSquare,
+    MenuSquare,
+    BodyText
+} from './Create.styles'
 
-const customTheme = createMuiTheme({
-	palette: {
-		primary: {
-			main: '#0B3669',
-		}
-	},
-    overrides: {
-        MuiInputBase: {
-            input: {
-                fontFamily: 'Josefin Sans',
-                color: '#0B3669',
-                padding: '0px 0px 0px 0px'
-            }
-        }
-    },
-})
 
-const Form = styled.form`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-items: space-between;
-    flex-direction: column;
-    padding: 40px;
-`;
-
-const SelectBox = withStyles({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'white',
-        width: '55vw',
-        borderRadius: 8,
-        border: 0,
-        borderColor: '#0B3669',
-        color: '#0B3669',
-        height: '2vh',
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
-        padding: '8px 16px 8px 16px'
-    }
-  })(Select);
-
-const MenuBox = withStyles({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'white',
-        width: '65vw',
-        border: 0,
-        color: '#0B3669',
-        height: 36,
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
-        padding: '8px 16px'
-    }
-})(MenuItem);
-
-const ColorButton = withStyles({
-    root: {
-        background: '#2075D8',
-        width: '70vw',
-        borderRadius: 8,
-        border: 0,
-        color: 'white',
-        height: 48,
-    },
-    label: {
-      textTransform: 'capitalize',
-      fontFamily: 'Josefin Sans'
-    },
-  })(Button);
-
-  const InputBox = withStyles({
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-        color: '#0B3669',
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
-    }
-  })(InputLabel);
-
-  const FormControlLabelBox = withStyles({
-    label: {
-        display: 'flex',
-        alignItems: 'center',
-        color: '#0B3669',
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
-    }
-  })(FormControlLabel);
-
-  const DateBox = withStyles({
-    root: {
-        width: '68vw',
-        height: '10vh'
-    }, 
-  })(KeyboardDateTimePicker);
-
-  const CheckBox = withStyles({
-      root: {
-        color: '#0B3669', 
-        backgroundColor: 'transparent'
-      }
-  })(Checkbox);
-
-  const SelectSquare = withStyles({
-    root: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        background: 'white',
-        width: '5vw',
-        borderRadius: 8,
-        border: 0,
-        borderColor: '#0B3669',
-        color: '#0B3669',
-        height: '2vh',
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
-        padding: '8px 16px 8px 16px'
-    }
-  })(Select);
-
-  const MenuSquare = withStyles({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'white',
-        width: '15vw',
-        border: 0,
-        color: '#0B3669',
-        height: '2vh',
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
-        padding: '8px 16px'
-    }
-  })(MenuItem);
-
-  const BodyText = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Josefin Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 2vh;
-    line-height: 2vh;
-    color: #0B3669;
-    padding: 10px 0px 0px 0px;
-  `;
 
 const Create = ({onCreate}) => {
 
