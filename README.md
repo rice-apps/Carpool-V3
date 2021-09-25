@@ -40,6 +40,9 @@ Now, you will be able to view the app in your browser under `localhost:3001`
 
 In the future, you can skil the `npm install` when starting the app.
 
+### Setting Environment Variables
+Carpool V3 uses two sets of `.env` files to set environment variables for local testing, one for the api folder and one from the client folder. Make sure to contact a Team Lead for those files!
+
 ### Contributing
 
 In order to contribute to Carpool V3, you must make all of your edits on your own development branch. To do so, create a new branch from your command line:
