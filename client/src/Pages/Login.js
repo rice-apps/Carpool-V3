@@ -16,9 +16,6 @@ const Login = () => {
 
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
-      {/* display: 'flex', position: 'relative', textAlign: 'center',
-        alignItems: 'center', justifyContent: 'center', backgroundColor:
-        "#FBFBFB" */}
       <div style={{ display: 'inline-block', color: '#272D2D' }}>
         <h2>the app formerly known as _________</h2>
         <h4>brought to you by riceapps</h4>
