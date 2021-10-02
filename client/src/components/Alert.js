@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useHistory, Redirect } from "react-router";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,6 +18,12 @@ function AlertDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const history = useHistory() 
+
+    const handleLogin = () => {
+        history.push('/login')
+    }
 
     return (
         <>
@@ -39,7 +46,7 @@ function AlertDialog() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Nope</Button>
-                    <Button onClick={handleClose} autoFocus>Yep</Button>
+                    <Button onClick={handleLogin} autoFocus>Yep</Button>
                 </DialogActions>
             </Dialog>
         </>
