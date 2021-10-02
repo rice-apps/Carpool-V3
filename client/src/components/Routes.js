@@ -11,6 +11,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary.js'
+import YourRides from '../Pages/YourRides.js'
 
 /**
  * Requests to verify the user's token on the backend
@@ -108,6 +109,7 @@ export const Routes = () => {
           </Route>
           <Route path={'/auth'} component={withRouter(Auth)} />
           <Route path={"/search"} component={withRouter(Search)} />
+          <Route path={'/yourrides'} component={withRouter(YourRides)} />
         </Switch>
       </Router>
     </div>
