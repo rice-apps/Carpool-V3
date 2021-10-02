@@ -1,5 +1,7 @@
 import React from 'react';
 import { Title, UpcomingRidesSection, PastRidesandPayments, OverallPage } from './YourRidesStyles';
+import RideInfo from '../components/RideInfo.js';
+
 
 const YourRides = () => {
     return (
@@ -7,7 +9,9 @@ const YourRides = () => {
             <OverallPage>
                 <Title>Your Rides</Title>
                 <UpcomingRidesSection>
-                    Hi
+                    <RideInfo>
+                        
+                    </RideInfo>
                     {/* WE WANT A FOR LOOP FOR ALL OUR UPCOMING RIDES */}
 
                 </UpcomingRidesSection>
