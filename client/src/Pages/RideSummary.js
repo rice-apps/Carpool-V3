@@ -67,11 +67,11 @@ const RideSummary = () => {
   const [rideId, setRideId] = React.useState(null)
 
   // TODO: Remove this!! This is to get rid of warnings in console
-  console.log(rideId ,setVariables)
+  // console.log(rideId ,setVariables)
 
-  React.useEffect(() => {
-    fetch(`http://localhost:3000/ridesummary/${id}`).then(setRideId)
-  }, [id])
+  // React.useEffect(() => {
+  //   fetch(`http://localhost:3000/ridesummary/${id}`).then(setRideId)
+  // }, [id])
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: getVariables,
   })
@@ -147,3 +147,4 @@ const RideSummary = () => {
   )
 }
 export default RideSummary
+

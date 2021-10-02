@@ -42,39 +42,39 @@ const SocialIcon = styled.div`
   top: 30%;
 `
 const RideSummaryDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-top: 4vh;
-  padding-left: 2vh;
   color: #2075d8;
   background: #f4f6f9;
 `
 
 const LocationDiv = styled.div`
-  position: absolute;
-  top: 25%;
-  height: 190px;
+  margin-top: 5vh;
+  height: 20vh;
+  margin-left: 4vw;
+  margin-right: 4vw;
   background: #ffffff;
   border-radius: 35px;
-  margin-left: 2.2vh;
-  margin-right: 2.2vh;
+ 
 `
 const LocationText = styled.div`
   position: relative;
-  padding: 10% 0;
-  font-size: 3 vh;
+  padding-top: 10%;
+  font-size: 5vw;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 35px;
-  line-height: 35px;
   text-align: center;
+  margin-bottom: 1vh;
 `
 const DateDiv = styled.div`
   position: relative;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 3vw;
 `
 const CalendarIcon = styled.div`
   position: absolute;
