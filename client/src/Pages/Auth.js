@@ -62,7 +62,7 @@ const Auth = () => {
 
     // Set recent update in client state
     return (
-        history.go(-2)
+        history.go(-3)
     )
 }
 

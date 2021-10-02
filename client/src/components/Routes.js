@@ -99,7 +99,7 @@ export const Routes = () => {
           <Route path={'/profile/:id'} component={withRouter(Profile)} />
           <Route path={'/'} exact component={withRouter(Home)} />
           <Route path={'/home'} component={withRouter(Home)} />
-          <PrivateRoute
+          <Route
             path={'/create-ride'}
             component={withRouter(CreateRide)}
           />
