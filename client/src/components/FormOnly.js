@@ -238,7 +238,7 @@ const FormOnly = (props) => {
         </Grid>
 
         <Grid  item xs = {12}>
-          <InputBox id = 'EndLoc'>End Location</InputBox>
+          <InputBox id = 'EndLoc'>Destination</InputBox>
             <SelectBox
                 id="End Location Search Bar"
                 labelId='EndLoc'
