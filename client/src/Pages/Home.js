@@ -3,26 +3,12 @@ import logo from '../logo.svg';
 import '../App.css';
 import styled from 'styled-components'
 import { useMediaQuery } from 'react-responsive'
-import {SearchButton, SearchButtonDiv} from './HomeStyles.js'
-import { ColorButton } from "../components/Create.styles";
-const Home = () => {
-    const MainHeader = styled.header`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: calc(10px + 2vmin);
-        min-height: 100vh;
-        background-color: #282c34;
-        color: white;
-        @media (max-width: 480px) {
-            background-color: #553d67;
-        }
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button'
+import {MainHeader} from './HomeStyles.js'
 
-    `
-    const toSearch = () => {
-        window.location.replace("/search");
-    }
+const Home = () => {
+
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 480px)' })
 
     return (
@@ -40,13 +26,11 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-            Learn React { isTabletOrMobile && <p>Yo we on mobile</p>}
+                Learn React { isTabletOrMobile && <p>Yo we on mobile</p>}
             </a>
-            <SearchButtonDiv>
-                <SearchButton onClick={() => toSearch()}>
-                    Search for Rides
-                </SearchButton>
-            </SearchButtonDiv>
+            <Link to= "/search">
+                <Button variant="contained">Search for Rides</Button>
+            </Link>
         </MainHeader>
         
         
