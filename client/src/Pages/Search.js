@@ -19,7 +19,7 @@ const Search = () => {
 
   return (
     <React.Fragment>
-      <div><Header subtitle  ="Search Rides"/></div>
+      <div><Header subtitle = "Search Rides"/></div>
       <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} displayRef={displayRef} />
       <DisplayRides ref={displayRef} rides={resultDestArr} testVar={3}/>
     </React.Fragment>
