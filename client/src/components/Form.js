@@ -84,6 +84,7 @@ let PossibleLocations = [
     address: "6330 Main St, Houston, TX 77005, USA"
   }];
 
+  // May cause 401 error if a request is made to the database before it's ready
   return (
     <React.Fragment>
     <FormOnly resultRides={resultRides} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} testLocations={PossibleLocations}/>

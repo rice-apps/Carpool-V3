@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
@@ -65,9 +65,13 @@ const RideSummary = () => {
   let { id } = useParams()
   const [getVariables, setVariables] = useState({})
   const [rideId, setRideId] = React.useState(null)
+
+  // TODO: Remove this!! This is to get rid of warnings in console
+  console.log(rideId ,setVariables)
+
   React.useEffect(() => {
     fetch(`http://localhost:3000/ridesummary/${id}`).then(setRideId)
-  }, id)
+  }, [id])
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: getVariables,
   })
