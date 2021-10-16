@@ -65,10 +65,15 @@ const renderTime = (date) => {
     const minutes = date.getMinutes();
     var ampm = "";
 
-    if (hours > 13){
-        hours = hours - 12;
+    if (hours >= 12){
+        if (hours !== 12){
+            hours = hours - 12;
+        }
         ampm = "PM"; 
     } else {
+        if (hours === 0){
+            hours += 12
+        }
         ampm = "AM"
     }
 
