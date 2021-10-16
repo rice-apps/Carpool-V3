@@ -1,6 +1,6 @@
 import React from 'react';
 import { Title, UpcomingRidesSection, PastRidesandPayments, OverallPage } from './YourRidesStyles';
-import RideInfo from '../components/RideInfo.js';
+import RideInfo from '../components/UpcomingRideCard.js';
 
 
 const YourRides = () => {
@@ -12,6 +12,17 @@ const YourRides = () => {
                     <RideInfo>
                         
                     </RideInfo>
+
+                    <RideInfo>
+                    </RideInfo>
+
+                    <RideInfo>
+                    </RideInfo>
+
+                    <RideInfo>
+                    </RideInfo>
+                    
+                    
                     {/* WE WANT A FOR LOOP FOR ALL OUR UPCOMING RIDES */}
 
                 </UpcomingRidesSection>
