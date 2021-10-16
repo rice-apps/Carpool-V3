@@ -57,24 +57,23 @@ const LocationDiv = styled.div`
   margin-right: 4vw;
   background: #ffffff;
   border-radius: 35px;
- 
+  align-items: center; 
+  flex-direction: column;
 `
 const LocationText = styled.div`
-  position: relative;
-  padding-top: 10%;
-  font-size: 5vw;
+  padding-top: 4.5vh;
+  font-size: 4.1vh;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
   text-align: center;
-  margin-bottom: 1vh;
 `
 const DateDiv = styled.div`
   position: relative;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 3vw;
+  font-size: 2.3vh;
 `
 const CalendarIcon = styled.div`
   position: absolute;
@@ -101,11 +100,9 @@ const HostDiv = styled.div`
 `
 const RidersDiv = styled.div`
   position: absolute;
-  height: 213px;
+  height: 28vh;
   left: 0px;
   right: 0px;
-  top: 360px;
-  margin-top: 4vh;
   text-align: center;
   padding-left: 2vh;
   font-family: Monaco;
@@ -117,7 +114,7 @@ const OwnerDiv = styled.div`
   left: 10.23%;
   right: 10.24%;
   top: 23.25%;
-  bottom: 47%;
+  bottom: 54%;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
@@ -127,7 +124,6 @@ const OwnerDiv = styled.div`
   background: #ffffff;
   border-radius: 30px 17px 17px 30px;
   text-align: left;
-  margin: 10px;
 `
 const LineDiv = styled.div`
 `
@@ -154,7 +150,7 @@ const OneRiderContainer = styled.div`
   background: #ffffff;
   border-radius: 30px 17px 17px 30px;
   margin: 15px;
-  width: 280px;
+  width: 97%;
 `
 const RiderText = styled.div`
   position: relative;
@@ -171,22 +167,23 @@ const TextContainer = styled.div`
 `
 const ButtonDiv = styled.button`
   position: absolute;
-  left: 6%;
+  left: 8%;
   right: 8%;
   top: 90%;
   bottom: 15%;
   color: #ffffff;
   background: #2075d8;
-    text-align: center;
+  text-align: center;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
   border-radius: 8px;
-  width: 330px;
+  width: 80%;
   height: 48px;
   onclick='joinRide()';
+  
 `
 const AllDiv = styled.div`
   background: #f4f6f9;
