@@ -141,19 +141,18 @@ class DisplayRides extends Component {
 
         const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
 
-        return <GridT container spacing={2}  direction="column"
-        alignItems="center">
-            {
-            <Box style={{fontSize: "5vw", paddingTop: '3vh', fontFamily: "Josefin Sans"}}>Matching Rides: </Box>
-            }
+        return <GridT container spacing={2}  direction="column"alignItems="center">
+            <Box style={{fontSize: "5vw", paddingTop: '3vh', fontFamily: "Josefin Sans"}}>
+                Matching Rides: 
+            </Box>
             {
             (isValidRidesT) && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
             (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff", marginTop: "3vw", marginBottom: "3vw"}}>
-            <Box width={"100%"} height={"100%"} style={{fontSize: "3vw"}}>
-            Either you have not clicked the submit button yet or no rides matched.
-            </Box>
+                <Box width={"100%"} height={"100%"} style={{fontSize: "3vw"}}>
+                    Either you have not clicked the submit button yet or no rides matched.
+                </Box>
             </Grid>
             }
             {
