@@ -1,67 +1,67 @@
 import styled from 'styled-components'
 
 const SeatsLeftDiv = styled.div`
-  position: absolute;
-  left: 68.36%;
-  right: 0%;
-  top: 12.03%;
-  bottom: 82.04%;
+  grid-column: 4;
+  grid-row: 1;
   background: rgba(187, 218, 255, 0.22);
   border-radius: 5px 0px 0px 5px;
   text-align: left;
   color: #2075d8;
-  padding-right: 1vh;
   font-family: Josefin Sans;
   font-style: normal;
   line-height: 11px;
+  background-color: red;
+  display: flex;
+  align-items: stretch; /* Default */
+
+
 `
 const SeatsLeftNum = styled.div`
-  position: absolute;
-  left: -64.3%;
-  right: -7.17%;
-  top: 30%;
-  bottom: -65.22%;
   font-weight: normal;
   font-size: 24px;
   line-height: 24px;
   text-align: center;
+  padding: 4px;
 `
 const SeatsLeftText = styled.div`
-  position: absolute;
-  left: 35%;
-  right: 23.93%;
-  top: 30%;
+  grid-column: 4;
+  grid-row: 1;
   font-weight: 300;
   font-size: 11px;
   line-height: 11px;
+  padding-top: 10px;
 `
 const SocialIcon = styled.div`
-  position: absolute;
-  left: 70%;
-  right: 0%;
-  top: 30%;
+
 `
 const RideSummaryDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 4vh;
+  grid-column: 4;
+  grid-row: 1;
   color: #2075d8;
   background: #f4f6f9;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
 `
+
+const LocationDivContainer = styled.div`
+  grid-column: 1/5;
+  grid-row: 2;
+  margin:auto;
+`
+
 
 const LocationDiv = styled.div`
   margin-top: 5vh;
-  height: 20vh;
-  margin-left: 4vw;
-  margin-right: 4vw;
   background: #ffffff;
   border-radius: 35px;
   align-items: center; 
   flex-direction: column;
+  background-color: blue;
 `
 const LocationText = styled.div`
-  padding-top: 4.5vh;
+  padding-top: 2.5vh;
   font-size: 4.1vh;
   font-family: Josefin Sans;
   font-style: normal;
@@ -69,28 +69,24 @@ const LocationText = styled.div`
   text-align: center;
 `
 const DateDiv = styled.div`
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 2.3vh;
+  background-color: red;
+  text-align: center;
+  
 `
 const CalendarIcon = styled.div`
-  position: absolute;
-  left: 25%;
-  right: 0%;
-  top: 40%;
+  background-color: pink;
+
+  
 `
 const ClockIcon = styled.div`
-  position: absolute;
-  left: 55%;
-  right: 0%;
-  top: 40%;
 `
 const HostDiv = styled.div`
-  position: absolute;
-  left: 13%;
-  top: 15%;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
@@ -99,7 +95,8 @@ const HostDiv = styled.div`
   color: rgba(187, 199, 221, 0.91);
 `
 const RidersDiv = styled.div`
-  position: absolute;
+  grid-column: 1 / 4;
+  grid-row: 3;
   height: 28vh;
   left: 0px;
   right: 0px;
@@ -110,11 +107,6 @@ const RidersDiv = styled.div`
   background: #f4f6f9;
 `
 const OwnerDiv = styled.div`
-  position: absolute;
-  left: 10.23%;
-  right: 10.24%;
-  top: 23.25%;
-  bottom: 54%;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
@@ -128,10 +120,6 @@ const OwnerDiv = styled.div`
 const LineDiv = styled.div`
 `
 const RidersComponents = styled.div`
-  position: absolute;
-  left: 8.23%;
-  right: 12.24%;
-  top: 58.25%;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
@@ -160,17 +148,11 @@ const RiderText = styled.div`
   height: 0px;
 `
 const TextContainer = styled.div`
-  position: absolute;
-  left: 20.23%;
-  right: 12.24%;
-  top: 40.25%;
+  
 `
 const ButtonDiv = styled.button`
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 90%;
-  bottom: 15%;
+  grid-column: 2 / 3;
+  grid-row: 4;
   color: #ffffff;
   background: #2075d8;
   text-align: center;
@@ -181,15 +163,17 @@ const ButtonDiv = styled.button`
   line-height: 24px;
   border-radius: 8px;
   width: 80%;
-  height: 48px;
+  height: 28px;
   onclick='joinRide()';
   
 `
 const AllDiv = styled.div`
   background: #f4f6f9;
   height: 100vh;
-`
-
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: min-content;
+  `
 export {
   SeatsLeftDiv,
   SeatsLeftNum,
@@ -211,5 +195,6 @@ export {
   RiderText,
   TextContainer,
   ButtonDiv,
-  AllDiv
+  AllDiv,
+  LocationDivContainer
 }
