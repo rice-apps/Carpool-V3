@@ -123,11 +123,11 @@ const FormOnly = (props) => {
       resultDestArr = ridesPossibleForm;
       console.log("ridesPossibleForm=", ridesPossibleForm);
 
-      if (startLoc != null) {
+      if (startLoc !== "") {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});
       }
       console.log("resultDestArr after startLoc=", resultDestArr);
-      if (endLoc != null) {
+      if (endLoc !== "") {
       resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
       }
       console.log("resultDestArr after endLoc=", resultDestArr);
