@@ -228,7 +228,7 @@ const FormOnly = (props) => {
             justifyContent='space-around'
             alignItems='center'
           >
-            <Grid item xs = {8}>
+            <Grid item xs = {12}>
               <InputBox id = 'Date'>Date</InputBox>
               <DateRangePickerComponent placeholder="Enter Date Range"
                 startDate={startValue}
@@ -269,6 +269,10 @@ const FormOnly = (props) => {
           fullWidth
           variant="contained"
           color="primary"
+          style={{
+            backgroundColor: "#2075D8",
+            fontSize: "2vh",
+          }}
           onClick={onSubmit}
         >
           Search RIDE

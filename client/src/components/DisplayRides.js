@@ -35,6 +35,9 @@ const displayRideButtons = () => {
         <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
             <Link to="/search">
                 <Button
+                style={{
+                    backgroundColor: "#2075D8",
+                }}
                 fullWidth
                 variant="contained"
                 color="primary"
@@ -49,6 +52,9 @@ const displayRideButtons = () => {
         <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
             <Link to="/create-ride">
                 <Button
+                style={{
+                    backgroundColor: "#2075D8",
+                  }}
                 fullWidth
                 variant="contained"
                 color="primary"
@@ -166,7 +172,7 @@ class DisplayRides extends Component {
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
             }
-            <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans"}}>
+            <Grid item marginBottom="2vh" justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans"}}>
                 End of Results
             </Grid>
             </GridT>;
