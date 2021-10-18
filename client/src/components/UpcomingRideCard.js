@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { RideCard, RideTime } from './UpcomingRideCard.styles.js';
+import { RiceCard, RideTime } from './UpcomingRideCard.styles.js';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const CalendarIcon = withStyles({
@@ -18,7 +18,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 
-const RideInfo = ({origin, destination, datetime}) => {
+const UpcomingRideCard = ({origin, destination, datetime}) => {
 
 
     let month = 12 // datetime.getMonth()
@@ -47,8 +47,6 @@ const RideInfo = ({origin, destination, datetime}) => {
                     </RideTime>
 
                 </RideTimeInfo>
-                    
-                
                 
                 
             </RideCard>
@@ -68,4 +66,4 @@ RideInfo.defaultProps = {
 }
 
 
-export default RideInfo;
+export default UpcomingRideCard;
