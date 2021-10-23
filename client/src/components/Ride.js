@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import {monthToStr} from '../Pages/Search.js';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -9,14 +8,12 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { gql, useMutation } from '@apollo/client';
 import { BoxRide } from './DisplayRides.styles';
 
-const renderTime = (date) => {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+function renderDate(date) {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
 
-    const hoursStr = (String)(hours).padStart(2, '0');
-    const minutesStr = (String)(minutes).padStart(2, '0');
-
-    return hoursStr+':'+minutesStr;
+function renderTime(date) {
+    return date.toLocaleTimeString('en-US', { timeStyle: 'short', hour12: false });
 }
 
 const Ride = ({ride}) => {
@@ -66,7 +63,7 @@ const Ride = ({ride}) => {
                     <Box width={"15vw"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                     <CalendarTodayIcon />
                     <span>
-                        {monthToStr[date.getMonth()-1] + " " + date.getDate()}
+                        {renderDate(date)}
                         <br/>
                         <div style={{fontSize: '2vw'}}>{renderTime(date)}</div>
                     </span>
