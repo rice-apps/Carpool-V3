@@ -18,11 +18,10 @@ function renderTime(date) {
 
 const Ride = ({ride}) => {
     const date = new Date(ride.departureDate);
-    console.log(ride);
 
     const JOIN_RIDE = gql`
-        mutation JoinRide ($rideID: MongoID!) {
-            addRider(rideID: rideID) {
+        mutation JoinRide($rideID: ID!) {
+            addRider(rideID: $rideID) {
                 riders { _id }
             }
         }
