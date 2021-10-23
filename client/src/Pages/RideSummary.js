@@ -37,7 +37,8 @@ import {
   ButtonContainer,
   DepartureDiv,
   ArrivalDiv,
-  ArrowDiv
+  LocationArrowDiv,
+  BackArrowDiv
 } from './RideSummaryStyles.js'
 
 const GET_RIDE = gql`
@@ -91,11 +92,13 @@ const RideSummary = () => {
 
   return (
     <AllDiv>
-      <RideSummaryDiv>
+      <BackArrowDiv>
         <IoIosArrowBack></IoIosArrowBack>
+      </BackArrowDiv>
+      <RideSummaryDiv>
         <SeatsLeftDiv>
         <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
-        <SeatsLeftText>seat(s) left</SeatsLeftText>
+        <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
         <SocialIcon>
           <IoShareSocialSharp></IoShareSocialSharp>
         </SocialIcon>
@@ -108,9 +111,9 @@ const RideSummary = () => {
               <IoLocationSharp></IoLocationSharp>&nbsp;
               {ride.departureLocation.title}&nbsp;
             </DepartureDiv>
-            <ArrowDiv>
+            <LocationArrowDiv>
               <BsArrowRight></BsArrowRight>&nbsp;
-            </ArrowDiv>
+            </LocationArrowDiv>
             <ArrivalDiv>
             <IoLocationSharp></IoLocationSharp>&nbsp;
               {ride.arrivalLocation.title}

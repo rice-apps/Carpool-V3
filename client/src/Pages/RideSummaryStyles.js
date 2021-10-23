@@ -10,13 +10,13 @@ const SeatsLeftDiv = styled.div`
   font-family: Josefin Sans;
   font-style: normal;
   line-height: 11px;
-  background-color: red;
   display: flex;
   align-items: stretch; /* Default */
 
 
 `
 const SeatsLeftNum = styled.div`
+  font-family: Josefin Sans;
   font-weight: normal;
   font-size: 24px;
   line-height: 24px;
@@ -24,14 +24,20 @@ const SeatsLeftNum = styled.div`
   padding: 4px;
 `
 const SeatsLeftText = styled.div`
+  font-family: Josefin Sans;
   grid-column: 4;
   grid-row: 1;
   font-weight: 300;
   font-size: 11px;
   line-height: 11px;
-  padding-top: 10px;
+  padding-top: 5px;
 `
 const SocialIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  font-size: 25px
 
 `
 const RideSummaryDiv = styled.div`
@@ -39,10 +45,12 @@ const RideSummaryDiv = styled.div`
   grid-row: 1;
   color: #2075d8;
   background: #f4f6f9;
-  background-color: red;
+  
   display: flex;
+  border: 3px solid green;
   align-items: center;
-  margin-top: 25px;
+  text-align: center;
+  margin-top: 20px;
 `
 
 const LocationDivContainer = styled.div`
@@ -53,14 +61,12 @@ const LocationDivContainer = styled.div`
   width:90%;
 `
 
-
 const LocationDiv = styled.div`
   margin-top: 5vh;
   background: #FFFFFF;
   border-radius: 17px;
   align-items: center; 
   flex-direction: column;
-
 `
 const LocationText = styled.div`
   display: grid;
@@ -76,7 +82,7 @@ const LocationText = styled.div`
   margin-left: 20px;
   margin-right: 20px;
 
-`
+`// Wrap everything in another div and use padding to make border
 const DateDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -85,14 +91,19 @@ const DateDiv = styled.div`
   font-weight: normal;
   font-size: 2.3vh;
   text-align: center;
-  
+  margin-top: 5px;
+  padding-bottom: 50px;  
 `
 const CalendarIcon = styled.div`
   // background-color: pink;
+  font-family: Josefin Sans;
+
 
   
 `
 const ClockIcon = styled.div`
+font-family: Josefin Sans;
+
 `
 const HostDiv = styled.div`
   font-family: Josefin Sans;
@@ -101,7 +112,6 @@ const HostDiv = styled.div`
   font-size: 12px;
   line-height: 12px;
   color: rgba(187, 199, 221, 0.91);
-  padding-bottom: 5px;
 `
 const RidersDiv = styled.div`
   grid-column: 1/ 5;
@@ -125,6 +135,10 @@ const OwnerDiv = styled.div`
   text-align: left;
 `
 const LineDiv = styled.div`
+border: 1px solid #FFFFFF;
+color: white;
+background: white;
+
 `
 const RidersComponents = styled.div`
   font-family: Josefin Sans;
@@ -142,17 +156,17 @@ const IoPersonCircleSharpDiv = styled.span`
   font-size: 43px;
 `
 const OneRiderContainer = styled.div`
+  display: flex;
   background: #ffffff;
   border-radius: 30px 17px 17px 30px;
   margin: 15px;
   width: 97%;
+  font-family: Josefin Sans;
 `
 const RiderText = styled.div`
-  position: relative;
-  left: 20.23%;
-  right: 12.24%;
-  top: -30px;
-  height: 0px;
+  padding-top: 17px;
+  padding-left: 15px;
+  font-family: Josefin Sans;
 `
 const TextContainer = styled.div`
   
@@ -191,23 +205,42 @@ const ButtonContainer = styled.div`
 const DepartureDiv = styled.div`
   grid-column: 1;
   grid-row: 1;
-  background-color:pink;
+  font-family: Josefin Sans;
+
 
 `
 
 const ArrivalDiv = styled.div`
 grid-column: 3;
 grid-row: 1;
-background-color:purple;
+font-family: Josefin Sans;
+
 
 
 `
-const ArrowDiv = styled.div`
+const LocationArrowDiv = styled.div`
 grid-column: 2;
 grid-row: 1;
-background-color:blue;
+display: flex;
+justify-content: center;
+align-items: center;
 `
+const BackArrowDiv = styled.div`
+width:30px;
+height: 30px;
+grid-column: 1;
+grid-row: 1;
+color: #2075d8;
+background: #f4f6f9;
+margin-top: 30px;
+margin-left: 20px;
+font-family: Josefin Sans;
+font-style: normal;
+line-height: 11px;
+font-size: 24px
 
+
+`
 
 
 
@@ -237,5 +270,6 @@ export {
   ButtonContainer,
   DepartureDiv,
   ArrivalDiv,
-  ArrowDiv
+  LocationArrowDiv,
+  BackArrowDiv
 }
