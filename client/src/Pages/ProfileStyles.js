@@ -42,7 +42,7 @@ root: {
 })(MailIcon);
 
 const EditProfileButton = styled.div`
-	marginTop:50px;
+	margin-top:20px;
 `
 
 const ProfileCard = styled.div`

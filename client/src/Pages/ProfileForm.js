@@ -12,7 +12,7 @@ import Select from '@material-ui/core/Select';
 
 const ProfileForm = () => {
 
-    const[payment, setPaymentOption] = React.useState('');
+    const[payment, setPaymentOption] = useState('');
 
     const handleChange = (event) => {
         setPaymentOption(event.target.value);
