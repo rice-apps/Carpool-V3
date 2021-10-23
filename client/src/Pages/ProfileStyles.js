@@ -41,6 +41,10 @@ root: {
 }
 })(MailIcon);
 
+const EditProfileButton = styled.div`
+	margin-top:20px;
+`
+
 const ProfileCard = styled.div`
 	display: flex;
 	justify-content: center;
@@ -150,6 +154,7 @@ export {
 	BackArrow,
 	TextBox,
 	MailBox,
+	EditProfileButton,
 	ProfileCard,
 	ReturnHeader,
 	UserName,
