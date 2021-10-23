@@ -33,7 +33,11 @@ import {
   TextContainer,
   ButtonDiv,
   AllDiv,
-  LocationDivContainer
+  LocationDivContainer,
+  ButtonContainer,
+  DepartureDiv,
+  ArrivalDiv,
+  ArrowDiv
 } from './RideSummaryStyles.js'
 
 const GET_RIDE = gql`
@@ -100,10 +104,17 @@ const RideSummary = () => {
       <LocationDivContainer>
         <LocationDiv>
           <LocationText>
+            <DepartureDiv>
+              <IoLocationSharp></IoLocationSharp>&nbsp;
+              {ride.departureLocation.title}&nbsp;
+            </DepartureDiv>
+            <ArrowDiv>
+              <BsArrowRight></BsArrowRight>&nbsp;
+            </ArrowDiv>
+            <ArrivalDiv>
             <IoLocationSharp></IoLocationSharp>&nbsp;
-            {ride.departureLocation.title}&nbsp;
-            <BsArrowRight></BsArrowRight>&nbsp;
-            {ride.arrivalLocation.title}
+              {ride.arrivalLocation.title}
+            </ArrivalDiv>
           </LocationText>
           <DateDiv>
             <CalendarIcon>
@@ -117,15 +128,17 @@ const RideSummary = () => {
       </LocationDivContainer>
       <RidersDiv>
         <HostDiv>Host</HostDiv>
-        <OwnerDiv>
-          <IoPersonCircleSharpDiv>
-            <IoPersonCircleSharp></IoPersonCircleSharp>
-          </IoPersonCircleSharpDiv>
-          <TextContainer>
-            {ride.owner.firstName}&nbsp;{ride.owner.lastName}
-          </TextContainer>
-        </OwnerDiv>
         <RidersComponents>
+        <OneRiderContainer>
+                <div key={ride.owner.netid}>
+                  <IoPersonCircleSharpDiv>
+                    <IoPersonCircleSharp></IoPersonCircleSharp>
+                  </IoPersonCircleSharpDiv>
+                </div>
+                <RiderText>
+                {ride.owner.firstName}&nbsp;{ride.owner.lastName}
+                </RiderText>
+          </OneRiderContainer>
           <LineDiv>
             <hr></hr>
           </LineDiv>
@@ -145,7 +158,9 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
-      <ButtonDiv onClick='joinRide()'>Join Ride</ButtonDiv>
+      <ButtonContainer>
+        <ButtonDiv onClick='joinRide()'>Join Ride</ButtonDiv>
+      </ButtonContainer>
     </AllDiv>
   )
 }

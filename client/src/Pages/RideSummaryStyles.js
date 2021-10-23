@@ -49,24 +49,33 @@ const LocationDivContainer = styled.div`
   grid-column: 1/5;
   grid-row: 2;
   margin:auto;
+  padding-bottom:20px;
+  width:90%;
 `
 
 
 const LocationDiv = styled.div`
   margin-top: 5vh;
-  background: #ffffff;
-  border-radius: 35px;
+  background: #FFFFFF;
+  border-radius: 17px;
   align-items: center; 
   flex-direction: column;
-  background-color: blue;
+
 `
 const LocationText = styled.div`
+  display: grid;
+  grid-template-columns: 6fr 1fr 6fr;
+  gap: 10px;
+  grid-auto-rows: minmax(55px, auto);
   padding-top: 2.5vh;
   font-size: 4.1vh;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
   text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
+
 `
 const DateDiv = styled.div`
   display: grid;
@@ -75,12 +84,11 @@ const DateDiv = styled.div`
   font-style: normal;
   font-weight: normal;
   font-size: 2.3vh;
-  background-color: red;
   text-align: center;
   
 `
 const CalendarIcon = styled.div`
-  background-color: pink;
+  // background-color: pink;
 
   
 `
@@ -93,15 +101,14 @@ const HostDiv = styled.div`
   font-size: 12px;
   line-height: 12px;
   color: rgba(187, 199, 221, 0.91);
+  padding-bottom: 5px;
 `
 const RidersDiv = styled.div`
-  grid-column: 1 / 4;
+  grid-column: 1/ 5;
   grid-row: 3;
-  height: 28vh;
-  left: 0px;
-  right: 0px;
-  text-align: center;
-  padding-left: 2vh;
+  margin: auto;
+  width: 85%;
+  padding: 10px;  
   font-family: Monaco;
   font-size: 1.5 vh;
   background: #f4f6f9;
@@ -151,8 +158,6 @@ const TextContainer = styled.div`
   
 `
 const ButtonDiv = styled.button`
-  grid-column: 2 / 3;
-  grid-row: 4;
   color: #ffffff;
   background: #2075d8;
   text-align: center;
@@ -162,8 +167,8 @@ const ButtonDiv = styled.button`
   font-size: 16px;
   line-height: 24px;
   border-radius: 8px;
-  width: 80%;
-  height: 28px;
+  width: 100%;
+  height: 48px;
   onclick='joinRide()';
   
 `
@@ -174,6 +179,38 @@ const AllDiv = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: min-content;
   `
+
+const ButtonContainer = styled.div`
+  grid-column: 1/5;
+  grid-row: 4;
+  margin: auto;
+  width: 95%;
+  padding: 20px;
+`
+
+const DepartureDiv = styled.div`
+  grid-column: 1;
+  grid-row: 1;
+  background-color:pink;
+
+`
+
+const ArrivalDiv = styled.div`
+grid-column: 3;
+grid-row: 1;
+background-color:purple;
+
+
+`
+const ArrowDiv = styled.div`
+grid-column: 2;
+grid-row: 1;
+background-color:blue;
+`
+
+
+
+
 export {
   SeatsLeftDiv,
   SeatsLeftNum,
@@ -196,5 +233,9 @@ export {
   TextContainer,
   ButtonDiv,
   AllDiv,
-  LocationDivContainer
+  LocationDivContainer,
+  ButtonContainer,
+  DepartureDiv,
+  ArrivalDiv,
+  ArrowDiv
 }
