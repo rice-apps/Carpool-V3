@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/MenuRounded';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,10 +24,10 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="white" elevation="1">
+      <AppBar position="static" color="white" elevation="0">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            <MenuIcon fontSize="large"/>
           </IconButton>
         </Toolbar>
       </AppBar>
