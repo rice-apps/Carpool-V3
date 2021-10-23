@@ -9,6 +9,7 @@ import Profile from '../Pages/Profile.js'
 import CreateRide from '../Pages/CreateRide.js'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import NewNavbar from '../components/NewNavbar'
 import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary.js'
 
@@ -93,7 +94,7 @@ export const Routes = () => {
   return (
     <div>
       <Router>
-        <Navbar />
+        <NewNavbar />
         <Switch>
           <Route path={'/login'} component={withRouter(Login)} />
           <Route path={'/profile/:id'} component={withRouter(Profile)} />
