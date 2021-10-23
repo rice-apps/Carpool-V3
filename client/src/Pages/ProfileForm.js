@@ -1,7 +1,6 @@
 import {Header, EditName, EditContactInfo, EditPaymentOptions, SubmitButton} from './ProfileFormStyles.js';
 import React, { useState} from 'react';
 import {TextField} from '@material-ui/core';
-import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
