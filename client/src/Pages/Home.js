@@ -1,6 +1,6 @@
 import React from "react";
-import logo from '../logo.svg';
 import '../App.css';
+import logo from '../logo.svg';
 import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button'
@@ -29,6 +29,7 @@ const Home = () => {
             </a>
             <Link to= "/search">
                 <Button variant="contained">Search for Rides</Button>
+                
             </Link>
         </MainHeader>
         

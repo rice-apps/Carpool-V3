@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
+import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom';
 import {
   ButtonBox,
   BackArrow,
@@ -14,7 +16,8 @@ import {
 	PhoneNumber,
 	StyledText,
 	StyledText2,
-	StyledText3
+	StyledText3,
+  EditProfileButton
 } from './ProfileStyles.js';
 
 const Profile = () => {
@@ -62,6 +65,11 @@ const Profile = () => {
           <StyledText3>Ride Summary</StyledText3>
         </ButtonBox>
       </ReturnHeader>
+      <EditProfileButton>
+        <Link to= "/profileform">
+          <Button variant = "outline">Edit Profile Information</Button>
+        </Link>
+      </EditProfileButton>
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + ' ' + user.lastName}</UserName>
