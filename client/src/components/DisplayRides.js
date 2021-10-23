@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {
     GridT,
-    BoxRide
+    BoxRide, 
+    StyledButton
 } from './DisplayRides.styles'
 
 
@@ -30,40 +31,28 @@ const handleClickSearchAgain = () => {
     window.scrollTo(0, 0);
 }
 
-const displayRideButtons = () => {
-    return <Grid container spacing = {0} direction="row" alignItems="center"  justifyContent='space-evenly'>
-        <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
-            <Link to="/search">
-                <Button
-                style={{
-                    backgroundColor: "#2075D8",
-                }}
-                fullWidth
-                variant="contained"
-                color="primary"
+const displayRideBottomOfPage = () => {
+    return <div style = {{display: "flex", alignItems: "center", flexDirection: "column", gap: "1vh"}}>
+        <div style={{ fontSize: '2vw', fontFamily: "Josefin Sans"}}>
+            <Link to="/search" style = {{textDecoration: "none"}}>
+                <StyledButton
                 onClick={() => handleClickSearchAgain()}> 
-                    Search Again 
-                </Button>
+                    Continue Searching
+                </StyledButton>
             </Link>
-        </Grid>
-        <Grid item xs={2} justify="center" align='center' style={{display: 'flex', alignItems: 'center',  fontSize: '3vh'}}>
+        </div>
+        <div style={{ fontSize: '2vh', fontFamily: "Josefin Sans", color: "#C7CBD3"}}>
             OR
-        </Grid>
-        <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
-            <Link to="/create-ride">
-                <Button
-                style={{
-                    backgroundColor: "#2075D8",
-                  }}
-                fullWidth
-                variant="contained"
-                color="primary"
+        </div>
+        <div style={{ fontSize: '2vw'}}>
+            <Link to="/create-ride" style = {{textDecoration: "none"}}>
+                <StyledButton
                 onClick={() => handleClickCreateRide()}> 
-                    Create Ride 
-                </Button>
+                    Create New Ride 
+                </StyledButton>
             </Link>
-        </Grid>
-        </Grid>
+        </div>
+        </div>
 }
 
 const renderTime = (date) => {
@@ -172,8 +161,8 @@ class DisplayRides extends Component {
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
             }
-            <Grid item marginBottom="2vh" justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans"}}>
-                End of Results
+            <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
+                no more results
             </Grid>
             </GridT>;
 
@@ -228,7 +217,7 @@ class DisplayRides extends Component {
                     </div>
                     <div >
                         {
-                    displayRideButtons()
+                    displayRideBottomOfPage()
                         }
                     </div>
                 </div>
