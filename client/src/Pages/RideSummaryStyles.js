@@ -47,7 +47,6 @@ const RideSummaryDiv = styled.div`
   background: #f4f6f9;
   
   display: flex;
-  border: 3px solid green;
   align-items: center;
   text-align: center;
   margin-top: 20px;
