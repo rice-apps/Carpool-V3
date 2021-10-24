@@ -61,9 +61,7 @@ const Auth = () => {
     console.log("netid set: ", localStorage.getItem('netid'))
 
     // Set recent update in client state
-    return (
-        history.go(-3)
-    )
+    return localStorage.getItem('nextPage') ?  history.push('/userAuth') : history.go(-2)
 }
 
 export default Auth;

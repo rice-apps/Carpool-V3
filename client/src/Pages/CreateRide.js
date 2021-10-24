@@ -1,6 +1,5 @@
 import React from 'react';
 import Create from '../components/Create.js'; 
-import Alert from '../components/Alert.js';
 import { gql, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 
@@ -52,10 +51,10 @@ const CreateRide = () => {
 
         <div> 
             <Create onCreate = {addRide} />
-            <Alert />
         </div>
 
     )
+    
 }
 
 export default CreateRide; 
