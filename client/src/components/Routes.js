@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
+import Alert from '../Pages/Alert.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import Search from '../Pages/Search.js'
@@ -96,6 +97,7 @@ export const Routes = () => {
         <Navbar />
         <Switch>
           <Route path={'/login'} component={withRouter(Login)} />
+          <Route path={'/alert'} component={withRouter(Alert)} />
           <Route path={'/profile/:id'} component={withRouter(Profile)} />
           <Route path={'/'} exact component={withRouter(Home)} />
           <Route path={'/home'} component={withRouter(Home)} />
