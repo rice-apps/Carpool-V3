@@ -38,7 +38,8 @@ import {
   DepartureDiv,
   ArrivalDiv,
   LocationArrowDiv,
-  BackArrowDiv
+  BackArrowDiv,
+  InnerLocationDiv
 } from './RideSummaryStyles.js'
 
 const GET_RIDE = gql`
@@ -106,27 +107,29 @@ const RideSummary = () => {
       </RideSummaryDiv>
       <LocationDivContainer>
         <LocationDiv>
-          <LocationText>
-            <DepartureDiv>
+          <InnerLocationDiv>
+            <LocationText>
+              <DepartureDiv>
+                <IoLocationSharp></IoLocationSharp>&nbsp;
+                {ride.departureLocation.title}&nbsp;
+              </DepartureDiv>
+              <LocationArrowDiv>
+                <BsArrowRight></BsArrowRight>&nbsp;
+              </LocationArrowDiv>
+              <ArrivalDiv>
               <IoLocationSharp></IoLocationSharp>&nbsp;
-              {ride.departureLocation.title}&nbsp;
-            </DepartureDiv>
-            <LocationArrowDiv>
-              <BsArrowRight></BsArrowRight>&nbsp;
-            </LocationArrowDiv>
-            <ArrivalDiv>
-            <IoLocationSharp></IoLocationSharp>&nbsp;
-              {ride.arrivalLocation.title}
-            </ArrivalDiv>
-          </LocationText>
-          <DateDiv>
-            <CalendarIcon>
-              <AiTwotoneCalendar></AiTwotoneCalendar> {mon}-{day}
-            </CalendarIcon>
-            <ClockIcon>
-              <AiFillClockCircle></AiFillClockCircle> {hour}
-            </ClockIcon>
-          </DateDiv>
+                {ride.arrivalLocation.title}
+              </ArrivalDiv>
+            </LocationText>
+            <DateDiv>
+              <CalendarIcon>
+                <AiTwotoneCalendar></AiTwotoneCalendar> {mon}-{day}
+              </CalendarIcon>
+              <ClockIcon>
+                <AiFillClockCircle></AiFillClockCircle> {hour}
+              </ClockIcon>
+            </DateDiv>
+          </InnerLocationDiv>
         </LocationDiv>
       </LocationDivContainer>
       <RidersDiv>

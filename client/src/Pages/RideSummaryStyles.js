@@ -59,14 +59,19 @@ const LocationDivContainer = styled.div`
   margin:auto;
   padding-bottom:20px;
   width:90%;
+  // border: 3px solid green;
+  margin-top: 5vh;
+
+
 `
 
 const LocationDiv = styled.div`
-  margin-top: 5vh;
   background: #FFFFFF;
   border-radius: 17px;
   align-items: center; 
   flex-direction: column;
+  // border: 3px solid red;
+
 `
 const LocationText = styled.div`
   display: grid;
@@ -238,10 +243,11 @@ font-family: Josefin Sans;
 font-style: normal;
 line-height: 11px;
 font-size: 24px
-
-
 `
 
+const InnerLocationDiv = styled.div`
+padding: 20px;
+`
 
 
 export {
@@ -271,5 +277,6 @@ export {
   DepartureDiv,
   ArrivalDiv,
   LocationArrowDiv,
-  BackArrowDiv
+  BackArrowDiv,
+  InnerLocationDiv
 }
