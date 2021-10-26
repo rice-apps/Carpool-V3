@@ -43,6 +43,9 @@ export default function ButtonAppBar() {
             <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
             <ListItemText className = {classes.text} primary = "Your Rides"/>
           </ListItem>
+          <ListItem button component = {Link} to = "/about">
+            <ListItemText className = {classes.text} primary = "About"/>
+          </ListItem>
         </List>
       </div>
   );
