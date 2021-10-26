@@ -6,41 +6,66 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/MenuRounded';
+import HomeIcon from '@material-ui/icons/HomeRounded';
+import CarIcon from '@material-ui/icons/DirectionsCarRounded';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import { Drawer } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  icon: {
+    color:"#002140",
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
+  text : {
+    color:"#002140",
+  }
 }));
+
 
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
 
-  const toggleDrawer = () => setDrawer(!drawer)
-  
-  
+  const toggleDrawer = () => setDrawer(!drawer);
+
+  const drawerItems = () => (
+      <div>
+        <List>
+          <ListItem button component = {Link} to = "/home">
+            <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
+            <ListItemText className = {classes.text} primary = "Home"/>
+          </ListItem>
+          <ListItem button component = {Link} to = "/search">
+            <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
+            <ListItemText className = {classes.text} primary = "Your Rides"/>
+          </ListItem>
+        </List>
+      </div>
+  );
+
+  // {newNavbarData.map((item, index) => {
+  //   return (
+  //     <List>
+  //         <ListItem button component = {Link} to = {item.path}>
+  //           <ListItemIcon className = {classes.icon}> {item.icon} </ListItemIcon>
+  //           <ListItemText className =  {classes.text} primary = {item.title}/>
+  //         </ListItem>
+  //     </List>
+  //   )
+  // })}
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="white" elevation="0">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="002140" onClick = {toggleDrawer} aria-label="menu">
+          <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
             <MenuIcon fontSize="large"/>
               <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
-                <div>
-                  A
-                </div>
-                <div>
-                  B
-                </div>
+                {drawerItems()}
               </Drawer>
           </IconButton>
         </Toolbar>
