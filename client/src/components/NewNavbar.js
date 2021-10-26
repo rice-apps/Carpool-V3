@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,14 +22,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const [drawer, setDrawer] = useState(false);
+
+  const toggleDrawer = () => setDrawer(!drawer)
+  
+  
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="white" elevation="0">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="002140" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} color="002140" onClick = {toggleDrawer} aria-label="menu">
             <MenuIcon fontSize="large"/>
-              <Drawer anchor = "left" open>
+              <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
                 <div>
                   A
                 </div>
