@@ -6,7 +6,7 @@ import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItemAvatar, ListItem, ListItemIcon, ListItemText, 
-  Drawer, Divider, IconButton, AppBar, Toolbar } from '@material-ui/core';
+  Drawer, Divider, IconButton, AppBar, Toolbar, Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -15,9 +15,12 @@ const useStyles = makeStyles((theme) => ({
   },
   text : {
     color:"#002140",
+  },
+  large : {
+    width: "15vw",
+    height: "15vw"
   }
 }));
-
 
 export default function ButtonAppBar() {
   const classes = useStyles();
@@ -27,7 +30,11 @@ export default function ButtonAppBar() {
 
   const drawerItems = () => (
       <div>
-        <List>
+        <List style = {{width: "66vw"}}>
+          <ListItem>
+            <Avatar className = {classes.large}/>
+            <ListItemText className = {classes.text} primary ={<Typography ml = {5}> Name </Typography>}/>
+          </ListItem>
           <ListItem button component = {Link} to = "/home">
             <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
             <ListItemText className = {classes.text} primary = "Home"/>
