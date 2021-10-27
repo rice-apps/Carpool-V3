@@ -17,8 +17,15 @@ const useStyles = makeStyles((theme) => ({
     color:"#002140",
   },
   large : {
-    width: "15vw",
-    height: "15vw"
+    width: "8vh",
+    height: "8vh"
+  },
+  bottom : {
+    marginTop: "auto"
+  },
+  list: {
+    display: "flex",
+    flexDirection: "column"
   }
 }));
 
@@ -28,12 +35,13 @@ export default function ButtonAppBar() {
 
   const toggleDrawer = () => setDrawer(!drawer);
 
+  // Eventually should make this extensible
   const drawerItems = () => (
       <div>
-        <List style = {{width: "66vw"}}>
-          <ListItem>
+        <List className = {classes.list} style = {{width: "66vw", height: "100vh"}}>
+          <ListItem button component = {Link} to = "/profile" style = {{gap: "5vw"}}>
             <Avatar className = {classes.large}/>
-            <ListItemText className = {classes.text} primary ={<Typography ml = {5}> Name </Typography>}/>
+            <ListItemText className = {classes.text} primary = "Alexis Nicolas"/>
           </ListItem>
           <ListItem button component = {Link} to = "/home">
             <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
@@ -43,23 +51,12 @@ export default function ButtonAppBar() {
             <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
             <ListItemText className = {classes.text} primary = "Your Rides"/>
           </ListItem>
-          <ListItem button component = {Link} to = "/about">
+          <ListItem button className = {classes.bottom} component = {Link} to = "/about">
             <ListItemText className = {classes.text} primary = "About"/>
           </ListItem>
         </List>
       </div>
   );
-
-  // {newNavbarData.map((item, index) => {
-  //   return (
-  //     <List>
-  //         <ListItem button component = {Link} to = {item.path}>
-  //           <ListItemIcon className = {classes.icon}> {item.icon} </ListItemIcon>
-  //           <ListItemText className =  {classes.text} primary = {item.title}/>
-  //         </ListItem>
-  //     </List>
-  //   )
-  // })}
 
   return (
     <div className={classes.root}>
