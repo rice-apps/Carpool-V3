@@ -15,7 +15,8 @@ import {
   SelectBox,
   MenuBox,
   InputBox,
-  BodyText
+  BodyText,
+  StyledButton
 } from './FormOnly.styles'
 
 const FormOnly = (props) => {
@@ -264,19 +265,19 @@ const FormOnly = (props) => {
         </Grid>
       </Grid>
       <Grid  item xs = {12}>
-        <Button
+        <StyledButton
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
           style={{
             backgroundColor: "#2075D8",
-            fontSize: "2vh",
+            fontSize: "2.5vh",
           }}
           onClick={onSubmit}
         >
-          Search RIDE
-        </Button>
+          Search Ride
+        </StyledButton>
       </Grid>
     </Grid>
   </Form>

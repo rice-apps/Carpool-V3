@@ -44,7 +44,7 @@ const displayRideBottomOfPage = () => {
         <div style={{ fontSize: '2vh', fontFamily: "Josefin Sans", color: "#C7CBD3"}}>
             OR
         </div>
-        <div style={{ fontSize: '2vw'}}>
+        <div>
             <Link to="/create-ride" style = {{textDecoration: "none"}}>
                 <StyledButton
                 onClick={() => handleClickCreateRide()}> 
@@ -64,7 +64,7 @@ const renderTime = (date) => {
         if (hours !== 12){
             hours = hours - 12;
         }
-        ampm = "PM"; 
+        ampm = " PM"; 
     } else {
         if (hours === 0){
             hours += 12
@@ -121,8 +121,8 @@ class DisplayRides extends Component {
                     <Box width={"15vw"} height={"15vw"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         <CalendarTodayIcon style ={{fontSize: "6vw", padding: "1vw"}}/>
                         <span>
-                            <div style = {{fontSize: '3vw', fontFamily: 'Josefin Sans'}}> {monthToStr[date.getMonth()-1] + " " + date.getDate()}</div>
-                            <div style={{fontSize: '2vw'}}>{renderTime(date)}</div>
+                            <div style = {{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}> {monthToStr[date.getMonth()-1] + " " + date.getDate()}</div>
+                            <div style={{fontSize: '2vw', fontFamily: "Josefin Sans"}}>{renderTime(date)}</div>
                         </span>
                     </Box>
                 </Grid>
@@ -150,7 +150,7 @@ class DisplayRides extends Component {
             }
             {
             (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff", marginTop: "3vw", marginBottom: "3vw"}}>
-                <Box width={"100%"} height={"100%"} style={{fontSize: "3vw"}}>
+                <Box width={"100%"} height={"100%"} style={{fontSize: "2vh", fontFamily: "Josefin Sans", padding: "1vh"}}>
                     Either you have not clicked the submit button yet or no rides matched.
                 </Box>
             </Grid>
