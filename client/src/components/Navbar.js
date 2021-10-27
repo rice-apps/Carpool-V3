@@ -99,7 +99,7 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="white" elevation="0">
+      <AppBar position="fixed" color="white" elevation="0">
         <Toolbar>
           <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
             <MenuIcon fontSize="large"/>
@@ -109,6 +109,8 @@ export default function ButtonAppBar() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      {/* Makes the app bar sticky while not covering up the content on the page */}
+      <Toolbar/>
     </div>
   );
 }
