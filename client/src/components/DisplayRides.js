@@ -101,7 +101,7 @@ class DisplayRides extends Component {
                 <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
                     <Box width={"12vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
                         <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{numLeft}</span>
-                        <span style={{fontSize: '2vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
+                        <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
                     </Box>
                 </Grid>
                 <Grid item xs={2} justify="center" align='center'>
@@ -118,11 +118,11 @@ class DisplayRides extends Component {
                     </BoxRide>
                 </Grid>
                 <Grid item xs={3} justify="center" align='center'>
-                    <Box width={"15vw"} height={"15vw"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <CalendarTodayIcon style ={{fontSize: "6vw", padding: "1vw"}}/>
+                    <Box width={"15vw"} height={"15vw"} style={{ display: 'flex', alignItems: 'center', gap: "1vh"}}>
+                        <CalendarTodayIcon style ={{fontSize: "3vw"}}/>
                         <span>
-                            <div style = {{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}> {monthToStr[date.getMonth()-1] + " " + date.getDate()}</div>
-                            <div style={{fontSize: '2vw', fontFamily: "Josefin Sans"}}>{renderTime(date)}</div>
+                            <div style = {{fontSize: '3vw', fontFamily: 'Josefin Sans'}}> {monthToStr[date.getMonth()-1] + " " + date.getDate()}</div>
+                            <div style={{fontSize: '2.5vw', fontFamily: "Josefin Sans"}}>{renderTime(date)}</div>
                         </span>
                     </Box>
                 </Grid>
@@ -141,8 +141,8 @@ class DisplayRides extends Component {
 
         const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
 
-        return <GridT container spacing={2}  direction="column"alignItems="center">
-            <Box style={{fontSize: "5vw", paddingTop: '3vh', fontFamily: "Josefin Sans"}}>
+        return <GridT container spacing={2}  direction="column" alignItems="center">
+            <Box style={{fontSize: "4vh", paddingTop: '5vh', fontFamily: "Josefin Sans"}}>
                 Matching Rides: 
             </Box>
             {
@@ -156,7 +156,7 @@ class DisplayRides extends Component {
             </Grid>
             }
             {
-            <div style = {{fontSize: "5vw", fontFamily: "Josefin Sans"}}>All Rides:</div>
+            <div style = {{fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
             }
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
