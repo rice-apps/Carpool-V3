@@ -8,6 +8,8 @@ import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItemAvatar, ListItem, ListItemIcon, ListItemText, 
   Drawer, Divider, IconButton, AppBar, Toolbar, Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom'
+import { useParams } from 'react-router';
+import { gql, useQuery } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -35,13 +37,40 @@ export default function ButtonAppBar() {
 
   const toggleDrawer = () => setDrawer(!drawer);
 
+  const {id} = useParams()
+
+  const GET_USER = gql`
+  query GetUserInfo ($netID: String)
+  {
+    userOne (filter:{netid : $netID}) {
+      _id
+      firstName
+      lastName
+    }
+  }`
+
+  const {data: userData, loading, error} = useQuery(GET_USER, 
+    {
+      variables: 
+      {
+        netID: id,
+      }
+    }
+  );
+  
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  const {userOne: user} = userData;
+  if (!user) return <div>Invalid User ID</div>
+
   // Eventually should make this extensible
   const drawerItems = () => (
       <div>
         <List className = {classes.list} style = {{width: "66vw", height: "100vh"}}>
           <ListItem button component = {Link} to = "/profile" style = {{gap: "5vw"}}>
             <Avatar className = {classes.large}/>
-            <ListItemText className = {classes.text} primary = "Alexis Nicolas"/>
+            <ListItemText className = {classes.text} primary = {user.firstName + ' ' + user.lastName}/>
           </ListItem>
           <ListItem button component = {Link} to = "/home">
             <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
