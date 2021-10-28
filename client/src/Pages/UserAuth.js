@@ -40,16 +40,20 @@ const UserAuth = () => {
         if (userData) {
             const user = userData.userOne; 
             if (!user.firstName) {
-                // Route to onboarding prompt.. need to be replaced with proper component
-                history.push('/search') 
+              // Route to onboarding prompt.. need to be replaced with proper component
+              history.push('/search') 
             } else {
-                history.push(destination);
+              history.push(destination)
             }
         }
         
     }, [userData, history, destination])
 
-    
+    return(
+      <div>
+        The destination is... ${destination}
+      </div>
+    )
 }
 
 export default UserAuth; 
