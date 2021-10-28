@@ -50,15 +50,11 @@ const GET_LOCATIONS = gql`
 
 const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
-const testDate = new Date("2021-09-01T01:30:49.000+00:00");
-
 const { refetch: refetchRide } = useQuery(GET_RIDES,
   {
-  variables: {
-    spotsNum: 3,
-    date: testDate
+    variables: {}
   }
-});
+);
   
   
 // TODO: Get this from the API!!
