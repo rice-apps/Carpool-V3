@@ -9,14 +9,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { SERVICE_URL } from '../config'
+import { SERVICE_URL } from '../config'; 
 
-const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
+const destinationURL = '/create-ride'; 
 
 function AlertDialog() {
     const [openAlert, setOpenAlert] = useState(false);
     const [skipQuery, setSkipQuery] = useState(true);
-    const [destination, setDestination] = useState("/create-ride");
+    const [destination, setDestination] = useState(destinationURL);
     const [userData, setUserData] = useState();
     const history = useHistory() 
     const id = localStorage.getItem('netid');
@@ -72,7 +73,7 @@ function AlertDialog() {
             const user = userData.userOne; 
             if (!user.firstName) {
                 // Route to onboarding prompt.. need to be replaced with proper component
-                history.push('/home') 
+                history.push('/search') 
             } else {
                 history.push(destination);
             }
