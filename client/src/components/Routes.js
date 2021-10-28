@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
@@ -12,6 +12,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary.js'
+import jwt_decode from "jwt-decode";
 
 /**
  * Requests to verify the user's token on the backend
@@ -37,37 +38,38 @@ const GET_RECENT_UPDATE = gql`
 `
 
 const CheckTokenRoute = ({ children, ...rest }) => {
-  let token =
-    localStorage.getItem('token') != null ? localStorage.getItem('token') : ''
+  let token = localStorage.getItem('token')
 
-  let client = useApolloClient()
-
-  // Verify that the token is valid on the backend
-  let { data, loading, error } = useQuery(VERIFY_USER, {
-    variables: { token: token },
-    errorPolicy: 'none',
-  })
-
-  if (error) {
-    // Clear the token because something is wrong with it
-    console.log("Token removed")
-    localStorage.removeItem('token')
-  }
-  if (loading) return <p>Waiting...</p>
-  if (!data || !data.verifyUser) {
-    // Clear the token
-    console.log("Token removed")
-    localStorage.removeItem('token')
+  if (token) {
+    console.log("Token found")
+    const {exp} = jwt_decode(token)
+    const expirationTime = (exp * 1000) - 60000
+    console.log("Expriration time", expirationTime)
+    console.log("Date now", Date.now())
+    if (Date.now() >= expirationTime) {
+      console.log("Token expired, removing")
+      localStorage.removeItem('token')
+    }
   }
 
-  // Check whether any recent updates have come in
-  let { recentUpdate } = data.verifyUser
+  // // Verify that the token is valid on the backend
+  // let { data, loading, error } = useQuery(VERIFY_USER, {
+  //   variables: { token: token },
+  //   errorPolicy: 'none',
+  // })
 
-  // Upon verification, store the returned information
-  client.writeQuery({
-    query: GET_RECENT_UPDATE,
-    data: { recentUpdate: recentUpdate },
-  })
+  // if (error) {
+  //   // Clear the token because something is wrong with it
+  //   console.log("Token removed")
+  //   localStorage.removeItem('token')
+  // }
+  // if (loading) return <p>Waiting...</p>
+  // if (!data || !data.verifyUser) {
+  //   // Clear the token
+  //   console.log("Token removed")
+  //   localStorage.removeItem('token')
+  // }
+
   // Everything looks good! Now let's send the user on their way
   return (
     <Route
