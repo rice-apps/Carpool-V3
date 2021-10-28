@@ -61,7 +61,7 @@ const Auth = () => {
     console.log("netid set: ", localStorage.getItem('netid'))
 
     // Set recent update in client state
-    return localStorage.getItem('nextPage') ?  history.push('/userAuth') : history.go(-2)
+    return localStorage.getItem('nextPage') ?  <Redirect path={'/userAuth'}/> : <Redirect path={"/home"} />
 }
 
 export default Auth;

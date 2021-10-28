@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useState, useEffect } from 'react';
-import { useHistory } from "react-router";
+import { Reroute, useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';

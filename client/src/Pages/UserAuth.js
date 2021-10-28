@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { useEffect } from 'react';
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 
     // Backend Query to Confirm User
@@ -41,9 +41,13 @@ const UserAuth = () => {
             const user = userData.userOne; 
             if (!user.firstName) {
               // Route to onboarding prompt.. need to be replaced with proper component
-              history.push('/search') 
+              return (
+                <Redirect path = '/search'/>
+              )
             } else {
-              history.push(destination)
+              return (
+                <Redirect path = {destination}/>
+              )
             }
         }
         
