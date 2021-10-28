@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
@@ -35,6 +35,49 @@ const GET_RECENT_UPDATE = gql`
     recentUpdate @client
   }
 `
+
+const CheckTokenRoute = ({ children, ...rest }) => {
+  let token =
+    localStorage.getItem('token') != null ? localStorage.getItem('token') : ''
+
+  let client = useApolloClient()
+
+  // Verify that the token is valid on the backend
+  let { data, loading, error } = useQuery(VERIFY_USER, {
+    variables: { token: token },
+    errorPolicy: 'none',
+  })
+
+  if (error) {
+    // Clear the token because something is wrong with it
+    console.log("Token removed")
+    localStorage.removeItem('token')
+  }
+  if (loading) return <p>Waiting...</p>
+  if (!data || !data.verifyUser) {
+    // Clear the token
+    console.log("Token removed")
+    localStorage.removeItem('token')
+  }
+
+  // Check whether any recent updates have come in
+  let { recentUpdate } = data.verifyUser
+
+  // Upon verification, store the returned information
+  client.writeQuery({
+    query: GET_RECENT_UPDATE,
+    data: { recentUpdate: recentUpdate },
+  })
+  // Everything looks good! Now let's send the user on their way
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        return children
+      }}
+    />
+  )
+}
 
 /**
  * Defines a private route - if the user is NOT logged in or has an invalid token,
@@ -108,7 +151,7 @@ export const Routes = () => {
             <RideSummary />
           </Route>
           <Route path={'/auth'} component={withRouter(Auth)} />
-          <Route path={"/search"} component={withRouter(Search)} />
+          <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
           <Route path={"/profileform"} component={withRouter(ProfileForm)} />
         </Switch>
       </Router>
