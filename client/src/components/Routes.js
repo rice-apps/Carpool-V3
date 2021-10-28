@@ -36,7 +36,7 @@ const GET_RECENT_UPDATE = gql`
     recentUpdate @client
   }
 `
-
+// Checks if the login token has expired. If not, remove it.
 const CheckTokenRoute = ({ children, ...rest }) => {
   let token = localStorage.getItem('token')
 
@@ -51,24 +51,6 @@ const CheckTokenRoute = ({ children, ...rest }) => {
       localStorage.removeItem('token')
     }
   }
-
-  // // Verify that the token is valid on the backend
-  // let { data, loading, error } = useQuery(VERIFY_USER, {
-  //   variables: { token: token },
-  //   errorPolicy: 'none',
-  // })
-
-  // if (error) {
-  //   // Clear the token because something is wrong with it
-  //   console.log("Token removed")
-  //   localStorage.removeItem('token')
-  // }
-  // if (loading) return <p>Waiting...</p>
-  // if (!data || !data.verifyUser) {
-  //   // Clear the token
-  //   console.log("Token removed")
-  //   localStorage.removeItem('token')
-  // }
 
   // Everything looks good! Now let's send the user on their way
   return (
@@ -141,20 +123,20 @@ export const Routes = () => {
       <Router>
         <Navbar />
         <Switch>
-          <Route path={'/login'} component={withRouter(Login)} />
-          <Route path={'/profile/:id'} component={withRouter(Profile)} />
-          <Route path={'/'} exact component={withRouter(Home)} />
-          <Route path={'/home'} component={withRouter(Home)} />
+          <CheckTokenRoute path={'/login'} component={withRouter(Login)} />
+          <CheckTokenRoute path={'/profile/:id'} component={withRouter(Profile)} />
+          <CheckTokenRoute path={'/'} exact component={withRouter(Home)} />
+          <CheckTokenRoute path={'/home'} component={withRouter(Home)} />
           <PrivateRoute
             path={'/create-ride'}
             component={withRouter(CreateRide)}
           />
-          <Route path={'/ridesummary/:id'}>
+          <CheckTokenRoute path={'/ridesummary/:id'}>
             <RideSummary />
-          </Route>
-          <Route path={'/auth'} component={withRouter(Auth)} />
+          </CheckTokenRoute>
+          <CheckTokenRoute path={'/auth'} component={withRouter(Auth)} />
           <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
-          <Route path={"/profileform"} component={withRouter(ProfileForm)} />
+          <CheckTokenRoute path={"/profileform"} component={withRouter(ProfileForm)} />
         </Switch>
       </Router>
     </div>
