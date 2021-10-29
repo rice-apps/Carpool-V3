@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import Button from '@material-ui/core/Button'
-import { Link } from 'react-router-dom';
+import ProfileDialog from './ProfileDialog.js';
 import {
   ButtonBox,
   BackArrow,
@@ -19,6 +19,7 @@ import {
 	StyledText3,
   EditProfileButton
 } from './ProfileStyles.js';
+import {useState} from 'react';
 
 const Profile = () => {
 
@@ -37,6 +38,8 @@ const Profile = () => {
       phone
     }
   }`
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const {data: userData, loading, error} = useQuery(GET_USER, 
     {
@@ -60,16 +63,18 @@ const Profile = () => {
     <div>
       <ReturnHeader>
         <ButtonBox
-        onClick = {goBack}>
+          onClick = {goBack}>
           <BackArrow></BackArrow>
           <StyledText3>Ride Summary</StyledText3>
         </ButtonBox>
       </ReturnHeader>
       <EditProfileButton>
-        <Link to= "/profileform">
-          <Button variant = "outline">Edit Profile Information</Button>
-        </Link>
+          <Button onClick = {() => setOpenDialog(true)} variant = "outlined">Edit Profile Information</Button>
       </EditProfileButton>
+      <ProfileDialog
+            openDialog = {openDialog}
+            setOpenDialog = {setOpenDialog}>
+          </ProfileDialog>
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + ' ' + user.lastName}</UserName>
@@ -90,4 +95,4 @@ const Profile = () => {
   )
 }
 
-export default Profile 
+export default Profile;
