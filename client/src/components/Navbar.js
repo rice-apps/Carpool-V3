@@ -4,7 +4,7 @@ import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
-  Drawer, Divider, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
+  Drawer, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
 
@@ -44,8 +44,7 @@ const LoginButton = withStyles({
   root: {
       background: '#2075D8',
       width: '33vw',
-      borderRadius: 8,
-      border: 0,
+      borderRadius: 25,
       color: 'white',
   },
   label: {
@@ -69,7 +68,7 @@ query GetUserInfo ($netID: String)
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
-  const loggedIn = localStorage.getItem('netid') != null;
+  const loggedIn = localStorage.getItem('token') != null;
 
   const toggleDrawer = () => setDrawer(!drawer);
 
@@ -94,12 +93,9 @@ export default function ButtonAppBar() {
   )
 
   const showLogin = () => (
-    <div>
-      <ListItem disableGutters = "true" className={classes.loginContainer}>
+      <ListItem className={classes.loginContainer} divider = "true" disableGutters = "true">
         <LoginButton component = {Link} to = "/login">Login</LoginButton>
       </ListItem>
-      <Divider/>
-    </div>
   )
 
   // Eventually should make this extensible
