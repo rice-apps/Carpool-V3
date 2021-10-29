@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
@@ -28,17 +29,44 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const GET_USER = gql`
+query GetUserInfo ($netID: String)
+{
+  userOne (filter:{netid : $netID}) {
+    _id
+    firstName
+    lastName
+    netid
+    phone
+  }
+}`
+
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('netid') != null;
 
+  const {id} = useParams()
+
   const toggleDrawer = () => setDrawer(!drawer);
+
+  const {data: userData, loading, error} = useQuery(GET_USER, 
+    {
+      variables: 
+      {
+        netID: localStorage.getItem('netid'),
+      }
+    }
+  );
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  const {userOne: user} = userData;
 
   const showUsername = () => (
     <ListItem button component = {Link} to = "/profile" style = {{gap: "5vw"}}>
       <Avatar className = {classes.large}/>
-      <ListItemText className = {classes.text} primary = "Filler Name"/>
+      <ListItemText className = {classes.text} primary = {user.firstName + " " + user.lastName}/>
     </ListItem>
   )
 
