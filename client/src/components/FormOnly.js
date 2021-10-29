@@ -5,7 +5,6 @@ import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 import {
     MenuItem,
     Grid, 
-    Button, 
 } from '@material-ui/core';
 
 import "@fontsource/source-sans-pro";
@@ -15,7 +14,8 @@ import {
   SelectBox,
   MenuBox,
   InputBox,
-  BodyText
+  BodyText,
+  StyledButton
 } from './FormOnly.styles'
 
 const FormOnly = (props) => {
@@ -59,14 +59,13 @@ const FormOnly = (props) => {
 
   console.log("startValue=" + startValue + " endValue=" + endValue + " minDate=" + minDate + " maxDate=" + maxDate);
 
-  const dictNames = {startLoc: 0, endLoc: 1, date: 2, time: 3, numberPeople: 4}
+  const dictNames = {startLoc: 0, endLoc: 1, date: 2, numberPeople: 3}
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
   
   const [dateRange, setDateRange] = useState([startValue, endValue])
   
-  const [time, setTime] = useState(null)
   const [numberPeople, setNumberPeople] = useState(null)
 
   const [indSelected, setIndSelected] = useState(-1)
@@ -91,31 +90,11 @@ const FormOnly = (props) => {
     return d1[0] > d2[0] || (equals && d1[0] === d2[0]);
   }
   
-  
-  const combineDateWithTime = (d, t) => {
-    if (d == null) {
-      return null;
-    }
-    let useT = t;
-    if (t == null) {
-      useT = "00:00";
-    }
-
-    const splitT = useT.split(":");
-    
-    return new Date(
-    d.getFullYear(),
-    d.getMonth(),
-    d.getDate(),
-    parseInt(splitT[0]),
-    parseInt(splitT[1]),
-    );
-  }
 
   const onSubmit = (e) => {
       e.preventDefault();
       console.log("Search form submitted.");
-      console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " time=" + time + " numberPeople=" + numberPeople + " ]");
+      console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " numberPeople=" + numberPeople + " ]");
 
       console.log("ridesPossibleForm before .getRidesRefetch() in onSubmit()=", ridesPossibleForm);
 
@@ -139,27 +118,24 @@ const FormOnly = (props) => {
 
       console.log("ridesPossible after props.getRidesRefetch()=", ridesPossible);
 
-      const dateTimeRange = [combineDateWithTime(dateRange[0], time), combineDateWithTime(dateRange[1], time)];
-      console.log("dateTimeRange=", dateTimeRange);
-
       //Make sure that ridesPossibleForm (FormOnly component's variable that stores the updated all rides from database)
       //has been updated with a new refetch() already.
       resultDestArr = ridesPossibleForm;
       console.log("ridesPossibleForm=", ridesPossibleForm);
 
-      if (startLoc != null) {
+      if (startLoc !== "") {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});
       }
       console.log("resultDestArr after startLoc=", resultDestArr);
-      if (endLoc != null) {
+      if (endLoc !== "") {
       resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
       }
       console.log("resultDestArr after endLoc=", resultDestArr);
 
-      if (dateTimeRange[0] != null && dateTimeRange[1] != null) {
-      resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateTimeRange[0], true) && !compareDates(new Date(ele.departureDate), dateTimeRange[1], false);});
+      if (dateRange[0] != null && dateRange[1] != null) {
+      resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateRange[0], true) && !compareDates(new Date(ele.departureDate), dateRange[1], false);});
       }
-      console.log("resultDestArr after dateTimeRange=", resultDestArr);
+      console.log("resultDestArr after dateRange=", resultDestArr);
 
       if (numberPeople != null) {
       resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
@@ -186,18 +162,7 @@ const FormOnly = (props) => {
     setIndSelected(dictNames.endLoc);
     console.log(JSON.parse(JSON.stringify(indSelected)));
     
-  }
-
-  const handleChangeTime = (time) => {
-    console.log("handleChangeTime() run, time=" +  time + " temp=" + temp);
-    setTime(time);
-
-    setIndSelected(dictNames.time);
-
-    console.log("handleChangeTime() run, time=" +  time + " temp=" + temp);
-
-  }
-    
+  }    
     
   return (
     <React.Fragment>
@@ -238,7 +203,7 @@ const FormOnly = (props) => {
         </Grid>
 
         <Grid  item xs = {12}>
-          <InputBox id = 'EndLoc'>End Location</InputBox>
+          <InputBox id = 'EndLoc'>Destination</InputBox>
             <SelectBox
                 id="End Location Search Bar"
                 labelId='EndLoc'
@@ -263,7 +228,7 @@ const FormOnly = (props) => {
             justifyContent='space-around'
             alignItems='center'
           >
-            <Grid item xs = {8}>
+            <Grid item xs = {12}>
               <InputBox id = 'Date'>Date</InputBox>
               <DateRangePickerComponent placeholder="Enter Date Range"
                 startDate={startValue}
@@ -275,25 +240,6 @@ const FormOnly = (props) => {
                 change={(e) => {setDateRange([e.startDate, e.endDate]); console.log("DateRangePickerComponent new e=", e);}}
               >
               </DateRangePickerComponent>
-            </Grid>
-            <Grid item xs = {3}>
-              <InputBox id = 'time'>Time</InputBox>
-                <TextField
-                  id="time"
-                  label=""
-                  type="time"
-                  defaultValue={time}
-                  onChange={(e) => {
-                    handleChangeTime(e.target.time);
-                    console.log("Time field e.target=", e.target); console.log("Time field e.target.value=", typeof(e.target.value));
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    step: 300, // 5 min
-                  }}
-                />
             </Grid>
           </Grid>
         </Grid>
@@ -318,15 +264,19 @@ const FormOnly = (props) => {
         </Grid>
       </Grid>
       <Grid  item xs = {12}>
-        <Button
+        <StyledButton
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
+          style={{
+            backgroundColor: "#2075D8",
+            fontSize: "2.5vh",
+          }}
           onClick={onSubmit}
         >
-          Search RIDE
-        </Button>
+          Search Ride
+        </StyledButton>
       </Grid>
     </Grid>
   </Form>

@@ -1,5 +1,4 @@
-import React from 'react';
-import {useState} from "react";
+import React, { useState } from 'react';
 import { gql, useQuery } from "@apollo/client";
 import Header from '../components/Header.js';
 import { useToasts } from "react-toast-notifications";
@@ -58,6 +57,7 @@ const Create = ({onCreate}) => {
     const onSubmit = (e) => {
         e.preventDefault()
         const users = [user._id]
+        const owner = user._id
         console.log('Riders is set to... ', users)
 
         if (!startLoc || !endLoc) { 
@@ -71,7 +71,7 @@ const Create = ({onCreate}) => {
         }
 
         // Pass arguments back to the top mutation queue
-        onCreate({ startLoc, endLoc, date, passengers, confirmation, users })
+        onCreate({ startLoc, endLoc, date, passengers, confirmation, users, owner})
         
         console.log("Submitted!")
 
