@@ -4,7 +4,6 @@ import {monthToStr} from '../Pages/Search.js';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {
     GridT,

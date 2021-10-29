@@ -5,7 +5,6 @@ import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 import {
     MenuItem,
     Grid, 
-    Button, 
 } from '@material-ui/core';
 
 import "@fontsource/source-sans-pro";
