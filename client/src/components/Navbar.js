@@ -6,8 +6,7 @@ import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
   Drawer, Divider, IconButton, AppBar, Toolbar, Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom'
-import { useParams } from 'react-router';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery} from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -32,39 +31,14 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
+  const loggedIn = localStorage.getItem('netid') != null;
 
   const toggleDrawer = () => setDrawer(!drawer);
-
-  const {id} = useParams()
-
-  const GET_USER = gql`
-  query GetUserInfo ($netID: String)
-  {
-    userOne (filter:{netid : $netID}) {
-      _id
-      firstName
-      lastName
-    }
-  }`
-
-  const {data: userData, loading, error} = useQuery(GET_USER, 
-    {
-      variables: 
-      {
-        netID: id,
-      }
-    }
-  );
-  
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
-  const {userOne: user} = userData;
 
   const showUsername = () => (
     <ListItem button component = {Link} to = "/profile" style = {{gap: "5vw"}}>
       <Avatar className = {classes.large}/>
-      <ListItemText className = {classes.text} primary = {user.firstName + ' ' + user.lastName}/>
+      <ListItemText className = {classes.text} primary = "Filler Name"/>
     </ListItem>
   )
 
@@ -81,12 +55,12 @@ export default function ButtonAppBar() {
   const drawerItems = () => (
     <div>
       <List className = {classes.list} style = {{width: "66vw", height: "100vh"}}>
-        {user ? showUsername() : showLogin()}
+        {loggedIn ? showUsername() : showLogin()}
         <ListItem button component = {Link} to = "/home">
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Home"/>
         </ListItem>
-        <ListItem button disabled = {!user} component = {Link} to = "/search">
+        <ListItem button disabled = {!loggedIn} component = {Link} to = "/search">
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
