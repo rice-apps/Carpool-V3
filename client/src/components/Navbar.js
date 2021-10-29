@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { useParams } from 'react-router';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
@@ -17,16 +16,27 @@ const useStyles = makeStyles((theme) => ({
   text : {
     color:"#002140",
   },
-  large : {
+  avatarIcon : {
     width: "8vh",
     height: "8vh"
   },
-  bottom : {
+  bottomItem : {
     marginTop: "auto"
   },
   list: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    width: "66vw",
+    height: "100vh",
+  },
+  usernameContainer:{
+    gap: "5vw",
+    height: "15vh"
+  },
+  loginContainer:{
+    display:"flex", 
+    justifyContent:"center", 
+    height: "15vh",
   },
 }));
 
@@ -77,15 +87,15 @@ export default function ButtonAppBar() {
   const {userOne: user} = userData;
 
   const showUsername = () => (
-    <ListItem button component = {Link} to = "/profile" style = {{gap: "5vw"}}>
-      <Avatar className = {classes.large}/>
+    <ListItem button component = {Link} to = "/profile" className={classes.usernameContainer}>
+      <Avatar className = {classes.avatarIcon}/>
       <ListItemText className = {classes.text} primary = {user.firstName + " " + user.lastName}/>
     </ListItem>
   )
 
   const showLogin = () => (
     <div>
-      <ListItem style ={{marginLeft: "14vw"}}>
+      <ListItem disableGutters = "true" className={classes.loginContainer}>
         <LoginButton component = {Link} to = "/login">Login</LoginButton>
       </ListItem>
       <Divider/>
@@ -95,7 +105,7 @@ export default function ButtonAppBar() {
   // Eventually should make this extensible
   const drawerItems = () => (
     <div>
-      <List className = {classes.list} style = {{width: "66vw", height: "100vh"}}>
+      <List className = {classes.list}>
         {loggedIn ? showUsername() : showLogin()}
         <ListItem button component = {Link} to = "/home">
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
@@ -105,7 +115,7 @@ export default function ButtonAppBar() {
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <ListItem button className = {classes.bottom} component = {Link} to = "/about">
+        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about">
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
       </List>
@@ -113,7 +123,7 @@ export default function ButtonAppBar() {
   );
 
   return (
-    <div className={classes.root}>
+    <div>
       <AppBar position="fixed" color="white" elevation="0">
         <Toolbar>
           <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
