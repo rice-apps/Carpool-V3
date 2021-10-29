@@ -57,11 +57,8 @@ const GET_USER = gql`
 query GetUserInfo ($netID: String)
 {
   userOne (filter:{netid : $netID}) {
-    _id
     firstName
     lastName
-    netid
-    phone
   }
 }`
 
@@ -82,6 +79,7 @@ export default function ButtonAppBar() {
   );
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
+  if (!userData) return "User not found!"; 
 
   const {userOne: user} = userData;
 
