@@ -21,6 +21,7 @@ const UserAuth = () => {
 
     const destination = localStorage.getItem('nextPage'); 
     const history = useHistory();
+    const id = localStorage.get('netid');
 
     localStorage.removeItem('nextPage'); 
 
@@ -41,13 +42,15 @@ const UserAuth = () => {
             const user = userData.userOne; 
             if (!user.firstName) {
               // Route to onboarding prompt.. need to be replaced with proper component
-              return (
-                <Redirect path = '/search'/>
-              )
+              history.push('/search');
+              // return (
+              //   <Redirect path = '/search'/>
+              // )
             } else {
-              return (
-                <Redirect path = {destination}/>
-              )
+              history.push(destination);
+              // return (
+              //   <Redirect path = {destination}/>
+              // )
             }
         }
         
