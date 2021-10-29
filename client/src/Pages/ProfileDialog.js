@@ -65,9 +65,9 @@ export default function ProfileDialog (props) {
                 </EditPaymentOptions>
             </DialogContent>
             <DialogActions>
-                <SubmitButton>
+            <SubmitButton>
                     <Button variant="contained">Submit</Button>
-                </SubmitButton>
+            </SubmitButton>
             </DialogActions>
             </Dialog>
         </div>

@@ -47,8 +47,6 @@ const SubmitButton = styled.div`
     aligh-items: center;
     justify-content: center;
     padding-top: 6vh;
-    padding-left: 40vw;
-    padding-right: 40vw;
 `
 
 export {
