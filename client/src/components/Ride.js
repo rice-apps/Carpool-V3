@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -17,6 +17,7 @@ function renderTime(date) {
 }
 
 const Ride = ({ride}) => {
+    const history = useHistory();
     const date = new Date(ride.departureDate);
 
     const JOIN_RIDE = gql`
@@ -27,9 +28,17 @@ const Ride = ({ride}) => {
         }
     `;
 
-    const [join] = useMutation(JOIN_RIDE, {
+    const [joinRide] = useMutation(JOIN_RIDE, {
         variables: { rideID: ride._id }
     });
+
+    const join = () => {
+        if (localStorage.getItem('token') == null) {
+            history.replace('/login');
+        }
+
+        joinRide();
+    };
 
     return (
         <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
@@ -71,7 +80,7 @@ const Ride = ({ride}) => {
 
                 <Grid item xs={1} justify="center" align='center'>
                     <Box width={"5vw"} height={"100%"}>
-                        <Button fullWidth variant="contained" color="secondary" onClick={() => { join() }}>
+                        <Button fullWidth variant="contained" color="secondary" onClick={join}>
                             Join
                         </Button>
                     </Box>
