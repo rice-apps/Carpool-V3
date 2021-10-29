@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import { useParams } from 'react-router';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
-  Drawer, Divider, IconButton, AppBar, Toolbar, Avatar } from '@material-ui/core';
+  Drawer, Divider, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
+
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -26,8 +27,22 @@ const useStyles = makeStyles((theme) => ({
   list: {
     display: "flex",
     flexDirection: "column"
-  }
+  },
 }));
+
+const LoginButton = withStyles({
+  root: {
+      background: '#2075D8',
+      width: '33vw',
+      borderRadius: 8,
+      border: 0,
+      color: 'white',
+  },
+  label: {
+    textTransform: 'capitalize',
+    fontFamily: 'Josefin Sans'
+  },
+})(Button);
 
 const GET_USER = gql`
 query GetUserInfo ($netID: String)
@@ -45,8 +60,6 @@ export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('netid') != null;
-
-  const {id} = useParams()
 
   const toggleDrawer = () => setDrawer(!drawer);
 
@@ -72,8 +85,8 @@ export default function ButtonAppBar() {
 
   const showLogin = () => (
     <div>
-      <ListItem button component = {Link} to = "/login" style = {{}}>
-        <ListItemText className = {classes.text}  primary = "Login"/>
+      <ListItem style ={{marginLeft: "14vw"}}>
+        <LoginButton component = {Link} to = "/login">Login</LoginButton>
       </ListItem>
       <Divider/>
     </div>
