@@ -84,7 +84,7 @@ export default function ButtonAppBar() {
   const {userOne: user} = userData;
 
   const showUsername = () => (
-    <ListItem button component = {Link} to = "/profile" className={classes.usernameContainer}>
+    <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer}>
       <Avatar className = {classes.avatarIcon}/>
       <ListItemText className = {classes.text} primary = {user.firstName + " " + user.lastName}/>
     </ListItem>
