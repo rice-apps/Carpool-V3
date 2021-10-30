@@ -32,9 +32,23 @@ width: 80vw;
 justify-content: space-between
 `;
 
+const PastRideCard = styled.div`
+`;
+
+const Unpaid = styled.div`
+`;
+
+const Paid = styled.div`
+`;
+
+
+
 export {
 	Title,
     UpcomingRidesSection,
     PastRidesandPayments,
-    OverallPage
+    OverallPage,
+    PastRideCard,
+    Unpaid,
+    Paid
 };

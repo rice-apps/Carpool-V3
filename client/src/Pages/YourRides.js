@@ -1,9 +1,9 @@
 import React from 'react';
-import { Title, UpcomingRidesSection, PastRidesandPayments, OverallPage } from './YourRidesStyles';
+import { Title, UpcomingRidesSection, PastRidesandPayments, OverallPage, PastRideCard, Paid, Unpaid } from './YourRidesStyles';
 import UpcomingRideCard from '../components/UpcomingRideCard.js';
 
 
-const YourRides = () => {
+const YourRides = (paid) => {
     return (
         <div> 
             <OverallPage>
@@ -13,14 +13,14 @@ const YourRides = () => {
                     <UpcomingRideCard>
                     </UpcomingRideCard>
 
-                    <UpcomingRideCard>
+                    {/* <UpcomingRideCard>
                     </UpcomingRideCard>
 
                     <UpcomingRideCard>
                     </UpcomingRideCard>
 
                     <UpcomingRideCard>
-                    </UpcomingRideCard>
+                    </UpcomingRideCard> */}
                     
                     
                     {/* WE WANT A FOR LOOP FOR ALL OUR UPCOMING RIDES */}
@@ -28,12 +28,28 @@ const YourRides = () => {
                 </UpcomingRidesSection>
 
                 <PastRidesandPayments>
-                    <p>Past Rides</p>
-                    <p>Payments</p>
+                    <PastRideCard>
+
+                    </PastRideCard>
+
+                    { paid ? <Paid /> : <Unpaid />}
+
                 </PastRidesandPayments>
             </OverallPage>
         </div>
     )
+}
+
+// FOR NOW, USING FOR TESTING FRONT END
+// DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
+YourRides.defaultProps = {
+    origin: 'RMC',
+    destination: 'IAH',
+    // WILL BE IN ISOstring
+    datetime: Date.now(),
+    notification: true,
+    paid: true
+
 }
 
 export default YourRides;

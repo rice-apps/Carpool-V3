@@ -16,30 +16,13 @@ const CalendarIcon = withStyles({
   })(CalendarTodayIcon);
 
   const ArrowForward = withStyles({
-    root: {
-      display: 'flex',
-      color: '#2075D8',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
   })(ArrowForwardIcon);
 
   const NotificationsOn = withStyles({
-    root: {
-      display: 'flex',
-      color: '#2075D8',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
+ 
   })(NotificationsActiveIcon);
   
   const NotificationsOff = withStyles({
-    root: {
-      display: 'flex',
-      color: '#2075D8',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
   })(NotificationsOffIcon);
 
 
@@ -62,11 +45,12 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
     return (
         <div>
+
+
             <RideCard>
 
                 <RideTimeInfo>
-                    { datetime < Date.now() &&
-                        <CalendarIcon ></CalendarIcon>}
+                    <CalendarIcon />
 
                     <RideDate>
                         { dateString }
@@ -85,7 +69,7 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
                 </Locations>
 
                 <Notifications>
-                    { notification } ? <NotificationsOn /> : <NotificationsOff />
+                    { notification ? <NotificationsOn /> : <NotificationsOff /> }
                 </Notifications>
             </RideCard>
         </div>

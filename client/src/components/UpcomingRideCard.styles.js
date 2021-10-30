@@ -12,33 +12,36 @@ border-radius: 9px;
 
 const RideTimeInfo = styled.div`
 grid-column-start: 1;
-display: flex;
-background: #FF0000;
 
-flex-direction: column;
+display: flex;
+background: rgba(187, 218, 255, 0.22);
 justify-content: center;
+align-items: center;
+flex-direction: column;
 `
 
 const RideDate = styled.div`
-// font size + style
+font-size: 3vh
 
 `
 
 const RideTime = styled.div`
-// font size + style
-
+font-size: 2vh
 `
 
 const Locations = styled.div`
 grid-column-start: 2;
-background: #00FF00;
+display: flex;
+justify-content: center;
+align-content: center;
+align-items: center;
+
 
 
 `
 
 const Notifications = styled.div`
 grid-column-start: 3;
-background: #0000FF;
 
 `
 
