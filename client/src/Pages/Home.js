@@ -1,33 +1,23 @@
 import React from "react";
-import logo from '../logo.svg';
 import '../App.css';
-import styled from 'styled-components'
+import logo from '../logo.svg';
 import { useMediaQuery } from 'react-responsive'
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button'
+import {MainHeader} from './HomeStyles.js'
 
 const Home = () => {
-    const MainHeader = styled.header`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: calc(10px + 2vmin);
-        min-height: 100vh;
-        background-color: #282c34;
-        color: white;
-        @media (max-width: 480px) {
-            background-color: #553d67;
-        }
-    `
 
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 480px)' })
 
     return (
         <div className="App">
+        
         <MainHeader>
             
             <img src={logo} className="App-logo" alt="logo" />
             <p>
-                Edit <code>src/Pages/Hoome/index.js</code> and save to reload.
+                Welcome to Carpool!
             </p>
             <a
                 className="App-link"
@@ -35,9 +25,15 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-            Learn React { isTabletOrMobile && <p>Yo we on mobile</p>}
+                Learn React { isTabletOrMobile && <p>Yo we on mobile</p>}
             </a>
+            <Link to= "/search">
+                <Button variant="contained">Search for Rides</Button>
+                
+            </Link>
         </MainHeader>
+        
+        
         </div>
     )
 }

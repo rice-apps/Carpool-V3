@@ -7,12 +7,14 @@ import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import Search from '../Pages/Search.js'
 import UserAuth from '../Pages/UserAuth.js'
+import ProfileForm  from '../Pages/ProfileForm.js'
 import Profile from '../Pages/Profile.js'
 import CreateRide from '../Pages/CreateRide.js'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary.js'
+import jwt_decode from "jwt-decode";
 
 /**
  * Requests to verify the user's token on the backend
@@ -36,6 +38,32 @@ const GET_RECENT_UPDATE = gql`
     recentUpdate @client
   }
 `
+// Checks if the login token has expired. If not, remove it.
+const CheckTokenRoute = ({ children, ...rest }) => {
+  let token = localStorage.getItem('token')
+
+  if (token) {
+    console.log("Token found")
+    const {exp} = jwt_decode(token)
+    const expirationTime = (exp * 1000) - 60000
+    console.log("Expriration time", expirationTime)
+    console.log("Date now", Date.now())
+    if (Date.now() >= expirationTime) {
+      console.log("Token expired, removing")
+      localStorage.removeItem('token')
+    }
+  }
+
+  // Everything looks good! Now let's send the user on their way
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        return children
+      }}
+    />
+  )
+}
 
 /**
  * Defines a private route - if the user is NOT logged in or has an invalid token,
@@ -97,21 +125,22 @@ export const Routes = () => {
       <Router>
         <Navbar />
         <Switch>
-          <Route path={'/login'} component={withRouter(Login)} />
-          <Route path={'/userAuth'} component={withRouter(UserAuth)} />
-          <Route path={'/alert'} component={withRouter(Alert)} />
-          <Route path={'/profile/:id'} component={withRouter(Profile)} />
-          <Route path={'/'} exact component={withRouter(Home)} />
-          <Route path={'/home'} component={withRouter(Home)} />
-          <Route
+          <CheckTokenRoute path={'/alert'} component={withRouter(Alert)} />
+          <CheckTokenRoute path={'/userAuth'} component={withRouter(UserAuth)} />
+          <CheckTokenRoute path={'/login'} component={withRouter(Login)} />
+          <CheckTokenRoute path={'/profile/:id'} component={withRouter(Profile)} />
+          <CheckTokenRoute path={'/'} exact component={withRouter(Home)} />
+          <CheckTokenRoute path={'/home'} component={withRouter(Home)} />
+          <PrivateRoute
             path={'/create-ride'}
             component={withRouter(CreateRide)}
           />
-          <Route path={'/ridesummary/:id'}>
+          <CheckTokenRoute path={'/ridesummary/:id'}>
             <RideSummary />
-          </Route>
-          <Route path={'/auth'} component={withRouter(Auth)} />
-          <Route path={"/search"} component={withRouter(Search)} />
+          </CheckTokenRoute>
+          <CheckTokenRoute path={'/auth'} component={withRouter(Auth)} />
+          <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
+          <CheckTokenRoute path={"/profileform"} component={withRouter(ProfileForm)} />
         </Switch>
       </Router>
     </div>

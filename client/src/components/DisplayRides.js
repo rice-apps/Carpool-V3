@@ -4,11 +4,11 @@ import {monthToStr} from '../Pages/Search.js';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {
     GridT,
-    BoxRide
+    BoxRide, 
+    StyledButton
 } from './DisplayRides.styles'
 
 
@@ -30,49 +30,51 @@ const handleClickSearchAgain = () => {
     window.scrollTo(0, 0);
 }
 
-const displayRideButtons = () => {
-    return <Grid container spacing={2} direction="column" alignItems="center" style={{fontFamily: 'Josefin Sans', marginBottom: '5vh'}}>
-        <Grid item xs={11} justify="center" align='center' style={{paddingTop: "3vh", display: 'flex', alignItems: 'center'}}>
-            End of Results
-        </Grid>
-        <Grid container spacing = {1} direction="row" alignItems="center"  justifyContent='space-evenly'>
-        <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
-
-        <Link to="/search">
-        <Button
-            
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={() => handleClickSearchAgain()}> Search Again </Button>
-        </Link>
-        </Grid>
-        <Grid item xs={1} justify="center" align='center' style={{display: 'flex', alignItems: 'center',  fontSize: '5vw'}}>
+const displayRideBottomOfPage = () => {
+    return <div style = {{display: "flex", alignItems: "center", flexDirection: "column", gap: "1vh"}}>
+        <div style={{ fontSize: '2vw', fontFamily: "Josefin Sans"}}>
+            <Link to="/search" style = {{textDecoration: "none"}}>
+                <StyledButton
+                onClick={() => handleClickSearchAgain()}> 
+                    Continue Searching
+                </StyledButton>
+            </Link>
+        </div>
+        <div style={{ fontSize: '2vh', fontFamily: "Josefin Sans", color: "#C7CBD3"}}>
             OR
-        </Grid>
-        <Grid item xs={5} justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontSize: '2vw'}}>
-        <Link to="/create">
-        <Button
-            
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={() => handleClickCreateRide()}> Create New Ride </Button>
-        </Link>
-        </Grid>
-        </Grid>
-       
-    </Grid>
+        </div>
+        <div>
+            <Link to="/create-ride" style = {{textDecoration: "none"}}>
+                <StyledButton
+                onClick={() => handleClickCreateRide()}> 
+                    Create New Ride 
+                </StyledButton>
+            </Link>
+        </div>
+        </div>
 }
 
 const renderTime = (date) => {
-    const hours = date.getHours();
+    var hours = date.getHours();
     const minutes = date.getMinutes();
+    var ampm = "";
 
-    const hoursStr = (String)(hours).padStart(2, '0');
+    if (hours >= 12){
+        if (hours !== 12){
+            hours = hours - 12;
+        }
+        ampm = " PM"; 
+    } else {
+        if (hours === 0){
+            hours += 12
+        }
+        ampm = "AM"
+    }
+
+    const hoursStr = (String)(hours);
     const minutesStr = (String)(minutes).padStart(2, '0');
 
-    return hoursStr+':'+minutesStr;
+    return hoursStr+':'+minutesStr+ampm;
 }
 
 class DisplayRides extends Component {
@@ -94,44 +96,37 @@ class DisplayRides extends Component {
         const date = new Date(ride.departureDate);
 
         return  <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
-        <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
-  <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
-      <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF', borderRadius: '5px'}}>
-        <div style={{height: '1.5vw'}}></div>
-        <span style={{fontSize: '3vw'}}>{numLeft}</span>
-        
-        <span style={{fontSize: '1.5vw'}}>seats left</span>
-        
-    </Box>
-  </Grid>
-  <Grid item xs={2} justify="center" align='center'>
-   <BoxRide style={{fontSize: '2vw'}}>
-           {ride.departureLocation.title}
-        
-   </BoxRide>
-  </Grid>
-  <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
-        <ArrowForwardIcon/>
-  </Grid>
-  <Grid item xs={2} justify="center" align='center'>
-      <BoxRide style={{fontSize: '2vw'}}>
-           {ride.arrivalLocation.title}
-      </BoxRide>
-  </Grid>
-  <Grid item xs={3} justify="center" align='center'>
-   <Box width={"15vw"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-    <CalendarTodayIcon />
-    <span>
-        {monthToStr[date.getMonth()-1] + " " + date.getDate()}
-        <br/>
-        <div style={{fontSize: '2vw'}}>{renderTime(date)}</div>
-    </span>
-    </Box>
-  </Grid>
-    
-    </Grid>
-</Grid>
-
+            <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
+                <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
+                    <Box width={"12vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
+                        <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{numLeft}</span>
+                        <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
+                    </Box>
+                </Grid>
+                <Grid item xs={2} justify="center" align='center'>
+                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
+                            {ride.departureLocation.title}      
+                    </BoxRide>
+                </Grid>
+                <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
+                        <ArrowForwardIcon/>
+                </Grid>
+                <Grid item xs={2} justify="center" align='center'>
+                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
+                        {ride.arrivalLocation.title}
+                    </BoxRide>
+                </Grid>
+                <Grid item xs={3} justify="center" align='center'>
+                    <Box width={"15vw"} height={"15vw"} style={{ display: 'flex', alignItems: 'center', gap: "1vh"}}>
+                        <CalendarTodayIcon style ={{fontSize: "3vw"}}/>
+                        <span>
+                            <div style = {{fontSize: '3vw', fontFamily: 'Josefin Sans'}}> {monthToStr[date.getMonth()-1] + " " + date.getDate()}</div>
+                            <div style={{fontSize: '2.5vw', fontFamily: "Josefin Sans"}}>{renderTime(date)}</div>
+                        </span>
+                    </Box>
+                </Grid>
+            </Grid>
+        </Grid>
     }
 
     displayRides(ridesT)  {
@@ -145,27 +140,29 @@ class DisplayRides extends Component {
 
         const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
 
-        return <GridT container spacing={5}  direction="column"
-        alignItems="center">
-            {
-            <Box style={{fontSize: "5vw", paddingTop: '3vh' }}>Matching Rides: </Box>
-            }
+        return <GridT container style={{gap: "2vh"}} direction="column" alignItems="center">
+            <Box style={{fontSize: "4vh", paddingTop: '4vh', fontFamily: "Josefin Sans"}}>
+                Matching Rides: 
+            </Box>
             {
             (isValidRidesT) && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
             }
             {
-            (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff", marginTop: "3vw", marginBottom: "3vw"}}>
-                <Box width={"100%"} height={"100%"} style={{fontSize: "3vw"}}>
-            Either you have not clicked the submit button yet or no rides matched.
-            </Box>
+            (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff"}}>
+                <Box width={"100%"} height={"100%"} style={{fontSize: "2vh", fontFamily: "Josefin Sans", padding: "1vh"}}>
+                    Either you have not clicked the submit button yet or no rides matched.
+                </Box>
             </Grid>
             }
             {
-            <div style = {{fontSize: "5vw"}}>All Rides:</div>
+            <div style = {{fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
             }
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
             }
+            <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
+                no more results
+            </Grid>
             </GridT>;
 
       }
@@ -219,7 +216,7 @@ class DisplayRides extends Component {
                     </div>
                     <div >
                         {
-                    displayRideButtons()
+                    displayRideBottomOfPage()
                         }
                     </div>
                 </div>

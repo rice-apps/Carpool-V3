@@ -16,5 +16,3 @@ Please include:
 - Instructions to reproduce the intended result
 - How you tested it and what cases you tested with, including edge cases
 - Any other relevant info regarding this feature/fix
-
-
