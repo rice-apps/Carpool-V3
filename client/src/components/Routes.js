@@ -6,6 +6,7 @@ import Alert from '../Pages/Alert.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import Search from '../Pages/Search.js'
+import UserAuth from '../Pages/UserAuth.js'
 import Profile from '../Pages/Profile.js'
 import CreateRide from '../Pages/CreateRide.js'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -56,14 +57,14 @@ const PrivateRoute = ({ children, ...rest }) => {
     // Clear the token because something is wrong with it
     localStorage.removeItem('token')
     // Redirect the user to the login page
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
   if (loading) return <p>Waiting...</p>
   if (!data || !data.verifyUser) {
     // Clear the token
     localStorage.removeItem('token')
     // Redirect the user
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
 
   // Check whether any recent updates have come in
@@ -97,6 +98,7 @@ export const Routes = () => {
         <Navbar />
         <Switch>
           <Route path={'/login'} component={withRouter(Login)} />
+          <Route path={'/userAuth'} component={withRouter(UserAuth)} />
           <Route path={'/alert'} component={withRouter(Alert)} />
           <Route path={'/profile/:id'} component={withRouter(Profile)} />
           <Route path={'/'} exact component={withRouter(Home)} />

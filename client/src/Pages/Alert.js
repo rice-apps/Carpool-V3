@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useState, useEffect } from 'react';
-import { Reroute, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -70,10 +70,9 @@ function AlertDialog() {
 
     useEffect(() => {
         if (userData) {
-            const user = userData.userOne; 
-            if (!user.firstName) {
+            if (!userData.userOne.firstName) {
                 // Route to onboarding prompt.. need to be replaced with proper component
-                history.push('/search') 
+                history.push('/search'); 
             } else {
                 history.push(destination);
             }

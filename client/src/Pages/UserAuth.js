@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { useEffect } from 'react';
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 
     // Backend Query to Confirm User
@@ -21,11 +21,10 @@ const UserAuth = () => {
 
     const destination = localStorage.getItem('nextPage'); 
     const history = useHistory();
-    const id = localStorage.get('netid');
+    const id = localStorage.getItem('netid');
+    console.log('nextPage in UserAuth: ', destination);
 
-    localStorage.removeItem('nextPage'); 
-
-    const {data: userData, loading, error} = useQuery(GET_USER, 
+    const {data: userData} = useQuery(GET_USER, 
         {
           variables: 
           {
@@ -34,23 +33,16 @@ const UserAuth = () => {
         }
     );
 
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
-
     useEffect(() => {
         if (userData) {
-            const user = userData.userOne; 
-            if (!user.firstName) {
+            localStorage.removeItem('nextPage'); 
+            if (!userData.userOne.firstName) {
               // Route to onboarding prompt.. need to be replaced with proper component
+              console.log('Going to Onboarding!')
               history.push('/search');
-              // return (
-              //   <Redirect path = '/search'/>
-              // )
             } else {
+              console.log('You exist! Go to where you want to!')
               history.push(destination);
-              // return (
-              //   <Redirect path = {destination}/>
-              // )
             }
         }
         
@@ -58,7 +50,7 @@ const UserAuth = () => {
 
     return(
       <div>
-        The destination is... ${destination}
+        Loading...
       </div>
     )
 }
