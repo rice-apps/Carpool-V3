@@ -3,13 +3,10 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
+import { LoginButton, LoginDialog } from './Alert.styles.js';
 import { SERVICE_URL } from '../config'; 
+import { withStyles } from '@material-ui/core/styles';
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const destinationURL = '/create-ride'; 
@@ -35,7 +32,7 @@ function AlertDialog() {
       }
     }`
   
-    const {loading, error} = useQuery(GET_USER, 
+    const {} = useQuery(GET_USER, 
       {
         skip: skipQuery, 
         variables: 
@@ -94,26 +91,14 @@ function AlertDialog() {
 
     return (
         <div>
-            <Button onClick={handleClickOpen}>
-                Create Ride
-            </Button>
+            <Button onClick={handleClickOpen}> Create Ride </Button>
             <Dialog
                 open={openAlert}
                 onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
-                    Log in?
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        You must be logged in as a Rice user to use Carpool. 
-                    </DialogContentText>
-                </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Nevermind</Button>
-                    <Button onClick={handleLogin} autoFocus>Take me there!</Button>
+                    <LoginButton onClick={handleLogin} autoFocus>Login</LoginButton>
                 </DialogActions>
             </Dialog>
         </div>
