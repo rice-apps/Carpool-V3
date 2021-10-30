@@ -29,11 +29,11 @@ export default function ProfileDialog (props) {
             <DialogContent>
                 <Header>
                     <p>
-                        Edit Profile Information
+                        Edit Profile
                     </p>
                 </Header>
                 <EditName>
-                    EditName
+                    Name
                     <TextField id = "outlined-filled" label = "First Name" variant = "filled"/>
                     <TextField id = "outlined-filled" label = "Last Name" variant = "filled"/>
                 </EditName>
@@ -63,12 +63,11 @@ export default function ProfileDialog (props) {
                     <br></br>
                     <TextField id = "outlined-filled" label = "Pay to @" variant = "filled"/>
                 </EditPaymentOptions>
-            </DialogContent>
-            <DialogActions>
             <SubmitButton>
-                    <Button variant="contained">Submit</Button>
+                <Button variant="contained">Submit</Button>
             </SubmitButton>
-            </DialogActions>
+            </DialogContent>
+            <DialogActions></DialogActions>
             </Dialog>
         </div>
     )

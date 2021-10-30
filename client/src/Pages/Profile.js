@@ -2,8 +2,9 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
-import Button from '@material-ui/core/Button'
 import ProfileDialog from './ProfileDialog.js';
+import IconButton from '@material-ui/core/IconButton'
+import EditIcon from '@material-ui/icons/Edit'
 import {
   ButtonBox,
   BackArrow,
@@ -69,12 +70,14 @@ const Profile = () => {
         </ButtonBox>
       </ReturnHeader>
       <EditProfileButton>
-          <Button onClick = {() => setOpenDialog(true)} variant = "outlined">Edit Profile Information</Button>
-      </EditProfileButton>
+        <IconButton aria-label="edit" onClick = {() => setOpenDialog(true)} variant = "outlined">
+          <EditIcon/>
+        </IconButton>
+        </EditProfileButton>
       <ProfileDialog
-            openDialog = {openDialog}
-            setOpenDialog = {setOpenDialog}>
-          </ProfileDialog>
+          openDialog = {openDialog}
+          setOpenDialog = {setOpenDialog}>
+        </ProfileDialog>
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + ' ' + user.lastName}</UserName>
