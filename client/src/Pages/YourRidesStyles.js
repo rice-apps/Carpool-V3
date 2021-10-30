@@ -9,7 +9,7 @@ font-family: Josefin Sans;
 
 `;
 
-const Title = styled.div`
+const OverallPageTitle = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
@@ -31,10 +31,20 @@ width: 90vw;
 padding: 3%;
 background: #F4F6F9;        /* light mode background */
 border-radius: 5px;
+// margins: 15vh 10vh 15vh 10vh;
+`;
+
+const UpcomingRideTitle = styled.div`
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 3vh;
+margin-top: 2vh;
+margin-bottom: 2vh;
 
 `;
 
-const PastRidesandPayments = styled.div`
+const PastRidesSection = styled.div`
 display: flex;
 width: 80vw;
 justify-content: space-between
@@ -42,10 +52,6 @@ font-family: Josefin Sans;
 
 `;
 
-const PastRideCard = styled.div`
-font-family: Josefin Sans;
-
-`;
 
 const Unpaid = styled.div`
 font-family: Josefin Sans;
@@ -59,12 +65,14 @@ font-family: Josefin Sans;
 
 
 
+
+
 export {
-	Title,
+	OverallPageTitle,
     UpcomingRidesSection,
-    PastRidesandPayments,
+    UpcomingRideTitle,
+    PastRidesSection,
     OverallPage,
-    PastRideCard,
     Unpaid,
     Paid
 };

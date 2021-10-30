@@ -7,7 +7,8 @@ grid-template-columns: 30% 60% 10%;
 background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
-
+height: 20vh;
+padding: 5%;
 `;
 
 const RideTimeInfo = styled.div`
@@ -17,15 +18,17 @@ background: rgba(187, 218, 255, 0.22);
 justify-content: space-between;
 align-items: center;
 flex-direction: column;
-min-height: 10vh;
-padding: 10%;
+border-radius: 5px;
+padding-top: 20%;
+padding-bottom: 20%;
+
 `
 
 const RideDate = styled.div`
 font-family: Josefin Sans;
 font-style: normal;
 font-weight: normal;
-font-size: 2.8vh;
+font-size: 2.5vh;
 `
 
 const RideTime = styled.div`
@@ -39,20 +42,17 @@ font-size: 2vh
 const Origin = styled.div`
 text-size: 3vh;
 font-family: Josefin Sans;
-
-
 `
+
 
 const Destination = styled.div`
 text-size: 3vh;
 font-family: Josefin Sans;
-
-
 `
 
 const Locations = styled.div`
 font-family: Josefin Sans;
-padding: 5%;
+padding-left: 10%;
 grid-column-start: 2;
 font-size: 3.5vh;
 display: flex;

@@ -19,7 +19,7 @@ import {
 const CalendarIcon = withStyles({
     root: {
       display: 'flex',
-      color: '#2075D8',
+      color: '#002140',
       justifyContent: 'center',
       alignItems: 'center'
     }
@@ -29,10 +29,22 @@ const CalendarIcon = withStyles({
   })(ArrowForwardIcon);
 
   const NotificationsOn = withStyles({
+    root: {
+        display: 'flex',
+        color: '#2075D8',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
  
   })(NotificationsActiveIcon);
   
   const NotificationsOff = withStyles({
+    root: {
+        display: 'flex',
+        color: 'rgba(32, 117, 216, 0.42)',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
   })(NotificationsOffIcon);
 
 

@@ -13,7 +13,7 @@ import {
     Destination, 
     Locations, 
     Notifications } 
-    from './UpcomingRideCard.styles.js';
+    from './PastRideCard.styles.js';
 
 
 const CalendarIcon = withStyles({
@@ -41,7 +41,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 
-const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
+const PastRideCard = ({origin, destination, datetime, notification}) => {
 
 
     let month = 12 // datetime.getMonth()
@@ -94,7 +94,7 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
 // FOR NOW, USING FOR TESTING FRONT END
 // DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
-UpcomingRideCard.defaultProps = {
+PastRideCard.defaultProps = {
     origin: 'RMC',
     destination: 'IAH',
     // WILL BE IN ISOstring
@@ -103,4 +103,4 @@ UpcomingRideCard.defaultProps = {
 }
 
 
-export default UpcomingRideCard;
+export default PastRideCard;

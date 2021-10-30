@@ -1,15 +1,29 @@
 import React from 'react';
-import { Title, UpcomingRidesSection, PastRidesandPayments, OverallPage, PastRideCard, Paid, Unpaid } from './YourRidesStyles';
 import UpcomingRideCard from '../components/UpcomingRideCard.js';
+import PastRideCard from '../components/PastRideCard.js';
+
+import { 
+    OverallPageTitle, 
+    UpcomingRidesSection, 
+    UpcomingRideTitle,
+    PastRidesSection, 
+    OverallPage, 
+    Paid,
+    Unpaid } from './YourRidesStyles';
 
 
 const YourRides = (paid) => {
     return (
         <div> 
             <OverallPage>
-                <Title>Your Rides</Title>
+                <OverallPageTitle>Your Rides</OverallPageTitle>
                 <UpcomingRidesSection>
                     
+                    <UpcomingRideTitle>
+                        Upcoming Rides
+                    </UpcomingRideTitle>
+
+
                     <UpcomingRideCard>
                     </UpcomingRideCard>
 
@@ -27,14 +41,14 @@ const YourRides = (paid) => {
 
                 </UpcomingRidesSection>
 
-                <PastRidesandPayments>
+                <PastRidesSection>
                     <PastRideCard>
 
                     </PastRideCard>
 
-                    { paid ? <Paid /> : <Unpaid />}
+                    {/* { paid ? <Paid /> : <Unpaid />} */}
 
-                </PastRidesandPayments>
+                </PastRidesSection>
             </OverallPage>
         </div>
     )
