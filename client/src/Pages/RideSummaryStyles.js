@@ -17,19 +17,21 @@ const SeatsLeftDiv = styled.div`
 const SeatsLeftNum = styled.div`
   font-family: Josefin Sans;
   font-weight: normal;
-  font-size: 24px;
+  font-size: 8vw;
   line-height: 24px;
   text-align: center;
   padding: 4px;
+  margin-right:2px;
+  padding-top: 7px;
 `
 const SeatsLeftText = styled.div`
   font-family: Josefin Sans;
   grid-column: 4;
   grid-row: 1;
   font-weight: 300;
-  font-size: 11px;
+  font-size: 3vw;
   line-height: 11px;
-  padding-top: 5px;
+  padding-top: 6px;
 `
 const SocialIcon = styled.div`
   display: flex;
@@ -44,7 +46,6 @@ const RideSummaryDiv = styled.div`
   grid-row: 1;
   color: #2075d8;
   background: #f4f6f9;
-  
   display: flex;
   align-items: center;
   text-align: center;

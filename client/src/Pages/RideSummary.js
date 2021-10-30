@@ -101,11 +101,11 @@ const RideSummary = () => {
       </BackArrowDiv>
       <RideSummaryDiv>
         <SeatsLeftDiv>
-        <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
-        <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
-        <SocialIcon>
-          <IoShareSocialSharp></IoShareSocialSharp>
-        </SocialIcon>
+          <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
+          <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
+          <SocialIcon>
+            <IoShareSocialSharp></IoShareSocialSharp>
+          </SocialIcon>
       </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
