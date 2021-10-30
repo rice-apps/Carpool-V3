@@ -23,9 +23,18 @@ const RideTime = styled.div`
 
 `
 
+const Locations = styled.div`
+
+`
+
+const Notification = styled.div`
+`
+
 export {
 	RideCard,
 	RideTimeInfo,
 	RideDate,
-	RideTime
+	RideTime,
+	Locations,
+	Notification
 };

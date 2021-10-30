@@ -9,8 +9,8 @@ const YourRides = () => {
             <OverallPage>
                 <Title>Your Rides</Title>
                 <UpcomingRidesSection>
+                    
                     <UpcomingRideCard>
-                        
                     </UpcomingRideCard>
 
                     <UpcomingRideCard>

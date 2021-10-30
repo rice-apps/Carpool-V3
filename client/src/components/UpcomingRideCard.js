@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { RiceCard, RideTime } from './UpcomingRideCard.styles.js';
+import { RideCard, RideTimeInfo, RideDate, RideTime, Locations, Notification } from './UpcomingRideCard.styles.js';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const CalendarIcon = withStyles({
@@ -58,7 +58,7 @@ const UpcomingRideCard = ({origin, destination, datetime}) => {
 
 // FOR NOW, USING FOR TESTING FRONT END
 // DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
-RideInfo.defaultProps = {
+UpcomingRideCard.defaultProps = {
     origin: 'RMC',
     destination: 'IAH',
     // WILL BE IN ISOstring
