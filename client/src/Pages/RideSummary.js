@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
 import {
-  IoLocationSharp,
   IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {
   SeatsLeftDiv,
   SeatsLeftNum,
@@ -24,13 +22,11 @@ import {
   ClockIcon,
   HostDiv,
   RidersDiv,
-  OwnerDiv,
   LineDiv,
   RidersComponents,
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
-  TextContainer,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -72,9 +68,10 @@ const GET_RIDE = gql`
   }
 `
 const RideSummary = () => {
-  let { id } = useParams()
+  // let { id } = useParams()
   const [getVariables, setVariables] = useState({})
-  const [rideId, setRideId] = React.useState(null)
+  console.log(setVariables);
+  // const [rideId, setRideId] = React.useState(null)
 
   // TODO: Remove this!! This is to get rid of warnings in console
   // console.log(rideId ,setVariables)

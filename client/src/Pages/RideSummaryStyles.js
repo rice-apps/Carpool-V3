@@ -104,7 +104,6 @@ const CalendarIcon = styled.div`
   grid-column: 1;
   grid-row: 1;
   font-family: Josefin Sans;
-  // background-color: red;
   text-align: center;
   
 
@@ -113,7 +112,6 @@ const CalendarText = styled.div`
   grid-column: 2;
   font-family: Josefin Sans;
   grid-row: 1;
-  // background-color: pink;
 `
 
 
@@ -121,7 +119,6 @@ const ClockIcon = styled.div`
   grid-column: 4;
   grid-row: 1;
   font-family: Josefin Sans;
-  // background-color: red;
   text-align: center;
 
 
@@ -131,7 +128,6 @@ const TimeText = styled.div`
   grid-column: 5;
   font-family: Josefin Sans;
   grid-row: 1;
-  // background-color: pink;
 `
 
 const HostDiv = styled.div`
@@ -235,7 +231,6 @@ const DepartureDiv = styled.div`
   grid-column: 2;
   grid-row: 1;
   font-family: Josefin Sans;
-  // background-color: pink;
   overflow: hidden;
   text-overflow: ellipsis;
 `
@@ -243,17 +238,7 @@ const DepartureIconDiv = styled(LocationOn)`
   grid-column: 1;
   grid-row: 1;
   fontSize: large;
-  // background-color: green;
 `
-
-
-// const ArrivalIconDiv = styled.div`
-//   grid-column: 4;
-//   grid-row: 1;
-//   background-color:red;
-
-// `
-
 
 const ArrivalDiv = styled.div`
 grid-column: 4;
@@ -267,7 +252,6 @@ grid-row: 1;
 display: flex;
 justify-content: center;
 align-items: center;
-// background-color: red;
 `
 const BackArrowDiv = styled.div`
 width:30px;
