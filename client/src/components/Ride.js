@@ -43,7 +43,7 @@ const Ride = ({ride}) => {
     return (
         <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
             <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
-                <Grid item xs={2} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
+                <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
                     <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF', borderRadius: '5px'}}>
                         <div style={{height: '1.5vw'}}></div>
                         <span style={{fontSize: '3vw'}}>{ride.spots}</span>
@@ -57,7 +57,7 @@ const Ride = ({ride}) => {
                     </BoxRide>
                 </Grid>
 
-                <Grid item xs={1} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
+                <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
                     <ArrowForwardIcon/>
                 </Grid>
 
@@ -75,14 +75,6 @@ const Ride = ({ride}) => {
                         <br/>
                         <div style={{fontSize: '2vw'}}>{renderTime(date)}</div>
                     </span>
-                    </Box>
-                </Grid>
-
-                <Grid item xs={1} justify="center" align='center'>
-                    <Box width={"5vw"} height={"100%"}>
-                        <Button fullWidth variant="contained" color="secondary" onClick={join}>
-                            Join
-                        </Button>
                     </Box>
                 </Grid>
             </Grid>
