@@ -1,7 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { RideCard, RideTimeInfo, RideDate, RideTime, Locations, Notification } from './UpcomingRideCard.styles.js';
+import { RideCard, RideTimeInfo, RideDate, RideTime, Locations, Notifications } from './UpcomingRideCard.styles.js';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const CalendarIcon = withStyles({
     root: {
@@ -12,13 +15,40 @@ const CalendarIcon = withStyles({
     }
   })(CalendarTodayIcon);
 
+  const ArrowForward = withStyles({
+    root: {
+      display: 'flex',
+      color: '#2075D8',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  })(ArrowForwardIcon);
+
+  const NotificationsOn = withStyles({
+    root: {
+      display: 'flex',
+      color: '#2075D8',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  })(NotificationsActiveIcon);
+  
+  const NotificationsOff = withStyles({
+    root: {
+      display: 'flex',
+      color: '#2075D8',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  })(NotificationsOffIcon);
+
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"
 ];
 
 
-const UpcomingRideCard = ({origin, destination, datetime}) => {
+const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
 
     let month = 12 // datetime.getMonth()
@@ -48,7 +78,15 @@ const UpcomingRideCard = ({origin, destination, datetime}) => {
 
                 </RideTimeInfo>
                 
-                
+                <Locations>
+                    { origin }
+                    <ArrowForward />
+                    { destination }
+                </Locations>
+
+                <Notifications>
+                    { notification } ? <NotificationsOn /> : <NotificationsOff />
+                </Notifications>
             </RideCard>
         </div>
     )
@@ -62,7 +100,8 @@ UpcomingRideCard.defaultProps = {
     origin: 'RMC',
     destination: 'IAH',
     // WILL BE IN ISOstring
-    datetime: Date.now() 
+    datetime: Date.now(),
+    notification: true
 }
 
 

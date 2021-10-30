@@ -18,6 +18,7 @@ width: 80vw;
 
 const UpcomingRidesSection = styled.div`
 dislay: flex;
+flex-direction: column;
 width: 80vw;
 
 background: #F4F6F9;        /* light mode background */
