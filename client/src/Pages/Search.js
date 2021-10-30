@@ -3,10 +3,20 @@ import Header from '../components/Header';
 import Form from '../components/Form';
 import DisplayRides from '../components/DisplayRides'
 import { gql, useQuery } from "@apollo/client";
+import ClipLoader from "react-spinners/ClipLoader";
+import styled from 'styled-components'
 import "@fontsource/source-sans-pro";
 import './Search.css'
 
 export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const LoadingDiv = styled.div`
+  display: flex;
+  width: 100%;
+  height: 15vh;
+  justify-content: center;
+  align-items: center;
+`
 
 const Search = () => {
 
@@ -67,7 +77,12 @@ const Search = () => {
     <React.Fragment>
       <div><Header subtitle = "Search Rides"/></div>
       <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
-      <DisplayRides ref={displayRef} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
+        {rideLoading ? 
+          <LoadingDiv>
+            <ClipLoader />
+          </LoadingDiv> : 
+          <DisplayRides ref={displayRef} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
+        }
     </React.Fragment>
   )
 }
