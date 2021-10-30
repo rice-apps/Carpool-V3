@@ -1,6 +1,5 @@
 import React from 'react'
 import FormOnly from './FormOnly.js'
-import { gql, useQuery } from "@apollo/client";
 
 export const ridesPossible = [];
 
@@ -11,56 +10,6 @@ const Form = (props) => {
 
   console.log("Rice date=", new Date("2021-09-01T01:30:49.000+00:00"));
 
-const GET_RIDES = gql`
-  query {
-    rideMany {
-      _id
-      departureDate
-      riders {
-        netid
-        firstName
-        lastName
-      }
-      spots
-      departureLocation {
-        title
-        address
-      }
-      arrivalLocation {
-        title
-        address
-      }
-      owner {
-        netid
-        firstName
-        lastName
-      }
-    }
-  }
-`;
-
-const GET_LOCATIONS = gql`
-  query {
-    locationMany {
-      title
-      address
-    }
-  }
-`;
-
-const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
-
-const testDate = new Date("2021-09-01T01:30:49.000+00:00");
-
-const { refetch: refetchRide } = useQuery(GET_RIDES,
-  {
-  variables: {
-    spotsNum: 3,
-    date: testDate
-  }
-});
-  
-  
 // TODO: Get this from the API!!
 let PossibleLocations = [
   {
@@ -87,7 +36,7 @@ let PossibleLocations = [
   // May cause 401 error if a request is made to the database before it's ready
   return (
     <React.Fragment>
-    <FormOnly resultRides={resultRides} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} testLocations={PossibleLocations}/>
+    <FormOnly resultRides={resultRides} displayRef={displayRef} getRidesRefetch={props.getRidesRefetch} getLocsRefetch={props.getLocsRefetch} testLocations={PossibleLocations}/>
     </React.Fragment>
   )
 }

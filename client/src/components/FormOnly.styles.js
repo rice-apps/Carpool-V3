@@ -4,6 +4,7 @@ import {
     MenuItem,
     Select, 
     InputLabel,
+    Button
 } from '@material-ui/core';
 
 export const Form = styled.form`
@@ -37,6 +38,21 @@ export const SelectBox = withStyles({
         padding: '8px 16px 8px 16px'
     }
 })(Select);
+
+export const StyledButton = withStyles({
+    root: {
+        background: '#2075D8',
+        width: '70vw',
+        borderRadius: 8,
+        border: 0,
+        color: 'white',
+        height: 48,
+    },
+    label: {
+      textTransform: 'capitalize',
+      fontFamily: 'Josefin Sans'
+    },
+  })(Button);
 
 export const MenuBox = withStyles({
     root: {

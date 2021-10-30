@@ -1,4 +1,49 @@
 import styled from 'styled-components';
+import { withStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import MailIcon from '@material-ui/icons/Mail';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+
+const ButtonBox = withStyles({
+	label: {
+	  textTransform: 'capitalize',
+	}
+  })(Button);
+  
+const BackArrow = withStyles({
+root: {
+	display: 'flex',
+	color: '#2075D8',
+	justifyContent: 'center',
+	alignItems: 'center'
+}
+})(ChevronLeftIcon);
+
+const TextBox = withStyles({
+root: {
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	marginTop: '25px',
+	width: '75vw',
+	height: '10vh',
+	borderRadius: '9px',
+	background: 'rgba(187, 218, 255, 0.22)'
+}, 
+label: {
+	textTransform: 'none',
+}
+})(Button);
+
+const MailBox = withStyles({
+root: {
+	color: '#2075D8'
+}
+})(MailIcon);
+
+const EditProfileButton = styled.div`
+	margin-top:20px;
+`
 
 const ProfileCard = styled.div`
 	display: flex;
@@ -105,6 +150,11 @@ const StyledText3 = styled.p`
 `;
 
 export {
+	ButtonBox,
+	BackArrow,
+	TextBox,
+	MailBox,
+	EditProfileButton,
 	ProfileCard,
 	ReturnHeader,
 	UserName,

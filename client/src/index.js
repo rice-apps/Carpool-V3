@@ -16,15 +16,27 @@ import { ToastProvider } from 'react-toast-notifications'
 import { client } from './apollo';
 import { ApolloProvider } from '@apollo/client'
 
+import { createTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+
+const theme = createTheme({
+    typography: {
+      fontFamily: "Josefin Sans"
+    }
+  });
+
 export const history = createBrowserHistory();
 
 render(
-    <ApolloProvider client={client}>
+    <ThemeProvider theme = {theme}>
+        <ApolloProvider client={client}>
         <Router history={history}>
             <ToastProvider>
                 <Routes />
             </ToastProvider>
         </Router>
-    </ApolloProvider>, 
+    </ApolloProvider>
+    </ThemeProvider>, 
     document.querySelector('#app')
 );
