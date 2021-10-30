@@ -235,7 +235,7 @@ const DepartureDiv = styled.div`
   grid-column: 2;
   grid-row: 1;
   font-family: Josefin Sans;
-  background-color: pink;
+  // background-color: pink;
   overflow: hidden;
   text-overflow: ellipsis;
 `
@@ -243,7 +243,7 @@ const DepartureIconDiv = styled(LocationOn)`
   grid-column: 1;
   grid-row: 1;
   fontSize: large;
-  background-color: green;
+  // background-color: green;
 `
 
 
@@ -267,7 +267,7 @@ grid-row: 1;
 display: flex;
 justify-content: center;
 align-items: center;
-background-color: red;
+// background-color: red;
 `
 const BackArrowDiv = styled.div`
 width:30px;
