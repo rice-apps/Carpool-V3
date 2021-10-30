@@ -28,7 +28,6 @@ const parseTicket = (url) => {
 const Auth = () => {
 
     const history = useHistory();
-
     // First parse out ticket from URL href
     let ticket = parseTicket(window.location.href);
 
@@ -59,9 +58,22 @@ const Auth = () => {
     localStorage.setItem('recentUpdate', recentUpdate)
 
     console.log("netid set: ", localStorage.getItem('netid'))
+    console.log("nextPage in Auth: ", localStorage.getItem('nextPage'));
 
     // Set recent update in client state
-    return localStorage.getItem('nextPage') ?  <Redirect path={'/userAuth'}/> : <Redirect path={"/home"} />
+    if (localStorage.getItem('nextPage') !== null) {
+        console.log('Going to UserAuth');
+        return (
+            <Redirect to="/userAuth" />
+        )
+    } else {
+        console.log("Going straight to home");
+        return (
+            <Redirect to="/home" />
+        )
+        
+    }
+
 }
 
 export default Auth;

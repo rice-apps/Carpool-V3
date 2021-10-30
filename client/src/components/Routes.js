@@ -84,14 +84,14 @@ const PrivateRoute = ({ children, ...rest }) => {
     // Clear the token because something is wrong with it
     localStorage.removeItem('token')
     // Redirect the user to the login page
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
   if (loading) return <p>Waiting...</p>
   if (!data || !data.verifyUser) {
     // Clear the token
     localStorage.removeItem('token')
     // Redirect the user
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
 
   // Check whether any recent updates have come in
