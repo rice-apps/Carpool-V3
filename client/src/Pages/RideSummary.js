@@ -10,7 +10,7 @@ import {
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
-
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {
   SeatsLeftDiv,
   SeatsLeftNum,
@@ -39,7 +39,10 @@ import {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
-  InnerLocationDiv
+  InnerLocationDiv,
+  DepartureIconDiv,
+  CalendarText,
+  TimeText
 } from './RideSummaryStyles.js'
 
 const GET_RIDE = gql`
@@ -109,25 +112,31 @@ const RideSummary = () => {
         <LocationDiv>
           <InnerLocationDiv>
             <LocationText>
+              <DepartureIconDiv style={{ fontSize: '7vw' }}></DepartureIconDiv>
               <DepartureDiv>
-                <IoLocationSharp></IoLocationSharp>&nbsp;
-                {ride.departureLocation.title}&nbsp;
+                {/* Rice Univ */}
+                {ride.departureLocation.title}
               </DepartureDiv>
               <LocationArrowDiv>
-                <BsArrowRight></BsArrowRight>&nbsp;
+                <BsArrowRight></BsArrowRight>
               </LocationArrowDiv>
               <ArrivalDiv>
-              <IoLocationSharp></IoLocationSharp>&nbsp;
                 {ride.arrivalLocation.title}
               </ArrivalDiv>
             </LocationText>
             <DateDiv>
               <CalendarIcon>
-                <AiTwotoneCalendar></AiTwotoneCalendar> {mon}-{day}
+                <AiTwotoneCalendar></AiTwotoneCalendar> 
               </CalendarIcon>
+              <CalendarText>
+                {mon}-{day}
+              </CalendarText>
               <ClockIcon>
-                <AiFillClockCircle></AiFillClockCircle> {hour}
+                <AiFillClockCircle></AiFillClockCircle>
               </ClockIcon>
+              <TimeText>
+                {hour}
+              </TimeText>
             </DateDiv>
           </InnerLocationDiv>
         </LocationDiv>

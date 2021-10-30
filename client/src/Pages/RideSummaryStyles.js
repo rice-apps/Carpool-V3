@@ -1,3 +1,4 @@
+import LocationOn from '@material-ui/icons/LocationOn'
 import styled from 'styled-components'
 
 const SeatsLeftDiv = styled.div`
@@ -12,8 +13,6 @@ const SeatsLeftDiv = styled.div`
   line-height: 11px;
   display: flex;
   align-items: stretch; /* Default */
-
-
 `
 const SeatsLeftNum = styled.div`
   font-family: Josefin Sans;
@@ -74,41 +73,66 @@ const LocationDiv = styled.div`
 `
 const LocationText = styled.div`
   display: grid;
-  grid-template-columns: 6fr 1fr 6fr;
-  gap: 10px;
-  grid-auto-rows: minmax(55px, auto);
+  grid-template-columns: 1fr 5fr 1fr 5fr .5fr;
+  gap: 15px;
+  grid-auto-rows: minmax(25px, auto);
   padding-top: 2.5vh;
-  font-size: 4.1vh;
+  font-size: 6.8vw;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  text-align: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 30px;
+  align-items: center;
 
 `// Wrap everything in another div and use padding to make border
 const DateDiv = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr 1fr 2fr;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 2.3vh;
-  text-align: center;
-  margin-top: 5px;
-  padding-bottom: 50px;  
+  font-size: 5vw;
+  text-align: left;
+  padding-bottom: 20px;  
 `
 const CalendarIcon = styled.div`
-  // background-color: pink;
+  grid-column: 1;
+  grid-row: 1;
   font-family: Josefin Sans;
-
-
+  // background-color: red;
+  text-align: center;
   
-`
-const ClockIcon = styled.div`
-font-family: Josefin Sans;
 
 `
+const CalendarText = styled.div`
+  grid-column: 2;
+  font-family: Josefin Sans;
+  grid-row: 1;
+  // background-color: pink;
+`
+
+
+const ClockIcon = styled.div`
+  grid-column: 4;
+  grid-row: 1;
+  font-family: Josefin Sans;
+  // background-color: red;
+  text-align: center;
+
+
+`
+
+const TimeText = styled.div`
+  grid-column: 5;
+  font-family: Josefin Sans;
+  grid-row: 1;
+  // background-color: pink;
+`
+
 const HostDiv = styled.div`
   font-family: Josefin Sans;
   font-style: normal;
@@ -207,27 +231,42 @@ const ButtonContainer = styled.div`
 `
 
 const DepartureDiv = styled.div`
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 1;
   font-family: Josefin Sans;
-
-
+  background-color: pink;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
+const DepartureIconDiv = styled(LocationOn)`
+  grid-column: 1;
+  grid-row: 1;
+  fontSize: large;
+  background-color: green;
+`
+
+
+// const ArrivalIconDiv = styled.div`
+//   grid-column: 4;
+//   grid-row: 1;
+//   background-color:red;
+
+// `
+
 
 const ArrivalDiv = styled.div`
-grid-column: 3;
+grid-column: 4;
 grid-row: 1;
 font-family: Josefin Sans;
-
-
-
+text-overflow: ellipsis;
 `
 const LocationArrowDiv = styled.div`
-grid-column: 2;
+grid-column: 3;
 grid-row: 1;
 display: flex;
 justify-content: center;
 align-items: center;
+background-color: red;
 `
 const BackArrowDiv = styled.div`
 width:30px;
@@ -277,5 +316,8 @@ export {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
-  InnerLocationDiv
+  InnerLocationDiv,
+  DepartureIconDiv,
+  CalendarText,
+  TimeText
 }
