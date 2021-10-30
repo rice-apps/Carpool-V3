@@ -105,7 +105,7 @@ export default function ButtonAppBar() {
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Home"/>
         </ListItem>
-        <ListItem button disabled = {!loggedIn} component = {Link} to = "/search">
+        <ListItem button disabled = {!loggedIn} component = {Link} to = "/your-rides">
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
