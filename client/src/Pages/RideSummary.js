@@ -70,8 +70,8 @@ const GET_RIDE = gql`
   }
 `
 const RideSummary = () => {
-  // let { id } = useParams()
-  const [getVariables, setVariables] = useState({})
+  let { id } = useParams()
+  const [getVariables] = useState({})
   const history = useHistory()
 
   const { data, loading, error } = useQuery(GET_RIDE, {

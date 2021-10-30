@@ -1,11 +1,8 @@
-import React, {Component} from 'react';
-import { useHistory } from 'react-router';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { gql, useMutation } from '@apollo/client';
 import { BoxRide } from './DisplayRides.styles';
 
 function renderDate(date) {
@@ -17,28 +14,7 @@ function renderTime(date) {
 }
 
 const Ride = ({ride}) => {
-    const history = useHistory();
     const date = new Date(ride.departureDate);
-
-    const JOIN_RIDE = gql`
-        mutation JoinRide($rideID: ID!) {
-            addRider(rideID: $rideID) {
-                riders { _id }
-            }
-        }
-    `;
-
-    const [joinRide] = useMutation(JOIN_RIDE, {
-        variables: { rideID: ride._id }
-    });
-
-    const join = () => {
-        if (localStorage.getItem('token') == null) {
-            history.replace('/login');
-        }
-
-        joinRide();
-    };
 
     return (
         <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>

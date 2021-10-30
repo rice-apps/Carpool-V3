@@ -1,16 +1,9 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import {monthToStr} from '../Pages/Search.js';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Ride from './Ride.js';
-import {
-    GridT,
-    BoxRide, 
-    StyledButton
-} from './DisplayRides.styles'
+import { GridT } from './DisplayRides.styles'
 
 
 const ridesPossible = [];
