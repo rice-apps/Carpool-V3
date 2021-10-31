@@ -33,7 +33,7 @@ export const createToken = (user) => {
     let token = jwt.sign({
         id: user._id,
         netid: user.netid
-    }, SECRET, { expiresIn: 129600 });
+    }, SECRET, { expiresIn: "12h" });
     return token;
 }
 
