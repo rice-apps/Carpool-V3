@@ -1,4 +1,4 @@
-import {Header, EditName, EditContactInfo, EditPaymentOptions, SubmitButton} from './ProfileFormStyles.js';
+import {Header, EditName, EditContactInfo, EditPaymentOptions, SubmitButton} from './ProfileDialogStyles.js';
 import React, {useState} from 'react';
 import {Dialog, DialogContent, TextField} from '@material-ui/core';
 import {DialogActions} from '@material-ui/core';
@@ -25,7 +25,8 @@ export default function ProfileDialog (props) {
 
     return (
         <div>
-            <Dialog open={openDialog} onClose={closeDialog}>
+            <Dialog open={openDialog} onClose={closeDialog} fullWidth={true}>
+    
             <DialogContent>
                 <Header>
                     <p>
@@ -40,7 +41,7 @@ export default function ProfileDialog (props) {
                 <EditContactInfo>
                     Contact Information
                     <TextField id = "outlined-filled" label = "Email" variant = "filled"/>
-                    <TextField id = "outlined-filled" label = "Phone #" variraint = "filled"/>
+                    <TextField id = "outlined-filled" label = "Phone #" variant = "filled"/>
                 </EditContactInfo>
                 <EditPaymentOptions>
                     Payment
