@@ -98,7 +98,8 @@ const RideSummary = () => {
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
-      history.replace('/login')
+      localStorage.setItem('nextPage', `/ridesummary/${id}`)
+      history.push('/login')
       return
     }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Redirect, useHistory } from "react-router";
+import { Redirect } from "react-router";
 
 const AUTHENTICATE_USER = gql`
     mutation AuthenticateMutation($ticket: String!) {
@@ -27,7 +27,6 @@ const parseTicket = (url) => {
 
 const Auth = () => {
 
-    const history = useHistory();
     // First parse out ticket from URL href
     let ticket = parseTicket(window.location.href);
 
