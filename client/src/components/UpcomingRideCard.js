@@ -55,11 +55,10 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 
 const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
-
-    let month = 12 // datetime.getMonth()
-    let day =  24 // datetime.getDay()
-    let hour = 14 // datetime.getHours()
-    let minute = 32 // datetime.getMinutes()
+    let month = 12
+    let day =  24
+    let hour = 14
+    let minute = 32
     
     let dateString = monthNames[month - 1].substr(0, 3) + " " + day
     let timeString = hour < 12 ? hour + ":" + minute + " am" : hour - 12 + ":" + minute + " pm"
@@ -67,21 +66,15 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
     return (
         <div>
-
-
             <RideCard>
-
                 <RideTimeInfo>
                     <CalendarIcon />
-
                     <RideDate>
                         { dateString }
                     </RideDate>
-
                     <RideTime>
                         { timeString }
                     </RideTime>
-
                 </RideTimeInfo>
                 
                 <Locations>

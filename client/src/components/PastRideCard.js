@@ -1,8 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { 
     RideCard, 
@@ -11,29 +8,32 @@ import {
     RideTime, 
     Origin, 
     Destination, 
-    Locations, 
-    Notifications } 
+    Locations,
+    PaidPaymentInfo,
+    PaymentText } 
     from './PastRideCard.styles.js';
 
-
-const CalendarIcon = withStyles({
-    root: {
-      display: 'flex',
-      color: '#2075D8',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
-  })(CalendarTodayIcon);
 
   const ArrowForward = withStyles({
   })(ArrowForwardIcon);
 
-  const NotificationsOn = withStyles({
- 
-  })(NotificationsActiveIcon);
-  
-  const NotificationsOff = withStyles({
-  })(NotificationsOffIcon);
+//   const UnpaidIcon = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: '#002140',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
+//   })(<p>!</p>);
+
+//   const PaidIcon = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: '#002140',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
+//   })(<p>$</p>);
 
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -41,13 +41,12 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 
-const PastRideCard = ({origin, destination, datetime, notification}) => {
+const PastRideCard = ({origin, destination, datetime, paid}) => {
 
-
-    let month = 12 // datetime.getMonth()
-    let day =  24 // datetime.getDay()
-    let hour = 14 // datetime.getHours()
-    let minute = 32 // datetime.getMinutes()
+    let month = 12
+    let day =  24
+    let hour = 14
+    let minute = 32
     
     let dateString = monthNames[month - 1].substr(0, 3) + " " + day
     let timeString = hour < 12 ? hour + ":" + minute + " am" : hour - 12 + ":" + minute + " pm"
@@ -55,21 +54,14 @@ const PastRideCard = ({origin, destination, datetime, notification}) => {
 
     return (
         <div>
-
-
             <RideCard>
-
                 <RideTimeInfo>
-                    <CalendarIcon />
-
                     <RideDate>
                         { dateString }
                     </RideDate>
-
                     <RideTime>
                         { timeString }
                     </RideTime>
-
                 </RideTimeInfo>
                 
                 <Locations>
@@ -82,9 +74,18 @@ const PastRideCard = ({origin, destination, datetime, notification}) => {
                     </Destination>
                 </Locations>
 
-                <Notifications>
-                    { notification ? <NotificationsOn /> : <NotificationsOff /> }
-                </Notifications>
+                <PaidPaymentInfo>
+                    {/* <PaidIcon /> */}
+                    <PaymentText>Payment Incomplete</PaymentText>
+                </PaidPaymentInfo>
+
+{/* 
+                <PaidPaymentInfo>
+                    <UnpaidIcon />
+                    <PaymentText>Payment Complete</PaymentText>
+                </PaidPaymentInfo> */}
+
+               
             </RideCard>
         </div>
     )
@@ -99,7 +100,8 @@ PastRideCard.defaultProps = {
     destination: 'IAH',
     // WILL BE IN ISOstring
     datetime: Date.now(),
-    notification: true
+    notification: true,
+    paid: true
 }
 
 

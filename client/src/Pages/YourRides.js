@@ -43,10 +43,8 @@ const YourRides = (paid) => {
 
                 <PastRidesSection>
                     <PastRideCard>
-
                     </PastRideCard>
 
-                    {/* { paid ? <Paid /> : <Unpaid />} */}
 
                 </PastRidesSection>
             </OverallPage>
