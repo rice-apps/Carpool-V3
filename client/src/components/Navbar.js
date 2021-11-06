@@ -62,6 +62,12 @@ query GetUserInfo ($netID: String)
   }
 }`
 
+const setIsShown = (mouseover) => {
+  if (mouseover){
+    this.setState({showBar :!this.state.showBar});
+  }
+}
+
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
@@ -117,7 +123,10 @@ export default function ButtonAppBar() {
   );
 
   return (
-    <div>
+    <div
+      onMouseEnter = {() => setIsShown(true)}
+      onMouseLeave = {() => setIsShown(false)}
+    >
       <AppBar position="fixed" color="white" elevation="0">
         <Toolbar>
           <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
