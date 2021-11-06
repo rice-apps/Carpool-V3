@@ -37,7 +37,7 @@ const UserAuth = () => {
             if (!userData.userOne.firstName) {
               // Route to onboarding prompt.. need to be replaced with proper component
               console.log('Going to Onboarding!')
-              history.push('/home');
+              history.push('/onboarding');
             } else {
               localStorage.removeItem('nextPage'); 
               console.log('You exist! Go to where you want to!')
