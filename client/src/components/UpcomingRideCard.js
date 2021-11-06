@@ -4,6 +4,8 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import moment from 'moment';
+
 import { 
     RideCard, 
     RideTimeInfo, 
@@ -13,7 +15,6 @@ import {
     Locations, 
     Notifications } 
     from './UpcomingRideCard.styles.js';
-
 
 const CalendarIcon = withStyles({
     root: {
@@ -47,24 +48,11 @@ const CalendarIcon = withStyles({
   })(NotificationsOffIcon);
 
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-"July", "August", "September", "October", "November", "December"
-];
-
-// toRideSummary: function()=> {
-//     let path = `ID`;
-//     let url = '/ridesummary/'
-//   }
-
 const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
-    let month = 12
-    let day =  24
-    let hour = 14
-    let minute = 32
-    
-    let dateString = monthNames[month - 1].substr(0, 3) + " " + day
-    let timeString = hour < 12 ? hour + ":" + minute + " am" : hour - 12 + ":" + minute + " pm"
+    const time = moment(datetime)
+    const dateString = time.format('MMM DD')
+    const timeString = time.format('h:mm a')
 
     
     return (

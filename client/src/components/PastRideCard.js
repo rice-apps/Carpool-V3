@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import moment from 'moment';
 
 import { 
     UnpaidPastRide,
@@ -41,21 +42,12 @@ import {
   })(AttachMoneyIcon);
 
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-"July", "August", "September", "October", "November", "December"
-];
-
-
 const PastRideCard = ({origin, destination, datetime, paid}) => {
+    const time = moment(datetime)
+    const dateString = time.format('MMM DD')
+    const timeString = time.format('h:mm a')
 
-    let month = 12
-    let day =  24
-    let hour = 14
-    let minute = 32
     
-    let dateString = monthNames[month - 1].substr(0, 3) + " " + day
-    let timeString = hour < 12 ? hour + ":" + minute + " am" : hour - 12 + ":" + minute + " pm"
-
     const RideCardData = () => {
         return (
             <div>

@@ -36,6 +36,11 @@ border-radius: 9px;
 const UpcomingRideTitle = styled.div`
 margin-top: 2vh;
 margin-bottom: 2vh;
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+color: #002140;
+font-size: 2.5vh;
 `;
 
 const PastRidesSection = styled.div`

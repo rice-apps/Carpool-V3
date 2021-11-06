@@ -87,38 +87,29 @@ const YourRides = (paid) => {
             <OverallPage>
                 <OverallPageTitle>Your Rides</OverallPageTitle>
                 <UpcomingRidesSection>
-                    
-                    <UpcomingRideTitle><TitleText>Upcoming Rides</TitleText></UpcomingRideTitle>
-
-                    {prevRides.map(ride => {
-											return (
-												<UpcomingRideCard 
-													origin={ride.departureLocation.title} 
-													destination={ride.arrivalLocation.title}
-													datetime={ride.departureDate}
-												/>
-											)
-										})}
-
-            
+                    <UpcomingRideTitle>Upcoming Rides</UpcomingRideTitle>
+                    {futureRides.map(ride => {
+                        return (
+                            <UpcomingRideCard 
+                                origin={ride.departureLocation.title} 
+                                destination={ride.arrivalLocation.title}
+                                datetime={ride.departureDate}
+                            />
+                        )
+                    })}
                 </UpcomingRidesSection>
 
                 <PastRidesSection>
-
-
-                    <PastRideTitle>
-                        <TitleText>Past Rides</TitleText>
-                        <TitleText>Payments</TitleText>
-                    </PastRideTitle>
-
-                    <PastRideCard />
-                    <PastRideCard paid={false} />
-                    <PastRideCard />
-
-                    {/* for (var i=0; i < numrows; i++) {
-                        <PastRideCard />
-                    } */}
-
+                    <PastRideTitle><TitleText>Past Rides</TitleText><TitleText>Payments</TitleText></PastRideTitle>
+                    {prevRides.map(ride => {
+                        return (
+                            <PastRideCard 
+                                origin={ride.departureLocation.title} 
+                                destination={ride.arrivalLocation.title}
+                                datetime={ride.departureDate}
+                            />
+                        )
+                    })}
                 </PastRidesSection>
             </OverallPage>
         </div>
