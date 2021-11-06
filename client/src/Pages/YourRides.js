@@ -90,14 +90,15 @@ const YourRides = (paid) => {
                     
                     <UpcomingRideTitle><TitleText>Upcoming Rides</TitleText></UpcomingRideTitle>
 
-                    {/* for (var i=0; i < numrows; i++) {
-                        <UpcomingRideCard origin="" destination=""" datetime= notification= />
-                        
-                    } */}
-                    <UpcomingRideCard />
-                    <UpcomingRideCard />
-                    <UpcomingRideCard />
-
+                    {prevRides.map(ride => {
+											return (
+												<UpcomingRideCard 
+													origin={ride.departureLocation.title} 
+													destination={ride.arrivalLocation.title}
+													datetime={ride.departureDate}
+												/>
+											)
+										})}
 
             
                 </UpcomingRidesSection>
