@@ -10,8 +10,7 @@ import {
     PastRideTitle,
     TitleText,
     OverallPage, 
-    Paid,
-    Unpaid } from './YourRidesStyles';
+    } from './YourRidesStyles';
 
 
 const YourRides = (paid) => {

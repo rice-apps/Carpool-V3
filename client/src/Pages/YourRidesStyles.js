@@ -20,6 +20,8 @@ font-size: 6vh;
 font-style: normal;
 font-weight: 100;
 text-align: center;
+margin-top: 2vh;
+margin-bottom: 2vh;
 `;
 
 const UpcomingRidesSection = styled.div`
@@ -63,15 +65,6 @@ color: #002140;
 font-size: 2.5vh;
 `;
 
-const Unpaid = styled.div`
-font-family: Josefin Sans;
-`;
-
-const Paid = styled.div`
-font-family: Josefin Sans;
-`;
-
-
 
 
 export {
@@ -81,8 +74,5 @@ export {
     PastRidesSection,
     PastRideTitle,
     TitleText,
-    OverallPage,
-    Unpaid,
-    Paid
-    
+    OverallPage    
 };
