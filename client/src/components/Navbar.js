@@ -96,6 +96,12 @@ export default function ButtonAppBar() {
       </ListItem>
   )
 
+  const showLogout = () => (
+    <ListItem className={classes.loginContainer}>
+      <LoginButton onClick = {() => {localStorage.clear()}}>Logout</LoginButton>
+    </ListItem>
+  )
+
   // Eventually should make this extensible
   const drawerItems = () => (
     <div>
@@ -112,6 +118,7 @@ export default function ButtonAppBar() {
         <ListItem button className = {classes.bottomItem} component = {Link} to = "/about">
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
+        {loggedIn ? showLogout() : null}
       </List>
     </div>
   );
