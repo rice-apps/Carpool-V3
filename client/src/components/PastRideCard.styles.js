@@ -43,6 +43,7 @@ flex-direction: column;
 border-radius: 9px;
 padding-top: 20%;
 padding-bottom: 20%;
+
 `;
 
 const RideDate = styled.div`

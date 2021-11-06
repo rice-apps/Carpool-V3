@@ -87,9 +87,7 @@ const YourRides = (paid) => {
                 <OverallPageTitle>Your Rides</OverallPageTitle>
                 <UpcomingRidesSection>
                     
-                    <UpcomingRideTitle>
-                        <TitleText>Upcoming Rides</TitleText>
-                    </UpcomingRideTitle>
+                    <UpcomingRideTitle><TitleText>Upcoming Rides</TitleText></UpcomingRideTitle>
 
                     {/* for (var i=0; i < numrows; i++) {
                         <UpcomingRideCard origin="" destination=""" datetime= notification= />

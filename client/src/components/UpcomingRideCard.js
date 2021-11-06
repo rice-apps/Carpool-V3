@@ -51,6 +51,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"
 ];
 
+// toRideSummary: function()=> {
+//     let path = `ID`;
+//     let url = '/ridesummary/'
+//   }
+
 const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
     let month = 12
@@ -61,9 +66,9 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
     let dateString = monthNames[month - 1].substr(0, 3) + " " + day
     let timeString = hour < 12 ? hour + ":" + minute + " am" : hour - 12 + ":" + minute + " pm"
 
-
+    
     return (
-        <div>
+        <div onclick="toRideSummary">
             <RideCard>
                 <RideTimeInfo>
                     <CalendarIcon />
