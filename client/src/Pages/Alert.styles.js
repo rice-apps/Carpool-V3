@@ -38,6 +38,7 @@ export const LoginDialog = withStyles({
         background: '#FFFFFF',
         width: '75vw',
         height: '20vh',
+        padding: '0px'
     }
 })(Dialog); 
 
@@ -47,9 +48,14 @@ export const LoginDialogActions = withStyles({
     }
 })(DialogActions); 
 
+export const ExitDialogActions = withStyles({
+    root: {
+        justifyContent: 'flex-end',
+    }
+})(IconButton);
+
 export const LoginIconButton = withStyles({
     root: {
-        display: 'absolute',
-        justifyContent: 'right'
+        padding: '4px 6px 8px'
     }
 })(IconButton);

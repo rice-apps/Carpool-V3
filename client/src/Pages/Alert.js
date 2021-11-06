@@ -3,9 +3,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
-import { Button, IconButton, DialogTitle} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { LoginButton, LoginDialog, LoginDialogActions, LoginDialogTitle } from './Alert.styles.js';
+import { LoginButton, LoginDialog, LoginDialogActions, ExitDialogActions, LoginIconButton } from './Alert.styles.js';
 import { SERVICE_URL } from '../config'; 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -97,9 +97,11 @@ function AlertDialog() {
                 open={openAlert}
                 onClose={handleClose}
             >
-                <IconButton onClick={handleClose}>
-                        <CloseIcon />
-                </IconButton>
+                <ExitDialogActions>
+                    <LoginIconButton onClick={handleClose}>
+                            <CloseIcon />
+                    </LoginIconButton>
+                </ExitDialogActions>
                 <LoginDialogActions>
                     {/* <Button onClick={handleClose}>Nevermind</Button> */}
                     <LoginButton onClick={handleLogin} autoFocus>Login</LoginButton>
