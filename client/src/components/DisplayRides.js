@@ -11,7 +11,13 @@ import {
     StyledButton
 } from './DisplayRides.styles'
 
+// SSO Imports
+import { SERVICE_URL } from '../config'; 
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
+
+const id = localStorage.getItem('netid');
+console.log('The net ID initially is: ', id);
 const ridesPossible = [];
 const locsPossible = [];
 
@@ -24,8 +30,24 @@ const isEqualRides = (ride1, ride2) => {
 }
 
 const handleClickCreateRide = () => {
+
     console.log("handleClickCreateRide() run");
+    localStorage.setItem('nextPage', '/create-ride');
+    console.log('Next Page is: ', localStorage.getItem('nextPage'));
+
+    if (id != null) { 
+        // Route to UserAuth
+        console.log('In the userAuth stage'); 
+        window.open('/userAuth', '_self');
+    } else {
+        console.log('Need to redirect to SSO');
+        // Route to SSO
+        let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+        window.open(redirectURL, '_self');
+    }
+    
 }
+
 const handleClickSearchAgain = () => {
     window.scrollTo(0, 0);
 }
@@ -44,12 +66,10 @@ const displayRideBottomOfPage = () => {
             OR
         </div>
         <div>
-            <Link to="/create-ride" style = {{textDecoration: "none"}}>
-                <StyledButton
-                onClick={() => handleClickCreateRide()}> 
+            <StyledButton
+                    onClick={() => handleClickCreateRide()}> 
                     Create New Ride 
-                </StyledButton>
-            </Link>
+            </StyledButton>
         </div>
         </div>
 }
