@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import UpcomingRideCard from '../components/UpcomingRideCard.js';
 import PastRideCard from '../components/PastRideCard.js';
+import { gql, useQuery, useMutation} from "@apollo/client";
+
 
 import { 
     OverallPageTitle, 
@@ -12,7 +14,64 @@ import {
     Unpaid } from './YourRidesStyles';
 
 
+const GET_RIDE = gql`
+query GetRide($netID: String) {
+	userOne (filter:{netid: $netID}) { 
+			rides {
+			_id
+			departureDate
+			riders {
+					netid
+					firstName
+					lastName
+			}
+			spots
+			departureLocation {
+					title
+					address
+			}
+			arrivalLocation {
+					title
+					address
+			}
+			owner {
+					netid
+					firstName
+					lastName
+			}
+			}     
+	}
+} 
+`
+
+
 const YourRides = (paid) => {
+
+    let netid = localStorage.getItem("netid")
+
+		const [allRides, setAllRides] = useEffect([])
+		const [prevRides, setPrevRides] = useEffect([])
+		const [futureRides, setFutureRides] = useEffect([])
+    const { data, loading, error } = useQuery(GET_RIDE, {
+        variables: { netid: netid },
+      });
+    ;
+
+    useEffect(() => {
+        if (data) {
+            console.log("netid", netid)
+            console.log("rides got: ", data)
+						setAllRides(data["userOne"]["rides"])
+        }
+    }, [data])
+
+		// useEffect(() => {
+
+		// })
+
+    if (error) return <p>Error...</p>;
+    if (loading) return <p>loading...</p>;
+
     return (
         <div> 
             <OverallPage>
