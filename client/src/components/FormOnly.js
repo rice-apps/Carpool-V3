@@ -63,12 +63,35 @@ const FormOnly = (props) => {
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
-  
+
   const [dateRange, setDateRange] = useState([startValue, endValue])
   
   const [numberPeople, setNumberPeople] = useState(null)
 
   const [indSelected, setIndSelected] = useState(-1)
+
+  useEffect(() => {
+    console.log("form changed!");
+    
+    props.getRidesRefetch()
+    .then((res) => {
+      resultDestArr = ridesPossibleForm;
+      if (startLoc !== "") {
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});
+      }
+      if (endLoc !== "") {
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
+      }
+      if (dateRange[0] != null && dateRange[1] != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateRange[0], true) && !compareDates(new Date(ele.departureDate), dateRange[1], false);});
+      }
+      if (numberPeople != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
+      }
+      displayRef.current.setRides(resultDestArr);
+    })
+  }, [startLoc, endLoc, numberPeople, dateRange])
+
 
   const compareDates = (date1, date2, equals) => {
     const d1 = [date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getHours(), date1.getMinutes()]
@@ -161,7 +184,6 @@ const FormOnly = (props) => {
     //setIsSelectedDestAny(true);
     setIndSelected(dictNames.endLoc);
     console.log(JSON.parse(JSON.stringify(indSelected)));
-    
   }    
     
   return (
