@@ -62,18 +62,14 @@ query GetUserInfo ($netID: String)
   }
 }`
 
-const setIsShown = (mouseover) => {
-  if (mouseover){
-    this.setState({showBar :!this.state.showBar});
-  }
-}
-
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
 
   const toggleDrawer = () => setDrawer(!drawer);
+  const showNav = () => {setDrawer(true)};
+  const hideNav = () => {setDrawer(false)};
 
   const {data: userData, loading, error} = useQuery(GET_USER, 
     {
@@ -104,7 +100,7 @@ export default function ButtonAppBar() {
 
   // Eventually should make this extensible
   const drawerItems = () => (
-    <div>
+    <div onMouseLeave = {hideNav}>
       <List className = {classes.list}>
         {loggedIn ? showUsername() : showLogin()}
         <ListItem button component = {Link} to = "/home">
@@ -123,11 +119,8 @@ export default function ButtonAppBar() {
   );
 
   return (
-    <div
-      onMouseEnter = {() => setIsShown(true)}
-      onMouseLeave = {() => setIsShown(false)}
-    >
-      <AppBar position="fixed" color="white" elevation="0">
+    <div>
+      <AppBar position="fixed" color="white" elevation="0" onMouseEnter = {showNav} onMouseLeave = {hideNav}> 
         <Toolbar>
           <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
             <MenuIcon fontSize="large"/>
