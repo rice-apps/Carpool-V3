@@ -16,8 +16,9 @@ import { SERVICE_URL } from '../config';
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 
-const id = localStorage.getItem('netid');
-console.log('The net ID initially is: ', id);
+// const id = localStorage.getItem('netid');
+// console.log('The net ID initially is: ', id);
+// console.log('The token is: ', localStorage.getItem('token'));
 const ridesPossible = [];
 const locsPossible = [];
 
@@ -35,7 +36,9 @@ const handleClickCreateRide = () => {
     localStorage.setItem('nextPage', '/create-ride');
     console.log('Next Page is: ', localStorage.getItem('nextPage'));
 
-    if (id != null) { 
+    let token = localStorage.getItem('token');
+
+    if (token != null) { 
         // Route to UserAuth
         console.log('In the userAuth stage'); 
         window.open('/userAuth', '_self');
