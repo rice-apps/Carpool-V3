@@ -42,7 +42,16 @@ root: {
 })(MailIcon);
 
 const EditProfileButton = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	margin-top:20px;
+	font-family: Josefin Sans;
+	font-weight: 600;
+	font-size: 30px;
+	line-height: 30px;
+	text-align: center;
 `
 
 const ProfileCard = styled.div`

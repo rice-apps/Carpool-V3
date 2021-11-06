@@ -123,7 +123,7 @@ export const Routes = () => {
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar/>
         <Switch>
           <CheckTokenRoute path={'/alert'} component={withRouter(Alert)} />
           <CheckTokenRoute path={'/userAuth'} component={withRouter(UserAuth)} />

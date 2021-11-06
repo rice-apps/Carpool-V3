@@ -2,8 +2,9 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
-import Button from '@material-ui/core/Button'
-import { Link } from 'react-router-dom';
+import ProfileDialog from './ProfileDialog.js';
+import IconButton from '@material-ui/core/IconButton'
+import EditIcon from '@material-ui/icons/Edit'
 import {
   ButtonBox,
   BackArrow,
@@ -19,6 +20,7 @@ import {
 	StyledText3,
   EditProfileButton
 } from './ProfileStyles.js';
+import {useState} from 'react';
 
 const Profile = () => {
 
@@ -37,6 +39,8 @@ const Profile = () => {
       phone
     }
   }`
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const {data: userData, loading, error} = useQuery(GET_USER, 
     {
@@ -60,16 +64,20 @@ const Profile = () => {
     <div>
       <ReturnHeader>
         <ButtonBox
-        onClick = {goBack}>
+          onClick = {goBack}>
           <BackArrow></BackArrow>
           <StyledText3>Ride Summary</StyledText3>
         </ButtonBox>
       </ReturnHeader>
       <EditProfileButton>
-        <Link to= "/profileform">
-          <Button variant = "outline">Edit Profile Information</Button>
-        </Link>
-      </EditProfileButton>
+        <IconButton aria-label="edit" onClick = {() => setOpenDialog(true)} variant = "outlined">
+          <EditIcon/>
+        </IconButton>
+        </EditProfileButton>
+      <ProfileDialog
+          openDialog = {openDialog}
+          setOpenDialog = {setOpenDialog}>
+        </ProfileDialog>
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + ' ' + user.lastName}</UserName>
