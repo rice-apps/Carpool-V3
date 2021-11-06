@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import {monthToStr} from '../Pages/Search.js';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import {
-    GridT,
-    BoxRide, 
-    StyledButton
-} from './DisplayRides.styles'
+import Ride from './Ride.js';
+import { GridT, StyledButton } from './DisplayRides.styles'
 
 
 const ridesPossible = [];
@@ -54,29 +48,6 @@ const displayRideBottomOfPage = () => {
         </div>
 }
 
-const renderTime = (date) => {
-    var hours = date.getHours();
-    const minutes = date.getMinutes();
-    var ampm = "";
-
-    if (hours >= 12){
-        if (hours !== 12){
-            hours = hours - 12;
-        }
-        ampm = " PM"; 
-    } else {
-        if (hours === 0){
-            hours += 12
-        }
-        ampm = "AM"
-    }
-
-    const hoursStr = (String)(hours);
-    const minutesStr = (String)(minutes).padStart(2, '0');
-
-    return hoursStr+':'+minutesStr+ampm;
-}
-
 class DisplayRides extends Component {
     constructor(props) {
         super(props);
@@ -87,46 +58,6 @@ class DisplayRides extends Component {
             locsPossible: locsPossible,
             testVar: props.testVar
         }
-    }
-
-    displayRideRows(ride) {
-
-        const numLeft = ride.spots;
-
-        const date = new Date(ride.departureDate);
-
-        return  <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
-            <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
-                <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
-                    <Box width={"12vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
-                        <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{numLeft}</span>
-                        <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
-                    </Box>
-                </Grid>
-                <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
-                            {ride.departureLocation.title}      
-                    </BoxRide>
-                </Grid>
-                <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
-                        <ArrowForwardIcon/>
-                </Grid>
-                <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
-                        {ride.arrivalLocation.title}
-                    </BoxRide>
-                </Grid>
-                <Grid item xs={3} justify="center" align='center'>
-                    <Box width={"15vw"} height={"15vw"} style={{ display: 'flex', alignItems: 'center', gap: "1vh"}}>
-                        <CalendarTodayIcon style ={{fontSize: "3vw"}}/>
-                        <span>
-                            <div style = {{fontSize: '3vw', fontFamily: 'Josefin Sans'}}> {monthToStr[date.getMonth()-1] + " " + date.getDate()}</div>
-                            <div style={{fontSize: '2.5vw', fontFamily: "Josefin Sans"}}>{renderTime(date)}</div>
-                        </span>
-                    </Box>
-                </Grid>
-            </Grid>
-        </Grid>
     }
 
     displayRides(ridesT)  {
@@ -145,7 +76,7 @@ class DisplayRides extends Component {
                 Matching Rides: 
             </Box>
             {
-            (isValidRidesT) && ridesT.map((ride, ind) => (this.displayRideRows(ride)))
+            (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride} />))
             }
             {
             (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff"}}>
@@ -158,7 +89,7 @@ class DisplayRides extends Component {
             <div style = {{fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
             }
             {
-            this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (this.displayRideRows(ride)))
+            this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
             }
             <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
                 no more results

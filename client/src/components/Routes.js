@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
+import Alert from '../Pages/Alert.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import Search from '../Pages/Search.js'
@@ -83,14 +84,14 @@ const PrivateRoute = ({ children, ...rest }) => {
     // Clear the token because something is wrong with it
     localStorage.removeItem('token')
     // Redirect the user to the login page
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
   if (loading) return <p>Waiting...</p>
   if (!data || !data.verifyUser) {
     // Clear the token
     localStorage.removeItem('token')
     // Redirect the user
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
 
   // Check whether any recent updates have come in
