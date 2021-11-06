@@ -16,35 +16,33 @@ import {
     } from './YourRidesStyles';
 
 
-const GET_RIDE = gql`
-query GetRide($netID: String) {
-	userOne (filter:{netid: $netID}) { 
-			rides {
-				_id
-				departureDate
-				riders {
-						netid
-						firstName
-						lastName
-				}
-				spots
-				departureLocation {
-						title
-						address
-				}
-				arrivalLocation {
-						title
-						address
-				}
-				owner {
-						netid
-						firstName
-						lastName
-				}
-			}     
+const GET_RIDES = gql`
+	query {
+		rideMany {
+			_id
+			departureDate
+			riders {
+				netid
+				firstName
+				lastName
+			}
+			spots
+			departureLocation {
+				title
+				address
+			}
+			arrivalLocation {
+				title
+				address
+			}
+			owner {
+				netid
+				firstName
+				lastName
+			}
+		}
 	}
-} 
-`
+`;
 
 
 const YourRides = (paid) => {
@@ -54,16 +52,19 @@ const YourRides = (paid) => {
 		// const [allRides, setAllRides] = useEffect([])
 		const [prevRides, setPrevRides] = useState([])
 		const [futureRides, setFutureRides] = useState([])
-    const { data, loading, error } = useQuery(GET_RIDE, {
-        variables: { netid: netid },
-      });
-    ;
+    const { data, loading, error } = useQuery(GET_RIDES);
 
     useEffect(() => {
         if (data) {
-						let rides = data["userOne"]["rides"]
-
-						console.log("rides", rides)
+						let rides = data.rideMany.filter(ride => {
+							let ownerTrue = false
+							let riderTrue = false
+							if (ride.owner) {
+								ownerTrue = ride.owner.netid === netid
+							}
+							ride.riders.forEach(rider => riderTrue = rider.netid === netid)
+							return ownerTrue || riderTrue
+						})
 
 						let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date())
 						previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
