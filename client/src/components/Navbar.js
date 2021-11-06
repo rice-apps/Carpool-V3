@@ -5,9 +5,9 @@ import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
   Drawer, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
-
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -62,14 +62,13 @@ query GetUserInfo ($netID: String)
   }
 }`
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar (props) {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
+  const [showBar, setShowBar] = useState(false);
 
   const toggleDrawer = () => setDrawer(!drawer);
-  const showNav = () => {setDrawer(true)};
-  const hideNav = () => {setDrawer(false)};
 
   const {data: userData, loading, error} = useQuery(GET_USER, 
     {
@@ -79,6 +78,16 @@ export default function ButtonAppBar() {
       }
     }
   );
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === "/home" || location.pathname === "/"){
+      setShowBar(false)
+    }
+    else{ 
+      setShowBar(true)
+    }
+  }, [location.pathname])
+
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
   if (!userData) return "User not found!"; 
@@ -100,7 +109,7 @@ export default function ButtonAppBar() {
 
   // Eventually should make this extensible
   const drawerItems = () => (
-    <div onMouseLeave = {hideNav}>
+    <div>
       <List className = {classes.list}>
         {loggedIn ? showUsername() : showLogin()}
         <ListItem button component = {Link} to = "/home">
@@ -120,18 +129,22 @@ export default function ButtonAppBar() {
 
   return (
     <div>
-      <AppBar position="fixed" color="white" elevation="0" onMouseEnter = {showNav} onMouseLeave = {hideNav}> 
-        <Toolbar>
-          <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
-            <MenuIcon fontSize="large"/>
-              <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
-                {drawerItems()}
-              </Drawer>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      {/* Makes the app bar sticky while not covering up the content on the page */}
-      <Toolbar/>
+    {showBar ?
+    <div>
+        <AppBar position="fixed" color="white" elevation="0"> 
+          <Toolbar>
+            <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
+              <MenuIcon fontSize="large"/>
+                <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
+                  {drawerItems()}
+                </Drawer>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Toolbar/>
     </div>
+    : null
+  }
+  </div>
   );
 }

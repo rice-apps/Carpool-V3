@@ -18,14 +18,10 @@ const WelcomeHeader = styled.header`
   font-weight: normal;
   font-size: 3.4em;
   display: flex;
-  align-items: center;
-  text-align: center;
   color: white;
-  top: 0vh;
 `
 
 const CarpoolHeader = styled.header`
-  position: absolute;
   align-items: center;
   justify-content: center;
   font-family: Josefin Sans;
@@ -33,7 +29,8 @@ const CarpoolHeader = styled.header`
   font-weight: normal;
   font-size: 5.6em;
   color: white;
-  padding-top: 25vh;
+  margin-top: 3vh;
+  line-height:0.90;
 `
 
 const SearchButton = styled.button`
@@ -47,6 +44,7 @@ const SearchButton = styled.button`
   width:50vw;
   height: 7vh;
   border-radius: 20vw;
+  margin-top: 2.5em;
 
   font-family: Josefin Sans;
   font-style: normal;
@@ -62,10 +60,9 @@ const ButtonContainer = styled.button`
   justify-content: center;
   background-color: white;
   display: flex;
-  top: 83vh;
+  top: 70vh;
   left: 25vw;
 `
-
 export {
   Header,
   CarpoolHeader, 
