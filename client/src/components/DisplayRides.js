@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Ride from './Ride.js';
-import { GridT } from './DisplayRides.styles'
+import { GridT, StyledButton } from './DisplayRides.styles'
 
 
 const ridesPossible = [];

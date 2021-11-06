@@ -3,10 +3,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
-import { LoginButton, LoginDialog } from './Alert.styles.js';
+import { Button, Dialog, DialogActions } from '@material-ui/core';
+import { LoginButton } from './Alert.styles.js';
 import { SERVICE_URL } from '../config'; 
-import { withStyles } from '@material-ui/core/styles';
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const destinationURL = '/create-ride'; 
@@ -14,7 +13,7 @@ const destinationURL = '/create-ride';
 function AlertDialog() {
     const [openAlert, setOpenAlert] = useState(false);
     const [skipQuery, setSkipQuery] = useState(true);
-    const [destination, setDestination] = useState(destinationURL);
+    const [destination] = useState(destinationURL);
     const [userData, setUserData] = useState();
     const history = useHistory() 
     const id = localStorage.getItem('netid');
@@ -32,7 +31,7 @@ function AlertDialog() {
       }
     }`
   
-    const {} = useQuery(GET_USER, 
+    useQuery(GET_USER, 
       {
         skip: skipQuery, 
         variables: 
