@@ -83,6 +83,11 @@ export default function ButtonAppBar() {
 
   const {userOne: user} = userData;
 
+  const logout = () => {
+    localStorage.clear();
+    window.location.reload()
+  }
+
   const showUsername = () => (
     <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer}>
       <Avatar className = {classes.avatarIcon}/>
@@ -98,7 +103,7 @@ export default function ButtonAppBar() {
 
   const showLogout = () => (
     <ListItem className={classes.logInOutContainer}>
-      <LogInOutButton onClick = {() => {localStorage.clear()}}>Logout</LogInOutButton>
+      <LogInOutButton onClick = {() => {logout()}}>Logout</LogInOutButton>
     </ListItem>
   )
 
