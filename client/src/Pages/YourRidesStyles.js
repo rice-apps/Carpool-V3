@@ -26,30 +26,42 @@ const UpcomingRidesSection = styled.div`
 dislay: flex;
 flex-direction: column;
 width: 90vw;
-padding: 3%;
+padding: 5%;
 background: #F4F6F9;        /* light mode background */
 border-radius: 9px;
 `;
 
 const UpcomingRideTitle = styled.div`
-font-family: Josefin Sans;
-font-style: normal;
-font-weight: normal;
-font-size: 3vh;
 margin-top: 2vh;
 margin-bottom: 2vh;
 `;
 
 const PastRidesSection = styled.div`
 display: flex;
-width: 90vw;
-justify-content: space-between
+width: 100vw;
+justify-content: space-between;
 font-family: Josefin Sans;
 flex-direction: column;
 padding: 3%;
 border-radius: 9px;
+margin-top: 3vh;
 `;
 
+const PastRideTitle = styled.div`
+display: flex;
+width: 90vw;
+justify-content: space-between;
+margin-top: 2vh;
+margin-bottom: 1vh;
+`;
+
+const TitleText = styled.div`
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+color: #002140;
+font-size: 2.5vh;
+`;
 
 const Unpaid = styled.div`
 font-family: Josefin Sans;
@@ -57,9 +69,7 @@ font-family: Josefin Sans;
 
 const Paid = styled.div`
 font-family: Josefin Sans;
-
 `;
-
 
 
 
@@ -69,7 +79,10 @@ export {
     UpcomingRidesSection,
     UpcomingRideTitle,
     PastRidesSection,
+    PastRideTitle,
+    TitleText,
     OverallPage,
     Unpaid,
     Paid
+    
 };

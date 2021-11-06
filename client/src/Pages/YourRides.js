@@ -7,6 +7,8 @@ import {
     UpcomingRidesSection, 
     UpcomingRideTitle,
     PastRidesSection, 
+    PastRideTitle,
+    TitleText,
     OverallPage, 
     Paid,
     Unpaid } from './YourRidesStyles';
@@ -20,31 +22,36 @@ const YourRides = (paid) => {
                 <UpcomingRidesSection>
                     
                     <UpcomingRideTitle>
-                        Upcoming Rides
+                        <TitleText>Upcoming Rides</TitleText>
                     </UpcomingRideTitle>
 
+                    {/* for (var i=0; i < numrows; i++) {
+                        <UpcomingRideCard origin="" destination=""" datetime= notification= />
+                        
+                    } */}
+                    <UpcomingRideCard />
+                    <UpcomingRideCard />
+                    <UpcomingRideCard />
 
-                    <UpcomingRideCard>
-                    </UpcomingRideCard>
 
-                    {/* <UpcomingRideCard>
-                    </UpcomingRideCard>
-
-                    <UpcomingRideCard>
-                    </UpcomingRideCard>
-
-                    <UpcomingRideCard>
-                    </UpcomingRideCard> */}
-                    
-                    
-                    {/* WE WANT A FOR LOOP FOR ALL OUR UPCOMING RIDES */}
-
+            
                 </UpcomingRidesSection>
 
                 <PastRidesSection>
-                    <PastRideCard>
-                    </PastRideCard>
 
+
+                    <PastRideTitle>
+                        <TitleText>Past Rides</TitleText>
+                        <TitleText>Payments</TitleText>
+                    </PastRideTitle>
+
+                    <PastRideCard />
+                    <PastRideCard paid={false} />
+                    <PastRideCard />
+
+                    {/* for (var i=0; i < numrows; i++) {
+                        <PastRideCard />
+                    } */}
 
                 </PastRidesSection>
             </OverallPage>

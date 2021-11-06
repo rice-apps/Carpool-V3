@@ -8,8 +8,11 @@ background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
 height: 15vh;
-padding: 5%;
+padding: 1vh;
+margin-top: 2vh;
+margin-bottom: 2vh;
 `;
+
 
 const RideTimeInfo = styled.div`
 grid-column-start: 1;
@@ -34,28 +37,21 @@ const RideTime = styled.div`
 font-family: Josefin Sans;
 font-style: normal;
 font-weight: 300;
-font-size: 2vh
+font-size: 2vh;
 `
 
 const Locations = styled.div`
 font-family: Josefin Sans;
-padding-left: 10%;
+padding: 10%;
 grid-column-start: 2;
-font-size: 3.5vh;
 display: flex;
 justify-content: space-between;
 align-content: center;
 align-items: center;
-
 `
 
-const Origin = styled.div`
-text-size: 3vh;
-font-family: Josefin Sans;
-`
-
-const Destination = styled.div`
-text-size: 3vh;
+const LocationText = styled.div`
+font-size: 3vh;
 font-family: Josefin Sans;
 `
 
@@ -68,8 +64,7 @@ export {
 	RideTimeInfo,
 	RideDate,
 	RideTime,
-	Origin,
-	Destination,
+	LocationText,
 	Locations,
 	Notifications
 };

@@ -9,8 +9,7 @@ import {
     RideTimeInfo, 
     RideDate, 
     RideTime, 
-    Origin, 
-    Destination, 
+    LocationText, 
     Locations, 
     Notifications } 
     from './UpcomingRideCard.styles.js';
@@ -52,7 +51,6 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"
 ];
 
-
 const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
 
     let month = 12
@@ -78,13 +76,9 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
                 </RideTimeInfo>
                 
                 <Locations>
-                    <Origin>
-                        { origin }
-                    </Origin>
+                    <LocationText>{ origin }</LocationText>
                     <ArrowForward />
-                    <Destination>
-                        { destination }
-                    </Destination>
+                    <LocationText>{ destination }</LocationText>
                 </Locations>
 
                 <Notifications>
