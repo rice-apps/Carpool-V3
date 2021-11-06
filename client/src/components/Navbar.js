@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
     gap: "5vw",
     height: "15vh"
   },
-  loginContainer:{
+  logInOutContainer:{
     display:"flex", 
     justifyContent:"center", 
     height: "15vh",
   },
 }));
 
-const LoginButton = withStyles({
+const LogInOutButton = withStyles({
   root: {
       background: '#2075D8',
       width: '33vw',
@@ -91,14 +91,14 @@ export default function ButtonAppBar() {
   )
 
   const showLogin = () => (
-      <ListItem className={classes.loginContainer} divider = "true" disableGutters = "true">
-        <LoginButton component = {Link} to = "/login">Login</LoginButton>
+      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+        <LogInOutButton component = {Link} to = "/login">Login</LogInOutButton>
       </ListItem>
   )
 
   const showLogout = () => (
-    <ListItem className={classes.loginContainer}>
-      <LoginButton onClick = {() => {localStorage.clear()}}>Logout</LoginButton>
+    <ListItem className={classes.logInOutContainer}>
+      <LogInOutButton onClick = {() => {localStorage.clear()}}>Logout</LogInOutButton>
     </ListItem>
   )
 
