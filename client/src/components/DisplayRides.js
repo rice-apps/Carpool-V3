@@ -81,7 +81,7 @@ class DisplayRides extends Component {
             {
             (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff"}}>
                 <Box width={"100%"} height={"100%"} style={{fontSize: "2vh", fontFamily: "Josefin Sans", padding: "1vh"}}>
-                    Either you have not clicked the submit button yet or no rides matched.
+                    No rides matched.
                 </Box>
             </Grid>
             }
