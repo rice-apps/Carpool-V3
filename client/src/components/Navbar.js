@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
     gap: "5vw",
     height: "15vh"
   },
-  loginContainer:{
+  logInOutContainer:{
     display:"flex", 
     justifyContent:"center", 
     height: "15vh",
   },
 }));
 
-const LoginButton = withStyles({
+const LogInOutButton = withStyles({
   root: {
       background: '#2075D8',
       width: '33vw',
@@ -94,6 +94,11 @@ export default function ButtonAppBar (props) {
 
   const {userOne: user} = userData;
 
+  const logout = () => {
+    localStorage.clear();
+    window.location.reload()
+  }
+
   const showUsername = () => (
     <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer}>
       <Avatar className = {classes.avatarIcon}/>
@@ -102,9 +107,15 @@ export default function ButtonAppBar (props) {
   )
 
   const showLogin = () => (
-      <ListItem className={classes.loginContainer} divider = "true" disableGutters = "true">
-        <LoginButton component = {Link} to = "/login">Login</LoginButton>
+      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+        <LogInOutButton component = {Link} to = "/login">Login</LogInOutButton>
       </ListItem>
+  )
+
+  const showLogout = () => (
+    <ListItem className={classes.logInOutContainer}>
+      <LogInOutButton onClick = {() => {logout()}}>Logout</LogInOutButton>
+    </ListItem>
   )
 
   // Eventually should make this extensible
@@ -123,6 +134,7 @@ export default function ButtonAppBar (props) {
         <ListItem button className = {classes.bottomItem} component = {Link} to = "/about">
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
+        {loggedIn ? showLogout() : null}
       </List>
     </div>
   );
