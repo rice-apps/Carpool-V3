@@ -5,64 +5,103 @@ const Popup = styled.div`
   height: 77vh;
   border-radius: 25px;
   color: white;
+  left: 20vw;
+  position:0vw;
 `
-
-const SectionHeader = styled.header`
-    left: 22.46%;
-    right: 48.96%;
-    top: 20%
-    bottom: 68.61%;
-
+const IconContainer = styled.div`
+    position: relative;
+    top: 3.5vh;
+    left: 29.5vw;
+`
+const NameSectionHeader = styled.header`
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
-    line-height: 20px;
-
-    display: flex;
-    align-items: center;
-    color: #2075D8
+    line-height: 3px;
+    color: #2075D8;
+    position: relative;
+    top: 9vh;
+    left: 10vw;
 `
-const TextBox = styled.div`
-    position: absolute;
-    width: 60.9vw;
+const FirstNameTextBox = styled.div`
+    position: relative;
+    width: 58vw;
     height: 5vh;
-    left: 12vw;;
-    top: 15vh;;
-
-    background: rgba(187, 218, 255, 0.22);
-    border-radius: 9px;
-    padding-top: 1vh;
-    
+    top: 10vh;
+    left: 9vw;
+    border-radius:2.0em;    
 `
-const EditName = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1vh;
-    background-color: white;
-    color: navy;
+const LastNameTextBox = styled.div`
+    position: relative;
+    width: 58vw;
+    height: 5vh;
+    top: 11vh;
+    left: 9vw;
+    border-radius:2.0em;
 `
 
-const EditContactInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3vh;
-    background-color: white;
-    color: navy;
+const ContactSectionHeader = styled.header`
+    font-family: Josefin Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 3px;
+    color: #2075D8;
+    position: relative;
+    top: 16vh;
+    left: 10vw;
 `
 
-const EditPaymentOptions = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3vh;
-    background-color: white;
+const PhoneTextBox = styled.div`
+    position: relative;
+    width: 58vw;
+    height: 5vh;
+    top: 17vh;
+    left: 9vw;
+    border-radius:2.0em;
+`
+const EmailTextBox = styled.div`
+    position: relative;
+    width: 58vw;
+    height: 5vh;
+    top: 17vh;
+    left: 9vw;
+    border-radius:2.0em;
+`
+
+const PaymentSectionHeader = styled.header`
+    font-family: Josefin Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 3px;
+    color: #2075D8;
+    position: relative;
+    top: 26vh;
+    left: 10vw;
+`
+
+const PaymentDropdown = styled.div`
+    display: flex;    
+    flex-direction: column;    
+    align-items: center;    
+    justify-content: center;    
+    top: 60vh;
+    left: 9.5vw;
+
+    background-color: white;    
     color: navy;
+    position: absolute;
+`
+
+const PaymentTextBox = styled.div`
+    position: relative;
+    width: 58vw;
+    height: 5vh;
+    top: 30vh;
+    left: 9vw;
+    border-radius:2.0em;
 `
 
 const SubmitButton = styled.div`
@@ -70,18 +109,25 @@ const SubmitButton = styled.div`
     flex-direction: column;
     aligh-items: center;
     justify-content: center;
-    padding-top: 6vh;
     height:10vh;
-    width:20vw;
+    width: 70vw;
     margin: auto;
+    top: 29vh;
+    left: 0.3vw;
+    position: relative;
 `
 
 export {
-    EditName,
-    EditContactInfo,
-    EditPaymentOptions,
     SubmitButton,
-    SectionHeader,
-    TextBox,
-    Popup
+    NameSectionHeader,
+    ContactSectionHeader,
+    PaymentSectionHeader,
+    FirstNameTextBox,
+    LastNameTextBox,
+    PhoneTextBox,
+    EmailTextBox,
+    PaymentTextBox,
+    Popup,
+    PaymentDropdown,
+    IconContainer
 }
