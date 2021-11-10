@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from "react-router";
 import { gql, useMutation } from '@apollo/client';
-import ProfileForm from '../pages/ProfileForm';
+import ProfileForm from '../Pages/ProfileForm';
 
 const Onboarding = () => {
   const history = useHistory();

@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
+import Onboarding from '../components/Onboarding.js'
 import Alert from '../Pages/Alert.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
@@ -130,6 +131,7 @@ export const Routes = () => {
           <CheckTokenRoute path={'/alert'} component={withRouter(Alert)} />
           <CheckTokenRoute path={'/userAuth'} component={withRouter(UserAuth)} />
           <CheckTokenRoute path={'/login'} component={withRouter(Login)} />
+          <CheckTokenRoute path={'/onboarding'} component={withRouter(Onboarding)} />
           <CheckTokenRoute path={'/profile/:id'} component={withRouter(Profile)} />
           <CheckTokenRoute path={'/'} exact component={withRouter(Home)} />
           <CheckTokenRoute path={'/home'} component={withRouter(Home)} />
