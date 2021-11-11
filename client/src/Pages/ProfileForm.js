@@ -8,16 +8,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+const ProfileForm = ({ onSubmit }) => {
+    const[firstName, setFirstName] = useState('');
+    const[lastName, setLastName] = useState('');
+    const[email, setEmail] = useState('');
+    const[phone, setPhone] = useState('');
+    const[paymentOption, setPaymentOption] = useState('');
+    const[paymentAccount, setPaymentAccount] = useState('');
 
-
-const ProfileForm = () => {
-
-    const[payment, setPaymentOption] = useState('');
-
-    const handleChange = (event) => {
-        setPaymentOption(event.target.value);
-    }
-    
     return (
         <div>
             <Header>
@@ -27,13 +25,13 @@ const ProfileForm = () => {
             </Header>
             <EditName>
                 Name
-                <TextField id = "outlined-filled" label = "First Name" variant = "filled"/>
-                <TextField id = "outlned-filled" label = "Last Name" variant = "filled"/>
+                <TextField id="outlined-filled" label="First Name" variant="filled" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                <TextField id="outlned-filled" label="Last Name" variant="filled" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
             </EditName>
             <EditContactInfo>
                 Contact Information
-                <TextField id = "outlined-filled" label = "Email" variant = "filled"/>
-                <TextField id = "outlined-filled" label = "Phone #" variant = "filled"/>
+                <TextField id="outlined-filled" label="Email" variant="filled" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <TextField id="outlined-filled" label="Phone #" variant="filled" value={phone} onChange={(e) => setPhone(e.target.value)}/>
             </EditContactInfo>    
             <EditPaymentOptions>
                 Payment
@@ -43,9 +41,9 @@ const ProfileForm = () => {
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={payment}
+                            value={paymentOption}
                             label="Options"
-                            onChange={handleChange}
+                            onChange={(e) => setPaymentOption(e.target.value)}
                         >
                             <MenuItem value={10}>Venmo</MenuItem>
                             <MenuItem value={20}>Zelle</MenuItem>
@@ -54,10 +52,10 @@ const ProfileForm = () => {
                     </FormControl>
                 </Box>
                 <br></br>
-                <TextField id = "outlined-filled" label = "Pay to @" variant = "filled"/>
+                <TextField id = "outlined-filled" label = "Pay to @" variant = "filled" value={paymentAccount} onChange={(e) => setPaymentAccount(e.target.value)}/>
             </EditPaymentOptions>
             <SubmitButton>
-                <Button variant="contained">Submit</Button>
+                <Button variant="contained" onClick={() => { console.log(firstName, lastName, email, phone, paymentAccount); }}>Submit</Button>
             </SubmitButton>
         </div>
     ) 
