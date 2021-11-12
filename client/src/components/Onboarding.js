@@ -7,29 +7,31 @@ const Onboarding = () => {
   const history = useHistory();
 
   const UPDATE_USER = gql`
-    mutation UpdateMutation($ticket: String!) {
-      updateOne(ticket: $ticket) {
-        _id
-        netid
-        firstName
-        lastName
-        phone
+    mutation UpdateMutation($firstName: String!, $lastName: String!, $phone: String!) {
+      userUpdateOne(record: { firstName: $firstName, lastName: $lastName, phone: $phone }) {
+        record {
+          _id
+          firstName
+          lastName
+          phone
+        }
       }
     }
   `;
   
   const [updateUser] = useMutation(UPDATE_USER);
-  
-  const onSubmit = (e) => {
-    e.preventDefault();
-    updateUser();
-    
+
+  const updateUserInfo = (data) => {
+    updateUser({
+      variables: data
+    });
+
     return history.push(-2);
   };
 
   return (
     <div>
-      <ProfileForm onSubmit={onSubmit} />
+      <ProfileForm onSubmit={updateUserInfo} />
     </div>
   );
 };

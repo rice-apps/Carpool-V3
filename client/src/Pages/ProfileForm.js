@@ -55,7 +55,11 @@ const ProfileForm = ({ onSubmit }) => {
                 <TextField id = "outlined-filled" label = "Pay to @" variant = "filled" value={paymentAccount} onChange={(e) => setPaymentAccount(e.target.value)}/>
             </EditPaymentOptions>
             <SubmitButton>
-                <Button variant="contained" onClick={() => { console.log(firstName, lastName, email, phone, paymentAccount); }}>Submit</Button>
+                <Button
+                    variant="contained"
+                    onClick={() => { onSubmit({ firstName, lastName, phone }) }}>
+                    Submit
+                </Button>
             </SubmitButton>
         </div>
     ) 
