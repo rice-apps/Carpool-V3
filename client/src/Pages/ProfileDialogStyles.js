@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 const Popup = styled.div`
-  width: 77vw;
-  height: 77vh;
+   width: 77vw;
+   height: 77vh;
   border-radius: 25px;
   color: white;
   left: 20vw;
@@ -11,7 +11,7 @@ const Popup = styled.div`
 const IconContainer = styled.div`
     position: relative;
     top: 3.5vh;
-    left: 29.5vw;
+    left: 29.45vw;
 `
 const NameSectionHeader = styled.header`
     font-family: Josefin Sans;

@@ -61,7 +61,7 @@ export default function ProfileDialog (props) {
 
     return (
         <div>
-            <Dialog open={openDialog} 
+            <Dialog open={openDialog}
             onClose={closeDialog} 
             className={(classes.dialog, classes.center)}
             fullWidth={true} 
