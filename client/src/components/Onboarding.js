@@ -21,12 +21,16 @@ const Onboarding = () => {
   
   const [updateUser] = useMutation(UPDATE_USER);
 
-  const updateUserInfo = (data) => {
-    updateUser({
-      variables: data
-    });
+  const updateUserInfo = (formData) => {
+    updateUser({ variables: formData });
 
-    return history.push(-2);
+    const nextPage = localStorage.getItem('nextPage');
+    if (nextPage) {
+      localStorage.removeItem('nextPage');
+      history.push(nextPage);
+    } else {
+      history.push('/search');
+    }
   };
 
   return (
