@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
 import {
-  IoLocationSharp,
   IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
+import { useHistory } from 'react-router'
 
 import {
   SeatsLeftDiv,
@@ -24,15 +24,23 @@ import {
   ClockIcon,
   HostDiv,
   RidersDiv,
-  OwnerDiv,
   LineDiv,
   RidersComponents,
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
-  TextContainer,
   ButtonDiv,
-  AllDiv
+  AllDiv,
+  LocationDivContainer,
+  ButtonContainer,
+  DepartureDiv,
+  ArrivalDiv,
+  LocationArrowDiv,
+  BackArrowDiv,
+  InnerLocationDiv,
+  DepartureIconDiv,
+  CalendarText,
+  TimeText
 } from './RideSummaryStyles.js'
 
 const GET_RIDE = gql`
@@ -63,22 +71,41 @@ const GET_RIDE = gql`
 `
 const RideSummary = () => {
   let { id } = useParams()
-  const [getVariables, setVariables] = useState({})
-  const [rideId, setRideId] = React.useState(null)
+  const [getVariables] = useState({})
+  const history = useHistory()
 
-  // TODO: Remove this!! This is to get rid of warnings in console
-  console.log(rideId ,setVariables)
-
-  React.useEffect(() => {
-    fetch(`http://localhost:3000/ridesummary/${id}`).then(setRideId)
-  }, [id])
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: getVariables,
   })
+
+  const JOIN_RIDE = gql`
+    mutation JoinRide($rideID: ID!) {
+      addRider(rideID: $rideID) {
+        riders { _id }
+      }
+    }
+  `
+
+  const [joinRide] = useMutation(JOIN_RIDE, {
+    variables: { rideID: id }
+  })
+
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
+
   const { rideOne: ride } = data
+
+  const join = () => {
+    if (localStorage.getItem('token') == null) {
+      localStorage.setItem('nextPage', `/ridesummary/${id}`)
+      history.push('/login')
+      return
+    }
+
+    joinRide()
+  }
+
   const time = moment(ride.departureDate)
   const mon = time.format('MMM').toString()
   const day = time.format('DD').toString()
@@ -86,43 +113,64 @@ const RideSummary = () => {
 
   return (
     <AllDiv>
-      <RideSummaryDiv>
+      <BackArrowDiv>
         <IoIosArrowBack></IoIosArrowBack>
-      </RideSummaryDiv>
-      <SeatsLeftDiv>
-        <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
-        <SeatsLeftText>seat(s) left</SeatsLeftText>
-        <SocialIcon>
-          <IoShareSocialSharp></IoShareSocialSharp>
-        </SocialIcon>
+      </BackArrowDiv>
+      <RideSummaryDiv>
+        <SeatsLeftDiv>
+          <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
+          <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
+          <SocialIcon>
+            <IoShareSocialSharp></IoShareSocialSharp>
+          </SocialIcon>
       </SeatsLeftDiv>
-      <LocationDiv>
-        <LocationText>
-          <IoLocationSharp></IoLocationSharp>&nbsp;
-          {ride.departureLocation.title}&nbsp;
-          <BsArrowRight></BsArrowRight>&nbsp;
-          {ride.arrivalLocation.title}
-        </LocationText>
-        <DateDiv>
-          <CalendarIcon>
-            <AiTwotoneCalendar></AiTwotoneCalendar> {mon}-{day}
-          </CalendarIcon>
-          <ClockIcon>
-            <AiFillClockCircle></AiFillClockCircle> {hour}
-          </ClockIcon>
-        </DateDiv>
-      </LocationDiv>
+      </RideSummaryDiv>
+      <LocationDivContainer>
+        <LocationDiv>
+          <InnerLocationDiv>
+            <LocationText>
+              <DepartureIconDiv style={{ fontSize: '7vw' }}></DepartureIconDiv>
+              <DepartureDiv>
+                {/* Rice Univ */}
+                {ride.departureLocation.title}
+              </DepartureDiv>
+              <LocationArrowDiv>
+                <BsArrowRight></BsArrowRight>
+              </LocationArrowDiv>
+              <ArrivalDiv>
+                {ride.arrivalLocation.title}
+              </ArrivalDiv>
+            </LocationText>
+            <DateDiv>
+              <CalendarIcon>
+                <AiTwotoneCalendar></AiTwotoneCalendar> 
+              </CalendarIcon>
+              <CalendarText>
+                {mon}-{day}
+              </CalendarText>
+              <ClockIcon>
+                <AiFillClockCircle></AiFillClockCircle>
+              </ClockIcon>
+              <TimeText>
+                {hour}
+              </TimeText>
+            </DateDiv>
+          </InnerLocationDiv>
+        </LocationDiv>
+      </LocationDivContainer>
       <RidersDiv>
         <HostDiv>Host</HostDiv>
-        <OwnerDiv>
-          <IoPersonCircleSharpDiv>
-            <IoPersonCircleSharp></IoPersonCircleSharp>
-          </IoPersonCircleSharpDiv>
-          <TextContainer>
-            {ride.owner.firstName}&nbsp;{ride.owner.lastName}
-          </TextContainer>
-        </OwnerDiv>
         <RidersComponents>
+        <OneRiderContainer>
+                <div key={ride.owner.netid}>
+                  <IoPersonCircleSharpDiv>
+                    <IoPersonCircleSharp></IoPersonCircleSharp>
+                  </IoPersonCircleSharpDiv>
+                </div>
+                <RiderText>
+                {ride.owner.firstName}&nbsp;{ride.owner.lastName}
+                </RiderText>
+          </OneRiderContainer>
           <LineDiv>
             <hr></hr>
           </LineDiv>
@@ -142,7 +190,7 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
-      <ButtonDiv onClick='joinRide()'>Join Ride</ButtonDiv>
+      <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
     </AllDiv>
   )
 }
