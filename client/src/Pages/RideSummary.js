@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
@@ -59,6 +59,7 @@ const GET_RIDE = gql`
         netid
         firstName
         lastName
+        phone
       }
       riders {
         netid
@@ -71,11 +72,17 @@ const GET_RIDE = gql`
 `
 const RideSummary = () => {
   let { id } = useParams()
-  const [getVariables] = useState({})
+  // const [getVariables, setVariables] = useState({})
+  const [ride, setRide] = useState({
+    departureLocation: {title: "Loading"},
+    arrivalLocation: {title: "Loading"},
+    owner: {netid: "Loading"},
+    riders: []
+  })
   const history = useHistory()
 
   const { data, loading, error } = useQuery(GET_RIDE, {
-    variables: getVariables,
+    variables: {id: id},
   })
 
   const JOIN_RIDE = gql`
@@ -90,11 +97,18 @@ const RideSummary = () => {
     variables: { rideID: id }
   })
 
+  useEffect(() => {
+    if (data) {
+      setRide(data.rideOne)
+      console.log(data.rideOne)
+    }
+  }, [data])
+
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
 
-  const { rideOne: ride } = data
+  // const { rideOne: ride } = data
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
