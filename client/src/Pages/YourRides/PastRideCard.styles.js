@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const UnpaidPastRide = styled.div`
 display: grid;
-width: 90vw;
-grid-template-columns: 65% 35%;
+width: 93vw;
+grid-template-columns: 25% 40% 35%;
 background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
@@ -14,7 +14,7 @@ margin-bottom: 2vh;
 
 const PaidPastRide = styled.div`
 display: grid;
-width: 90vw;
+width: 93vw;
 grid-template-columns: 65% 35%;
 background: rgba(187, 218, 255, 0.22);
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
@@ -24,20 +24,14 @@ margin-top: 2vh;
 margin-bottom: 2vh;
 `;
 
-const TimeLocationData = styled.div`
-display: grid;
-grid-column-start: 1;
-grid-template-columns: 30% 70%;
-margin-top: 1vh;
-margin-bottom: 1vh;
-margin-left: 1vh;
-padding: 1vh;
-`
 
 const RideTimeInfo = styled.div`
 grid-column-start: 1;
+`
+
+const DateTime = styled.div`
 display: flex;
-background: #F0F7FF;
+background: rgba(187, 218, 255, 0.22);
 justify-content: space-between;
 align-items: center;
 flex-direction: column;
@@ -46,7 +40,6 @@ margin-top: 1vh;
 margin-bottom: 1vh;
 margin-left: 1vh;
 padding: 1vh;
-
 `;
 
 const RideDate = styled.div`
@@ -61,13 +54,16 @@ font-family: Josefin Sans;
 font-style: normal;
 font-weight: 300;
 font-size: 2vh;
-`;
+`
+
 
 const Locations = styled.div`
 grid-column-start: 2;
+`
+
+const OriginDestination = styled.div`
 font-family: Josefin Sans;
 padding: 10%;
-max-height: 10vh;
 display: flex;
 justify-content: space-between;
 align-content: center;
@@ -80,7 +76,7 @@ font-family: Josefin Sans;
 `
 
 const PaidPaymentInfo = styled.div`
-grid-column-start: 2;
+grid-column-start: 3;
 max-height: 10vh;
 display: flex;
 background: #BBDAFF;
@@ -91,7 +87,7 @@ padding: 10%;
 `;
 
 const UnpaidPaymentInfo = styled.div`
-grid-column-start: 2;
+grid-column-start: 3;
 display: flex;
 max-height: 10vh;
 background: #EB5248;
@@ -112,11 +108,12 @@ color: #FFFFFF;
 export {
 	UnpaidPastRide,
 	PaidPastRide,
-	TimeLocationData,
 	RideTimeInfo,
+    DateTime,
 	RideDate,
 	RideTime,
 	Locations,
+    OriginDestination,
 	LocationText,
 	PaidPaymentInfo,
 	UnpaidPaymentInfo,

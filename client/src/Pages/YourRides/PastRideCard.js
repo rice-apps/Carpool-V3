@@ -8,11 +8,12 @@ import moment from 'moment';
 import { 
     UnpaidPastRide,
 	PaidPastRide,
-	TimeLocationData,
 	RideTimeInfo,
+    DateTime,
 	RideDate,
 	RideTime,
 	Locations,
+    OriginDestination,
 	LocationText,
 	PaidPaymentInfo,
 	UnpaidPaymentInfo,
@@ -44,27 +45,27 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
     const time = moment(datetime)
     const dateString = time.format('MMM DD')
     const timeString = time.format('h:mm a')
-    
-    const RideTimeLocationData = () => {
+
+    const DateTimeInfo = () => {
         return (
-            <div>
-                <TimeLocationData>
-                    <RideTimeInfo>
-                        <RideDate>
-                            { dateString }
-                        </RideDate>
-                        <RideTime>
-                            { timeString }
-                        </RideTime>
-                    </RideTimeInfo>
-                    
-                    <Locations>
-                        <LocationText>{ origin }</LocationText>
-                        <ArrowForward />
-                        <LocationText>{ destination }</LocationText>
-                    </Locations>
-                </TimeLocationData>
-            </div>
+            <DateTime>
+                <RideDate>
+                    { dateString }
+                </RideDate>
+                <RideTime>
+                    { timeString }
+                </RideTime>
+            </DateTime>
+        )
+    }
+
+    const LocationInfo = () => {
+        return (
+            <OriginDestination>
+                <LocationText>{ origin }</LocationText>
+                    <ArrowForward />
+                <LocationText>{ destination }</LocationText>
+            </OriginDestination>
         )
     }
 
@@ -72,7 +73,14 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
         <div>
             { paid ? 
             <PaidPastRide>
-                <RideTimeLocationData />
+                <RideTimeInfo>
+                    <DateTimeInfo />
+                </RideTimeInfo>
+
+                <Locations>
+                    <LocationInfo />
+                </Locations>
+
                 <PaidPaymentInfo>
                     <PaidIcon />
                     <PaymentText>Payment Complete</PaymentText>
@@ -80,7 +88,14 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
             </PaidPastRide>
             :
             <UnpaidPastRide>
-                <RideTimeLocationData />
+                <RideTimeInfo>
+                    <DateTimeInfo />
+                </RideTimeInfo>
+
+                <Locations>
+                    <LocationInfo />
+                </Locations>
+
                 <UnpaidPaymentInfo>
                     <UnpaidIcon />
                     <PaymentText>Payment Incomplete</PaymentText>

@@ -41,9 +41,9 @@ font-size: 2vh;
 `
 
 const Locations = styled.div`
+grid-column-start: 2;
 font-family: Josefin Sans;
 padding: 10%;
-grid-column-start: 2;
 display: flex;
 justify-content: space-between;
 align-content: center;
