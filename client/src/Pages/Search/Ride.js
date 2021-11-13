@@ -20,10 +20,12 @@ const Ride = ({ride}) => {
         <Grid container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
             <Grid item container  style={{height:"16vh", backgroundColor: "white", borderRadius: '10px', borderColor:'', boxShadow: '0px 3px 10px #bbdaff'}}>
                 <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
-                    <Box width={"60%"} height={"75%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
-                        <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{ride.spots}</span>
-                        <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
-                    </Box>
+                    <a href={`/ridesummary/${ride._id}`} style={{textDecoration: 'none'}}>
+                        <Box width={"60%"} height={"75%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
+                            <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{ride.spots}</span>
+                            <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
+                        </Box>
+                    </a>
                 </Grid>
 
                 <Grid item xs={2} justify="center" align='center'>
