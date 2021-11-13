@@ -17,10 +17,10 @@ const Ride = ({ride}) => {
     const date = new Date(ride.departureDate);
 
     return (
-        <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
-            <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
+        <Grid container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
+            <Grid item container  style={{height:"16vh", backgroundColor: "white", borderRadius: '10px', borderColor:'', boxShadow: '0px 3px 10px #bbdaff'}}>
                 <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
-                    <Box width={"12vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
+                    <Box width={"60%"} height={"75%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
                         <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{ride.spots}</span>
                         <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
                     </Box>
@@ -42,8 +42,8 @@ const Ride = ({ride}) => {
                     </BoxRide>
                 </Grid>
                 
-                <Grid item xs={3} justify="center" align='center'>
-                    <Box width={"15vw"} height={"15vw"} style={{ display: 'flex', alignItems: 'center', gap: "1vh"}}>
+                <Grid item xs={3}  align='center'>
+                    <Box width={"75%"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent:"flex-end", gap: "1vh"}}>
                         <CalendarTodayIcon style ={{fontSize: "3vw"}}/>
                         <span>
                             <div style = {{fontSize: '3vw', fontFamily: 'Josefin Sans'}}> {renderDate(date)}</div>
