@@ -71,7 +71,6 @@ const GET_RIDE = gql`
 `
 const RideSummary = () => {
   let { id } = useParams()
-  // const [getVariables, setVariables] = useState({})
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading"},
     arrivalLocation: {title: "Loading"},
@@ -99,7 +98,13 @@ const RideSummary = () => {
 
   useEffect(() => {
     if (data) {
-      let ride = {...data.rideOne,owner:{netid:"mbo",lastName:"Temp",firstName:"Temp"}}
+      let ride;
+      if(!data.rideOne.owner){
+        ride = {...data.rideOne,owner:{netid:"err",lastName:"owner",firstName:"No"}}
+      }
+      else {
+        ride = {...data.rideOne}
+      }
       setRide(ride)
       console.log(ride)
     }
@@ -108,7 +113,6 @@ const RideSummary = () => {
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
-  // const { rideOne: ride } = data
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
@@ -145,7 +149,6 @@ const RideSummary = () => {
             <LocationText>
               <DepartureIconDiv style={{ fontSize: '7vw' }}></DepartureIconDiv>
               <DepartureDiv>
-                {/* Rice Univ */}
                 {ride.departureLocation.title}
               </DepartureDiv>
               <LocationArrowDiv>
