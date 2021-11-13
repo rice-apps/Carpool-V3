@@ -1,6 +1,58 @@
 import styled from 'styled-components'
 
-const Popup = styled.div`
+export const Header = styled.header`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    min-height: 10vh;
+    background-color: white;
+    color: navy;
+`
+export const EditName = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1vh;
+    background-color: white;
+    color: navy;
+`
+
+export const EditContactInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+    background-color: white;
+    color: navy;
+`
+
+export const EditPaymentOptions = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
+    background-color: white;
+    color: navy;
+`
+
+export const SubmitButton = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height:10vh;
+    width: 70vw;
+    margin: auto;
+    top: 29vh;
+    left: 0.3vw;
+    position: relative;
+`
+
+export const Popup = styled.div`
    width: 77vw;
    height: 77vh;
   border-radius: 25px;
@@ -8,12 +60,12 @@ const Popup = styled.div`
   left: 20vw;
   position:0vw;
 `
-const IconContainer = styled.div`
+export const IconContainer = styled.div`
     position: relative;
     top: 3.5vh;
     left: 29.45vw;
 `
-const NameSectionHeader = styled.header`
+export const NameSectionHeader = styled.header`
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
@@ -24,7 +76,7 @@ const NameSectionHeader = styled.header`
     top: 9vh;
     left: 10vw;
 `
-const FirstNameTextBox = styled.div`
+export const FirstNameTextBox = styled.div`
     position: relative;
     width: 58vw;
     height: 5vh;
@@ -32,7 +84,7 @@ const FirstNameTextBox = styled.div`
     left: 9vw;
     border-radius:2.0em;    
 `
-const LastNameTextBox = styled.div`
+export const LastNameTextBox = styled.div`
     position: relative;
     width: 58vw;
     height: 5vh;
@@ -41,7 +93,7 @@ const LastNameTextBox = styled.div`
     border-radius:2.0em;
 `
 
-const ContactSectionHeader = styled.header`
+export const ContactSectionHeader = styled.header`
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
@@ -53,7 +105,7 @@ const ContactSectionHeader = styled.header`
     left: 10vw;
 `
 
-const PhoneTextBox = styled.div`
+export const PhoneTextBox = styled.div`
     position: relative;
     width: 58vw;
     height: 5vh;
@@ -61,7 +113,7 @@ const PhoneTextBox = styled.div`
     left: 9vw;
     border-radius:2.0em;
 `
-const EmailTextBox = styled.div`
+export const EmailTextBox = styled.div`
     position: relative;
     width: 58vw;
     height: 5vh;
@@ -70,7 +122,7 @@ const EmailTextBox = styled.div`
     border-radius:2.0em;
 `
 
-const PaymentSectionHeader = styled.header`
+export const PaymentSectionHeader = styled.header`
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
@@ -82,7 +134,7 @@ const PaymentSectionHeader = styled.header`
     left: 10vw;
 `
 
-const PaymentDropdown = styled.div`
+export const PaymentDropdown = styled.div`
     display: flex;    
     flex-direction: column;    
     align-items: center;    
@@ -95,7 +147,7 @@ const PaymentDropdown = styled.div`
     position: absolute;
 `
 
-const PaymentTextBox = styled.div`
+export const PaymentTextBox = styled.div`
     position: relative;
     width: 58vw;
     height: 5vh;
@@ -104,33 +156,26 @@ const PaymentTextBox = styled.div`
     border-radius:2.0em;
 `
 
-const SubmitButton = styled.div`
-    display: flex;
-    flex-direction: column;
-    aligh-items: center;
-    justify-content: center;
-    height:10vh;
-    width: 70vw;
-    margin: auto;
-    top: 29vh;
-    left: 0.3vw;
-    position: relative;
-`
-const HideAppBar = styled.div`
+export const HideAppBar = styled.div`
 `
 
-export {
-    SubmitButton,
-    NameSectionHeader,
-    ContactSectionHeader,
-    PaymentSectionHeader,
-    FirstNameTextBox,
-    LastNameTextBox,
-    PhoneTextBox,
-    EmailTextBox,
-    PaymentTextBox,
-    Popup,
-    PaymentDropdown,
-    IconContainer,
-    HideAppBar
-}
+// export {
+//     Header,
+//     EditName,
+//     EditContactInfo,
+//     EditPaymentOptions,
+//     SubmitButton,
+//     HideAppBar,
+//     SubmitButton,
+//     NameSectionHeader,
+//     ContactSectionHeader,
+//     PaymentSectionHeader,
+//     FirstNameTextBox,
+//     LastNameTextBox,
+//     PhoneTextBox,
+//     EmailTextBox,
+//     PaymentTextBox,
+//     Popup,
+//     PaymentDropdown,
+//     IconContainer,
+// }
