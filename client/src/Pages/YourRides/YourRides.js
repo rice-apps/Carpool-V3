@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import UpcomingRideCard from '../components/UpcomingRideCard.js';
-import PastRideCard from '../components/PastRideCard.js';
+import UpcomingRideCard from './UpcomingRideCard.js';
+import PastRideCard from './PastRideCard.js';
 import { gql, useQuery} from "@apollo/client";
 import moment from "moment";
 
@@ -56,28 +56,28 @@ const YourRides = (paid) => {
 
     useEffect(() => {
         if (data) {
-						let rides = data.rideMany.filter(ride => {
-							let ownerTrue = false
-							let riderTrue = false
-							if (ride.owner) {
-								ownerTrue = ride.owner.netid === netid
-							}
-							ride.riders.forEach(rider => riderTrue = rider.netid === netid)
-							return ownerTrue || riderTrue
-						})
+            let rides = data.rideMany.filter(ride => {
+                let ownerTrue = false
+                let riderTrue = false
+                if (ride.owner) {
+                    ownerTrue = ride.owner.netid === netid
+                }
+                ride.riders.forEach(rider => riderTrue = rider.netid === netid)
+                return ownerTrue || riderTrue
+            })
 
-						let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date())
-						previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
-						let upcomingrides = rides.filter(ride => moment(ride.departureDate) >= new Date())
-						upcomingrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
+            let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date())
+            previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
+            let upcomingrides = rides.filter(ride => moment(ride.departureDate) >= new Date())
+            upcomingrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
 
-						console.log("previousRides", previousrides)
-						console.log("upcomingRides", upcomingrides)
+            console.log("previousRides", previousrides)
+            console.log("upcomingRides", upcomingrides)
 
-						setPrevRides(previousrides)
-						setFutureRides(upcomingrides)
+            setPrevRides(previousrides)
+            setFutureRides(upcomingrides)
         }
-    }, [data])
+    }, [data, netid])
 
     if (error) return <p>Error...</p>;
     if (loading) return <p>loading...</p>;

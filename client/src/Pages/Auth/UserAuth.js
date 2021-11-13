@@ -22,7 +22,6 @@ const UserAuth = () => {
     const destination = localStorage.getItem('nextPage'); 
     const history = useHistory();
     const id = localStorage.getItem('netid');
-    console.log('nextPage in UserAuth: ', destination);
 
     const {data: userData} = useQuery(GET_USER, 
         {
@@ -35,14 +34,14 @@ const UserAuth = () => {
 
     useEffect(() => {
         if (userData) {
-            localStorage.removeItem('nextPage'); 
             if (!userData.userOne.firstName) {
               // Route to onboarding prompt.. need to be replaced with proper component
               console.log('Going to Onboarding!')
-              history.push('/search');
+              history.push('/onboarding');
             } else {
+              localStorage.removeItem('nextPage'); 
               console.log('You exist! Go to where you want to!')
-              history.push(destination);
+              window.open(destination, '_self'); 
             }
         }
         

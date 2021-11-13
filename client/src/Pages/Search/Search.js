@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../components/Header';
-import Form from '../components/Form';
-import DisplayRides from '../components/DisplayRides'
+import Header from '../../common/Header/Header';
+import Form from './Form';
+import DisplayRides from './DisplayRides'
 import { gql, useQuery } from "@apollo/client";
 import ClipLoader from "react-spinners/ClipLoader";
 import styled from 'styled-components'
