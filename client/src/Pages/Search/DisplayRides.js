@@ -6,7 +6,7 @@ import Ride from './Ride.js';
 import { GridT, StyledButton } from './DisplayRides.styles'
 
 // SSO Imports
-import { SERVICE_URL } from '../config'; 
+import { SERVICE_URL } from '../../config'; 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 

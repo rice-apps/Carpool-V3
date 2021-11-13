@@ -6,7 +6,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { LoginButton, LoginDialog, LoginDialogActions, ExitDialogActions, LoginIconButton } from './Alert.styles.js';
-import { SERVICE_URL } from '../config'; 
+import { SERVICE_URL } from '../../config'; 
 import { withStyles } from '@material-ui/core/styles';
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
