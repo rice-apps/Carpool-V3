@@ -7,7 +7,7 @@ flex-direction: column;
 font-family: Josefin Sans;
 `;
 
-const OverallPageTitle = styled.div`
+const PageTitle = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;

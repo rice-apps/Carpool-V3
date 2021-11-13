@@ -105,7 +105,6 @@ font-weight: normal;
 color: #FFFFFF;
 `
 
-
 export {
 	UnpaidPastRide,
 	PaidPastRide,
@@ -113,8 +112,8 @@ export {
 	RideTimeInfo,
 	RideDate,
 	RideTime,
-	LocationText,
 	Locations,
+	LocationText,
 	PaidPaymentInfo,
 	UnpaidPaymentInfo,
 	PaymentText

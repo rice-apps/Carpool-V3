@@ -13,7 +13,6 @@ margin-top: 2vh;
 margin-bottom: 2vh;
 `;
 
-
 const RideTimeInfo = styled.div`
 grid-column-start: 1;
 display: flex;
@@ -64,7 +63,7 @@ export {
 	RideTimeInfo,
 	RideDate,
 	RideTime,
-	LocationText,
 	Locations,
+	LocationText,
 	Notifications
 };

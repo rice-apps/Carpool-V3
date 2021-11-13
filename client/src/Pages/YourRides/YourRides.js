@@ -4,7 +4,7 @@ import PastRideCard from './PastRideCard.js';
 import { gql, useQuery} from "@apollo/client";
 import moment from "moment";
 import { 
-    OverallPageTitle, 
+    PageTitle, 
     UpcomingRidesSection, 
     UpcomingRideTitle,
     PastRidesSection, 
@@ -57,7 +57,7 @@ const YourRides = (paid) => {
                 }
                 ride.riders.forEach(rider => riderTrue = rider.netid === netid)
                 return ownerTrue || riderTrue;
-            })
+            });
 
             let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date());
             previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate));
@@ -78,7 +78,7 @@ const YourRides = (paid) => {
     return (
         <div> 
             <OverallPage>
-                <OverallPageTitle>Your Rides</OverallPageTitle>
+                <PageTitle>Your Rides</PageTitle>
                 <UpcomingRidesSection>
                     <UpcomingRideTitle>Upcoming Rides</UpcomingRideTitle>
                     {futureRides.map(ride => {

@@ -8,12 +8,12 @@ import moment from 'moment';
 import { 
     UnpaidPastRide,
 	PaidPastRide,
-    TimeLocationData,
+	TimeLocationData,
 	RideTimeInfo,
 	RideDate,
 	RideTime,
 	Locations,
-    LocationText,
+	LocationText,
 	PaidPaymentInfo,
 	UnpaidPaymentInfo,
 	PaymentText } 

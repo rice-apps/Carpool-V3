@@ -6,13 +6,13 @@ import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
 import { 
-    RideCard, 
-    RideTimeInfo, 
-    RideDate, 
-    RideTime, 
-    LocationText, 
-    Locations, 
-    Notifications } 
+    RideCard,
+	RideTimeInfo,
+	RideDate,
+	RideTime,
+	Locations,
+	LocationText,
+	Notifications } 
     from './UpcomingRideCard.styles.js';
 
 const CalendarIcon = withStyles({
