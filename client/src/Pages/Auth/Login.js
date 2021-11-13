@@ -1,5 +1,5 @@
 import React from 'react'
-import { SERVICE_URL } from '../config'
+import { SERVICE_URL } from '../../config'
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'
 
