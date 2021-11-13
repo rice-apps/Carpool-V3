@@ -60,19 +60,14 @@ const Auth = () => {
     console.log("netid set: ", localStorage.getItem('netid'))
     console.log("nextPage in Auth: ", localStorage.getItem('nextPage'));
 
-    // Set recent update in client state
-    if (localStorage.getItem('nextPage') !== null) {
-        console.log('Going to UserAuth');
-        return (
-            <Redirect to="/userAuth" />
-        )
-    } else {
-        console.log("Going straight to home");
-        return (
-            <Redirect to="/home" />
-        )
-        
+    // If came straight from login button, set the next destination to home
+    if (localStorage.getItem('nextPage') == null) {
+        localStorage.setItem('nextPage', '/home');
     }
+
+    return (
+        <Redirect to="/userAuth" />
+    )
 
 }
 

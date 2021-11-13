@@ -27,7 +27,7 @@ const Onboarding = () => {
     const nextPage = localStorage.getItem('nextPage');
     if (nextPage) {
       localStorage.removeItem('nextPage');
-      history.push(nextPage);
+      window.open(nextPage, '_self');
     } else {
       history.push('/search');
     }
