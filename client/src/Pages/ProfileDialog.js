@@ -11,13 +11,14 @@ import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {makeStyles} from '@material-ui/core/styles'
+import {makeStyles, ThemeProvider, createTheme} from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { orange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) =>({
     input :{
-        widdth: "55vw",
+        width: "55vw",
     },
     inputLabel: {
         fontSize: 15,
@@ -44,6 +45,14 @@ const useStyles = makeStyles((theme) =>({
     }
 }));
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: orange[500],
+        }
+    }
+})
+
 export default function ProfileDialog (props) {
     const classes = useStyles();
 
@@ -60,6 +69,7 @@ export default function ProfileDialog (props) {
     };
 
     return (
+        <ThemeProvider theme = {theme}>
         <div>
             <Dialog open={openDialog}
             onClose={closeDialog} 
@@ -185,11 +195,15 @@ export default function ProfileDialog (props) {
                     />
                 </PaymentTextBox>
             <SubmitButton>
-                <Button variant="contained">Save</Button>
+                <Button variant="contained"
+                style={{
+                    fontSize: 16
+                }}>Save</Button>
             </SubmitButton>
             <DialogActions></DialogActions>
             </Popup>
             </Dialog>
         </div>
+        </ThemeProvider>
     )
 }

@@ -115,6 +115,7 @@ const SubmitButton = styled.div`
     top: 29vh;
     left: 0.3vw;
     position: relative;
+    color: #2075D8
 `
 
 export {
