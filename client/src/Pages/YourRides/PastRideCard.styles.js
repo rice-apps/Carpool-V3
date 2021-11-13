@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const UnpaidPastRide = styled.div`
 display: grid;
 width: 93vw;
-grid-template-columns: 25% 40% 35%;
+grid-template-columns: 25% 45% 30%;
 background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
@@ -27,6 +27,7 @@ margin-bottom: 2vh;
 
 const RideTimeInfo = styled.div`
 grid-column-start: 1;
+display: flex;
 `
 
 const DateTime = styled.div`
@@ -39,7 +40,7 @@ border-radius: 9px;
 margin-top: 1vh;
 margin-bottom: 1vh;
 margin-left: 1vh;
-padding: 1vh;
+padding: 1.5vh;
 `;
 
 const RideDate = styled.div`
@@ -63,7 +64,7 @@ grid-column-start: 2;
 
 const OriginDestination = styled.div`
 font-family: Josefin Sans;
-padding: 10%;
+padding: 1vh;
 display: flex;
 justify-content: space-between;
 align-content: center;
@@ -83,7 +84,7 @@ background: #BBDAFF;
 justify-content: space-between;
 align-items: center;
 border-radius: 0px 9px 9px 0px;
-padding: 10%;
+padding: 1vh;
 `;
 
 const UnpaidPaymentInfo = styled.div`
@@ -94,7 +95,7 @@ background: #EB5248;
 justify-content: space-between;
 align-items: center;
 border-radius: 0px 9px 9px 0px;
-padding: 10%;
+padding: 1vh;
 `
 
 const PaymentText = styled.div`
