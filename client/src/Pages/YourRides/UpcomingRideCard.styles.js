@@ -8,7 +8,6 @@ background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
 height: 15vh;
-padding: 1vh;
 margin-top: 2vh;
 margin-bottom: 2vh;
 `;
@@ -21,8 +20,10 @@ justify-content: space-between;
 align-items: center;
 flex-direction: column;
 border-radius: 9px;
-padding-top: 20%;
-padding-bottom: 20%;
+margin-top: 1vh;
+margin-bottom: 1vh;
+margin-left: 1vh;
+padding: 1vh;
 `
 
 const RideDate = styled.div`
@@ -56,6 +57,7 @@ font-family: Josefin Sans;
 
 const Notifications = styled.div`
 grid-column-start: 3;
+
 `
 
 export {

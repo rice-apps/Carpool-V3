@@ -57,6 +57,7 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
                             { timeString }
                         </RideTime>
                     </RideTimeInfo>
+                    
                     <Locations>
                         <LocationText>{ origin }</LocationText>
                         <ArrowForward />

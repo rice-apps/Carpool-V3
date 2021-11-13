@@ -27,10 +27,11 @@ margin-bottom: 2vh;
 const TimeLocationData = styled.div`
 display: grid;
 grid-column-start: 1;
-max-height: 10vh;
-margins: 5%;
-padding: 3%;
 grid-template-columns: 30% 70%;
+margin-top: 1vh;
+margin-bottom: 1vh;
+margin-left: 1vh;
+padding: 1vh;
 `
 
 const RideTimeInfo = styled.div`
@@ -41,8 +42,11 @@ justify-content: space-between;
 align-items: center;
 flex-direction: column;
 border-radius: 9px;
-padding-top: 20%;
-padding-bottom: 20%;
+margin-top: 1vh;
+margin-bottom: 1vh;
+margin-left: 1vh;
+padding: 1vh;
+
 `;
 
 const RideDate = styled.div`
@@ -60,10 +64,10 @@ font-size: 2vh;
 `;
 
 const Locations = styled.div`
+grid-column-start: 2;
 font-family: Josefin Sans;
 padding: 10%;
 max-height: 10vh;
-grid-column-start: 2;
 display: flex;
 justify-content: space-between;
 align-content: center;
