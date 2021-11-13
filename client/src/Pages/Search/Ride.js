@@ -10,7 +10,7 @@ function renderDate(date) {
 }
 
 function renderTime(date) {
-    return date.toLocaleTimeString('en-US', { timeStyle: 'short', hour12: false });
+    return date.toLocaleTimeString('en-US', { timeStyle: 'short', hour12: true });
 }
 
 const Ride = ({ride}) => {
@@ -19,38 +19,36 @@ const Ride = ({ride}) => {
     return (
         <Grid item container key={ride._id} xs={11} alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px'}}>
             <Grid item container  style={{ backgroundColor: "white", borderRadius: '10px', boxShadow: '0px 5px 3px #bbdaff'}}>
-                <Grid item xs={3} justify="center" align='center' style={{display: 'flex', alignItems: 'center'}}>
-                    <Box width={"10vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: '#BBDAFF', borderRadius: '5px'}}>
-                        <div style={{height: '1.5vw'}}></div>
-                        <span style={{fontSize: '3vw'}}>{ride.spots}</span>
-                        <span style={{fontSize: '1.5vw'}}>seats left</span>
+                <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
+                    <Box width={"12vw"} height={"80%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
+                        <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{ride.spots}</span>
+                        <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
                     </Box>
                 </Grid>
 
                 <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide style={{fontSize: '2vw'}}>
-                        {ride.departureLocation.title}
+                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
+                            {ride.departureLocation.title}      
                     </BoxRide>
                 </Grid>
-
+                
                 <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
-                    <ArrowForwardIcon/>
+                        <ArrowForwardIcon/>
                 </Grid>
-
+                
                 <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide style={{fontSize: '2vw'}}>
+                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
                         {ride.arrivalLocation.title}
                     </BoxRide>
                 </Grid>
-
+                
                 <Grid item xs={3} justify="center" align='center'>
-                    <Box width={"15vw"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                    <CalendarTodayIcon />
-                    <span>
-                        {renderDate(date)}
-                        <br/>
-                        <div style={{fontSize: '2vw'}}>{renderTime(date)}</div>
-                    </span>
+                    <Box width={"15vw"} height={"15vw"} style={{ display: 'flex', alignItems: 'center', gap: "1vh"}}>
+                        <CalendarTodayIcon style ={{fontSize: "3vw"}}/>
+                        <span>
+                            <div style = {{fontSize: '3vw', fontFamily: 'Josefin Sans'}}> {renderDate(date)}</div>
+                            <div style={{fontSize: '2.5vw', fontFamily: "Josefin Sans"}}>{renderTime(date)}</div>
+                        </span>
                     </Box>
                 </Grid>
             </Grid>
