@@ -8,6 +8,13 @@
 // import FormControl from '@material-ui/core/FormControl';
 // import Select from '@material-ui/core/Select';
 
+// const ProfileForm = ({ onSubmit }) => {
+//     const[firstName, setFirstName] = useState('');
+//     const[lastName, setLastName] = useState('');
+//     const[email, setEmail] = useState('');
+//     const[phone, setPhone] = useState('');
+//     const[paymentOption, setPaymentOption] = useState('');
+//     const[paymentAccount, setPaymentAccount] = useState('');
 
 
 // const ProfileForm = () => {

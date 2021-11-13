@@ -13,6 +13,7 @@ const AUTHENTICATE_USER = gql`
     }
 `;
 
+
 const parseTicket = (url) => {
     // Ex: http://example.com/auth?ticket=ST-1590205338989-7y7ojqvDfvGIFDLyjahEqIp2F
     // Get the ticket query param
@@ -25,6 +26,7 @@ const parseTicket = (url) => {
 }
 
 const Auth = () => {
+
     // First parse out ticket from URL href
     let ticket = parseTicket(window.location.href);
 
@@ -55,11 +57,17 @@ const Auth = () => {
     localStorage.setItem('recentUpdate', recentUpdate)
 
     console.log("netid set: ", localStorage.getItem('netid'))
+    console.log("nextPage in Auth: ", localStorage.getItem('nextPage'));
 
-    // Set recent update in client state
+    // If came straight from login button, set the next destination to home
+    if (localStorage.getItem('nextPage') == null) {
+        localStorage.setItem('nextPage', '/home');
+    }
+
     return (
-        <Redirect path={"/home"} />
+        <Redirect to="/userAuth" />
     )
+
 }
 
 export default Auth;

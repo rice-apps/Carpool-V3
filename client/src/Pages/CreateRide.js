@@ -54,6 +54,7 @@ const CreateRide = () => {
         </div>
 
     )
+    
 }
 
 export default CreateRide; 

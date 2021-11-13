@@ -15,7 +15,6 @@ import {
   MenuBox,
   InputBox,
   BodyText,
-  StyledButton
 } from './FormOnly.styles'
 
 const FormOnly = (props) => {
@@ -48,8 +47,6 @@ const FormOnly = (props) => {
 
   const displayRef = props.displayRef;
 
-  let resultDestArr = null;
-
   let temp = 3;
 
   const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
@@ -63,12 +60,38 @@ const FormOnly = (props) => {
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
-  
+
   const [dateRange, setDateRange] = useState([startValue, endValue])
   
   const [numberPeople, setNumberPeople] = useState(null)
 
   const [indSelected, setIndSelected] = useState(-1)
+
+  useEffect(() => {
+    console.log("form changed!");
+    let resultDestArr = null;
+    props.getRidesRefetch()
+    .then((res) => {
+      resultDestArr = ridesPossibleForm;
+      if (startLoc !== "") {
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});
+      }
+      if (endLoc !== "") {
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
+      }
+      if (dateRange[0] != null && dateRange[1] != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateRange[0], true) && !compareDates(new Date(ele.departureDate), dateRange[1], false);});
+      }
+      if (numberPeople != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
+      }
+      displayRef.current.setRides(resultDestArr);
+    }).catch((err) => {
+      console.log("err=", err);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startLoc, endLoc, numberPeople, dateRange])
+
 
   const compareDates = (date1, date2, equals) => {
     const d1 = [date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getHours(), date1.getMinutes()]
@@ -90,61 +113,6 @@ const FormOnly = (props) => {
     return d1[0] > d2[0] || (equals && d1[0] === d2[0]);
   }
   
-
-  const onSubmit = (e) => {
-      e.preventDefault();
-      console.log("Search form submitted.");
-      console.log("Search query = [ startLoc=" + startLoc + " endLoc=" + endLoc + " dateRange=" + dateRange + " numberPeople=" + numberPeople + " ]");
-
-      console.log("ridesPossibleForm before .getRidesRefetch() in onSubmit()=", ridesPossibleForm);
-
-      let ridesPossible = null;
-
-      props.getRidesRefetch()
-      .then((res) => {
-        ridesPossible = res.data.rideMany;
-        console.log("in getRidesRefetch.then(), ridesPossible=", ridesPossible);
-
-        const ridesPossibleNotBefore = ridesPossible.filter((ride) => {
-          const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
-          return rideDateAfterCurrentDate;
-        });
-        
-        setRidesPossibleForm(ridesPossibleNotBefore);
-        displayRef.current.setRidesPossible(ridesPossibleNotBefore);
-
-      })
-      .catch((err) => {console.log("getRidesRefetch() err=", err);});
-
-      console.log("ridesPossible after props.getRidesRefetch()=", ridesPossible);
-
-      //Make sure that ridesPossibleForm (FormOnly component's variable that stores the updated all rides from database)
-      //has been updated with a new refetch() already.
-      resultDestArr = ridesPossibleForm;
-      console.log("ridesPossibleForm=", ridesPossibleForm);
-
-      if (startLoc !== "") {
-        resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});
-      }
-      console.log("resultDestArr after startLoc=", resultDestArr);
-      if (endLoc !== "") {
-      resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
-      }
-      console.log("resultDestArr after endLoc=", resultDestArr);
-
-      if (dateRange[0] != null && dateRange[1] != null) {
-      resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateRange[0], true) && !compareDates(new Date(ele.departureDate), dateRange[1], false);});
-      }
-      console.log("resultDestArr after dateRange=", resultDestArr);
-
-      if (numberPeople != null) {
-      resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
-      }
-      console.log("resultDestArr after numberPeople after every filter=", resultDestArr);
-
-      displayRef.current.setRides(resultDestArr);
-  }
-
   const handleClickStartLoc = (locInd) => {
     console.log("handleClickStartLoc() run, locInd=", locInd);
     setStartLoc(locInd);
@@ -161,7 +129,6 @@ const FormOnly = (props) => {
     //setIsSelectedDestAny(true);
     setIndSelected(dictNames.endLoc);
     console.log(JSON.parse(JSON.stringify(indSelected)));
-    
   }    
     
   return (
@@ -262,21 +229,6 @@ const FormOnly = (props) => {
               <BodyText>{"Number of People"}</BodyText> 
           </Grid>
         </Grid>
-      </Grid>
-      <Grid  item xs = {12}>
-        <StyledButton
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          style={{
-            backgroundColor: "#2075D8",
-            fontSize: "2.5vh",
-          }}
-          onClick={onSubmit}
-        >
-          Search Ride
-        </StyledButton>
       </Grid>
     </Grid>
   </Form>

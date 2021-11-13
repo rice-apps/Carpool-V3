@@ -2,9 +2,12 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Login from '../Pages/Login.js'
+import Onboarding from '../components/Onboarding.js'
+import Alert from '../Pages/Alert.js'
 import Auth from '../Pages/Auth.js'
 import Home from '../Pages/Home.js'
 import Search from '../Pages/Search.js'
+import UserAuth from '../Pages/UserAuth.js'
 import ProfileForm  from '../Pages/ProfileForm.js'
 import Profile from '../Pages/Profile.js'
 import CreateRide from '../Pages/CreateRide.js'
@@ -38,17 +41,19 @@ const GET_RECENT_UPDATE = gql`
 `
 // Checks if the login token has expired. If not, remove it.
 const CheckTokenRoute = ({ children, ...rest }) => {
-  let token = localStorage.getItem('token')
+  let token = localStorage.getItem('token');
 
   if (token) {
-    console.log("Token found")
-    const {exp} = jwt_decode(token)
-    const expirationTime = (exp * 1000) - 60000
-    console.log("Expriration time", expirationTime)
-    console.log("Date now", Date.now())
+    console.log("Token found");
+    const {exp} = jwt_decode(token);
+    const expirationTime = (exp * 1000) - 60000;
+    console.log("Expriration time", expirationTime);
+    console.log("Date now", Date.now());
     if (Date.now() >= expirationTime) {
-      console.log("Token expired, removing")
-      localStorage.removeItem('token')
+      console.log("Token expired, removing");
+      localStorage.removeItem('token');
+      localStorage.removeItem('netid');
+      localStorage.removeItem('nextPage');
     }
   }
 
@@ -83,14 +88,14 @@ const PrivateRoute = ({ children, ...rest }) => {
     // Clear the token because something is wrong with it
     localStorage.removeItem('token')
     // Redirect the user to the login page
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
   if (loading) return <p>Waiting...</p>
   if (!data || !data.verifyUser) {
     // Clear the token
     localStorage.removeItem('token')
     // Redirect the user
-    return <Redirect to='login' />
+    return <Redirect path='login' />
   }
 
   // Check whether any recent updates have come in
@@ -123,7 +128,10 @@ export const Routes = () => {
       <Router>
         <Navbar/>
         <Switch>
+          <CheckTokenRoute path={'/alert'} component={withRouter(Alert)} />
+          <CheckTokenRoute path={'/userAuth'} component={withRouter(UserAuth)} />
           <CheckTokenRoute path={'/login'} component={withRouter(Login)} />
+          <CheckTokenRoute path={'/onboarding'} component={withRouter(Onboarding)} />
           <CheckTokenRoute path={'/profile/:id'} component={withRouter(Profile)} />
           <CheckTokenRoute path={'/'} exact component={withRouter(Home)} />
           <CheckTokenRoute path={'/home'} component={withRouter(Home)} />

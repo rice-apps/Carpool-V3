@@ -116,6 +116,8 @@ const SubmitButton = styled.div`
     left: 0.3vw;
     position: relative;
 `
+const HideAppBar = styled.div`
+`
 
 export {
     SubmitButton,
@@ -129,5 +131,6 @@ export {
     PaymentTextBox,
     Popup,
     PaymentDropdown,
-    IconContainer
+    IconContainer,
+    HideAppBar
 }
