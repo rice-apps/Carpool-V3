@@ -5,7 +5,6 @@ import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
-
 import { 
     RideCard, 
     RideTimeInfo, 
@@ -35,7 +34,6 @@ const CalendarIcon = withStyles({
         justifyContent: 'center',
         alignItems: 'center'
       }
- 
   })(NotificationsActiveIcon);
   
   const NotificationsOff = withStyles({
@@ -49,12 +47,10 @@ const CalendarIcon = withStyles({
 
 
 const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
-
     const time = moment(datetime)
     const dateString = time.format('MMM DD')
     const timeString = time.format('h:mm a')
 
-    
     return (
         <div onclick="toRideSummary">
             <RideCard>
@@ -67,31 +63,17 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
                         { timeString }
                     </RideTime>
                 </RideTimeInfo>
-                
                 <Locations>
                     <LocationText>{ origin }</LocationText>
                     <ArrowForward />
                     <LocationText>{ destination }</LocationText>
                 </Locations>
-
                 <Notifications>
                     { notification ? <NotificationsOn /> : <NotificationsOff /> }
                 </Notifications>
             </RideCard>
         </div>
-    )
-
-    
-}
-
-// FOR NOW, USING FOR TESTING FRONT END
-// DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
-UpcomingRideCard.defaultProps = {
-    origin: 'RMC',
-    destination: 'IAH',
-    // WILL BE IN ISOstring
-    datetime: Date.now(),
-    notification: true
+    ) 
 }
 
 

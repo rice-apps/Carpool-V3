@@ -4,7 +4,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import moment from 'moment';
-
 import { 
     UnpaidPastRide,
 	PaidPastRide,
@@ -18,7 +17,6 @@ import {
 	UnpaidPaymentInfo,
 	PaymentText } 
     from './PastRideCard.styles.js';
-
 
   const ArrowForward = withStyles({
   })(ArrowForwardIcon);
@@ -41,12 +39,10 @@ import {
       }
   })(AttachMoneyIcon);
 
-
 const PastRideCard = ({origin, destination, datetime, paid}) => {
     const time = moment(datetime)
     const dateString = time.format('MMM DD')
     const timeString = time.format('h:mm a')
-
     
     const RideCardData = () => {
         return (
@@ -60,23 +56,19 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
                             { timeString }
                         </RideTime>
                     </RideTimeInfo>
-                    
                     <Locations>
                         <LocationText>{ origin }</LocationText>
                         <ArrowForward />
                         <LocationText>{ destination }</LocationText>
                     </Locations>
                 </PastRideCardData>
-                
             </div>
         )
-
     }
 
     return (
         <div>
             { paid ? 
-        
             <PaidPastRide>
                 <RideCardData />
                 <PaidPaymentInfo>
@@ -84,9 +76,7 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
                     <PaymentText>Payment Complete</PaymentText>
                 </PaidPaymentInfo>
             </PaidPastRide>
-
             :
-
             <UnpaidPastRide>
                 <RideCardData />
                 <UnpaidPaymentInfo>
@@ -95,26 +85,8 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
                 </UnpaidPaymentInfo>
             </UnpaidPastRide>
             }
-            
-
-
-            
         </div>
     )
-
-    
 }
-
-// FOR NOW, USING FOR TESTING FRONT END
-// DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
-PastRideCard.defaultProps = {
-    origin: 'RMC',
-    destination: 'IAH',
-    // WILL BE IN ISOstring
-    datetime: Date.now(),
-    notification: true,
-    paid: true
-}
-
 
 export default PastRideCard;

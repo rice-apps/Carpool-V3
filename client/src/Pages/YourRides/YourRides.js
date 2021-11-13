@@ -3,8 +3,6 @@ import UpcomingRideCard from './UpcomingRideCard.js';
 import PastRideCard from './PastRideCard.js';
 import { gql, useQuery} from "@apollo/client";
 import moment from "moment";
-
-
 import { 
     OverallPageTitle, 
     UpcomingRidesSection, 
@@ -14,7 +12,6 @@ import {
     TitleText,
     OverallPage, 
     } from './YourRidesStyles';
-
 
 const GET_RIDES = gql`
 	query {
@@ -44,38 +41,34 @@ const GET_RIDES = gql`
 	}
 `;
 
-
 const YourRides = (paid) => {
-
-    let netid = localStorage.getItem("netid")
-
-		// const [allRides, setAllRides] = useEffect([])
-		const [prevRides, setPrevRides] = useState([])
-		const [futureRides, setFutureRides] = useState([])
+    let netid = localStorage.getItem("netid");
+	const [prevRides, setPrevRides] = useState([]);
+	const [futureRides, setFutureRides] = useState([]);
     const { data, loading, error } = useQuery(GET_RIDES);
 
     useEffect(() => {
         if (data) {
             let rides = data.rideMany.filter(ride => {
-                let ownerTrue = false
-                let riderTrue = false
+                let ownerTrue = false;
+                let riderTrue = false;
                 if (ride.owner) {
-                    ownerTrue = ride.owner.netid === netid
+                    ownerTrue = ride.owner.netid === netid;
                 }
                 ride.riders.forEach(rider => riderTrue = rider.netid === netid)
-                return ownerTrue || riderTrue
+                return ownerTrue || riderTrue;
             })
 
-            let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date())
-            previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
-            let upcomingrides = rides.filter(ride => moment(ride.departureDate) >= new Date())
-            upcomingrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
+            let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date());
+            previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate));
+            let upcomingrides = rides.filter(ride => moment(ride.departureDate) >= new Date());
+            upcomingrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate));
 
-            console.log("previousRides", previousrides)
-            console.log("upcomingRides", upcomingrides)
+            console.log("previousRides", previousrides);
+            console.log("upcomingRides", upcomingrides);
 
-            setPrevRides(previousrides)
-            setFutureRides(upcomingrides)
+            setPrevRides(previousrides);
+            setFutureRides(upcomingrides);
         }
     }, [data, netid])
 
@@ -100,7 +93,8 @@ const YourRides = (paid) => {
                 </UpcomingRidesSection>
 
                 <PastRidesSection>
-                    <PastRideTitle><TitleText>Past Rides</TitleText><TitleText>Payments</TitleText></PastRideTitle>
+                    <PastRideTitle><TitleText>Past Rides</TitleText>
+                    <TitleText>Payments</TitleText></PastRideTitle>
                     {prevRides.map(ride => {
                         return (
                             <PastRideCard 
@@ -114,18 +108,6 @@ const YourRides = (paid) => {
             </OverallPage>
         </div>
     )
-}
-
-// FOR NOW, USING FOR TESTING FRONT END
-// DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
-YourRides.defaultProps = {
-    origin: 'RMC',
-    destination: 'IAH',
-    // WILL BE IN ISOstring
-    datetime: Date.now(),
-    notification: true,
-    paid: true
-
 }
 
 export default YourRides;
