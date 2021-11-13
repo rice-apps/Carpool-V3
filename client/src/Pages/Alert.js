@@ -3,9 +3,11 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
-import { Button, Dialog, DialogActions } from '@material-ui/core';
-import { LoginButton } from './Alert.styles.js';
+import { Button } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { LoginButton, LoginDialog, LoginDialogActions, ExitDialogActions, LoginIconButton } from './Alert.styles.js';
 import { SERVICE_URL } from '../config'; 
+import { withStyles } from '@material-ui/core/styles';
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const destinationURL = '/create-ride'; 
@@ -13,7 +15,7 @@ const destinationURL = '/create-ride';
 function AlertDialog() {
     const [openAlert, setOpenAlert] = useState(false);
     const [skipQuery, setSkipQuery] = useState(true);
-    const [destination] = useState(destinationURL);
+    const [destination, setDestination] = useState(destinationURL);
     const [userData, setUserData] = useState();
     const history = useHistory() 
     const id = localStorage.getItem('netid');
@@ -31,7 +33,7 @@ function AlertDialog() {
       }
     }`
   
-    useQuery(GET_USER, 
+    const {} = useQuery(GET_USER, 
       {
         skip: skipQuery, 
         variables: 
@@ -91,15 +93,20 @@ function AlertDialog() {
     return (
         <div>
             <Button onClick={handleClickOpen}> Create Ride </Button>
-            <Dialog
+            <LoginDialog
                 open={openAlert}
                 onClose={handleClose}
             >
-                <DialogActions>
-                    <Button onClick={handleClose}>Nevermind</Button>
+                <ExitDialogActions>
+                    <LoginIconButton onClick={handleClose}>
+                            <CloseIcon />
+                    </LoginIconButton>
+                </ExitDialogActions>
+                <LoginDialogActions>
+                    {/* <Button onClick={handleClose}>Nevermind</Button> */}
                     <LoginButton onClick={handleLogin} autoFocus>Login</LoginButton>
-                </DialogActions>
-            </Dialog>
+                </LoginDialogActions>
+            </LoginDialog>
         </div>
     )
 }
