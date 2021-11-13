@@ -16,6 +16,7 @@ import Navbar from '../common/NavBar/Navbar'
 import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary/RideSummary.js'
 import jwt_decode from "jwt-decode";
+import YourRides from '../Pages/YourRides/YourRides.js'
 
 /**
  * Requests to verify the user's token on the backend
@@ -145,6 +146,7 @@ export const Routes = () => {
           <CheckTokenRoute path={'/auth'} component={withRouter(Auth)} />
           <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
           <CheckTokenRoute path={"/profileform"} component={withRouter(ProfileForm)} />
+          <CheckTokenRoute path={"/your-rides"} component={withRouter(YourRides)} />
         </Switch>
       </Router>
     </div>
