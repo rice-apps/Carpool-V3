@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
@@ -10,7 +10,6 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 import { useHistory } from 'react-router'
-
 import {
   SeatsLeftDiv,
   SeatsLeftNum,
@@ -59,6 +58,7 @@ const GET_RIDE = gql`
         netid
         firstName
         lastName
+        phone
       }
       riders {
         netid
@@ -71,12 +71,19 @@ const GET_RIDE = gql`
 `
 const RideSummary = () => {
   let { id } = useParams()
-  const [getVariables] = useState({})
+  // const [getVariables, setVariables] = useState({})
+  const [ride, setRide] = useState({
+    departureLocation: {title: "Loading"},
+    arrivalLocation: {title: "Loading"},
+    owner: {netid: "Loading"},
+    riders: []
+  })
   const history = useHistory()
 
   const { data, loading, error } = useQuery(GET_RIDE, {
-    variables: getVariables,
+    variables: {id: id},
   })
+ 
 
   const JOIN_RIDE = gql`
     mutation JoinRide($rideID: ID!) {
@@ -90,11 +97,18 @@ const RideSummary = () => {
     variables: { rideID: id }
   })
 
+  useEffect(() => {
+    if (data) {
+      let ride = {...data.rideOne,owner:{netid:"mbo",lastName:"Temp",firstName:"Temp"}}
+      setRide(ride)
+      console.log(ride)
+    }
+  }, [data])
+  console.log(data, loading, error);
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
-
-  const { rideOne: ride } = data
+  // const { rideOne: ride } = data
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
@@ -190,7 +204,9 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
-      <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+      <ButtonContainer>
+        <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+      </ButtonContainer>
     </AllDiv>
   )
 }
