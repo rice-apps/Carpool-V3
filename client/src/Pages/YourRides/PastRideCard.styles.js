@@ -24,7 +24,7 @@ margin-top: 2vh;
 margin-bottom: 2vh;
 `;
 
-const PastRideCardData = styled.div`
+const TimeLocationData = styled.div`
 display: grid;
 grid-column-start: 1;
 max-height: 10vh;
@@ -43,7 +43,6 @@ flex-direction: column;
 border-radius: 9px;
 padding-top: 20%;
 padding-bottom: 20%;
-
 `;
 
 const RideDate = styled.div`
@@ -97,6 +96,7 @@ align-items: center;
 border-radius: 0px 9px 9px 0px;
 padding: 10%;
 `
+
 const PaymentText = styled.div`
 font-size: 2vh;
 font-family: Josefin Sans;
@@ -109,7 +109,7 @@ color: #FFFFFF;
 export {
 	UnpaidPastRide,
 	PaidPastRide,
-	PastRideCardData,
+	TimeLocationData,
 	RideTimeInfo,
 	RideDate,
 	RideTime,

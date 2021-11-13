@@ -4,10 +4,11 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import moment from 'moment';
+
 import { 
     UnpaidPastRide,
 	PaidPastRide,
-    PastRideCardData,
+    TimeLocationData,
 	RideTimeInfo,
 	RideDate,
 	RideTime,
@@ -44,10 +45,10 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
     const dateString = time.format('MMM DD')
     const timeString = time.format('h:mm a')
     
-    const RideCardData = () => {
+    const RideTimeLocationData = () => {
         return (
             <div>
-                <PastRideCardData>
+                <TimeLocationData>
                     <RideTimeInfo>
                         <RideDate>
                             { dateString }
@@ -61,7 +62,7 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
                         <ArrowForward />
                         <LocationText>{ destination }</LocationText>
                     </Locations>
-                </PastRideCardData>
+                </TimeLocationData>
             </div>
         )
     }
@@ -70,7 +71,7 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
         <div>
             { paid ? 
             <PaidPastRide>
-                <RideCardData />
+                <RideTimeLocationData />
                 <PaidPaymentInfo>
                     <PaidIcon />
                     <PaymentText>Payment Complete</PaymentText>
@@ -78,7 +79,7 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
             </PaidPastRide>
             :
             <UnpaidPastRide>
-                <RideCardData />
+                <RideTimeLocationData />
                 <UnpaidPaymentInfo>
                     <UnpaidIcon />
                     <PaymentText>Payment Incomplete</PaymentText>
