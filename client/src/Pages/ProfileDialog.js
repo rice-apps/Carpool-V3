@@ -63,7 +63,7 @@ export default function ProfileDialog (props) {
         <div>
             <Dialog open={openDialog}
             onClose={closeDialog} 
-            className={(classes.dialog, classes.center)}
+            className={[classes.dialog, classes.center]}
             fullWidth={true} 
             maxWidth="lg"
             id="dialog"
@@ -88,7 +88,7 @@ export default function ProfileDialog (props) {
                             </InputAdornment>
                         ),
                         }}
-                    InputLabelProps={{className:(classes.multiLineColor, classes.inputLabel)}}
+                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
                     />
                 </FirstNameTextBox>
                 <LastNameTextBox>
@@ -106,7 +106,7 @@ export default function ProfileDialog (props) {
                             </InputAdornment>
                         ),
                     }}
-                    InputLabelProps={{className:(classes.multiLineColor, classes.inputLabel)}}
+                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
                     />
                 </LastNameTextBox>
                 <ContactSectionHeader>Contact</ContactSectionHeader>
@@ -125,7 +125,7 @@ export default function ProfileDialog (props) {
                             </InputAdornment>
                         ),
                     }}
-                    InputLabelProps={{className:(classes.multiLineColor, classes.inputLabel)}}
+                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
                     />
                 </PhoneTextBox>
                 <PaymentSectionHeader>Payment</PaymentSectionHeader>
@@ -145,7 +145,7 @@ export default function ProfileDialog (props) {
                             </InputAdornment>
                         ),
                     }}
-                    InputLabelProps={{className:(classes.multiLineColor, classes.inputLabel)}}
+                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
                     />
                 </EmailTextBox>
                 <PaymentDropdown>
@@ -181,7 +181,7 @@ export default function ProfileDialog (props) {
                             </InputAdornment>
                         ),
                     }}
-                    InputLabelProps={{className:(classes.multiLineColor, classes.inputLabel)}}
+                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
                     />
                 </PaymentTextBox>
             <SubmitButton>
