@@ -51,11 +51,14 @@ const SubmitButton = styled.div`
     width:20vw;
     margin: auto;
 `
+const HideAppBar = styled.div`
+`
 
 export {
     Header,
     EditName,
     EditContactInfo,
     EditPaymentOptions,
-    SubmitButton
+    SubmitButton,
+    HideAppBar
 }

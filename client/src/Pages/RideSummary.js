@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
-// import { useParams } from 'react-router-dom'
+import { gql, useQuery, useMutation } from '@apollo/client'
+import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
 import {
   IoShareSocialSharp,
@@ -9,6 +9,8 @@ import {
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
+import { useHistory } from 'react-router'
+
 import {
   SeatsLeftDiv,
   SeatsLeftNum,
@@ -68,24 +70,42 @@ const GET_RIDE = gql`
   }
 `
 const RideSummary = () => {
-  // let { id } = useParams()
-  const [getVariables, setVariables] = useState({})
-  console.log(setVariables);
-  // const [rideId, setRideId] = React.useState(null)
+  let { id } = useParams()
+  const [getVariables] = useState({})
+  const history = useHistory()
 
-  // TODO: Remove this!! This is to get rid of warnings in console
-  // console.log(rideId ,setVariables)
-
-  // React.useEffect(() => {
-  //   fetch(`http://localhost:3000/ridesummary/${id}`).then(setRideId)
-  // }, [id])
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: getVariables,
   })
+
+  const JOIN_RIDE = gql`
+    mutation JoinRide($rideID: ID!) {
+      addRider(rideID: $rideID) {
+        riders { _id }
+      }
+    }
+  `
+
+  const [joinRide] = useMutation(JOIN_RIDE, {
+    variables: { rideID: id }
+  })
+
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
+
   const { rideOne: ride } = data
+
+  const join = () => {
+    if (localStorage.getItem('token') == null) {
+      localStorage.setItem('nextPage', `/ridesummary/${id}`)
+      history.push('/login')
+      return
+    }
+
+    joinRide()
+  }
+
   const time = moment(ride.departureDate)
   const mon = time.format('MMM').toString()
   const day = time.format('DD').toString()
@@ -170,11 +190,8 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
-      <ButtonContainer>
-        <ButtonDiv onClick='joinRide()'>Join Ride</ButtonDiv>
-      </ButtonContainer>
+      <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
     </AllDiv>
   )
 }
 export default RideSummary
-

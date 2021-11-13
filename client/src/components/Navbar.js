@@ -5,9 +5,9 @@ import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
   Drawer, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
-
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
     gap: "5vw",
     height: "15vh"
   },
-  loginContainer:{
+  logInOutContainer:{
     display:"flex", 
     justifyContent:"center", 
     height: "15vh",
   },
 }));
 
-const LoginButton = withStyles({
+const LogInOutButton = withStyles({
   root: {
       background: '#2075D8',
       width: '33vw',
@@ -62,10 +62,11 @@ query GetUserInfo ($netID: String)
   }
 }`
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar (props) {
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
+  const [showBar, setShowBar] = useState(false);
 
   const toggleDrawer = () => setDrawer(!drawer);
 
@@ -77,11 +78,26 @@ export default function ButtonAppBar() {
       }
     }
   );
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === "/home" || location.pathname === "/"){
+      setShowBar(false)
+    }
+    else{ 
+      setShowBar(true)
+    }
+  }, [location.pathname])
+
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
   if (!userData) return "User not found!"; 
 
   const {userOne: user} = userData;
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.reload()
+  }
 
   const showUsername = () => (
     <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer}>
@@ -91,9 +107,15 @@ export default function ButtonAppBar() {
   )
 
   const showLogin = () => (
-      <ListItem className={classes.loginContainer} divider = "true" disableGutters = "true">
-        <LoginButton component = {Link} to = "/login">Login</LoginButton>
+      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+        <LogInOutButton component = {Link} to = "/login">Login</LogInOutButton>
       </ListItem>
+  )
+
+  const showLogout = () => (
+    <ListItem className={classes.logInOutContainer}>
+      <LogInOutButton onClick = {() => {logout()}}>Logout</LogInOutButton>
+    </ListItem>
   )
 
   // Eventually should make this extensible
@@ -112,24 +134,29 @@ export default function ButtonAppBar() {
         <ListItem button className = {classes.bottomItem} component = {Link} to = "/about">
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
+        {loggedIn ? showLogout() : null}
       </List>
     </div>
   );
 
   return (
     <div>
-      <AppBar position="fixed" color="white" elevation="0">
-        <Toolbar>
-          <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
-            <MenuIcon fontSize="large"/>
-              <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
-                {drawerItems()}
-              </Drawer>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      {/* Makes the app bar sticky while not covering up the content on the page */}
-      <Toolbar/>
+    {showBar ?
+    <div>
+        <AppBar position="fixed" color="white" elevation="0"> 
+          <Toolbar>
+            <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
+              <MenuIcon fontSize="large"/>
+                <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
+                  {drawerItems()}
+                </Drawer>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Toolbar/>
     </div>
+    : null
+  }
+  </div>
   );
 }
