@@ -10,7 +10,6 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 import { useHistory } from 'react-router'
-
 import {
   SeatsLeftDiv,
   SeatsLeftNum,
@@ -84,6 +83,7 @@ const RideSummary = () => {
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
   })
+ 
 
   const JOIN_RIDE = gql`
     mutation JoinRide($rideID: ID!) {
@@ -99,15 +99,15 @@ const RideSummary = () => {
 
   useEffect(() => {
     if (data) {
-      setRide(data.rideOne)
-      console.log(data.rideOne)
+      let ride = {...data.rideOne,owner:{netid:"mbo",lastName:"Temp",firstName:"Temp"}}
+      setRide(ride)
+      console.log(ride)
     }
   }, [data])
-
+  console.log(data, loading, error);
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
-
   // const { rideOne: ride } = data
 
   const join = () => {
@@ -204,7 +204,9 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
-      <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+      <ButtonContainer>
+        <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+      </ButtonContainer>
     </AllDiv>
   )
 }
