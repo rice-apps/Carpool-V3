@@ -69,10 +69,8 @@ color: #002140;
 font-size: 2.5vh;
 `;
 
-
-
 export {
-	OverallPageTitle,
+	PageTitle,
     UpcomingRidesSection,
     UpcomingRideTitle,
     PastRidesSection,
