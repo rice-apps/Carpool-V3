@@ -109,7 +109,7 @@ class DisplayRides extends Component {
             </Grid>
             }
             {
-            <div style = {{fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
+            <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
             }
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
