@@ -1,5 +1,5 @@
 import React from 'react';
-import Create from '../components/Create.js'; 
+import Create from './Create.js'; 
 import { gql, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 
@@ -54,6 +54,7 @@ const CreateRide = () => {
         </div>
 
     )
+    
 }
 
 export default CreateRide; 

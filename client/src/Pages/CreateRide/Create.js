@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useQuery } from "@apollo/client";
-import Header from '../components/Header.js';
+import Header from '../../common/Header/Header.js';
 import { useToasts } from "react-toast-notifications";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import LuxonUtils from '@date-io/luxon';
