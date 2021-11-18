@@ -1,0 +1,35 @@
+steps:
+- name: 'gcr.io/cloud-builders/npm'
+  args: [ 'install' ]
+  dir: 'client'
+- name: 'gcr.io/cloud-builders/npm'
+  args: ["run", "create-env"]
+  env:
+    - 'REACT_APP_SERVICE_URL=${_REACT_APP_SERVICE_URL}'
+    - 'REACT_APP_BACKEND_URL=${_REACT_APP_BACKEND_URL}'
+    - 'REACT_APP_GRAPHQL_URL=${_REACT_APP_GRAPHQL_URL}'
+    - 'REACT_APP_GRAPHQL_WS_URL=${_REACT_APP_GRAPHQL_WS_URL}'
+  dir: 'client'
+- name: 'gcr.io/cloud-builders/npm'
+  args: [ 'run', 'build' ]
+  dir: 'client'
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', '--version=1']
+  dir: 'client'
+- name: 'gcr.io/cloud-builders/npm'
+  args: [ 'install' ]
+  dir: 'api'
+- name: 'gcr.io/cloud-builders/npm'
+  args: ["run", "create-env"]
+  env:
+    - 'TWILIO_ACCOUNT_SID=${_TWILIO_ACCOUNT_SID}'
+    - 'TWILIO_AUTH_TOKEN=${_TWILIO_AUTH_TOKEN}'
+    - 'TWILIO_PHONE_NUMBER=${_TWILIO_PHONE_NUMBER}'
+    - 'MONGODB_CONNECTION_STRING=${_MONGODB_CONNECTION_STRING}'
+    - 'SERVICE_URL=${_SERVICE_URL}'
+    - 'SECRET=${_SECRET}'
+    - 'PORT=${_PORT}'
+  dir: 'api'
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', '--version=1']
+  dir: 'api'
