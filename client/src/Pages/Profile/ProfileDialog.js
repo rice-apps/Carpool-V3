@@ -20,15 +20,13 @@ import { Dialog, InputAdornment, TextField } from "@material-ui/core";
 import { DialogActions } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { blue } from "@material-ui/core/colors";
 import EditIcon from '@material-ui/icons/Edit'
+import { blue } from '@material-ui/core/colors'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,9 +84,9 @@ export default function ProfileDialog(props) {
 
       <IconContainer>
           <EditIconContainer>
-            <EditIcon/>
+            <EditIcon style={{ color: "#2075D8",fontSize: 50 }} />
         </EditIconContainer>
-        <AccountCircleIcon style={{ fontSize: 130 }} />
+        <AccountCircleIcon style={{ color: "#002140", fontSize: 130 }} />
       </IconContainer>
         <Popup>
           <NameSectionHeader> Name </NameSectionHeader>
@@ -97,6 +95,7 @@ export default function ProfileDialog(props) {
               id="filled-basic"
               label="First Name"
               variant="filled"
+              size="small"
               fullWidth={true}
               className={classes.input}
               InputProps={{
@@ -117,6 +116,7 @@ export default function ProfileDialog(props) {
               id="filled-basic"
               label="Last Name"
               variant="filled"
+              size="small"
               fullWidth={true}
               className={classes.input}
               InputProps={{
@@ -138,6 +138,7 @@ export default function ProfileDialog(props) {
               id="filled-basic"
               label="Phone #"
               variant="filled"
+              size="small"
               fullWidth={true}
               className={classes.input}
               InputProps={{
@@ -160,6 +161,7 @@ export default function ProfileDialog(props) {
               id="filled-basic"
               label="Email"
               variant="filled"
+              size="small"
               fullWidth={true}
               className={classes.input}
               InputProps={{
@@ -201,6 +203,7 @@ export default function ProfileDialog(props) {
               id="filled-basic"
               label="@ VenmoID"
               variant="filled"
+              size="small"
               fullWidth={true}
               className={classes.input}
               InputProps={{

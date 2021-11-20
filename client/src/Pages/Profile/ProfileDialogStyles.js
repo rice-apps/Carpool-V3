@@ -78,8 +78,8 @@ export const AccountIconContainer = styled.div`
 
 export const EditIconContainer = styled.div`
   position: relative;
-  left: 9vw;
-  top: 2.5vh;
+  left: 12vw;
+  top: 6.5vh;
 `
 export const NameSectionHeader = styled.header`
   font-family: Josefin Sans;
@@ -137,6 +137,7 @@ export const EmailTextBox = styled.div`
   top: 14.5vh;
   left: 9vw;
   border-radius: 2em;
+  margin-top: .5h;
 `;
 
 export const PaymentSectionHeader = styled.header`
@@ -147,7 +148,7 @@ export const PaymentSectionHeader = styled.header`
   line-height: 3px;
   color: #2075d8;
   position: relative;
-  top: 25vh;
+  top: 26vh;
   left: 10vw;
 `;
 
