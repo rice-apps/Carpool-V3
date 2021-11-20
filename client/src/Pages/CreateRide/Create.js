@@ -53,7 +53,6 @@ const Create = ({onCreate}) => {
     const [date, setDate] = useState(new Date())
     const [passengers, setPassengers] = useState(4)
     const [confirmation, setConfirmation] = useState(false)
-    const [queryCompletes, setQueryCompletes] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
