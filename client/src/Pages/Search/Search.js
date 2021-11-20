@@ -17,9 +17,9 @@ const LoadingDiv = styled.div`
   justify-content: center;
   align-items: center;
 `
-
 const Search = () => {
-
+  // Set last page visited
+  localStorage.setItem('lastPage', 'search');
   let resultDestArr = [];
     
   const displayRef = React.useRef();
