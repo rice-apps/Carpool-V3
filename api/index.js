@@ -88,7 +88,6 @@ app.use(function(err, req, res, next) {
 });
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
-httpServer.listen({ port: PORT }, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
-    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
+app.listen({ port: PORT }, () => {
+  console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
 });
