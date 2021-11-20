@@ -48,8 +48,6 @@ const FormOnly = (props) => {
 
   const todayDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-
-  const dictNames = {startLoc: 0, endLoc: 1, date: 2, numberPeople: 3}
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
@@ -58,8 +56,6 @@ const FormOnly = (props) => {
   const [filterDate, setfilterDate] = useState(todayDate);
 
   const [numberPeople, setNumberPeople] = useState(null)
-
-  const [indSelected, setIndSelected] = useState(-1)
 
   // does actual filtering, produces resultDestArr
   useEffect(() => {
@@ -117,14 +113,10 @@ const FormOnly = (props) => {
   
   const handleClickStartLoc = (locInd) => {
     setStartLoc(locInd);
-
-    setIndSelected(dictNames.startLoc);
   }
 
   const handleClickEndLoc = (locInd) => {
     setEndLoc(locInd);
-
-    setIndSelected(dictNames.endLoc);
   }    
     
   return (
@@ -195,6 +187,7 @@ const FormOnly = (props) => {
               <InputBox id = 'Date'>Date</InputBox>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
+                  clearable
                   value={filterDate}
                   onChange={date => setfilterDate(date)}
                   minDate={minDate}
