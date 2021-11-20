@@ -18,6 +18,7 @@ import {
 } from './FormOnly.styles'
 
 const FormOnly = (props) => {
+  console.log("PROPS", props);
 
   const PossibleLocations = props.testLocations;
 
@@ -25,6 +26,7 @@ const FormOnly = (props) => {
 
   const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
 
+  // initial filter: filters rides that are past current date
   useEffect(() => {
     console.log("useEffect run()");
     props.getRidesRefetch()
@@ -49,6 +51,7 @@ const FormOnly = (props) => {
 
   let temp = 3;
 
+  // preselected values
   const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   const endValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+14);
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
@@ -61,12 +64,20 @@ const FormOnly = (props) => {
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
 
+  // state for date range (to be removed)
   const [dateRange, setDateRange] = useState([startValue, endValue])
+
+  // state for start date
+  const [startDate, setStartDate] = useState(startValue);
+
+  // state for end date (to be removed)
+  //const [endDate, setEndDate] = useState(endValue);
   
   const [numberPeople, setNumberPeople] = useState(null)
 
   const [indSelected, setIndSelected] = useState(-1)
 
+  // does actual filtering, produces resultDestArr
   useEffect(() => {
     console.log("form changed!");
     let resultDestArr = null;
@@ -79,20 +90,29 @@ const FormOnly = (props) => {
       if (endLoc !== "") {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
       }
-      if (dateRange[0] != null && dateRange[1] != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateRange[0], true) && !compareDates(new Date(ele.departureDate), dateRange[1], false);});
+      // filters by only start date and only by year, month, day
+      if (startDate != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return isSameDay(new Date(ele.departureDate), new Date(startDate));});
       }
       if (numberPeople != null) {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
       }
+      console.log("RESULTDESTARR", resultDestArr);
       displayRef.current.setRides(resultDestArr);
     }).catch((err) => {
       console.log("err=", err);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startLoc, endLoc, numberPeople, dateRange])
+  }, [startLoc, endLoc, numberPeople, startDate]);
 
+  // returns true of date1 and date2 are on the same day, returns false otherwise
+  const isSameDay = (date1, date2) => {
+    return (date1.getFullYear() === date2.getFullYear()
+            && date1.getMonth() === date2.getMonth()
+            && date1.getDate() === date2.getDate());
+  };
 
+  // checks that date1 < date2 (still need for the initial filter)
   const compareDates = (date1, date2, equals) => {
     const d1 = [date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getHours(), date1.getMinutes()]
     const d2 = [date2.getFullYear(), date2.getMonth(), date2.getDate(), date2.getHours(), date2.getMinutes()]
@@ -204,7 +224,7 @@ const FormOnly = (props) => {
                 max={maxDate}
                 format="dd-MMM-yy"
                 value={dateRange}
-                change={(e) => {setDateRange([e.startDate, e.endDate]); console.log("DateRangePickerComponent new e=", e);}}
+                change={(e) => {setStartDate([e.startDate]); console.log("DateRangePickerComponent new e=", e);}}
               >
               </DateRangePickerComponent>
             </Grid>
