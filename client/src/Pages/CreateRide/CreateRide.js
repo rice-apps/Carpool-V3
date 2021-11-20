@@ -6,6 +6,7 @@ import { useToasts } from "react-toast-notifications";
 const CreateRide = () => {
     
     const { addToast } = useToasts();
+    // Set the last page visited
     localStorage.setItem('lastPage', 'create-ride');
     const CREATE_RIDE = gql`
         mutation CreateRide (

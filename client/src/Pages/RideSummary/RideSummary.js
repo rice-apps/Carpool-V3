@@ -82,9 +82,8 @@ const RideSummary = () => {
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
   })
- // Search or rideCreation pages
- // Use local storage: set variable and go back to that
 
+  
   const JOIN_RIDE = gql`
     mutation JoinRide($rideID: ID!) {
       addRider(rideID: $rideID) {
@@ -127,7 +126,6 @@ const RideSummary = () => {
 
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
-    console.log(lastPage);
     history.push(lastPage);
   }
 
