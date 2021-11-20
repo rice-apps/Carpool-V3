@@ -1,12 +1,12 @@
 var createError = require('http-errors');
 var express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-import http from 'http';
 
 // var path = require('path');
 // var cookieParser = require('cookie-parser');
 var exjwt = require('express-jwt');
 var cors = require('cors')
+
 
 // Import hidden values from .env
 import { PORT, SECRET } from './config';
@@ -37,6 +37,12 @@ const server = new ApolloServer({
 
 // Initiate express
 var app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
 
 // Apply cors for dev purposes
 app.use(cors({
@@ -53,10 +59,6 @@ app.use(exjwt({
 
 // This connects apollo with express
 server.applyMiddleware({ app });
-
-// Create WebSockets server for subscriptions: https://stackoverflow.com/questions/59254814/apollo-server-express-subscriptions-error
-const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
 
 // If we have custom routes, we need these to accept JSON input
 // app.use(express.json());
@@ -89,5 +91,5 @@ app.use(function(err, req, res, next) {
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
 app.listen({ port: PORT }, () => {
-  console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
 });
