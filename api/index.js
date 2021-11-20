@@ -47,7 +47,7 @@ app.use(bodyParser.urlencoded({
 // Apply cors for dev purposes
 app.use(cors({
     // Set CORS options here
-    // origin: "*"
+    origin: "*"
 }))
 
 // Add JWT so that it is AVAILABLE; does NOT protect all routes (nor do we want it to)
