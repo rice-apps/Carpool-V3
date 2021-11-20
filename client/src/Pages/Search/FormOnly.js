@@ -1,6 +1,7 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 import {
     MenuItem,
@@ -18,8 +19,6 @@ import {
 } from './FormOnly.styles'
 
 const FormOnly = (props) => {
-  console.log("PROPS", props);
-
   const PossibleLocations = props.testLocations;
 
   const currentDate = new Date();
@@ -28,10 +27,8 @@ const FormOnly = (props) => {
 
   // initial filter: filters rides that are past current date
   useEffect(() => {
-    console.log("useEffect run()");
     props.getRidesRefetch()
     .then((res) => {
-      console.log("in useEffect refetchRide().then() res.data.rideMany=", res.data.rideMany);
 
       const ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
         const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
@@ -49,37 +46,23 @@ const FormOnly = (props) => {
 
   const displayRef = props.displayRef;
 
-  let temp = 3;
-
-  // preselected values
-  const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  const endValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+14);
+  const todayDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  const maxDate = new Date(new Date().getFullYear()+1, new Date().getMonth(), new Date().getDate());
-
-  console.log("startValue=" + startValue + " endValue=" + endValue + " minDate=" + minDate + " maxDate=" + maxDate);
 
   const dictNames = {startLoc: 0, endLoc: 1, date: 2, numberPeople: 3}
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
 
-  // state for date range (to be removed)
-  const [dateRange, setDateRange] = useState([startValue, endValue])
+  // state for filter date
+  const [filterDate, setfilterDate] = useState(todayDate);
 
-  // state for start date
-  const [startDate, setStartDate] = useState(startValue);
-
-  // state for end date (to be removed)
-  //const [endDate, setEndDate] = useState(endValue);
-  
   const [numberPeople, setNumberPeople] = useState(null)
 
   const [indSelected, setIndSelected] = useState(-1)
 
   // does actual filtering, produces resultDestArr
   useEffect(() => {
-    console.log("form changed!");
     let resultDestArr = null;
     props.getRidesRefetch()
     .then((res) => {
@@ -91,19 +74,18 @@ const FormOnly = (props) => {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
       }
       // filters by only start date and only by year, month, day
-      if (startDate != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return isSameDay(new Date(ele.departureDate), new Date(startDate));});
+      if (filterDate != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return isSameDay(new Date(ele.departureDate), new Date(filterDate));});
       }
       if (numberPeople != null) {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
       }
-      console.log("RESULTDESTARR", resultDestArr);
       displayRef.current.setRides(resultDestArr);
     }).catch((err) => {
       console.log("err=", err);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startLoc, endLoc, numberPeople, startDate]);
+  }, [startLoc, endLoc, numberPeople, filterDate]);
 
   // returns true of date1 and date2 are on the same day, returns false otherwise
   const isSameDay = (date1, date2) => {
@@ -134,21 +116,15 @@ const FormOnly = (props) => {
   }
   
   const handleClickStartLoc = (locInd) => {
-    console.log("handleClickStartLoc() run, locInd=", locInd);
     setStartLoc(locInd);
 
-    //setIsSelectedDestAny(true);
     setIndSelected(dictNames.startLoc);
-    console.log(JSON.parse(JSON.stringify(indSelected)));
   }
 
   const handleClickEndLoc = (locInd) => {
-    console.log("handleClickEndLoc() run, locInd=", locInd);
     setEndLoc(locInd);
 
-    //setIsSelectedDestAny(true);
     setIndSelected(dictNames.endLoc);
-    console.log(JSON.parse(JSON.stringify(indSelected)));
   }    
     
   return (
@@ -217,16 +193,14 @@ const FormOnly = (props) => {
           >
             <Grid item xs = {12}>
               <InputBox id = 'Date'>Date</InputBox>
-              <DateRangePickerComponent placeholder="Enter Date Range"
-                startDate={startValue}
-                endDate={endValue}
-                min={minDate}
-                max={maxDate}
-                format="dd-MMM-yy"
-                value={dateRange}
-                change={(e) => {setStartDate([e.startDate]); console.log("DateRangePickerComponent new e=", e);}}
-              >
-              </DateRangePickerComponent>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DatePicker
+                  value={filterDate}
+                  onChange={date => setfilterDate(date)}
+                  minDate={minDate}
+                  format="MMM dd, yyyy"
+                />
+              </MuiPickersUtilsProvider>
             </Grid>
           </Grid>
         </Grid>
@@ -239,7 +213,7 @@ const FormOnly = (props) => {
             spacing = '1'
           >
             <Grid item>   
-            <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value); temp=e.target.value; console.log("temp=" + temp)}}>
+            <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value);}}>
               { [1,2,3,4,5,6,7,8,9,10,11,12,13].map((ele) => (
                 <MenuItem key={ele} value={ele}>{ele}</MenuItem>
               ))}
