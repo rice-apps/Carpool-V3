@@ -54,11 +54,11 @@ const Create = ({onCreate}) => {
     const [passengers, setPassengers] = useState(4)
     const [confirmation, setConfirmation] = useState(false)
 
+    // Function after Submit Button is Pressed
     const onSubmit = (e) => {
         e.preventDefault()
         const users = [user._id]
         const owner = user._id
-        console.log('Riders is set to... ', users)
 
         if (!startLoc || !endLoc) { 
             addToast("Please fill in all fields.", { appearance: 'error' });
@@ -72,8 +72,6 @@ const Create = ({onCreate}) => {
 
         // Pass arguments back to the top mutation queue
         onCreate({ startLoc, endLoc, date, passengers, confirmation, users, owner})
-        
-        console.log("Submitted!")
 
         setStartLoc('')
         setEndLoc('')
@@ -82,34 +80,25 @@ const Create = ({onCreate}) => {
         setConfirmation(false)
     }
 
-    // OnChange Functions 
+    // OnChange Functions: Triggers for User Changing Fields
 
     const onStartLocChange = (e) => {
         e.preventDefault()
         setStartLoc(e.target.value);
-        console.log("Changed Start Locations!")
-        console.log("It is now at location with the ID of ", e.target.value)
     };
 
 
     const onEndLocChange = (e) => {
         e.preventDefault()
         setEndLoc(e.target.value);
-        console.log("Changed End Locations!")
-        console.log("It is now at location with the ID of ", e.target.value)
     };
 
     const onCheck = (e) => {
-
-        console.log("Confirmation changed to " + e.target.checked)
-
         setConfirmation(e.target.checked);
     };
 
     const onPassengerChange = (e) => {
         e.preventDefault()
-
-        console.log("Changed Passengers")
 
         setPassengers(e.target.value);
     };
@@ -134,9 +123,9 @@ const Create = ({onCreate}) => {
         }
     }`
 
-    const { data: locationData } = useQuery(GET_LOCATIONS);
+    const { data: locationData, loading: locationLoading} = useQuery(GET_LOCATIONS);
 
-    const { data: userData, loading, error } = useQuery(GET_USER, 
+    const { data: userData, loading: userLoading, error } = useQuery(GET_USER, 
         {
             variables: 
             {
@@ -145,7 +134,7 @@ const Create = ({onCreate}) => {
         }
     );
 
-    if (loading) return 'Loading...';
+    if (locationLoading || userLoading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
 
     const {locationMany: locations} = locationData
