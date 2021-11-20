@@ -173,6 +173,7 @@ export const PaymentTextBox = styled.div`
   top: 30.5vh;
   left: 9vw;
   border-radius: 2em;
+  margin-top: vh;
 `;
 
 export const SaveButtonContainer = styled.div`
