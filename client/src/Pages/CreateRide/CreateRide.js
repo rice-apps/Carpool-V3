@@ -37,9 +37,11 @@ const CreateRide = () => {
         createRide({
             variables: ride
         })
-        .then(() => {
+        .then((obj) => {
             addToast("Congratulations! Your ride has been successfully created.", { appearance: 'success'});
+            const rideID = obj.data.rideCreateOne.record._id;
             console.log("success!");
+            window.open('/ridesummary/' + rideID, '_self');
         })
         .catch((error) => {
             console.log("error", error);
