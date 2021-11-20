@@ -53,6 +53,7 @@ const Create = ({onCreate}) => {
     const [date, setDate] = useState(new Date())
     const [passengers, setPassengers] = useState(4)
     const [confirmation, setConfirmation] = useState(false)
+    const [queryCompletes, setQueryCompletes] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -134,9 +135,9 @@ const Create = ({onCreate}) => {
         }
     }`
 
-    const { data: locationData } = useQuery(GET_LOCATIONS);
+    const { data: locationData, loading: locationLoading} = useQuery(GET_LOCATIONS);
 
-    const { data: userData, loading, error } = useQuery(GET_USER, 
+    const { data: userData, loading: userLoading, error } = useQuery(GET_USER, 
         {
             variables: 
             {
@@ -145,7 +146,7 @@ const Create = ({onCreate}) => {
         }
     );
 
-    if (loading) return 'Loading...';
+    if (locationLoading || userLoading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
 
     const {locationMany: locations} = locationData
