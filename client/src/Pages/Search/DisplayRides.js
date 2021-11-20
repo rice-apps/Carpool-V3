@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -70,7 +70,6 @@ const displayRideBottomOfPage = () => {
 class DisplayRides extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             rides: props.rides,
             ridesPossible: ridesPossible,
@@ -95,7 +94,15 @@ class DisplayRides extends Component {
                 Matching Rides: 
             </Box>
             {
-            (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride} />))
+            (isValidRidesT) && ridesT.sort(function(a,b){
+                console.log("hihihihihihihihihihihihi")
+                console.log(a);
+                console.log(b);
+                console.log(a.departureDate);
+                console.log(b.departureDate);
+                return new Date(b.departureDate) - new Date(a.departureDate);
+            }
+            ).map((ride, ind) => (<Ride ride={ride} />))
             }
             {
             (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff"}}>
