@@ -31,18 +31,13 @@ const CreateRide = () => {
     );
 
     const addRide = (ride) => {
-        console.log("Ride Create: ", ride);
-        console.log("The date is ", ride.date);
-        console.log("User: ", localStorage.getItem('netid'))
         createRide({
             variables: ride
         })
         .then(() => {
             addToast("Congratulations! Your ride has been successfully created.", { appearance: 'success'});
-            console.log("success!");
         })
         .catch((error) => {
-            console.log("error", error);
             addToast("Sorry, an error occurred processing your new ride. Please try again later.", { appearance: 'error' });
         });
     }
