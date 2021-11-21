@@ -32,7 +32,7 @@ render(
     <ThemeProvider theme = {theme}>
         <ApolloProvider client={client}>
         <Router history={history}>
-            <ToastProvider>
+            <ToastProvider autoDismiss>
                 <Routes />
             </ToastProvider>
         </Router>

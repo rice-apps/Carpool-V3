@@ -4,9 +4,10 @@ import { gql, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 
 const CreateRide = () => {
-
+    
     const { addToast } = useToasts();
-
+    // Set the last page visited
+    localStorage.setItem('lastPage', 'create-ride');
     const CREATE_RIDE = gql`
         mutation CreateRide (
             $startLoc: MongoID!, $endLoc: MongoID!, $date: Date, $passengers: Float, $users: [MongoID!], $owner: MongoID!) 
@@ -31,9 +32,6 @@ const CreateRide = () => {
     );
 
     const addRide = (ride) => {
-        console.log("Ride Create: ", ride);
-        console.log("The date is ", ride.date);
-        console.log("User: ", localStorage.getItem('netid'))
         createRide({
             variables: ride
         })
@@ -44,7 +42,6 @@ const CreateRide = () => {
             window.open('/ridesummary/' + rideID, '_self');
         })
         .catch((error) => {
-            console.log("error", error);
             addToast("Sorry, an error occurred processing your new ride. Please try again later.", { appearance: 'error' });
         });
     }

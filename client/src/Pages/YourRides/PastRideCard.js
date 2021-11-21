@@ -4,6 +4,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import moment from 'moment';
+import { useHistory } from 'react-router';
 
 import { 
     UnpaidPastRide,
@@ -42,15 +43,17 @@ import {
   })(AttachMoneyIcon);
 
 
-const PastRideCard = ({origin, destination, datetime, paid}) => {
+const PastRideCard = ({id, origin, destination, datetime, paid}) => {
     const time = moment(datetime)
     const dateString = time.format('MMM DD')
     const timeString = time.format('h:mm a')
 
-    
+    const history = useHistory();
+    const summaryURL = "/ridesummary/" + id;
+
     const RideCardData = () => {
         return (
-            <div>
+            <div onClick={e => history.push(summaryURL)}>
                 <PastRideCardData>
                     <RideTimeInfo>
                         <RideDate>
@@ -101,16 +104,11 @@ const PastRideCard = ({origin, destination, datetime, paid}) => {
             
         </div>
     )
-
-    
 }
 
-// FOR NOW, USING FOR TESTING FRONT END
-// DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
 PastRideCard.defaultProps = {
     origin: 'RMC',
     destination: 'IAH',
-    // WILL BE IN ISOstring
     datetime: Date.now(),
     notification: true,
     paid: true
