@@ -39,7 +39,6 @@ const Auth = () => {
     useEffect(() => {
         // We only want this mutation to run once; if we hit any errors we redirect to login
         authenticateUser().catch(err => {
-            console.log(err)
             return <Redirect path={"/login"} />
         });
     }, [authenticateUser]);
@@ -49,15 +48,11 @@ const Auth = () => {
     if (!data) return <p>Login data could not be reached.</p>;
 
     let { netid, token, recentUpdate } = data.authenticateUser;
-    console.log("Authenticated netid: ", netid)
-    console.log("RecentUpdate: ", recentUpdate)
+
     // Set token in local storage
     localStorage.setItem('token', token);
     localStorage.setItem('netid', netid)
     localStorage.setItem('recentUpdate', recentUpdate)
-
-    console.log("netid set: ", localStorage.getItem('netid'))
-    console.log("nextPage in Auth: ", localStorage.getItem('nextPage'));
 
     // If came straight from login button, set the next destination to home
     if (localStorage.getItem('nextPage') == null) {

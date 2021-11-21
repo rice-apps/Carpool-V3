@@ -8,10 +8,10 @@ import {
     InputLabel,
     FormControlLabel, 
     Checkbox, 
-    createMuiTheme
+    createTheme
 } from '@material-ui/core';
 
-export const customTheme = createMuiTheme({
+export const customTheme = createTheme({
 	palette: {
 		primary: {
 			main: '#0B3669',

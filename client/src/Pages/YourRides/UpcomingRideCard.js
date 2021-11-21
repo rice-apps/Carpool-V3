@@ -5,6 +5,7 @@ import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
+import { useHistory } from 'react-router';
 
 import { 
     RideCard, 
@@ -48,15 +49,17 @@ const CalendarIcon = withStyles({
   })(NotificationsOffIcon);
 
 
-const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
+const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => {
 
     const time = moment(datetime)
     const dateString = time.format('MMM DD')
     const timeString = time.format('h:mm a')
 
-    
+    const history = useHistory();
+    const summaryURL = "/ridesummary/" + id;
+
     return (
-        <div onclick="toRideSummary">
+        <div onClick={e => history.push(summaryURL)}>
             <RideCard>
                 <RideTimeInfo>
                     <CalendarIcon />
@@ -80,16 +83,12 @@ const UpcomingRideCard = ({origin, destination, datetime, notification}) => {
             </RideCard>
         </div>
     )
-
-    
 }
 
-// FOR NOW, USING FOR TESTING FRONT END
-// DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
+
 UpcomingRideCard.defaultProps = {
     origin: 'RMC',
     destination: 'IAH',
-    // WILL BE IN ISOstring
     datetime: Date.now(),
     notification: true
 }

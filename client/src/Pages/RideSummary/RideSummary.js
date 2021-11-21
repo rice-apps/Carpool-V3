@@ -82,8 +82,8 @@ const RideSummary = () => {
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
   })
- 
 
+  
   const JOIN_RIDE = gql`
     mutation JoinRide($rideID: ID!) {
       addRider(rideID: $rideID) {
@@ -124,6 +124,11 @@ const RideSummary = () => {
     joinRide()
   }
 
+  const goBack = () => {
+    let lastPage = '/' + localStorage.getItem('lastPage');
+    history.push(lastPage);
+  }
+
   const time = moment(ride.departureDate)
   const mon = time.format('MMM').toString()
   const day = time.format('DD').toString()
@@ -131,7 +136,7 @@ const RideSummary = () => {
 
   return (
     <AllDiv>
-      <BackArrowDiv>
+      <BackArrowDiv onClick={() => goBack()}>
         <IoIosArrowBack></IoIosArrowBack>
       </BackArrowDiv>
       <RideSummaryDiv>
