@@ -13,7 +13,7 @@ import {
   PaymentTextBox,
   SaveButtonContainer,
   EditIconContainer,
-  AccountIconContainer
+  CloseIconContainer
 } from "./ProfileDialogStyles.js";
 import React, { useState } from "react";
 import { Dialog, InputAdornment, TextField } from "@material-ui/core";
@@ -25,8 +25,7 @@ import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import EditIcon from '@material-ui/icons/Edit'
-import { blue } from '@material-ui/core/colors'
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +80,7 @@ export default function ProfileDialog(props) {
         maxWidth="lg"
         id="dialog"
       >
-
+      <CloseIconContainer><CloseIcon/></CloseIconContainer>
       <IconContainer>
           <EditIconContainer>
             <EditIcon style={{ color: "#2075D8",fontSize: 50 }} />

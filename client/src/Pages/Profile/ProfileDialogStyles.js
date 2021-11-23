@@ -182,3 +182,9 @@ export const SaveButtonContainer = styled.div`
   left: 3vw;
   justify-content: center;
 `;
+
+export const CloseIconContainer = styled.div`
+  top: 1vh;
+  position: relative;
+  left: 65vw;
+`
