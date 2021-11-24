@@ -70,6 +70,8 @@ export default function ProfileDialog(props) {
     setOpenDialog(false);
   };
 
+  // Close the dialog box
+
   return (
     <div>
       <Dialog
@@ -80,7 +82,7 @@ export default function ProfileDialog(props) {
         maxWidth="lg"
         id="dialog"
       >
-      <CloseIconContainer><CloseIcon/></CloseIconContainer>
+      <CloseIconContainer><CloseIcon onClick = {closeDialog}/></CloseIconContainer>
       <IconContainer>
           <EditIconContainer>
             <EditIcon style={{ color: "#2075D8",fontSize: 50 }} />
