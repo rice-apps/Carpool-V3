@@ -31,8 +31,8 @@ export const history = createBrowserHistory();
 render(
     <ThemeProvider theme = {theme}>
         <ApolloProvider client={client}>
-        <Router history={history}>
-            <ToastProvider autoDismiss>
+        <Router history={history} basename={process.env.PUBLIC_URL}>
+            <ToastProvider>
                 <Routes />
             </ToastProvider>
         </Router>
