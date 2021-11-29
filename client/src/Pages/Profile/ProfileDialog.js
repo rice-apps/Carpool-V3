@@ -26,6 +26,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import EditIcon from '@material-ui/icons/Edit';
+import updateUserInfo from "../Onboarding/Onboarding.js"; 
 
 
 const useStyles = makeStyles((theme) => ({
@@ -222,7 +223,11 @@ export default function ProfileDialog(props) {
           </PaymentTextBox>
           <SubmitButton>
             <SaveButtonContainer>
-              <Button className={classes.saveButton} variant="contained">
+              <Button 
+                className={classes.saveButton} 
+                variant="contained"
+                onClick={updateUserInfo}
+                >
                 Save
               </Button>
             </SaveButtonContainer>
