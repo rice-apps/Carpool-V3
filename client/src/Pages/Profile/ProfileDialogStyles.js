@@ -119,14 +119,12 @@ export function InputTextField(props) {
       fullWidth={true}
       onChange={onChange}
       value={value}
-      color="#2075D8"
       clearTextField={clearTextField}
       InputLabelProps={{
         className: [classes.inputLabel],
-        color: "#2075D8",
       }}
       InputProps={{
-        color: "#2075D8",
+        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8" },
         endAdornment: (
           <InputAdornment position="end">
             <CloseIcon onClick={() => clearTextField()} />
@@ -136,5 +134,3 @@ export function InputTextField(props) {
     ></TextField>
   );
 }
-
-//set value
