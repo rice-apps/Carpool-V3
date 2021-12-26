@@ -24,15 +24,22 @@ export default function ProfileDialog(props) {
       $firstName: String!
       $lastName: String!
       $phone: String!
+      $payment: JSON!
     ) {
       userUpdateOne(
-        record: { firstName: $firstName, lastName: $lastName, phone: $phone }
+        record: {
+          firstName: $firstName
+          lastName: $lastName
+          phone: $phone
+          payment: $payment
+        }
       ) {
         record {
           _id
           firstName
           lastName
           phone
+          payment
         }
       }
     }
@@ -81,6 +88,20 @@ export default function ProfileDialog(props) {
         payment: {
           ...prestate.payment,
           [prestate.selectedPaymentMethod]: newPayment,
+        },
+        selectedPayment: newPayment,
+      };
+    });
+  }
+
+  function clearUserPayment(method) {
+    const newPayment = "";
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        payment: {
+          ...prestate.payment,
+          [prestate.method]: newPayment,
         },
         selectedPayment: newPayment,
       };
@@ -170,8 +191,10 @@ export default function ProfileDialog(props) {
                 setUserPayment(e);
               }}
               clearTextField={() => {
-                clearTextField("selectedPayment");
-                user.payment[user.selectedPaymentMethod] = "";
+                // clearTextField("selectedPayment");
+                // user.payment[user.selectedPaymentMethod] = "";
+                clearUserPayment("selectedPayment");
+                console.log(user.payment);
               }}
             ></InputTextField>
           </InputBox>
