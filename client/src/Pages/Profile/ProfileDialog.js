@@ -202,6 +202,7 @@ export default function ProfileDialog(props) {
               onClick={() => {
                 saveUser();
                 updateUserInfo();
+                setOpenDialog(false);
                 addToast("User Information Updated", {
                   appearance: "success",
                 });
