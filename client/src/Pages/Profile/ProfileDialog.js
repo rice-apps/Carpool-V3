@@ -164,7 +164,7 @@ export default function ProfileDialog(props) {
             ></InputTextField>
             <InputTextField
               label="Email"
-              disabeled
+              disabled={true}
               defaultValue={user.email}
               clearTextField={() => {}}
             ></InputTextField>
@@ -191,8 +191,6 @@ export default function ProfileDialog(props) {
                 setUserPayment(e);
               }}
               clearTextField={() => {
-                // clearTextField("selectedPayment");
-                // user.payment[user.selectedPaymentMethod] = "";
                 clearUserPayment("selectedPayment");
                 console.log(user.payment);
               }}

@@ -108,13 +108,22 @@ export const ProfileStyles = makeStyles((theme) => ({
 
 export function InputTextField(props) {
   const classes = ProfileStyles();
-  const { label, name, defaultValue, onChange, value, clearTextField } = props;
+  const {
+    label,
+    name,
+    defaultValue,
+    onChange,
+    value,
+    clearTextField,
+    disabled,
+  } = props;
   return (
     <TextField
       name={name}
       InputProps={{ className: classes.inputContent }}
       variant="filled"
       label={label}
+      disabled={disabled}
       defaultValue={defaultValue}
       fullWidth={true}
       onChange={onChange}
@@ -125,11 +134,11 @@ export function InputTextField(props) {
       }}
       InputProps={{
         style: { background: "rgb(187,218,255,0.22)", color: "#2075D8" },
-        endAdornment: (
+        endAdornment: !disabled ? (
           <InputAdornment position="end">
             <CloseIcon onClick={() => clearTextField()} />
           </InputAdornment>
-        ),
+        ) : undefined,
       }}
     ></TextField>
   );
