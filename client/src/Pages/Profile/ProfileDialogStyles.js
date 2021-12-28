@@ -120,7 +120,7 @@ export function InputTextField(props) {
   return (
     <TextField
       name={name}
-      InputProps={{ className: classes.inputContent }}
+      // InputProps={{ className: classes.inputContent }}
       variant="filled"
       label={label}
       disabled={disabled}
@@ -133,7 +133,7 @@ export function InputTextField(props) {
         className: [classes.inputLabel],
       }}
       InputProps={{
-        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8" },
+        className: classes.inputContent,
         endAdornment: !disabled ? (
           <InputAdornment position="end">
             <CloseIcon onClick={() => clearTextField()} />
