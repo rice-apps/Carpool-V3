@@ -16,7 +16,7 @@ import {
   ProfileStyles,
   SaveButton,
 } from "./ProfileDialogStyles";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -94,16 +94,16 @@ export default function ProfileDialog(props) {
     });
   }
 
-  function clearUserPayment(method) {
-    const newPayment = "";
+  function clearUserPayment(type) {
+    console.log("type", type);
     setUser((prestate) => {
       return {
         ...prestate,
         payment: {
           ...prestate.payment,
-          [prestate.method]: newPayment,
+          [type]: "",
         },
-        selectedPayment: newPayment,
+        selectedPayment: "",
       };
     });
   }
@@ -124,6 +124,19 @@ export default function ProfileDialog(props) {
     setUserProps(key, "");
     document.getElementsByName(key)[0].value = "";
   };
+
+  let {
+    data: userData,
+    loading,
+    error,
+  } = useMutation(UPDATE_USER, {
+    variables: {
+      user,
+    },
+  });
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
@@ -191,7 +204,7 @@ export default function ProfileDialog(props) {
                 setUserPayment(e);
               }}
               clearTextField={() => {
-                clearUserPayment("selectedPayment");
+                clearUserPayment(user.selectedPaymentMethod);
                 console.log(user.payment);
               }}
             ></InputTextField>

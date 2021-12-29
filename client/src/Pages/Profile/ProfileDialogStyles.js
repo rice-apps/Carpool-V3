@@ -98,12 +98,6 @@ export const ProfileStyles = makeStyles((theme) => ({
     fontSize: 15,
     color: "#2075D8",
   },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(5),
-    top: theme.spacing(4),
-    color: theme.palette.grey[500],
-  },
 }));
 
 export function InputTextField(props) {
@@ -120,7 +114,6 @@ export function InputTextField(props) {
   return (
     <TextField
       name={name}
-      // InputProps={{ className: classes.inputContent }}
       variant="filled"
       label={label}
       disabled={disabled}
