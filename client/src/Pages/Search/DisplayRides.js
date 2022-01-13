@@ -26,18 +26,14 @@ const isEqualRides = (ride1, ride2) => {
 
 const handleClickCreateRide = () => {
 
-    console.log("handleClickCreateRide() run");
     localStorage.setItem('nextPage', '/create-ride');
-    console.log('Next Page is: ', localStorage.getItem('nextPage'));
 
     let token = localStorage.getItem('token');
 
     if (token != null) { 
         // Route to UserAuth
-        console.log('In the userAuth stage'); 
         window.open('/userAuth', '_self');
     } else {
-        console.log('Need to redirect to SSO');
         // Route to SSO
         let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
         window.open(redirectURL, '_self');
@@ -109,7 +105,7 @@ class DisplayRides extends Component {
             </Grid>
             }
             {
-            <div style = {{fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
+            <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
             }
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
