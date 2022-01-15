@@ -43,13 +43,15 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+var corsOptions = {
+  // Set CORS options here
+  origin: "*",
+  credentials: true
+}
+
 
 // Apply cors for dev purposes
-app.use(cors({
-    // Set CORS options here
-    origin: "*",
-    credentials: true
-}))
+app.use(cors(corsOptions))
 
 // Add JWT so that it is AVAILABLE; does NOT protect all routes (nor do we want it to)
 // Inspiration from: https://www.apollographql.com/blog/setting-up-authentication-and-authorization-with-apollo-federation
@@ -57,9 +59,6 @@ app.use(exjwt({
   secret: SECRET, 
   credentialsRequired: false 
 }));
-
-// This connects apollo with express
-server.applyMiddleware({ app, path: "/graphql", cors: false });
 
 // If we have custom routes, we need these to accept JSON input
 // app.use(express.json());
@@ -95,6 +94,9 @@ app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
+
+// This connects apollo with express
+server.applyMiddleware({ app, path: "/graphql", cors: cors(corsOptions) });
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
 app.listen({ port: PORT }, () => {
