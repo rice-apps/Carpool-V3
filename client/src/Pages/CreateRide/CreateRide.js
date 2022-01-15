@@ -1,10 +1,12 @@
 import React from 'react';
 import Create from './Create.js'; 
+import { useHistory } from "react-router";
 import { gql, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 
 const CreateRide = () => {
-    
+
+    const history = useHistory();
     const { addToast } = useToasts();
     // Set the last page visited
     localStorage.setItem('lastPage', 'create-ride');
@@ -45,6 +47,20 @@ const CreateRide = () => {
             addToast("Sorry, an error occurred processing your new ride. Please try again later.", { appearance: 'error' });
         });
     }
+
+    // Back Button Logic (in case of OnBoarding Prompt)
+    // TODO: This is supposed to display a confirmation message if the user attempts to "go back", 
+    // but for some reason it doesn't quite work. 
+    function beforeUnloadListener(event) {
+        event.preventDefault();
+        console.log('back button detected');
+        localStorage.setItem('from', 'createRide'); 
+            history.goBack();
+    };
+
+    // Include safety net for when user accidentally tries to go back
+    window.addEventListener("beforeunload", beforeUnloadListener);
+
 
     return (
 

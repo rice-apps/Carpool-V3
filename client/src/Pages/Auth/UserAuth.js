@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 
@@ -15,7 +15,7 @@ query GetUserInfo ($netID: String)
     phone
   }
 }`
-  
+
 // Function to verify if the user is part of the Carpool MongoDB, and redirect accordingly.     
 const UserAuth = () => {
 
@@ -25,6 +25,7 @@ const UserAuth = () => {
   // and the user's next destination (where to route to if user has a registered Carpool account). 
   const destination = localStorage.getItem('nextPage'); 
   const id = localStorage.getItem('netid');  
+  const previous = localStorage.getItem('from');
 
   const {data: userData} = useQuery(GET_USER, 
     {
@@ -35,16 +36,36 @@ const UserAuth = () => {
     }
   );
 
+  console.log('the destination is: ', destination);
+  console.log('the previous page is: ', previous);
+  
+  // Determining where to route to
   useEffect(() => {
+    // Check to see if the user came here via going back
+    if (previous){
+      // Clear the localstorage for items
+      localStorage.removeItem('from');
+      // If previous was from onboarding, must clear user netID to prevent access to restricted pages
+      if (previous === 'onboarding'){
+        localStorage.removeItem('netid');
+      } 
+      // Go back further
+      history.goBack();
+    }
     // Do not trigger until Query result returns
     if (userData) {
         if (!userData.userOne.firstName) {
           // User's information is incomplete, direct to onboarding page
           history.push('/onboarding');
         } else {
-          // Route to next page since user is verified
-          localStorage.removeItem('nextPage'); 
-          window.open(destination, '_self'); 
+          // Check to see that there is a specified destination
+          if (destination){
+            // Route to next page since user is verified
+            window.open(destination, '_self'); 
+          } else {
+            window.alert('Unexpected Behavior');
+          }
+          
         }
     }
   }, [userData, history, destination])
