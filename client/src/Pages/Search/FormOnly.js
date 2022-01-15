@@ -139,6 +139,17 @@ const FormOnly = (props) => {
 
           <InputBox id = 'StartLoc'>Departure Location</InputBox>
           <SelectBox
+              MenuProps={{
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left"
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left"
+                },
+                getContentAnchorEl: null
+              }}
               id="Start Location Search Bar"
               labelId='StartLoc'
               value={startLoc}
@@ -160,6 +171,17 @@ const FormOnly = (props) => {
         <Grid  item xs = {12}>
           <InputBox id = 'EndLoc'>Destination</InputBox>
             <SelectBox
+                MenuProps={{
+                  anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "left"
+                  },
+                  transformOrigin: {
+                    vertical: "top",
+                    horizontal: "left"
+                  },
+                  getContentAnchorEl: null
+                }}
                 id="End Location Search Bar"
                 labelId='EndLoc'
                 value={endLoc}
