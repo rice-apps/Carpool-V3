@@ -106,42 +106,42 @@ export default function ButtonAppBar (props) {
     localStorage.setItem('nextPage', window.location.pathname);
   }
 
-  const showUsername = () => (
-    <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer}>
+  const showUsername = (toggleDrawer) => (
+    <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer} onClick = {toggleDrawer}>
       <Avatar className = {classes.avatarIcon}/>
       <ListItemText className = {classes.text} primary = {user.firstName + " " + user.lastName}/>
     </ListItem>
   )
 
-  const showLogin = () => (
-      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+  const showLogin = (toggleDrawer) => (
+      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true" onClick = {toggleDrawer}>
         <LogInOutButton onClick = {() => {login()}} component = {Link} to = "/login">Login</LogInOutButton>
       </ListItem>
   )
 
-  const showLogout = () => (
-    <ListItem className={classes.logInOutContainer}>
+  const showLogout = (toggleDrawer) => (
+    <ListItem className={classes.logInOutContainer} onClick = {toggleDrawer}>
       <LogInOutButton onClick = {() => {logout()}}>Logout</LogInOutButton>
     </ListItem>
   )
 
   // Eventually should make this extensible
-  const drawerItems = () => (
+  const drawerItems = (toggleDrawer) => (
     <div>
       <List className = {classes.list}>
-        {loggedIn ? showUsername() : showLogin()}
-        <ListItem button component = {Link} to = "/home">
+        {loggedIn ? showUsername(toggleDrawer) : showLogin(toggleDrawer)}
+        <ListItem button component = {Link} to = "/home" onClick = {toggleDrawer}>
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Home"/>
         </ListItem>
-        <ListItem button disabled = {!loggedIn} component = {Link} to = "/your-rides">
+        <ListItem button disabled = {!loggedIn} component = {Link} to = "/your-rides" onClick = {toggleDrawer}>
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about">
+        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about" onClick = {toggleDrawer}>
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
-        {loggedIn ? showLogout() : null}
+        {loggedIn ? showLogout(toggleDrawer) : null}
       </List>
     </div>
   );
@@ -154,10 +154,10 @@ export default function ButtonAppBar (props) {
           <Toolbar>
             <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
-                <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
-                  {drawerItems()}
-                </Drawer>
             </IconButton>
+            <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
+                  {drawerItems(toggleDrawer)}
+            </Drawer>
           </Toolbar>
         </AppBar>
         <Toolbar/>
