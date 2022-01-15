@@ -53,14 +53,14 @@ export const ButtonBox = styled(Box)({
 
 export const ProfileEditIcon = styled(EditIcon)({
   position: "absolute",
-  top: "6%",
-  left: "53%",
+  top: "9%",
+  left: "56%",
   color: "#2075D8",
-  fontSize: "5vh",
+  fontSize: "4vh",
 });
 
 export const ProfileIcon = styled(AccountCircleIcon)({
-  fontSize: "15vh",
+  fontSize: "14vh",
   color: "#002140",
 });
 
