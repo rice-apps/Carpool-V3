@@ -16,7 +16,7 @@ import {
   ProfileStyles,
   SaveButton,
 } from "./ProfileDialogStyles";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -108,10 +108,6 @@ export default function ProfileDialog(props) {
     });
   }
 
-  function saveUser() {
-    console.log(user);
-  }
-
   const [updateUser] = useMutation(UPDATE_USER);
   const updateUserInfo = () => {
     updateUser({ variables: user });
@@ -126,7 +122,6 @@ export default function ProfileDialog(props) {
   };
 
   let {
-    data: userData,
     loading,
     error,
   } = useMutation(UPDATE_USER, {
@@ -137,6 +132,7 @@ export default function ProfileDialog(props) {
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
+  
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
@@ -197,6 +193,7 @@ export default function ProfileDialog(props) {
               <MenuItem value="Other">Other</MenuItem>
             </PaymentSelect>
             <InputTextField
+              label="Account ID"
               name="selectedPayment"
               defaultValue={user.selectedPayment}
               value={user.selectedPayment}
@@ -213,7 +210,6 @@ export default function ProfileDialog(props) {
             <SaveButton
               variant="contained"
               onClick={() => {
-                saveUser();
                 updateUserInfo();
                 setOpenDialog(false);
                 addToast("User Information Updated", {

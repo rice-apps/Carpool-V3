@@ -30,7 +30,7 @@ export const ProfileDialogContainer = styled.div`
 `;
 
 export const IconBox = styled(Box)({
-  height: "22%",
+  height: "15%",
   width: "100%",
   justifyContent: "center",
   alignItems: "center",
@@ -54,13 +54,13 @@ export const ButtonBox = styled(Box)({
 export const ProfileEditIcon = styled(EditIcon)({
   position: "absolute",
   top: "6%",
-  left: "53%",
+  left: "56%",
   color: "#2075D8",
-  fontSize: "5vh",
+  fontSize: "4vh",
 });
 
 export const ProfileIcon = styled(AccountCircleIcon)({
-  fontSize: "15vh",
+  fontSize: "14vh",
   color: "#002140",
 });
 
@@ -73,6 +73,7 @@ export const CloseProfileIcon = styled(CloseIcon)({
 export const Label = styled(InputLabel)({
   fontFamily: "Josefin Sans",
   color: "#2075d8",
+  paddingBottom: "1vh"
 });
 
 export const PaymentSelect = styled(Select)({
@@ -81,11 +82,14 @@ export const PaymentSelect = styled(Select)({
 });
 
 export const SaveButton = styled(Button)({
+  fontFamily: "Josefin Sans",
+  fontSize: "2vh",
   background: "#2075D8",
   color: "white",
-  borderRadius: "1.5vw",
+  borderRadius: "2vw",
   width: "100%",
-  height: "60%",
+  height: "50%",
+  textTransform: "none"
 });
 
 export const ProfileStyles = makeStyles((theme) => ({
@@ -98,25 +102,23 @@ export const ProfileStyles = makeStyles((theme) => ({
     fontSize: 15,
     color: "#2075D8",
   },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(5),
+    top: theme.spacing(4),
+    color: theme.palette.grey[500],
+  },
 }));
 
 export function InputTextField(props) {
   const classes = ProfileStyles();
-  const {
-    label,
-    name,
-    defaultValue,
-    onChange,
-    value,
-    clearTextField,
-    disabled,
-  } = props;
+  const { label, name, defaultValue, onChange, value, clearTextField } = props;
   return (
     <TextField
       name={name}
+      style={{paddingBottom: "1vh"}}
       variant="filled"
       label={label}
-      disabled={disabled}
       defaultValue={defaultValue}
       fullWidth={true}
       onChange={onChange}
@@ -127,11 +129,12 @@ export function InputTextField(props) {
       }}
       InputProps={{
         className: classes.inputContent,
-        endAdornment: !disabled ? (
+        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8", height: "6vh" },
+        endAdornment: (
           <InputAdornment position="end">
             <CloseIcon onClick={() => clearTextField()} />
           </InputAdornment>
-        ) : undefined,
+        ),
       }}
     ></TextField>
   );

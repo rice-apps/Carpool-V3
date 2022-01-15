@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
-import { gql, serializeFetchParameter, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
 import IconButton from "@material-ui/core/IconButton";
