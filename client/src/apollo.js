@@ -29,6 +29,7 @@ const cache = new InMemoryCache();
 
 // Initialize Client
 export const client = new ApolloClient({
+    credentials: 'include',
     cache: new InMemoryCache(),
     link: authLink.concat(httpLink),
 });
