@@ -63,6 +63,7 @@ const Onboarding = () => {
     return () => {
       window.removeEventListener('popstate', onBackButtonEvent);  
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
