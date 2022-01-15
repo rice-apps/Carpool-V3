@@ -10,6 +10,9 @@ import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
+  appbarRoot: {
+    zIndex:"999"
+  },
   icon: {
     color:"#002140",
   },
@@ -99,6 +102,10 @@ export default function ButtonAppBar (props) {
     window.location.reload()
   }
 
+  const login = () => {
+    localStorage.setItem('nextPage', window.location.pathname);
+  }
+
   const showUsername = () => (
     <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer}>
       <Avatar className = {classes.avatarIcon}/>
@@ -108,7 +115,7 @@ export default function ButtonAppBar (props) {
 
   const showLogin = () => (
       <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
-        <LogInOutButton component = {Link} to = "/login">Login</LogInOutButton>
+        <LogInOutButton onClick = {() => {login()}} component = {Link} to = "/login">Login</LogInOutButton>
       </ListItem>
   )
 
@@ -143,7 +150,7 @@ export default function ButtonAppBar (props) {
     <div>
     {showBar ?
     <div>
-        <AppBar position="fixed" color="white" elevation="0"> 
+        <AppBar position="fixed" color="white" elevation="0" className={classes.appbarRoot}> 
           <Toolbar>
             <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
