@@ -203,6 +203,7 @@ const FormOnly = (props) => {
             direction='row'
             justifyContent='center'
             alignItems='center'
+            spacing = "1"
           >
             <Grid item>
               <Select 
