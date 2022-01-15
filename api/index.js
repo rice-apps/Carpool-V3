@@ -59,7 +59,7 @@ app.use(exjwt({
 }));
 
 // This connects apollo with express
-server.applyMiddleware({ app });
+server.applyMiddleware({ app, path: "/graphql", cors: false });
 
 // If we have custom routes, we need these to accept JSON input
 // app.use(express.json());
@@ -91,6 +91,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.use(function(req, res, next) {
+  req.setHeader("")
   res.setHeader("Access-Control-Allow-Origin", "https://carpool.riceapps.org/");
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
