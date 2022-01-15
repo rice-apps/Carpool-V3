@@ -5,11 +5,11 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import {
     MenuItem,
+    Select,
     Grid, 
 } from '@material-ui/core';
 
-import "@fontsource/source-sans-pro";
-import TextField from '@material-ui/core/TextField';
+import "@fontsource/source-sans-pro"; 
 import {
   Form,
   SelectBox,
@@ -198,23 +198,36 @@ const FormOnly = (props) => {
           </Grid>
         </Grid>
         <Grid  item xs = {12}>
-          <Grid
+          <Grid 
             container
             direction='row'
             justifyContent='center'
             alignItems='center'
-            spacing = '1'
           >
-            <Grid item>   
-            <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value);}}>
-              { [1,2,3,4,5,6,7,8,9,10,11,12,13].map((ele) => (
-                <MenuItem key={ele} value={ele}>{ele}</MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item>
+            <Grid item>
+              <Select 
+                MenuProps={{
+                  anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "left"
+                  },
+                  transformOrigin: {
+                    vertical: "top",
+                    horizontal: "left"
+                  },
+                  getContentAnchorEl: null
+                }} 
+                id="number-people" 
+                value={numberPeople} 
+                onChange={e => {setNumberPeople(e.target.value);}}>
+                  { [1,2,3,4,5].map((ele) => (
+                  <MenuItem value={ele}>{ele}</MenuItem>
+                  ))}
+              </Select>
+            </Grid>
+            <Grid item>
               <BodyText>{"Number of People"}</BodyText> 
-          </Grid>
+            </Grid>        
         </Grid>
       </Grid>
     </Grid>
