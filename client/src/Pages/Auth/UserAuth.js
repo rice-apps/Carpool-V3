@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 
@@ -39,19 +39,21 @@ const UserAuth = () => {
   console.log('the destination is: ', destination);
   console.log('the previous page is: ', previous);
   
+  // Check to see if the user came here via going back
+  if (previous){
+    // Clear the localstorage for items
+    localStorage.removeItem('from');
+    // If previous was from onboarding, must clear user netID to prevent access to restricted pages
+    if (previous === 'onboarding'){
+      localStorage.removeItem('netid');
+    } 
+    // Go back further
+    history.goBack();
+  }
+
   // Determining where to route to
   useEffect(() => {
-    // Check to see if the user came here via going back
-    if (previous){
-      // Clear the localstorage for items
-      localStorage.removeItem('from');
-      // If previous was from onboarding, must clear user netID to prevent access to restricted pages
-      if (previous === 'onboarding'){
-        localStorage.removeItem('netid');
-      } 
-      // Go back further
-      history.goBack();
-    }
+
     // Do not trigger until Query result returns
     if (userData) {
         if (!userData.userOne.firstName) {
@@ -68,7 +70,7 @@ const UserAuth = () => {
           
         }
     }
-  }, [userData, history, destination])
+  }, [userData, history, destination]);
 
   return(
     // Loading icon until the query is complete... in which case, the user is redirected 
