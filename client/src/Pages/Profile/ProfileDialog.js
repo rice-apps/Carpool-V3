@@ -24,15 +24,22 @@ export default function ProfileDialog(props) {
       $firstName: String!
       $lastName: String!
       $phone: String!
+      $payment: JSON!
     ) {
       userUpdateOne(
-        record: { firstName: $firstName, lastName: $lastName, phone: $phone }
+        record: {
+          firstName: $firstName
+          lastName: $lastName
+          phone: $phone
+          payment: $payment
+        }
       ) {
         record {
           _id
           firstName
           lastName
           phone
+          payment
         }
       }
     }
@@ -87,8 +94,18 @@ export default function ProfileDialog(props) {
     });
   }
 
-  function saveUser() {
-    console.log(user);
+  function clearUserPayment(type) {
+    console.log("type", type);
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        payment: {
+          ...prestate.payment,
+          [type]: "",
+        },
+        selectedPayment: "",
+      };
+    });
   }
 
   const [updateUser] = useMutation(UPDATE_USER);
@@ -103,6 +120,19 @@ export default function ProfileDialog(props) {
     setUserProps(key, "");
     document.getElementsByName(key)[0].value = "";
   };
+
+  let {
+    loading,
+    error,
+  } = useMutation(UPDATE_USER, {
+    variables: {
+      user,
+    },
+  });
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+  
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
@@ -143,7 +173,7 @@ export default function ProfileDialog(props) {
             ></InputTextField>
             <InputTextField
               label="Email"
-              disabeled
+              disabled={true}
               defaultValue={user.email}
               clearTextField={() => {}}
             ></InputTextField>
@@ -171,8 +201,8 @@ export default function ProfileDialog(props) {
                 setUserPayment(e);
               }}
               clearTextField={() => {
-                clearTextField("selectedPayment");
-                user.payment[user.selectedPaymentMethod] = "";
+                clearUserPayment(user.selectedPaymentMethod);
+                console.log(user.payment);
               }}
             ></InputTextField>
           </InputBox>
@@ -180,8 +210,8 @@ export default function ProfileDialog(props) {
             <SaveButton
               variant="contained"
               onClick={() => {
-                saveUser();
                 updateUserInfo();
+                setOpenDialog(false);
                 addToast("User Information Updated", {
                   appearance: "success",
                 });

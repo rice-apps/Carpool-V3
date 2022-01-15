@@ -62,13 +62,20 @@ const Profile = () => {
     window.history.back();
   }
 
-  const paymentKeys = user.payment ? Object.keys(user.payment) : undefined; //["Venmo", "Zelle"]
+  const paymentKeys = user.payment ? Object.keys(user.payment) : undefined; //["Venmo", "Zelle", "Other"]
   let paymentType = "";
 
   //set paymentType to Venmo or Zelle or Other, in that order of priority
   if (paymentKeys) {
-    paymentType = paymentKeys[0] !== "" ? paymentKeys[0] : paymentKeys[1];
+    if (user.payment["Venmo"] && user.payment["Venmo"] !== "") {
+      paymentType = "Venmo";
+    } else if (user.payment["Zelle"] && user.payment["Zelle"] !== "") {
+      paymentType = "Zelle";
+    } else {
+      paymentType = "Other";
+    }
   }
+  console.log("paymentType", paymentType);
 
   return (
     <div>
