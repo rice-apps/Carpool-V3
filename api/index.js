@@ -92,6 +92,7 @@ app.use(function(err, req, res, next) {
 
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "https://carpool.riceapps.org/");
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
 
