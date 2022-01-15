@@ -82,7 +82,7 @@ const YourRides = (paid) => {
     if (loading) return <p>loading...</p>;
 
     return (
-        <div> 
+        // <div> 
             <OverallPage>
                 <OverallPageTitle>Your Rides</OverallPageTitle>
                 <UpcomingRidesSection>
@@ -114,7 +114,7 @@ const YourRides = (paid) => {
                     })}
                 </PastRidesSection>
             </OverallPage>
-        </div>
+        // </div>
     )
 }
 
