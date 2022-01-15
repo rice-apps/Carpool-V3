@@ -146,7 +146,10 @@ const FormOnly = (props) => {
               variant='outlined'
               size='small'
           >
-              {
+              <MenuBox value="">
+                None
+              </MenuBox>
+              { 
                   PossibleLocations.map((option, locInd) => (
                       <MenuBox key = {option._id} value = {locInd}>
                           {option.title}
@@ -167,6 +170,9 @@ const FormOnly = (props) => {
                 variant='outlined'
                 size='small'
             >
+              <MenuBox value="">
+                None
+              </MenuBox>
               {
                   PossibleLocations.map((option, locInd) => (
                       <MenuBox key = {option._id} value = {locInd}>
