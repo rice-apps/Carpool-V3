@@ -47,8 +47,8 @@ app.use(bodyParser.urlencoded({
 // Apply cors for dev purposes
 app.use(cors({
     // Set CORS options here
-    // origin: "https://carpool.riceapps.org/",
-    // credentials: true
+    origin: "https://carpool.riceapps.org/",
+    credentials: true
 }))
 
 // Add JWT so that it is AVAILABLE; does NOT protect all routes (nor do we want it to)
@@ -88,6 +88,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.send('error');
+});
+
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "https://carpool.riceapps.org/");
+  next();
 });
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
