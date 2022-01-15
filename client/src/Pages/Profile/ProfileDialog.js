@@ -163,6 +163,7 @@ export default function ProfileDialog(props) {
               <MenuItem value="Other">Other</MenuItem>
             </PaymentSelect>
             <InputTextField
+              label="Account ID"
               name="selectedPayment"
               defaultValue={user.selectedPayment}
               value={user.selectedPayment}

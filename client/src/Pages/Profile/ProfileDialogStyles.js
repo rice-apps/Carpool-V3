@@ -30,7 +30,7 @@ export const ProfileDialogContainer = styled.div`
 `;
 
 export const IconBox = styled(Box)({
-  height: "22%",
+  height: "15%",
   width: "100%",
   justifyContent: "center",
   alignItems: "center",
@@ -53,7 +53,7 @@ export const ButtonBox = styled(Box)({
 
 export const ProfileEditIcon = styled(EditIcon)({
   position: "absolute",
-  top: "9%",
+  top: "6%",
   left: "56%",
   color: "#2075D8",
   fontSize: "4vh",
@@ -73,6 +73,7 @@ export const CloseProfileIcon = styled(CloseIcon)({
 export const Label = styled(InputLabel)({
   fontFamily: "Josefin Sans",
   color: "#2075d8",
+  paddingBottom: "1vh"
 });
 
 export const PaymentSelect = styled(Select)({
@@ -81,11 +82,14 @@ export const PaymentSelect = styled(Select)({
 });
 
 export const SaveButton = styled(Button)({
+  fontFamily: "Josefin Sans",
+  fontSize: "2vh",
   background: "#2075D8",
   color: "white",
-  borderRadius: "1.5vw",
+  borderRadius: "2vw",
   width: "100%",
-  height: "60%",
+  height: "50%",
+  textTransform: "none"
 });
 
 export const ProfileStyles = makeStyles((theme) => ({
@@ -112,7 +116,7 @@ export function InputTextField(props) {
   return (
     <TextField
       name={name}
-      InputProps={{ className: classes.inputContent }}
+      style={{paddingBottom: "1vh"}}
       variant="filled"
       label={label}
       defaultValue={defaultValue}
@@ -124,7 +128,8 @@ export function InputTextField(props) {
         className: [classes.inputLabel],
       }}
       InputProps={{
-        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8" },
+        className: classes.inputContent,
+        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8", height: "6vh" },
         endAdornment: (
           <InputAdornment position="end">
             <CloseIcon onClick={() => clearTextField()} />
