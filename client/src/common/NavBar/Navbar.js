@@ -99,7 +99,10 @@ export default function ButtonAppBar (props) {
 
   const logout = () => {
     localStorage.clear();
-    window.location.reload()
+    //window.location.reload()
+    window.location.replace("/home")
+    
+
   }
 
   const login = () => {
@@ -114,14 +117,14 @@ export default function ButtonAppBar (props) {
   )
 
   const showLogin = (toggleDrawer) => (
-      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true" onClick = {toggleDrawer}>
-        <LogInOutButton onClick = {() => {login()}} component = {Link} to = "/login">Login</LogInOutButton>
+      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+        <LogInOutButton onClick = {() => {toggleDrawer(); login();}} component = {Link} to = "/login">Login</LogInOutButton>
       </ListItem>
   )
 
   const showLogout = (toggleDrawer) => (
-    <ListItem className={classes.logInOutContainer} onClick = {toggleDrawer}>
-      <LogInOutButton onClick = {() => {logout()}}>Logout</LogInOutButton>
+    <ListItem className={classes.logInOutContainer}>
+      <LogInOutButton onClick = {() => {toggleDrawer(); logout();}}>Logout</LogInOutButton>
     </ListItem>
   )
 
@@ -130,7 +133,7 @@ export default function ButtonAppBar (props) {
     <div>
       <List className = {classes.list}>
         {loggedIn ? showUsername(toggleDrawer) : showLogin(toggleDrawer)}
-        <ListItem button component = {Link} to = "/home" onClick = {toggleDrawer}>
+        <ListItem button component = {Link} to = "/search" onClick = {toggleDrawer}>
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Home"/>
         </ListItem>
