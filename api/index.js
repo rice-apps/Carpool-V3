@@ -47,7 +47,7 @@ app.use(bodyParser.urlencoded({
 // Apply cors for dev purposes
 app.use(cors({
     // Set CORS options here
-    origin: "https://carpool.riceapps.org/",
+    origin: "*",
     credentials: true
 }))
 
@@ -91,8 +91,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.use(function(req, res, next) {
-  req.setHeader("")
-  res.setHeader("Access-Control-Allow-Origin", "https://carpool.riceapps.org/");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
