@@ -235,6 +235,7 @@ const Create = ({onCreate}) => {
                                 labelid='Date and Time'
                                 inputVariant='outlined'
                                 format="MM/dd/yyyy"
+                                disablePast={true}
                                 value={date}
                                 onChange={setDate}
                             >
