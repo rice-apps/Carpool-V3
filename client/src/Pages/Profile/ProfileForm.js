@@ -16,12 +16,18 @@ const ProfileForm = ({ onSubmit }) => {
     const[paymentOption, setPaymentOption] = useState('');
     const[paymentAccount, setPaymentAccount] = useState('');
 
-    return (
-        <form onSubmit={() => onSubmit({
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        return onSubmit({
             firstName, lastName,
             email, phone,
             paymentOption, paymentAccount
-        })}>
+        });
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
             <Header>
                 <p>
                     Edit Profile Information
