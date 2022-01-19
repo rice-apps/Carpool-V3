@@ -262,11 +262,11 @@ const Create = ({onCreate}) => {
                     item
                     xs = {12}
                 >   
-                    {/* <InputBox id = 'Notes'>Notes</InputBox> */}
+                    <InputBox id = 'Notes'>Notes</InputBox>
 
                     <TextFieldBox 
-                        id="outlined-basic" 
-                        label="Notes" 
+                        id="outlined-basic"
+                        // label="Notes" Adding this would give it a label that moves when user enters textbox! cool effect
                         labelId="Notes"
                         variant="outlined"
                         value={notes}
