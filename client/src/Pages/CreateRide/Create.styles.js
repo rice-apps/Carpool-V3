@@ -5,6 +5,7 @@ import {
     MenuItem,
     Button, 
     Select, 
+    TextField,
     InputLabel,
     FormControlLabel, 
     Checkbox, 
@@ -95,6 +96,24 @@ export const ColorButton = withStyles({
         fontSize: '13px',
     }
   })(InputLabel);
+
+
+  // NEW!
+  export const TextFieldBox = withStyles({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: 'white',
+      borderRadius: 8,
+      border: 0,
+      borderColor: '#0B3669',
+      color: '#0B3669',
+      fontFamily: 'Josefin Sans',
+      fontSize: '13px',
+    }
+  })(TextField);
+
 
   export const FormControlLabelBox = withStyles({
     label: {
