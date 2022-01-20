@@ -183,7 +183,8 @@ const RideSummary = () => {
       <RidersDiv>
         <HostDiv>Host</HostDiv>
         <RidersComponents>
-        <OneRiderContainer>
+          <div onClick={e => history.push("/profile/" + ride.owner.netid)}>
+            <OneRiderContainer>
                 <div key={ride.owner.netid}>
                   <IoPersonCircleSharpDiv>
                     <IoPersonCircleSharp></IoPersonCircleSharp>
@@ -192,12 +193,13 @@ const RideSummary = () => {
                 <RiderText>
                 {ride.owner.firstName}&nbsp;{ride.owner.lastName}
                 </RiderText>
-          </OneRiderContainer>
+              </OneRiderContainer>
+            </div>
           <LineDiv>
             <hr></hr>
           </LineDiv>
           {ride.riders.slice(0, 3).map((person) => (
-            <div>
+            <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
                   <IoPersonCircleSharpDiv>
