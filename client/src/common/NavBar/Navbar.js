@@ -10,6 +10,9 @@ import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
+  appbarRoot: {
+    zIndex:"999"
+  },
   icon: {
     color:"#002140",
   },
@@ -96,45 +99,52 @@ export default function ButtonAppBar (props) {
 
   const logout = () => {
     localStorage.clear();
-    window.location.reload()
+    //window.location.reload()
+    window.location.replace("/home")
+    
+
   }
 
-  const showUsername = () => (
-    <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer}>
+  const login = () => {
+    localStorage.setItem('nextPage', window.location.pathname);
+  }
+
+  const showUsername = (toggleDrawer) => (
+    <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer} onClick = {toggleDrawer}>
       <Avatar className = {classes.avatarIcon}/>
       <ListItemText className = {classes.text} primary = {user.firstName + " " + user.lastName}/>
     </ListItem>
   )
 
-  const showLogin = () => (
+  const showLogin = (toggleDrawer) => (
       <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
-        <LogInOutButton component = {Link} to = "/login">Login</LogInOutButton>
+        <LogInOutButton onClick = {() => {toggleDrawer(); login();}} component = {Link} to = "/login">Login</LogInOutButton>
       </ListItem>
   )
 
-  const showLogout = () => (
+  const showLogout = (toggleDrawer) => (
     <ListItem className={classes.logInOutContainer}>
-      <LogInOutButton onClick = {() => {logout()}}>Logout</LogInOutButton>
+      <LogInOutButton onClick = {() => {toggleDrawer(); logout();}}>Logout</LogInOutButton>
     </ListItem>
   )
 
   // Eventually should make this extensible
-  const drawerItems = () => (
+  const drawerItems = (toggleDrawer) => (
     <div>
       <List className = {classes.list}>
-        {loggedIn ? showUsername() : showLogin()}
-        <ListItem button component = {Link} to = "/home">
+        {loggedIn ? showUsername(toggleDrawer) : showLogin(toggleDrawer)}
+        <ListItem button component = {Link} to = "/search" onClick = {toggleDrawer}>
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Home"/>
         </ListItem>
-        <ListItem button disabled = {!loggedIn} component = {Link} to = "/your-rides">
+        <ListItem button disabled = {!loggedIn} component = {Link} to = "/your-rides" onClick = {toggleDrawer}>
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about">
+        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about" onClick = {toggleDrawer}>
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
-        {loggedIn ? showLogout() : null}
+        {loggedIn ? showLogout(toggleDrawer) : null}
       </List>
     </div>
   );
@@ -143,14 +153,14 @@ export default function ButtonAppBar (props) {
     <div>
     {showBar ?
     <div>
-        <AppBar position="fixed" color="white" elevation="0"> 
+        <AppBar position="fixed" color="white" elevation="0" className={classes.appbarRoot}> 
           <Toolbar>
             <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
-                <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
-                  {drawerItems()}
-                </Drawer>
             </IconButton>
+            <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
+                  {drawerItems(toggleDrawer)}
+            </Drawer>
           </Toolbar>
         </AppBar>
         <Toolbar/>

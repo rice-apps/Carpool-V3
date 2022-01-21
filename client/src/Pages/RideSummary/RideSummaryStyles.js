@@ -38,7 +38,8 @@ const SocialIcon = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 5px;
-  font-size: 25px
+  font-size: 25px;
+  cursor: pointer;
 
 `
 const RideSummaryDiv = styled.div`
@@ -208,6 +209,7 @@ const ButtonDiv = styled.button`
   border-radius: 8px;
   width: 100%;
   height: 48px;
+  cursor: pointer;
   onclick='joinRide()';
   
 `
@@ -265,7 +267,8 @@ margin-left: 20px;
 font-family: Josefin Sans;
 font-style: normal;
 line-height: 11px;
-font-size: 24px
+font-size: 24px;
+cursor: pointer;
 `
 
 const InnerLocationDiv = styled.div`

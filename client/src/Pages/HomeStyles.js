@@ -31,8 +31,6 @@ const CarpoolHeader = styled.header`
   color: white;
   margin-top: 3vh;
   line-height:0.90;
-  margin-left: 5vw;
-  margin-right: 5vw;
 `
 
 const SearchButton = styled.button`

@@ -5,6 +5,7 @@ display: flex;
 align-items: center;
 flex-direction: column;
 font-family: Josefin Sans;
+overflow-x: hidden;
 `;
 
 const OverallPageTitle = styled.div`

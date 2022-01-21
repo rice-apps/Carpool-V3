@@ -71,7 +71,6 @@ const GET_RIDE = gql`
 `
 const RideSummary = () => {
   let { id } = useParams()
-  // const [getVariables, setVariables] = useState({})
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading"},
     arrivalLocation: {title: "Loading"},
@@ -83,8 +82,8 @@ const RideSummary = () => {
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
   })
- 
 
+  
   const JOIN_RIDE = gql`
     mutation JoinRide($rideID: ID!) {
       addRider(rideID: $rideID) {
@@ -99,7 +98,13 @@ const RideSummary = () => {
 
   useEffect(() => {
     if (data) {
-      let ride = {...data.rideOne,owner:{netid:"mbo",lastName:"Temp",firstName:"Temp"}}
+      let ride;
+      if(!data.rideOne.owner){
+        ride = {...data.rideOne,owner:{netid:"err",lastName:"owner",firstName:"No"}}
+      }
+      else {
+        ride = {...data.rideOne}
+      }
       setRide(ride)
       console.log(ride)
     }
@@ -108,7 +113,6 @@ const RideSummary = () => {
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
-  // const { rideOne: ride } = data
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
@@ -120,6 +124,11 @@ const RideSummary = () => {
     joinRide()
   }
 
+  const goBack = () => {
+    let lastPage = '/' + localStorage.getItem('lastPage');
+    history.push(lastPage);
+  }
+
   const time = moment(ride.departureDate)
   const mon = time.format('MMM').toString()
   const day = time.format('DD').toString()
@@ -127,7 +136,7 @@ const RideSummary = () => {
 
   return (
     <AllDiv>
-      <BackArrowDiv>
+      <BackArrowDiv onClick={() => goBack()}>
         <IoIosArrowBack></IoIosArrowBack>
       </BackArrowDiv>
       <RideSummaryDiv>
@@ -145,7 +154,6 @@ const RideSummary = () => {
             <LocationText>
               <DepartureIconDiv style={{ fontSize: '7vw' }}></DepartureIconDiv>
               <DepartureDiv>
-                {/* Rice Univ */}
                 {ride.departureLocation.title}
               </DepartureDiv>
               <LocationArrowDiv>
@@ -175,7 +183,8 @@ const RideSummary = () => {
       <RidersDiv>
         <HostDiv>Host</HostDiv>
         <RidersComponents>
-        <OneRiderContainer>
+          <div onClick={e => history.push("/profile/" + ride.owner.netid)}>
+            <OneRiderContainer>
                 <div key={ride.owner.netid}>
                   <IoPersonCircleSharpDiv>
                     <IoPersonCircleSharp></IoPersonCircleSharp>
@@ -184,12 +193,13 @@ const RideSummary = () => {
                 <RiderText>
                 {ride.owner.firstName}&nbsp;{ride.owner.lastName}
                 </RiderText>
-          </OneRiderContainer>
+              </OneRiderContainer>
+            </div>
           <LineDiv>
             <hr></hr>
           </LineDiv>
           {ride.riders.slice(0, 3).map((person) => (
-            <div>
+            <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
                   <IoPersonCircleSharpDiv>

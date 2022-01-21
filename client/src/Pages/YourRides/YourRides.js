@@ -4,7 +4,6 @@ import PastRideCard from './PastRideCard.js';
 import { gql, useQuery} from "@apollo/client";
 import moment from "moment";
 
-
 import { 
     OverallPageTitle, 
     UpcomingRidesSection, 
@@ -83,7 +82,7 @@ const YourRides = (paid) => {
     if (loading) return <p>loading...</p>;
 
     return (
-        <div> 
+        // <div> 
             <OverallPage>
                 <OverallPageTitle>Your Rides</OverallPageTitle>
                 <UpcomingRidesSection>
@@ -91,6 +90,7 @@ const YourRides = (paid) => {
                     {futureRides.map(ride => {
                         return (
                             <UpcomingRideCard 
+                                id={ride._id}
                                 origin={ride.departureLocation.title} 
                                 destination={ride.arrivalLocation.title}
                                 datetime={ride.departureDate}
@@ -104,24 +104,23 @@ const YourRides = (paid) => {
                     {prevRides.map(ride => {
                         return (
                             <PastRideCard 
+                                id={ride._id}
                                 origin={ride.departureLocation.title} 
                                 destination={ride.arrivalLocation.title}
                                 datetime={ride.departureDate}
                             />
+                        
                         )
                     })}
                 </PastRidesSection>
             </OverallPage>
-        </div>
+        // </div>
     )
 }
 
-// FOR NOW, USING FOR TESTING FRONT END
-// DO WE HAVE TO CHECK FOR TYPE OR SPECIFY AT LEAST?
 YourRides.defaultProps = {
     origin: 'RMC',
     destination: 'IAH',
-    // WILL BE IN ISOstring
     datetime: Date.now(),
     notification: true,
     paid: true

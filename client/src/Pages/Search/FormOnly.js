@@ -1,14 +1,15 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 import {
     MenuItem,
+    Select,
     Grid, 
 } from '@material-ui/core';
 
-import "@fontsource/source-sans-pro";
-import TextField from '@material-ui/core/TextField';
+import "@fontsource/source-sans-pro"; 
 import {
   Form,
   SelectBox,
@@ -18,18 +19,16 @@ import {
 } from './FormOnly.styles'
 
 const FormOnly = (props) => {
-
   const PossibleLocations = props.testLocations;
 
   const currentDate = new Date();
 
   const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
 
+  // initial filter: filters rides that are past current date
   useEffect(() => {
-    console.log("useEffect run()");
     props.getRidesRefetch()
     .then((res) => {
-      console.log("in useEffect refetchRide().then() res.data.rideMany=", res.data.rideMany);
 
       const ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
         const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
@@ -47,28 +46,19 @@ const FormOnly = (props) => {
 
   const displayRef = props.displayRef;
 
-  let temp = 3;
-
-  const startValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  const endValue = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+14);
+  const todayDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  const maxDate = new Date(new Date().getFullYear()+1, new Date().getMonth(), new Date().getDate());
-
-  console.log("startValue=" + startValue + " endValue=" + endValue + " minDate=" + minDate + " maxDate=" + maxDate);
-
-  const dictNames = {startLoc: 0, endLoc: 1, date: 2, numberPeople: 3}
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
 
-  const [dateRange, setDateRange] = useState([startValue, endValue])
-  
+  // state for filter date
+  const [filterDate, setfilterDate] = useState(todayDate);
+
   const [numberPeople, setNumberPeople] = useState(null)
 
-  const [indSelected, setIndSelected] = useState(-1)
-
+  // does actual filtering, produces resultDestArr
   useEffect(() => {
-    console.log("form changed!");
     let resultDestArr = null;
     props.getRidesRefetch()
     .then((res) => {
@@ -79,8 +69,9 @@ const FormOnly = (props) => {
       if (endLoc !== "") {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.arrivalLocation.title === PossibleLocations[endLoc].title);});
       }
-      if (dateRange[0] != null && dateRange[1] != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return compareDates(new Date(ele.departureDate), dateRange[0], true) && !compareDates(new Date(ele.departureDate), dateRange[1], false);});
+      // filters by only start date and only by year, month, day
+      if (filterDate != null) {
+        resultDestArr = resultDestArr.filter((ele) => { return isSameDay(new Date(ele.departureDate), new Date(filterDate));});
       }
       if (numberPeople != null) {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
@@ -90,9 +81,16 @@ const FormOnly = (props) => {
       console.log("err=", err);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startLoc, endLoc, numberPeople, dateRange])
+  }, [startLoc, endLoc, numberPeople, filterDate]);
 
+  // returns true of date1 and date2 are on the same day, returns false otherwise
+  const isSameDay = (date1, date2) => {
+    return (date1.getFullYear() === date2.getFullYear()
+            && date1.getMonth() === date2.getMonth()
+            && date1.getDate() === date2.getDate());
+  };
 
+  // checks that date1 < date2 (still need for the initial filter)
   const compareDates = (date1, date2, equals) => {
     const d1 = [date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getHours(), date1.getMinutes()]
     const d2 = [date2.getFullYear(), date2.getMonth(), date2.getDate(), date2.getHours(), date2.getMinutes()]
@@ -114,21 +112,11 @@ const FormOnly = (props) => {
   }
   
   const handleClickStartLoc = (locInd) => {
-    console.log("handleClickStartLoc() run, locInd=", locInd);
     setStartLoc(locInd);
-
-    //setIsSelectedDestAny(true);
-    setIndSelected(dictNames.startLoc);
-    console.log(JSON.parse(JSON.stringify(indSelected)));
   }
 
   const handleClickEndLoc = (locInd) => {
-    console.log("handleClickEndLoc() run, locInd=", locInd);
     setEndLoc(locInd);
-
-    //setIsSelectedDestAny(true);
-    setIndSelected(dictNames.endLoc);
-    console.log(JSON.parse(JSON.stringify(indSelected)));
   }    
     
   return (
@@ -151,6 +139,17 @@ const FormOnly = (props) => {
 
           <InputBox id = 'StartLoc'>Departure Location</InputBox>
           <SelectBox
+              MenuProps={{
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left"
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left"
+                },
+                getContentAnchorEl: null
+              }}
               id="Start Location Search Bar"
               labelId='StartLoc'
               value={startLoc}
@@ -158,7 +157,10 @@ const FormOnly = (props) => {
               variant='outlined'
               size='small'
           >
-              {
+              <MenuBox value="">
+                None
+              </MenuBox>
+              { 
                   PossibleLocations.map((option, locInd) => (
                       <MenuBox key = {option._id} value = {locInd}>
                           {option.title}
@@ -172,6 +174,17 @@ const FormOnly = (props) => {
         <Grid  item xs = {12}>
           <InputBox id = 'EndLoc'>Destination</InputBox>
             <SelectBox
+                MenuProps={{
+                  anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "left"
+                  },
+                  transformOrigin: {
+                    vertical: "top",
+                    horizontal: "left"
+                  },
+                  getContentAnchorEl: null
+                }}
                 id="End Location Search Bar"
                 labelId='EndLoc'
                 value={endLoc}
@@ -179,6 +192,9 @@ const FormOnly = (props) => {
                 variant='outlined'
                 size='small'
             >
+              <MenuBox value="">
+                None
+              </MenuBox>
               {
                   PossibleLocations.map((option, locInd) => (
                       <MenuBox key = {option._id} value = {locInd}>
@@ -197,37 +213,50 @@ const FormOnly = (props) => {
           >
             <Grid item xs = {12}>
               <InputBox id = 'Date'>Date</InputBox>
-              <DateRangePickerComponent placeholder="Enter Date Range"
-                startDate={startValue}
-                endDate={endValue}
-                min={minDate}
-                max={maxDate}
-                format="dd-MMM-yy"
-                value={dateRange}
-                change={(e) => {setDateRange([e.startDate, e.endDate]); console.log("DateRangePickerComponent new e=", e);}}
-              >
-              </DateRangePickerComponent>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DatePicker
+                  clearable
+                  value={filterDate}
+                  onChange={date => setfilterDate(date)}
+                  minDate={minDate}
+                  format="MMM dd, yyyy"
+                />
+              </MuiPickersUtilsProvider>
             </Grid>
           </Grid>
         </Grid>
         <Grid  item xs = {12}>
-          <Grid
+          <Grid 
             container
             direction='row'
             justifyContent='center'
             alignItems='center'
-            spacing = '1'
+            spacing = "1"
           >
-            <Grid item>   
-            <TextField id="number-people" select value={numberPeople} onChange={e => {setNumberPeople(e.target.value); temp=e.target.value; console.log("temp=" + temp)}}>
-              { [1,2,3,4,5,6,7,8,9,10,11,12,13].map((ele) => (
-                <MenuItem key={ele} value={ele}>{ele}</MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item>
+            <Grid item>
+              <Select 
+                MenuProps={{
+                  anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "left"
+                  },
+                  transformOrigin: {
+                    vertical: "top",
+                    horizontal: "left"
+                  },
+                  getContentAnchorEl: null
+                }} 
+                id="number-people" 
+                value={numberPeople} 
+                onChange={e => {setNumberPeople(e.target.value);}}>
+                  { [1,2,3,4,5].map((ele) => (
+                  <MenuItem value={ele}>{ele}</MenuItem>
+                  ))}
+              </Select>
+            </Grid>
+            <Grid item>
               <BodyText>{"Number of People"}</BodyText> 
-          </Grid>
+            </Grid>        
         </Grid>
       </Grid>
     </Grid>

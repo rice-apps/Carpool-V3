@@ -1,181 +1,141 @@
-import styled from 'styled-components'
+import styled from "styled-components";
+import React from "react";
+import Box from "@material-ui/core/Box";
+import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import {
+  Button,
+  DialogContent,
+  InputLabel,
+  makeStyles,
+  TextField,
+  Select,
+} from "@material-ui/core";
+import { InputAdornment } from "@material-ui/core";
 
-export const Header = styled.header`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2em;
-    min-height: 10vh;
-    background-color: white;
-    color: navy;
-`
-export const EditName = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1vh;
-    background-color: white;
-    color: navy;
-`
+export const StyledDialogContent = styled(DialogContent)({
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
+});
 
-export const EditContactInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3vh;
-    background-color: white;
-    color: navy;
-`
+export const ProfileDialogContainer = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+`;
 
-export const EditPaymentOptions = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3vh;
-    background-color: white;
-    color: navy;
-`
+export const IconBox = styled(Box)({
+  height: "15%",
+  width: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  display: "flex",
+});
 
-export const SubmitButton = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height:10vh;
-    width: 70vw;
-    margin: auto;
-    top: 29vh;
-    left: 0.3vw;
-    position: relative;
-`
+export const InputBox = styled(Box)({
+  height: "16%",
+  width: "75%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+});
 
-export const Popup = styled.div`
-   width: 77vw;
-   height: 77vh;
-  border-radius: 25px;
-  color: white;
-  left: 20vw;
-  position:0vw;
-`
-export const IconContainer = styled.div`
-    position: relative;
-    top: 3.5vh;
-    left: 29.45vw;
-`
-export const NameSectionHeader = styled.header`
-    font-family: Josefin Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 3px;
-    color: #2075D8;
-    position: relative;
-    top: 9vh;
-    left: 10vw;
-`
-export const FirstNameTextBox = styled.div`
-    position: relative;
-    width: 58vw;
-    height: 5vh;
-    top: 10vh;
-    left: 9vw;
-    border-radius:2.0em;    
-`
-export const LastNameTextBox = styled.div`
-    position: relative;
-    width: 58vw;
-    height: 5vh;
-    top: 11vh;
-    left: 9vw;
-    border-radius:2.0em;
-`
+export const ButtonBox = styled(Box)({
+  height: "14%",
+  width: "90%",
+  display: "flex",
+});
 
-export const ContactSectionHeader = styled.header`
-    font-family: Josefin Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 3px;
-    color: #2075D8;
-    position: relative;
-    top: 16vh;
-    left: 10vw;
-`
+export const ProfileEditIcon = styled(EditIcon)({
+  position: "absolute",
+  top: "6%",
+  left: "56%",
+  color: "#2075D8",
+  fontSize: "4vh",
+});
 
-export const PhoneTextBox = styled.div`
-    position: relative;
-    width: 58vw;
-    height: 5vh;
-    top: 17vh;
-    left: 9vw;
-    border-radius:2.0em;
-`
-export const EmailTextBox = styled.div`
-    position: relative;
-    width: 58vw;
-    height: 5vh;
-    top: 17vh;
-    left: 9vw;
-    border-radius:2.0em;
-`
+export const ProfileIcon = styled(AccountCircleIcon)({
+  fontSize: "14vh",
+  color: "#002140",
+});
 
-export const PaymentSectionHeader = styled.header`
-    font-family: Josefin Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 3px;
-    color: #2075D8;
-    position: relative;
-    top: 26vh;
-    left: 10vw;
-`
+export const CloseProfileIcon = styled(CloseIcon)({
+  position: "absolute",
+  top: "2%",
+  right: "5%",
+});
 
-export const PaymentDropdown = styled.div`
-    display: flex;    
-    flex-direction: column;    
-    align-items: center;    
-    justify-content: center;    
-    top: 60vh;
-    left: 9.5vw;
+export const Label = styled(InputLabel)({
+  fontFamily: "Josefin Sans",
+  color: "#2075d8",
+  paddingBottom: "1vh"
+});
 
-    background-color: white;    
-    color: navy;
-    position: absolute;
-`
+export const PaymentSelect = styled(Select)({
+  borderRadius: "2vw",
+  border: "1px solid #2075D8",
+});
 
-export const PaymentTextBox = styled.div`
-    position: relative;
-    width: 58vw;
-    height: 5vh;
-    top: 30vh;
-    left: 9vw;
-    border-radius:2.0em;
-`
+export const SaveButton = styled(Button)({
+  fontFamily: "Josefin Sans",
+  fontSize: "2vh",
+  background: "#2075D8",
+  color: "white",
+  borderRadius: "2vw",
+  width: "100%",
+  height: "50%",
+  textTransform: "none"
+});
 
-export const HideAppBar = styled.div`
-`
+export const ProfileStyles = makeStyles((theme) => ({
+  inputContent: {
+    background: "rgb(187,218,255,0.22)",
+    color: "#2075D8",
+    height: "5vh",
+  },
+  inputLabel: {
+    fontSize: 15,
+    color: "#2075D8",
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(5),
+    top: theme.spacing(4),
+    color: theme.palette.grey[500],
+  },
+}));
 
-// export {
-//     Header,
-//     EditName,
-//     EditContactInfo,
-//     EditPaymentOptions,
-//     SubmitButton,
-//     HideAppBar,
-//     SubmitButton,
-//     NameSectionHeader,
-//     ContactSectionHeader,
-//     PaymentSectionHeader,
-//     FirstNameTextBox,
-//     LastNameTextBox,
-//     PhoneTextBox,
-//     EmailTextBox,
-//     PaymentTextBox,
-//     Popup,
-//     PaymentDropdown,
-//     IconContainer,
-// }
+export function InputTextField(props) {
+  const classes = ProfileStyles();
+  const { label, name, defaultValue, onChange, value, clearTextField } = props;
+  return (
+    <TextField
+      name={name}
+      style={{paddingBottom: "1vh"}}
+      variant="filled"
+      label={label}
+      defaultValue={defaultValue}
+      fullWidth={true}
+      onChange={onChange}
+      value={value}
+      clearTextField={clearTextField}
+      InputLabelProps={{
+        className: [classes.inputLabel],
+      }}
+      InputProps={{
+        className: classes.inputContent,
+        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8", height: "6vh" },
+        endAdornment: (
+          <InputAdornment position="end">
+            <CloseIcon onClick={() => clearTextField()} />
+          </InputAdornment>
+        ),
+      }}
+    ></TextField>
+  );
+}

@@ -1,20 +1,26 @@
-import {Header, EditName, EditContactInfo, EditPaymentOptions, SubmitButton} from './ProfileDialogStyles';
-import React, { useState} from 'react';
-import {TextField} from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import {
+  Header,
+  EditName,
+  EditContactInfo,
+  EditPaymentOptions,
+  SubmitButton,
+} from "./ProfileFormStyles";
+import React, { useState } from "react";
+import { TextField } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const ProfileForm = ({ onSubmit }) => {
-    const[firstName, setFirstName] = useState('');
-    const[lastName, setLastName] = useState('');
-    const[email, setEmail] = useState('');
-    const[phone, setPhone] = useState('');
-    const[paymentOption, setPaymentOption] = useState('');
-    const[paymentAccount, setPaymentAccount] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [paymentOption, setPaymentOption] = useState("");
+  const [paymentAccount, setPaymentAccount] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -74,4 +80,4 @@ const ProfileForm = ({ onSubmit }) => {
     ) 
 }
 
-export default ProfileForm
+export default ProfileForm;
