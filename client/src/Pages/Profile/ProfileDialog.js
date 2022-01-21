@@ -165,7 +165,6 @@ export default function ProfileDialog(props) {
               type="file"
               onChange={(e) => {
                 setImageSelected(e.target.files[0]);
-                setid(e.target.getAttribute("public-id"));
               }}
             />
             <button onClick={() => uploadImage()}>Upload Image</button>
@@ -174,9 +173,6 @@ export default function ProfileDialog(props) {
           <Image
             style={{ width: 200 }}
             cloudName="dnsw4xdiz"
-            // publicId={imageSelected.public_id}
-            // publicId="https://res.cloudinary.com/dnsw4xdiz/image/upload/v1642718833/fnf3qrm2guzwtzscstgu.jpg"
-            //so "https://res.cloudinary.com/dnsw4xdiz/image/upload/"+public_id
             publicId={"https://res.cloudinary.com/dnsw4xdiz/image/upload/" + id}
           />
 
