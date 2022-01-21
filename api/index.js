@@ -51,7 +51,17 @@ var corsOptions = {
 
 
 // Apply cors for dev purposes
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
+app.use(function(req, res, next) {
+  if (req.headers.origin) {
+      res.header('Access-Control-Allow-Credentials', true)
+      res.header('Access-Control-Allow-Headers', '*')
+      res.header('Access-Control-Allow-Methods', '*')
+      res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+      if (req.method === 'OPTIONS') return res.sendStatus(200);
+  }
+  next()
+})
 
 // Add JWT so that it is AVAILABLE; does NOT protect all routes (nor do we want it to)
 // Inspiration from: https://www.apollographql.com/blog/setting-up-authentication-and-authorization-with-apollo-federation
@@ -89,11 +99,11 @@ app.use(function(err, req, res, next) {
   res.send('error');
 });
 
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "https://carpool.riceapps.org/");
-  // res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "https://carpool.riceapps.org/");
+//   // res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
 
 // This connects apollo with express
 server.applyMiddleware({ app, path: "/graphql", cors: cors(corsOptions) });
