@@ -57,7 +57,7 @@ app.use(function(req, res, next) {
       res.header('Access-Control-Allow-Credentials', true)
       res.header('Access-Control-Allow-Headers', '*')
       res.header('Access-Control-Allow-Methods', '*')
-      res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+      res.header('Access-Control-Allow-Origin', 'https://carpool.riceapps.org/')
       if (req.method === 'OPTIONS') return res.sendStatus(200);
   }
   next()
@@ -106,8 +106,8 @@ app.use(function(err, req, res, next) {
 // });
 
 // This connects apollo with express
-server.applyMiddleware({ app, path: "/graphql", cors: cors(corsOptions) });
-// server.applyMiddleware({ app });
+// server.applyMiddleware({ app, path: "/graphql", cors: cors(corsOptions) });
+server.applyMiddleware({ app });
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
 app.listen({ port: PORT }, () => {
