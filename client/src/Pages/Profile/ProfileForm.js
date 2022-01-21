@@ -62,9 +62,9 @@ const ProfileForm = ({ onSubmit }) => {
                             required
                             onChange={(e) => setPaymentOption(e.target.value)}
                         >
-                            <MenuItem value={10}>Venmo</MenuItem>
-                            <MenuItem value={20}>Zelle</MenuItem>
-                            <MenuItem value={30}>Other</MenuItem>
+                            <MenuItem value="Venmo">Venmo</MenuItem>
+                            <MenuItem value="Zelle">Zelle</MenuItem>
+                            <MenuItem value="Other">Other</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
@@ -72,7 +72,17 @@ const ProfileForm = ({ onSubmit }) => {
                 <TextField id = "outlined-filled" label = "Pay to @" variant = "filled" value={paymentAccount} required onChange={(e) => setPaymentAccount(e.target.value)}/>
             </EditPaymentOptions>
             <SubmitButton>
-                <Button variant="contained" type="submit">
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        onSubmit({
+                        firstName,
+                        lastName,
+                        phone,
+                        payment: { [paymentOption]: paymentAccount }
+                        });
+                    }}
+                >
                     Submit
                 </Button>
             </SubmitButton>
