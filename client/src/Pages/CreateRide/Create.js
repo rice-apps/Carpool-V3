@@ -65,6 +65,11 @@ const Create = ({onCreate}) => {
             return
         }   
 
+        if (startLoc === endLoc) {
+            addToast("Ride departure and destination locations must be different.", { appearance: 'error' });
+            return;
+        }
+
         if (!confirmation) {
             addToast("You must agree to lead the ride to create this ride.", { appearance: 'error' });
             return
@@ -235,6 +240,7 @@ const Create = ({onCreate}) => {
                                 labelid='Date and Time'
                                 inputVariant='outlined'
                                 format="MM/dd/yyyy"
+                                disablePast={true}
                                 value={date}
                                 onChange={setDate}
                             >
