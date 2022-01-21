@@ -17,6 +17,8 @@ import {
   SaveButton,
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
+import Axios from "axios";
+import { Image } from "cloudinary-react";
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -121,18 +123,35 @@ export default function ProfileDialog(props) {
     document.getElementsByName(key)[0].value = "";
   };
 
-  let {
-    loading,
-    error,
-  } = useMutation(UPDATE_USER, {
+  let { loading, error } = useMutation(UPDATE_USER, {
     variables: {
       user,
     },
   });
 
+  const [imageSelected, setImageSelected] = useState("");
+  const [id, setid] = useState("");
+
+  const uploadImage = () => {
+    //constructing the form data we are uploading to cloudinary
+    const formData = new FormData();
+    formData.append("file", imageSelected);
+    //upload preset
+    formData.append("upload_preset", "gx855d5s");
+    //send information
+    //endpoint where data is sent
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/dnsw4xdiz/image/upload",
+      formData
+    ).then((response) => {
+      console.log("RESPONSE", response);
+      console.log(response["data"]["public_id"]);
+      setid(response["data"]["public_id"]);
+    });
+  };
+
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
-  
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
@@ -142,7 +161,24 @@ export default function ProfileDialog(props) {
             <ProfileIcon />
             <ProfileEditIcon />
             <CloseProfileIcon onClick={closeDialog} />
+            <input
+              type="file"
+              onChange={(e) => {
+                setImageSelected(e.target.files[0]);
+                setid(e.target.getAttribute("public-id"));
+              }}
+            />
+            <button onClick={() => uploadImage()}>Upload Image</button>
           </IconBox>
+
+          <Image
+            style={{ width: 200 }}
+            cloudName="dnsw4xdiz"
+            // publicId={imageSelected.public_id}
+            // publicId="https://res.cloudinary.com/dnsw4xdiz/image/upload/v1642718833/fnf3qrm2guzwtzscstgu.jpg"
+            //so "https://res.cloudinary.com/dnsw4xdiz/image/upload/"+public_id
+            publicId={"https://res.cloudinary.com/dnsw4xdiz/image/upload/" + id}
+          />
 
           <InputBox>
             <Label>Name:</Label>
