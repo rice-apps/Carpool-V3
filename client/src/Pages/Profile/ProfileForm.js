@@ -7,20 +7,14 @@ import {
 } from "./ProfileFormStyles";
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 
 const ProfileForm = ({ onSubmit }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [paymentOption, setPaymentOption] = useState("");
-  const [paymentAccount, setPaymentAccount] = useState("");
+  const [venmo, setVenmo] = useState(undefined);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +22,7 @@ const ProfileForm = ({ onSubmit }) => {
         return onSubmit({
             firstName, lastName,
             email, phone,
-            paymentOption, paymentAccount
+            venmo
         });
     };
 
@@ -51,25 +45,8 @@ const ProfileForm = ({ onSubmit }) => {
             </EditContactInfo>    
             <EditPaymentOptions>
                 Payment
-                <Box sx = {{minWidth: 120}}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Options</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={paymentOption}
-                            label="Options"
-                            required
-                            onChange={(e) => setPaymentOption(e.target.value)}
-                        >
-                            <MenuItem value="Venmo">Venmo</MenuItem>
-                            <MenuItem value="Zelle">Zelle</MenuItem>
-                            <MenuItem value="Other">Other</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Box>
                 <br></br>
-                <TextField id = "outlined-filled" label = "Pay to @" variant = "filled" value={paymentAccount} required onChange={(e) => setPaymentAccount(e.target.value)}/>
+                <TextField id = "outlined-filled" label = "Venmo Account" variant = "filled" value={venmo} onChange={(e) => setVenmo(e.target.value)}/>
             </EditPaymentOptions>
             <SubmitButton>
                 <Button
@@ -79,7 +56,7 @@ const ProfileForm = ({ onSubmit }) => {
                         firstName,
                         lastName,
                         phone,
-                        payment: { [paymentOption]: paymentAccount }
+                        venmo,
                         });
                     }}
                 >
