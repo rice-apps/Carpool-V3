@@ -1,12 +1,12 @@
 var createError = require('http-errors');
 var express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+import http from 'http';
 
 // var path = require('path');
 // var cookieParser = require('cookie-parser');
 var exjwt = require('express-jwt');
 var cors = require('cors')
-
 
 // Import hidden values from .env
 import { PORT, SECRET } from './config';
@@ -37,24 +37,16 @@ const server = new ApolloServer({
 
 // Initiate express
 var app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-var corsOptions = {
-  // Set CORS options here
-  origin: "https://carpool.riceapps.org",
-  credentials: true
-}
-
 
 // Apply cors for dev purposes
-app.use(cors(corsOptions))
+app.use(cors({
+    // Set CORS options here
+    // origin: "*"
+}))
+
 app.use(function(req, res, next) {
   if (req.headers.origin) {
-      console.log(req.headers.origin)
+      // console.log(req.headers.origin)
       res.header('Access-Control-Allow-Credentials', true)
       res.header('Access-Control-Allow-Headers', '*')
       res.header('Access-Control-Allow-Methods', '*')
@@ -70,6 +62,13 @@ app.use(exjwt({
   secret: SECRET, 
   credentialsRequired: false 
 }));
+
+// This connects apollo with express
+server.applyMiddleware({ app });
+
+// Create WebSockets server for subscriptions: https://stackoverflow.com/questions/59254814/apollo-server-express-subscriptions-error
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
 
 // If we have custom routes, we need these to accept JSON input
 // app.use(express.json());
@@ -100,17 +99,8 @@ app.use(function(err, req, res, next) {
   res.send('error');
 });
 
-// app.use(function(req, res, next) {
-//   res.setHeader("Access-Control-Allow-Origin", "https://carpool.riceapps.org/");
-//   // res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
-
-// This connects apollo with express
-// server.applyMiddleware({ app, path: "/graphql", cors: cors(corsOptions) });
-server.applyMiddleware({ app });
-
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
-app.listen({ port: PORT }, () => {
+httpServer.listen({ port: PORT }, () => {
     console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
 });
