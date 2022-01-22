@@ -85,15 +85,17 @@ const Profile = () => {
           <StyledText3>Ride Summary</StyledText3>
         </ButtonBox>
       </ReturnHeader>
-      <EditProfileButton>
-        <IconButton
-          aria-label="edit"
-          onClick={() => setOpenDialog(true)}
-          variant="outlined"
-        >
-          <EditIcon />
-        </IconButton>
-      </EditProfileButton>
+      {localStorage.getItem("netid") === user.netid && (
+        <EditProfileButton>
+          <IconButton
+            aria-label="edit"
+            onClick={() => setOpenDialog(true)}
+            variant="outlined"
+          >
+            <EditIcon />
+          </IconButton>
+        </EditProfileButton>
+      )}
       <ProfileDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}

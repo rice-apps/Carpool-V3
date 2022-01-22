@@ -1,6 +1,7 @@
-import { Dialog, MenuItem } from "@material-ui/core";
-import React, { useState } from "react";
+import { Dialog, MenuItem, Tooltip } from "@material-ui/core";
+import React, { useState, useRef } from "react";
 import { useToasts } from "react-toast-notifications";
+import { uploadImage } from "../Utils/ApiUtil.js";
 import {
   ProfileDialogContainer,
   IconBox,
@@ -8,6 +9,8 @@ import {
   ButtonBox,
   ProfileIcon,
   ProfileEditIcon,
+  ProfileEditButton,
+  ProfileImage,
   CloseProfileIcon,
   Label,
   InputTextField,
@@ -15,10 +18,9 @@ import {
   PaymentSelect,
   ProfileStyles,
   SaveButton,
+  StyledImage,
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
-import Axios from "axios";
-import { Image } from "cloudinary-react";
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -62,13 +64,22 @@ export default function ProfileDialog(props) {
     payment: profileUser.payment ? profileUser.payment : {},
   });
 
+  const [imageSelected, setImageSelected] = useState("");
+  const [previewSource, setPreviewSource] = useState("");
+  // const [id, setid] = useState("");
+  const uploadPic = useRef(null);
+
   const classes = ProfileStyles();
 
   const closeDialog = () => {
     setOpenDialog(false);
   };
 
-  function selectPayment(e) {
+  const onUploadPic = () => {
+    uploadPic.current.click();
+  };
+
+  const selectPayment = (e) => {
     setUser((prestate) => {
       const newPaymentMethod = e.target.value;
       const newPayment = prestate.payment[newPaymentMethod]
@@ -80,9 +91,9 @@ export default function ProfileDialog(props) {
         selectedPayment: newPayment,
       };
     });
-  }
+  };
 
-  function setUserPayment(e) {
+  const setUserPayment = (e) => {
     const newPayment = e.target.value;
     setUser((prestate) => {
       return {
@@ -94,9 +105,9 @@ export default function ProfileDialog(props) {
         selectedPayment: newPayment,
       };
     });
-  }
+  };
 
-  function clearUserPayment(type) {
+  const clearUserPayment = (type) => {
     console.log("type", type);
     setUser((prestate) => {
       return {
@@ -108,46 +119,40 @@ export default function ProfileDialog(props) {
         selectedPayment: "",
       };
     });
-  }
+  };
 
   const [updateUser] = useMutation(UPDATE_USER);
+
   const updateUserInfo = () => {
     updateUser({ variables: user });
+    if (imageSelected) {
+      uploadImage(imageSelected, profileUser.netid);
+    }
   };
-  function setUserProps(key, value) {
+
+  const setUserProps = (key, value) => {
     user[key] = value;
-  }
+  };
 
   const clearTextField = (key) => {
     setUserProps(key, "");
     document.getElementsByName(key)[0].value = "";
   };
 
-  let { loading, error } = useMutation(UPDATE_USER, {
+  const { loading, error, data } = useMutation(UPDATE_USER, {
     variables: {
       user,
     },
   });
 
-  const [imageSelected, setImageSelected] = useState("");
-  const [id, setid] = useState("");
-
-  const uploadImage = () => {
-    //constructing the form data we are uploading to cloudinary
-    const formData = new FormData();
-    formData.append("file", imageSelected);
-    //upload preset
-    formData.append("upload_preset", "gx855d5s");
-    //send information
-    //endpoint where data is sent
-    Axios.post(
-      "https://api.cloudinary.com/v1_1/dnsw4xdiz/image/upload",
-      formData
-    ).then((response) => {
-      console.log("RESPONSE", response);
-      console.log(response["data"]["public_id"]);
-      setid(response["data"]["public_id"]);
-    });
+  const selectImage = (e) => {
+    const file = e.target.files[0];
+    setImageSelected(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
   };
 
   if (loading) return "Loading...";
@@ -158,23 +163,24 @@ export default function ProfileDialog(props) {
       <StyledDialogContent>
         <ProfileDialogContainer>
           <IconBox>
-            <ProfileIcon />
-            <ProfileEditIcon />
-            <CloseProfileIcon onClick={closeDialog} />
+            {previewSource ? (
+              <StyledImage src={previewSource}></StyledImage>
+            ) : (
+              <ProfileImage netid={profileUser.netid} />
+            )}
+            <Tooltip title="Upload profile picture">
+              <ProfileEditButton onClick={onUploadPic}>
+                <ProfileEditIcon />
+              </ProfileEditButton>
+            </Tooltip>
             <input
               type="file"
-              onChange={(e) => {
-                setImageSelected(e.target.files[0]);
-              }}
+              ref={uploadPic}
+              style={{ display: "none" }}
+              onChange={selectImage}
             />
-            <button onClick={() => uploadImage()}>Upload Image</button>
+            <CloseProfileIcon onClick={closeDialog} />
           </IconBox>
-
-          <Image
-            style={{ width: 200 }}
-            cloudName="dnsw4xdiz"
-            publicId={"https://res.cloudinary.com/dnsw4xdiz/image/upload/" + id}
-          />
 
           <InputBox>
             <Label>Name:</Label>
@@ -227,7 +233,6 @@ export default function ProfileDialog(props) {
             <InputTextField
               label="Account ID"
               name="selectedPayment"
-              defaultValue={user.selectedPayment}
               value={user.selectedPayment}
               onChange={(e) => {
                 setUserPayment(e);

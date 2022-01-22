@@ -11,8 +11,12 @@ import {
   makeStyles,
   TextField,
   Select,
+  IconButton,
 } from "@material-ui/core";
 import { InputAdornment } from "@material-ui/core";
+import { AdvancedImage } from "@cloudinary/react";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { imageExists } from "../Utils/ApiUtil";
 
 export const StyledDialogContent = styled(DialogContent)({
   overflow: "hidden",
@@ -51,13 +55,22 @@ export const ButtonBox = styled(Box)({
   display: "flex",
 });
 
-export const ProfileEditIcon = styled(EditIcon)({
+export const ProfileEditButton = styled(IconButton)({
   position: "absolute",
   top: "6%",
-  left: "56%",
+  left: "53%",
   color: "#2075D8",
+});
+
+export const ProfileEditIcon = styled(EditIcon)({
   fontSize: "4vh",
 });
+
+export const StyledImage = styled.img`
+  border-radius: 50%;
+  width: 20vw;
+  height: 14vh;
+`;
 
 export const ProfileIcon = styled(AccountCircleIcon)({
   fontSize: "14vh",
@@ -73,7 +86,7 @@ export const CloseProfileIcon = styled(CloseIcon)({
 export const Label = styled(InputLabel)({
   fontFamily: "Josefin Sans",
   color: "#2075d8",
-  paddingBottom: "1vh"
+  paddingBottom: "1vh",
 });
 
 export const PaymentSelect = styled(Select)({
@@ -89,7 +102,7 @@ export const SaveButton = styled(Button)({
   borderRadius: "2vw",
   width: "100%",
   height: "50%",
-  textTransform: "none"
+  textTransform: "none",
 });
 
 export const ProfileStyles = makeStyles((theme) => ({
@@ -108,28 +121,64 @@ export const ProfileStyles = makeStyles((theme) => ({
     top: theme.spacing(4),
     color: theme.palette.grey[500],
   },
+  imageStyle: {
+    borderRadius: "50%",
+    width: "20vw",
+    height: "14vh",
+  },
 }));
 
-export function InputTextField(props) {
+export const ProfileImage = (props) => {
+  const { netid } = props;
+  const classes = ProfileStyles();
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
+    },
+  });
+
+  const hasImage = imageExists(netid);
+  console.log("hasImage=", hasImage);
+  const profileImage = cld.image(netid);
+
+  profileImage.format("jpg");
+  // .resize(thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face())))
+  // .roundCorners(byRadius(50));
+
+  return (
+    <div>
+      {hasImage ? (
+        <AdvancedImage className={classes.imageStyle} cldImg={profileImage} />
+      ) : (
+        <ProfileIcon />
+      )}
+    </div>
+  );
+};
+
+export const InputTextField = (props) => {
   const classes = ProfileStyles();
   const { label, name, defaultValue, onChange, value, clearTextField } = props;
   return (
     <TextField
       name={name}
-      style={{paddingBottom: "1vh"}}
+      style={{ paddingBottom: "1vh" }}
       variant="filled"
       label={label}
       defaultValue={defaultValue}
       fullWidth={true}
       onChange={onChange}
       value={value}
-      clearTextField={clearTextField}
       InputLabelProps={{
-        className: [classes.inputLabel],
+        className: classes.inputLabel,
       }}
       InputProps={{
         className: classes.inputContent,
-        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8", height: "6vh" },
+        style: {
+          background: "rgb(187,218,255,0.22)",
+          color: "#2075D8",
+          height: "6vh",
+        },
         endAdornment: (
           <InputAdornment position="end">
             <CloseIcon onClick={() => clearTextField()} />
@@ -138,4 +187,4 @@ export function InputTextField(props) {
       }}
     ></TextField>
   );
-}
+};
