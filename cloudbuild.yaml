@@ -30,6 +30,9 @@ steps:
     - 'SECRET=${_SECRET}'
     - 'PORT=${_PORT}'
   dir: 'api'
+- name: 'gcr.io/cloud-builders/npm'
+  args: [ 'run', 'build' ]
+  dir: 'api'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
   dir: 'api'
