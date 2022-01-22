@@ -55,7 +55,7 @@ app.use(function(req, res, next) {
       res.header('Access-Control-Allow-Credentials', true)
       res.header('Access-Control-Allow-Headers', '*')
       res.header('Access-Control-Allow-Methods', '*')
-      res.header('Access-Control-Allow-Origin', 'https://carpool.riceapps.org')
+      res.header('Access-Control-Allow-Origin', 'https://carpool-276605.uc.r.appspot.com')
       if (req.method === 'OPTIONS') return res.sendStatus(200);
   }
   next()
@@ -106,5 +106,5 @@ app.use(function(err, req, res, next) {
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
 app.listen({ port: PORT }, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀 Server ready at http://localhost:${PORT}`);
 });
