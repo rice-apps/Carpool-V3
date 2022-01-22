@@ -103,12 +103,18 @@ const Profile = () => {
           <StyledText>{user.netid}@rice.edu</StyledText>
         </TextBox>
         <TextBox
-          onClick={() => {
-            navigator.clipboard.writeText("@comp182Luay").then(
-              addToast("Venmo ID Copied to Clipboard!", {
-                appearance: "success",
+          onClick={async () => {
+            if (user.venmo) {
+              navigator.clipboard.writeText(user.venmo).then(
+                addToast("Venmo ID Copied to Clipboard!", {
+                  appearance: "success",
+                })
+              );
+            } else {
+              addToast("Venmo ID Not Specified", {
+                appearance: "error",
               })
-            );
+            }
           }}
         >
           <StyledText2>
