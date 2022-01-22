@@ -45,19 +45,20 @@ app.use(bodyParser.urlencoded({
 
 var corsOptions = {
   // Set CORS options here
-  origin: "https://carpool.riceapps.org/",
+  origin: "https://carpool.riceapps.org",
   credentials: true
 }
 
 
 // Apply cors for dev purposes
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 app.use(function(req, res, next) {
   if (req.headers.origin) {
+      console.log(req.headers.origin)
       res.header('Access-Control-Allow-Credentials', true)
       res.header('Access-Control-Allow-Headers', '*')
       res.header('Access-Control-Allow-Methods', '*')
-      res.header('Access-Control-Allow-Origin', 'https://carpool.riceapps.org/')
+      res.header('Access-Control-Allow-Origin', 'https://carpool.riceapps.org')
       if (req.method === 'OPTIONS') return res.sendStatus(200);
   }
   next()
