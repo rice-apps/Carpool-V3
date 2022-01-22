@@ -8,7 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-const ProfileForm = ({ onSubmit }) => {
+const ProfileForm = ({ onSubmit, onCancel }) => {
     const[firstName, setFirstName] = useState('');
     const[lastName, setLastName] = useState('');
     const[email, setEmail] = useState('');
@@ -59,6 +59,11 @@ const ProfileForm = ({ onSubmit }) => {
                     variant="contained"
                     onClick={() => { onSubmit({ firstName, lastName, phone }) }}>
                     Submit
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={() => { onCancel() }}>
+                    Cancel
                 </Button>
             </SubmitButton>
         </div>

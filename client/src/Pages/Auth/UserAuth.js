@@ -40,16 +40,11 @@ const UserAuth = () => {
   console.log('the previous page is: ', previous);
   
   // Check to see if the user came here via going back
-  if (previous){
-    // Clear the localstorage for items
-    localStorage.removeItem('from');
-    // If previous was from onboarding, must clear user netID to prevent access to restricted pages
-    if (previous === 'onboarding'){
-      localStorage.removeItem('netid');
-    } 
+  if (previous === 'onboarding'){
+    localStorage.removeItem('netid');
     // Go back further
     history.goBack();
-  }
+  } 
 
   // Determining where to route to
   useEffect(() => {
