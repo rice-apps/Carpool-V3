@@ -11,14 +11,14 @@ const Onboarding = () => {
       $firstName: String!
       $lastName: String!
       $phone: String!
-      $payment: JSON!
+      $venmo: String
     ) {
       userUpdateOne(
         record: {
           firstName: $firstName,
           lastName: $lastName,
           phone: $phone,
-          payment: $payment,
+          venmo: $venmo,
         }
       ) {
         record {
@@ -26,6 +26,7 @@ const Onboarding = () => {
           firstName
           lastName
           phone
+          venmo
         }
       }
     }
