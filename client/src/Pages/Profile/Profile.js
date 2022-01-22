@@ -115,7 +115,7 @@ const Profile = () => {
             Venmo
           </StyledText2>
           <StyledText>
-            {user.venmo || "Not Specified"}
+            {user.venmo ? `@${user.venmo}` : "Not Specified"}
           </StyledText>
         </TextBox>
       </ProfileCard>
