@@ -9,7 +9,7 @@ const Onboarding = () => {
 
   const history = useHistory();
   const { addToast } = useToasts();
-  const previous = localStorage.getItem('from');
+  const previous = localStorage.getItem('lastPage');
   console.log("Previous page is registered as: ", previous);
 
   const UPDATE_USER = gql`
@@ -33,7 +33,7 @@ const Onboarding = () => {
     const nextPage = localStorage.getItem('nextPage');
     if (nextPage) {
       localStorage.removeItem('nextPage');
-      localStorage.setItem('from', 'onboardingCompletion');
+      localStorage.setItem('lastPage', 'onboardingCompletion');
       window.open(nextPage, '_self');
     } else {
       history.push('/search');
@@ -43,8 +43,9 @@ const Onboarding = () => {
   const cancelOnboarding = () => {
     localStorage.clear();
     if (previous){
-      history.push(previous);
+      window.open(previous, '_self');
     }
+    // default behavior is to route to home page
     history.push('/search');
   };
   
@@ -57,17 +58,18 @@ const Onboarding = () => {
         // Clear the localStorage to ensure that the user starts on a fresh profile
         localStorage.clear();
         // Notify UserAuth that it is navigated via a back command. 
-        localStorage.setItem('from', 'onboarding'); 
+        localStorage.setItem('lastPage', 'onboarding'); 
         history.goBack();
     } else {
-        console.log('Directing back since user wants to navigate away!')
         window.history.pushState(null, null, window.location.pathname);
     }
   }
 
   useEffect(() => {
-    addToast("If you would not like to onboard, please use the \"Cancel\" button. Going back could cause unexpected issues.", {
+    addToast("If you would not like to onboard, please use the \"Cancel\" button below. Please do not press back.", {
       appearance: 'warning', 
+      autoDismiss: true,
+      autoDismissTimeout: 12000
     })
     window.history.pushState(null, null, window.location.pathname);
     window.addEventListener('popstate', onBackButtonEvent);

@@ -117,10 +117,10 @@ const RideSummary = () => {
   const join = () => {
     if (localStorage.getItem('token') == null) {
       localStorage.setItem('nextPage', `/ridesummary/${id}`)
-      localStorage.setItem('from', window.location.pathname);
-      history.push('/login')
+      localStorage.setItem('lastPage', `/ridesummary/${id}`);
+      history.push('/login');
       return
-    }
+    } 
 
     joinRide()
   }

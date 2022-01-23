@@ -10,8 +10,6 @@ import './Search.css'
 
 export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-localStorage.setItem('from', window.location.pathname);
-
 const LoadingDiv = styled.div`
   display: flex;
   width: 100%;

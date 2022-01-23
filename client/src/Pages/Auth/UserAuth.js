@@ -25,7 +25,7 @@ const UserAuth = () => {
   // and the user's next destination (where to route to if user has a registered Carpool account). 
   const destination = localStorage.getItem('nextPage'); 
   const id = localStorage.getItem('netid');  
-  const previous = localStorage.getItem('from');
+  const previous = localStorage.getItem('lastPage');
 
   const {data: userData} = useQuery(GET_USER, 
     {
@@ -41,7 +41,7 @@ const UserAuth = () => {
   
   // Check to see if the user came here via going back
   if (previous === 'onboarding'){
-    localStorage.removeItem('netid');
+    localStorage.clear();
     // Go back further
     history.goBack();
   } 
