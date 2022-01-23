@@ -14,22 +14,22 @@ const Form = (props) => {
 let PossibleLocations = [
   {
       _id: "60dd1f608211a44ac40b33ef",
-      title: "Rice University",
+      title: "Rice",
       address: "6100 Main St, Houston, TX 77005, USA"
   },
   {
     _id: "60dd1f608211a44ac40b33f0",
-    title: "Hobby Airport",
+    title: "HOU",
     address: "Hobby Airport Loop, Houston, TX 77061, USA"
   },
   {
     _id: "60dd1fff8211a44ac40b33f2",
-    title: "George Bush Intercontinental Airport",
+    title: "IAH",
     address: "2800 N Terminal Rd, Houston, TX 77032, USA"
   },
   {
     _id: "60dd20008211a44ac40b33f3",
-    title: "Will Rice College",
+    title: "WRC",
     address: "6330 Main St, Houston, TX 77005, USA"
   }];
 

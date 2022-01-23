@@ -12,30 +12,45 @@ const Onboarding = () => {
   const previous = localStorage.getItem('lastPage');
 
   const UPDATE_USER = gql`
-    mutation UpdateMutation($firstName: String!, $lastName: String!, $phone: String!) {
-      userUpdateOne(record: { firstName: $firstName, lastName: $lastName, phone: $phone }) {
+    mutation UpdateMutation(
+      $firstName: String!
+      $lastName: String!
+      $phone: String!
+      $venmo: String
+    ) {
+      userUpdateOne(
+        record: {
+          firstName: $firstName,
+          lastName: $lastName,
+          phone: $phone,
+          venmo: $venmo,
+        }
+      ) {
         record {
           _id
           firstName
           lastName
           phone
+          venmo
         }
       }
     }
   `;
-  
+
   const [updateUser] = useMutation(UPDATE_USER);
 
   const updateUserInfo = (formData) => {
+    console.log(formData);
+    
     updateUser({ variables: formData });
 
-    const nextPage = localStorage.getItem('nextPage');
+    const nextPage = localStorage.getItem("nextPage");
     if (nextPage) {
       localStorage.removeItem('nextPage');
       localStorage.setItem('lastPage', 'onboardingCompletion');
       window.open(nextPage, '_self');
     } else {
-      history.push('/search');
+      history.push("/search");
     }
   };
   

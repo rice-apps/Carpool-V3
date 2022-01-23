@@ -65,6 +65,11 @@ const Create = ({onCreate}) => {
             return
         }   
 
+        if (startLoc === endLoc) {
+            addToast("Ride departure and destination locations must be different.", { appearance: 'error' });
+            return;
+        }
+
         if (!confirmation) {
             addToast("You must agree to lead the ride to create this ride.", { appearance: 'error' });
             return
@@ -161,6 +166,17 @@ const Create = ({onCreate}) => {
                 >   
                     <InputBox id = 'StartLoc'>Departure Location</InputBox>
                     <SelectBox
+                        MenuProps={{
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left"
+                            },
+                            transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left"
+                            },
+                            getContentAnchorEl: null
+                        }}
                         id="Start Location Search Bar"
                         labelId='StartLoc'
                         value={startLoc}
@@ -185,6 +201,17 @@ const Create = ({onCreate}) => {
                 >
                     <InputBox id = 'EndLoc'>Destination</InputBox>
                     <SelectBox
+                        MenuProps={{
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left"
+                            },
+                            transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left"
+                            },
+                            getContentAnchorEl: null
+                        }}
                         id="End Location Search Bar"
                         labelId='Endloc'
                         value={endLoc}
@@ -213,6 +240,7 @@ const Create = ({onCreate}) => {
                                 labelid='Date and Time'
                                 inputVariant='outlined'
                                 format="MM/dd/yyyy"
+                                disablePast={true}
                                 value={date}
                                 onChange={setDate}
                             >
