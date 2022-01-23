@@ -35,9 +35,6 @@ const UserAuth = () => {
       }
     }
   );
-
-  console.log('the destination is: ', destination);
-  console.log('the previous page is: ', previous);
   
   // Check to see if the user came here via going back
   if (previous === 'onboarding'){

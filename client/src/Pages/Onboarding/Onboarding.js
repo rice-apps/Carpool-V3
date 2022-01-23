@@ -10,7 +10,6 @@ const Onboarding = () => {
   const history = useHistory();
   const { addToast } = useToasts();
   const previous = localStorage.getItem('lastPage');
-  console.log("Previous page is registered as: ", previous);
 
   const UPDATE_USER = gql`
     mutation UpdateMutation($firstName: String!, $lastName: String!, $phone: String!) {
@@ -52,7 +51,6 @@ const Onboarding = () => {
 
 
   const onBackButtonEvent = (e) => {
-    console.log('Back Button detected.')
     e.preventDefault();
     if (window.confirm("Do you want to navigate away? It is recommended to complete the form to prevent unexpected errors.")) {
         // Clear the localStorage to ensure that the user starts on a fresh profile
