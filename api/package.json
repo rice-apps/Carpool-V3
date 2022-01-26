@@ -8,7 +8,7 @@
     "start": "nodemon --exec npx babel-node ./index.js",
     "create-env": "printenv > .env",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist",
+    "build": "babel . --out-dir dist",
     "dev": "nodemon --exec npx babel-node ./index.js"
   },
   "dependencies": {
