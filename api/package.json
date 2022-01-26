@@ -9,7 +9,7 @@
     "create-env": "printenv > .env",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist && mkdir dist",
-    "build-server": "babel-node -d ./dist ./api -s",
+    "build-server": "babel -d ./dist ./api -s",
     "build": "npm run clean && npm run build-server",
     "start-prod": "node ./dist/index.js",
     "dev": "nodemon --exec npx babel-node ./index.js"
