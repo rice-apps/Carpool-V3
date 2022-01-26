@@ -9,9 +9,9 @@
     "create-env": "printenv > .env",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist && mkdir dist",
-    "build-server": "babel-node . --out-dir dist",
+    "build-server": "babel -d ./dist . -s",
     "build": "npm run clean && npm run build-server",
-    "start-prod": "node ./build/index.js",
+    "start-prod": "node ./dist/index.js",
     "dev": "nodemon --exec npx babel-node ./index.js"
   },
   "dependencies": {
@@ -19,7 +19,6 @@
     "@babel/core": "^7.9.6",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
-    "@babel/preset-react": "^7.16.7",
     "apollo-link-ws": "^1.0.20",
     "apollo-server": "^2.13.1",
     "apollo-server-express": "^2.13.1",
@@ -47,6 +46,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
     "babel-preset-env": "^1.7.0"
   }
 }
