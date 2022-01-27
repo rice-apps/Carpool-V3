@@ -6,13 +6,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon --exec npx babel-node ./index.js",
-    "create-env": "printenv > .env",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf dist && mkdir dist",
-    "build-server": "babel -d ./dist . -s",
-    "build": "npm run clean && npm run build-server",
-    "start-prod": "node ./dist/index.js",
-    "dev": "nodemon --exec npx babel-node ./index.js"
+    "create-env": "printenv > .env"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
