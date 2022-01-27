@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec npx babel-node ./index.js",
+    "start": "npx babel-node ./index.js",
     "serve": "node ./index.js",
     "create-env": "printenv > .env"
   },
