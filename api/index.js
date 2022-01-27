@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-import http from 'http';
 
 // var path = require('path');
 // var cookieParser = require('cookie-parser');
