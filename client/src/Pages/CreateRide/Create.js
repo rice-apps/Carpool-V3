@@ -285,7 +285,7 @@ const Create = ({onCreate}) => {
                 >
                     <FormControlLabelBox
                         control={<CheckBox color='primary' checked={confirmation} onChange={onCheck}/>}
-                        label="I will be responsible for coordinating this ride."
+                        label="I am responsible for coordinating this ride."
                     />
                 </Grid>
 
