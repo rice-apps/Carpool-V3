@@ -198,7 +198,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.slice(0, 3).map((person) => (
+          {ride.riders.map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
