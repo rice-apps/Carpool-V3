@@ -24,7 +24,7 @@ const Ride = ({ride}) => {
                 <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
                     
                         <Box width={"60%"} height={"75%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
-                            <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{(ride.spots - ride.riders.length) + 1}</span>
+                            <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{(ride.spots - ride.riders.length)}</span>
                             <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
                         </Box>
                 </Grid>

@@ -141,7 +141,7 @@ const RideSummary = () => {
       </BackArrowDiv>
       <RideSummaryDiv>
         <SeatsLeftDiv>
-          <SeatsLeftNum>{(ride.spots - ride.riders.length) + 1}</SeatsLeftNum>
+          <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
