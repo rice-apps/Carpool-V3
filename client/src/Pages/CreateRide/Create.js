@@ -274,7 +274,7 @@ const Create = ({onCreate}) => {
                         </SelectSquare> 
                     </Grid>
                     <Grid item>
-                        <BodyText>{"# of open seats"}</BodyText> 
+                        <BodyText>{"# of seats (include yourself)"}</BodyText> 
                     </Grid>
 
                 </Grid>

@@ -161,7 +161,7 @@ export const ColorButton = withStyles({
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 2vh;
+    font-size: 1.75vh;
     line-height: 2vh;
     color: #0B3669;
     padding: 10px 0px 0px 0px;
