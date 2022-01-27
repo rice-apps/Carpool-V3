@@ -41,6 +41,9 @@ import {
   CalendarText,
   TimeText
 } from './RideSummaryStyles.js'
+// SSO imports
+import { SERVICE_URL } from '../../config'; 
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
@@ -117,7 +120,8 @@ const RideSummary = () => {
   const join = () => {
     if (localStorage.getItem('token') == null) {
       localStorage.setItem('nextPage', `/ridesummary/${id}`)
-      history.push('/login')
+      let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+      window.open(redirectURL, '_self');
       return
     }
 
