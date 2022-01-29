@@ -125,7 +125,12 @@ const RideSummary = () => {
       return
     }
 
-    joinRide()
+    joinRide().then((result) => {
+      console.log(result);
+      window.location.reload();
+    }).catch((err) => {
+      console.log("Caught error: Ride is full");
+    });
   }
 
   const goBack = () => {
