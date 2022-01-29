@@ -1,195 +1,189 @@
-import {Popup, NameSectionHeader, ContactSectionHeader,
-    PaymentSectionHeader, PhoneTextBox, EmailTextBox, 
-    SubmitButton, FirstNameTextBox, LastNameTextBox, PaymentDropdown, 
-    IconContainer, PaymentTextBox} from './ProfileDialogStyles.js';
-import React, {useState} from 'react';
-import {Dialog, InputAdornment, TextField} from '@material-ui/core';
-import {DialogActions} from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import {makeStyles} from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { Dialog } from "@material-ui/core";
+import React, { useState } from "react";
+import { useToasts } from "react-toast-notifications";
+import {
+  ProfileDialogContainer,
+  IconBox,
+  StyledDialogContent,
+  ButtonBox,
+  ProfileIcon,
+  ProfileEditIcon,
+  CloseProfileIcon,
+  Label,
+  InputTextField,
+  InputBox,
+  SaveButton,
+} from "./ProfileDialogStyles";
+import { gql, useMutation } from "@apollo/client";
 
-const useStyles = makeStyles((theme) =>({
-    input :{
-        widdth: "55vw",
-    },
-    inputLabel: {
-        fontSize: 15,
-        color: "#2075D8",
-    },
-    inputContent: {
-        height: 30,
-        marginTop: 6,
-        background: "rgb(187,218,255,0.22)"
-    },
-    center: {
-        display: "flex",
-        justifycontent: "center",
-        alignItems: "center",
-    },
-    closeButton: {
-        positin: "absolute",
-        right: theme.spacing(1),
-        top: theme.spacing(1),
-        color: theme.palette.grey[500]
-    },
-    multiLineColor:{
-        color: "#2075D8"
+export default function ProfileDialog(props) {
+  const UPDATE_USER = gql`
+    mutation UpdateUser(
+      $firstName: String!
+      $lastName: String!
+      $phone: String!
+      $venmo: String
+    ) {
+      userUpdateOne(
+        record: {
+          firstName: $firstName
+          lastName: $lastName
+          phone: $phone
+          venmo: $venmo
+        }
+      ) {
+        record {
+          _id
+          firstName
+          lastName
+          phone
+          venmo
+        }
+      }
     }
-}));
+  `;
 
-export default function ProfileDialog (props) {
-    const classes = useStyles();
+  const { addToast } = useToasts();
+  const { openDialog, setOpenDialog, profileUser } = props;
 
-    const[payment, setPaymentOption] = useState('');
-    
-    const handleChange = (event) => {
-        setPaymentOption(event.target.value);
-    }
+  let payment = profileUser.payment ? profileUser.payment : {};
 
-    const {openDialog, setOpenDialog} = props;
+  const [user, setUser] = useState({
+    selectedPaymentMethod: "Venmo",
+    selectedPayment: payment["Venmo"] ? payment["Venmo"] : "",
+    firstName: profileUser.firstName,
+    lastName: profileUser.lastName,
+    phone: profileUser.phone,
+    email: profileUser.netid + "@rice.edu",
+    payment: profileUser.payment ? profileUser.payment : {},
+  });
 
-    const closeDialog = () => {
-        setOpenDialog(false);
-    };
+  const closeDialog = () => {
+    setOpenDialog(false);
+  };
 
-    return (
-        <div>
-            <Dialog open={openDialog}
-            onClose={closeDialog} 
-            className={[classes.dialog, classes.center]}
-            fullWidth={true} 
-            maxWidth="lg"
-            id="dialog"
+  function setUserPayment(e) {
+    const newPayment = e.target.value;
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        venmo: newPayment,
+      };
+    });
+  }
+
+  function clearUserPayment() {
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        venmo: undefined,
+      };
+    });
+  }
+
+  const [updateUser] = useMutation(UPDATE_USER);
+  const updateUserInfo = () => {
+    updateUser({ variables: user });
+  };
+  function setUserProps(key, value) {
+    user[key] = value;
+  }
+
+  const clearTextField = (key) => {
+    setUserProps(key, "");
+    document.getElementsByName(key)[0].value = "";
+  };
+
+  let {
+    loading,
+    error,
+  } = useMutation(UPDATE_USER, {
+    variables: {
+      user,
+    },
+  });
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+  
+
+  return (
+    <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
+      <StyledDialogContent>
+        <ProfileDialogContainer>
+          <IconBox>
+            <ProfileIcon />
+            <ProfileEditIcon />
+            <CloseProfileIcon onClick={closeDialog} />
+          </IconBox>
+
+          <InputBox>
+            <Label>Name:</Label>
+            <InputTextField
+              label="First Name"
+              defaultValue={user.firstName}
+              name="firstName"
+              onChange={(e) => setUserProps("firstName", e.target.value)}
+              clearTextField={() => clearTextField("firstName")}
+            ></InputTextField>
+            <InputTextField
+              label="Last Name"
+              name="lastName"
+              defaultValue={user.lastName}
+              onChange={(e) => setUserProps("lastName", e.target.value)}
+              clearTextField={() => clearTextField("lastName")}
+            ></InputTextField>
+          </InputBox>
+
+          <InputBox>
+            <Label>Contact:</Label>
+            <InputTextField
+              label="Phone #"
+              defaultValue={user.phone}
+              name="phone"
+              onChange={(e) => setUserProps("phone", e.target.value)}
+              clearTextField={() => clearTextField("phone")}
+            ></InputTextField>
+            <InputTextField
+              label="Email"
+              disabled={true}
+              defaultValue={user.email}
+              clearTextField={() => {}}
+            ></InputTextField>
+          </InputBox>
+
+          <InputBox>
+            <Label>Venmo:</Label>
+            <InputTextField
+              label="Account ID"
+              name="venmo"
+              defaultValue={user.venmo}
+              value={user.venmo}
+              onChange={(e) => {
+                setUserPayment(e);
+              }}
+              clearTextField={() => {
+                clearUserPayment();
+                console.log(user.venmo);
+              }}
+            ></InputTextField>
+          </InputBox>
+          <ButtonBox>
+            <SaveButton
+              variant="contained"
+              onClick={() => {
+                updateUserInfo();
+                setOpenDialog(false);
+                addToast("User Information Updated", {
+                  appearance: "success",
+                });
+              }}
             >
-            <IconContainer>
-            <AccountCircleIcon style={{fontSize: 130}}/>
-            </IconContainer>
-            <Popup>
-                <NameSectionHeader> Name </NameSectionHeader>
-                <FirstNameTextBox>
-                    <TextField 
-                    id = "filled-basic" 
-                    label = "First Name"
-                    variant = "filled"
-                    fullWidth={true}
-                    className = {classes.input}
-                    InputProps={{
-                        className: classes.inputContent,
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <CloseIcon/>
-                            </InputAdornment>
-                        ),
-                        }}
-                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
-                    />
-                </FirstNameTextBox>
-                <LastNameTextBox>
-                <TextField 
-                    id = "filled-basic" 
-                    label = "Last Name"
-                    variant = "filled"
-                    fullWidth={true}
-                    className = {classes.input}
-                    InputProps={{
-                        className: classes.inputContent,
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <CloseIcon/>
-                            </InputAdornment>
-                        ),
-                    }}
-                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
-                    />
-                </LastNameTextBox>
-                <ContactSectionHeader>Contact</ContactSectionHeader>
-                <PhoneTextBox> 
-                <TextField 
-                    id = "filled-basic" 
-                    label = "Phone #"
-                    variant = "filled"
-                    fullWidth={true}
-                    className = {classes.input}
-                    InputProps={{
-                        className: classes.inputContent,
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <CloseIcon/>
-                            </InputAdornment>
-                        ),
-                    }}
-                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
-                    />
-                </PhoneTextBox>
-                <PaymentSectionHeader>Payment</PaymentSectionHeader>
-
-                <EmailTextBox>
-                <TextField 
-                    id = "filled-basic" 
-                    label = "Email"
-                    variant = "filled"
-                    fullWidth={true}
-                    className = {classes.input}
-                    InputProps={{
-                        className: classes.inputContent,
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <CloseIcon/>
-                            </InputAdornment>
-                        ),
-                    }}
-                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
-                    />
-                </EmailTextBox>
-                <PaymentDropdown>
-                    <Box sx = {{minWidth: 210, maxHeight: 20}}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Options</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={payment}
-                                label="Options"
-                                onChange={handleChange}
-                            >
-                                <MenuItem value={10}>Venmo</MenuItem>
-                                <MenuItem value={20}>Zelle</MenuItem>
-                                <MenuItem value={30}>Other</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </PaymentDropdown>
-                <PaymentTextBox>
-                <TextField 
-                    id = "filled-basic" 
-                    label = "@ VenmoID"
-                    variant = "filled"
-                    fullWidth={true}
-                    className = {classes.input}
-                    InputProps={{
-                        className: classes.inputContent,
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <CloseIcon/>
-                            </InputAdornment>
-                        ),
-                    }}
-                    InputLabelProps={{className:[classes.multiLineColor, classes.inputLabel]}}
-                    />
-                </PaymentTextBox>
-            <SubmitButton>
-                <Button variant="contained">Save</Button>
-            </SubmitButton>
-            <DialogActions></DialogActions>
-            </Popup>
-            </Dialog>
-        </div>
-    )
+              Save
+            </SaveButton>
+          </ButtonBox>
+        </ProfileDialogContainer>
+      </StyledDialogContent>
+    </Dialog>
+  );
 }

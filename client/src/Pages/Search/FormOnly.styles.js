@@ -60,7 +60,7 @@ export const MenuBox = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'white',
-        width: '65vw',
+        width: '100%',
         border: 0,
         color: '#0B3669',
         height: 36,

@@ -41,6 +41,9 @@ import {
   CalendarText,
   TimeText
 } from './RideSummaryStyles.js'
+// SSO imports
+import { SERVICE_URL } from '../../config'; 
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
@@ -117,7 +120,8 @@ const RideSummary = () => {
   const join = () => {
     if (localStorage.getItem('token') == null) {
       localStorage.setItem('nextPage', `/ridesummary/${id}`)
-      history.push('/login')
+      let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+      window.open(redirectURL, '_self');
       return
     }
 
@@ -141,7 +145,7 @@ const RideSummary = () => {
       </BackArrowDiv>
       <RideSummaryDiv>
         <SeatsLeftDiv>
-          <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
+          <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
@@ -183,7 +187,8 @@ const RideSummary = () => {
       <RidersDiv>
         <HostDiv>Host</HostDiv>
         <RidersComponents>
-        <OneRiderContainer>
+          <div onClick={e => history.push("/profile/" + ride.owner.netid)}>
+            <OneRiderContainer>
                 <div key={ride.owner.netid}>
                   <IoPersonCircleSharpDiv>
                     <IoPersonCircleSharp></IoPersonCircleSharp>
@@ -192,12 +197,13 @@ const RideSummary = () => {
                 <RiderText>
                 {ride.owner.firstName}&nbsp;{ride.owner.lastName}
                 </RiderText>
-          </OneRiderContainer>
+              </OneRiderContainer>
+            </div>
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.slice(0, 3).map((person) => (
-            <div>
+          {ride.riders.filter((x) => x.firstName + " " + x.lastName != ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
+            <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
                   <IoPersonCircleSharpDiv>

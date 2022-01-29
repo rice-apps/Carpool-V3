@@ -31,6 +31,12 @@ const Create = ({onCreate}) => {
 
     const seats = [
         {
+            value: 2
+        }, 
+        {
+            value: 3
+        }, 
+        {
             value: 4
         }, 
         {
@@ -38,12 +44,6 @@ const Create = ({onCreate}) => {
         }, 
         {
             value: 6
-        }, 
-        {
-            value: 7
-        }, 
-        {
-            value: 8
         }
     ]
 
@@ -51,7 +51,7 @@ const Create = ({onCreate}) => {
     const [startLoc, setStartLoc] = useState('')
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date())
-    const [passengers, setPassengers] = useState(4)
+    const [passengers, setPassengers] = useState(3)
     const [confirmation, setConfirmation] = useState(false)
 
     // Function after Submit Button is Pressed
@@ -64,6 +64,11 @@ const Create = ({onCreate}) => {
             addToast("Please fill in all fields.", { appearance: 'error' });
             return
         }   
+
+        if (startLoc === endLoc) {
+            addToast("Ride departure and destination locations must be different.", { appearance: 'error' });
+            return;
+        }
 
         if (!confirmation) {
             addToast("You must agree to lead the ride to create this ride.", { appearance: 'error' });
@@ -161,6 +166,17 @@ const Create = ({onCreate}) => {
                 >   
                     <InputBox id = 'StartLoc'>Departure Location</InputBox>
                     <SelectBox
+                        MenuProps={{
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left"
+                            },
+                            transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left"
+                            },
+                            getContentAnchorEl: null
+                        }}
                         id="Start Location Search Bar"
                         labelId='StartLoc'
                         value={startLoc}
@@ -185,6 +201,17 @@ const Create = ({onCreate}) => {
                 >
                     <InputBox id = 'EndLoc'>Destination</InputBox>
                     <SelectBox
+                        MenuProps={{
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left"
+                            },
+                            transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left"
+                            },
+                            getContentAnchorEl: null
+                        }}
                         id="End Location Search Bar"
                         labelId='Endloc'
                         value={endLoc}
@@ -212,7 +239,8 @@ const Create = ({onCreate}) => {
                             <DateBox
                                 labelid='Date and Time'
                                 inputVariant='outlined'
-                                format="MM/dd/yyyy"
+                                format="MM/dd/yyyy   t"
+                                disablePast={true}
                                 value={date}
                                 onChange={setDate}
                             >
@@ -246,7 +274,7 @@ const Create = ({onCreate}) => {
                         </SelectSquare> 
                     </Grid>
                     <Grid item>
-                        <BodyText>{"# of open seats"}</BodyText> 
+                        <BodyText>{"# of seats (include yourself)"}</BodyText> 
                     </Grid>
 
                 </Grid>
@@ -257,7 +285,7 @@ const Create = ({onCreate}) => {
                 >
                     <FormControlLabelBox
                         control={<CheckBox color='primary' checked={confirmation} onChange={onCheck}/>}
-                        label="I will be responsible for coordinating this ride."
+                        label="I am responsible for coordinating this ride."
                     />
                 </Grid>
 
