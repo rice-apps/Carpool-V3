@@ -13,6 +13,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/pickers": "^3.3.10",
+    "@mui/lab": "^5.0.0-alpha.55",
     "@randex/material-ui-multiple-dates-picker": "^0.4.0",
     "@syncfusion/ej2-react-calendars": "^19.2.46",
     "@testing-library/jest-dom": "^4.2.4",
@@ -42,7 +43,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "create-env": "printenv > .env"
   },
   "eslintConfig": {
     "extends": "react-app"
