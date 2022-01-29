@@ -43,6 +43,7 @@ import {
 } from './RideSummaryStyles.js'
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
+import LoadingDiv from '../../common/LoadingDiv.js'
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const GET_RIDE = gql`
@@ -114,7 +115,7 @@ const RideSummary = () => {
   }, [data])
   console.log(data, loading, error);
   if (error) return <p>Error.</p>
-  if (loading) return <p>Loading...</p>
+  if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
 
   const join = () => {
@@ -202,7 +203,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.filter((x) => x.firstName + " " + x.lastName != ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
+          {ride.riders.filter((x) => x.firstName + " " + x.lastName !== ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
