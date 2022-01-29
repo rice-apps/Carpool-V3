@@ -145,11 +145,6 @@ const RideSummary = () => {
     history.push(lastPage);
   }
 
-  const goBack = () => {
-    let lastPage = '/' + localStorage.getItem('lastPage');
-    history.push(lastPage);
-  }
-
   const time = moment(ride.departureDate)
   const mon = time.format('MMM').toString()
   const day = time.format('DD').toString()
