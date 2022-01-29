@@ -157,7 +157,7 @@ const RideSummary = () => {
       </BackArrowDiv>
       <RideSummaryDiv>
         <SeatsLeftDiv>
-          <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
+          <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
@@ -214,7 +214,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.map((person) => (
+          {ride.riders.filter((x) => x.firstName + " " + x.lastName !== ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
