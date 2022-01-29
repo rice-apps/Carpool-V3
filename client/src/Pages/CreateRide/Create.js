@@ -22,6 +22,7 @@ import {
     MenuSquare,
     BodyText
 } from './Create.styles'
+import LoadingDiv from '../../common/LoadingDiv.js';
 
 
 
@@ -139,7 +140,7 @@ const Create = ({onCreate}) => {
         }
     );
 
-    if (locationLoading || userLoading) return 'Loading...';
+    if (locationLoading || userLoading) return <LoadingDiv />;
     if (error) return `Error! ${error.message}`;
 
     const {locationMany: locations} = locationData
