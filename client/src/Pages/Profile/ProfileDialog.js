@@ -144,12 +144,6 @@ export default function ProfileDialog(props) {
               onChange={(e) => setUserProps("phone", e.target.value)}
               clearTextField={() => clearTextField("phone")}
             ></InputTextField>
-            {/* <InputTextField
-              label="Email"
-              disabled={true}
-              defaultValue={user.email}
-              clearTextField={() => {}}
-            ></InputTextField> */}
           </InputBox>
 
           <InputBox>
