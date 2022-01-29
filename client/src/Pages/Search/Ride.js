@@ -17,16 +17,16 @@ function renderTime(date) {
 
 const useStyles = makeStyles((theme) => ({
    text: {
-       fontSize: '1.5em',
-       fontFamily: 'Josefin Sans'
+    fontSize: '1.3em',
+    fontFamily: 'Josefin Sans'
    },
    midtext: {
-    fontSize: '1.25em',
+    fontSize: '1.1em',
     fontFamily: 'Josefin Sans'
    },
    subtext: {
-        fontSize: '1em',
-        fontFamily: 'Josefin Sans'
+    fontSize: '.9em',
+    fontFamily: 'Josefin Sans'
    }
 }));
   
@@ -46,24 +46,26 @@ const Ride = ({ride}) => {
                         </Box>
                 </Grid>
 
-                <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide className = {classes.text}>
-                            {ride.departureLocation.title}      
-                    </BoxRide>
-                </Grid>
-                
-                <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
-                        <ArrowForwardIcon/>
-                </Grid>
-                
-                <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide className = {classes.text}>
-                        {ride.arrivalLocation.title}
-                    </BoxRide>
+                <Grid item container xs = {6}>
+                    <Grid item xs={5} justify="center" align='center'>
+                        <BoxRide className = {classes.text}>
+                                {ride.departureLocation.title}      
+                        </BoxRide>
+                    </Grid>
+                    
+                    <Grid item xs={2} justify="center" style={{display: 'flex', alignItems: 'center'}}>
+                            <ArrowForwardIcon/>
+                    </Grid>
+                    
+                    <Grid item xs={5} justify="center" align='center'>
+                        <BoxRide className = {classes.text}>
+                            {ride.arrivalLocation.title}
+                        </BoxRide>
+                    </Grid>
                 </Grid>
 
                 
-                <Grid item xs={3}  align='center'>
+                <Grid item xs = {3} align='center'>
                     <Box width={"100%"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent:"center", gap: "1vh"}}>
                         <span>
                             <CalendarTodayIcon className = {classes.midtext}/>
