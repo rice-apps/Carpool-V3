@@ -5,17 +5,15 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec npx babel-node ./index.js",
-    "create-env": "printenv > .env",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist",
-    "dev": "nodemon --exec npx babel-node ./index.js"
+    "start": "npx babel-node ./index.js",
+    "serve": "node ./index.js",
+    "create-env": "printenv > .env"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-env": "^7.16.11",
     "apollo-link-ws": "^1.0.20",
     "apollo-server": "^2.13.1",
     "apollo-server-express": "^2.13.1",
@@ -42,6 +40,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
     "babel-preset-env": "^1.7.0"
   }
 }

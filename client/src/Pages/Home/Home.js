@@ -15,9 +15,18 @@ const Home = () => {
                 Rice Carpool
             </CarpoolHeader>
         </Header>
+        {
+        <ButtonContainer>
+                <Link to="/"><SearchButton>Coming in Spring 2022!</SearchButton></Link>
+        </ButtonContainer>
+        }
+        {/*
         <ButtonContainer>
                 <Link to="/search"><SearchButton>Start Riding</SearchButton></Link>
         </ButtonContainer>
+        }
+        */}
+        
         </div>
     )
 }

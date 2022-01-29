@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-import http from 'http';
 
 // var path = require('path');
 // var cookieParser = require('cookie-parser');
@@ -37,12 +36,29 @@ const server = new ApolloServer({
 
 // Initiate express
 var app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // Apply cors for dev purposes
 app.use(cors({
     // Set CORS options here
     // origin: "*"
 }))
+
+app.use(function(req, res, next) {
+  if (req.headers.origin) {
+      // console.log(req.headers.origin)
+      res.header('Access-Control-Allow-Credentials', true)
+      res.header('Access-Control-Allow-Headers', '*')
+      res.header('Access-Control-Allow-Methods', '*')
+      res.header('Access-Control-Allow-Origin', 'https://carpool.riceapps.org')
+      if (req.method === 'OPTIONS') return res.sendStatus(200);
+  }
+  next()
+})
 
 // Add JWT so that it is AVAILABLE; does NOT protect all routes (nor do we want it to)
 // Inspiration from: https://www.apollographql.com/blog/setting-up-authentication-and-authorization-with-apollo-federation
@@ -55,8 +71,8 @@ app.use(exjwt({
 server.applyMiddleware({ app });
 
 // Create WebSockets server for subscriptions: https://stackoverflow.com/questions/59254814/apollo-server-express-subscriptions-error
-const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
+// const httpServer = http.createServer(app);
+// server.installSubscriptionHandlers(httpServer);
 
 // If we have custom routes, we need these to accept JSON input
 // app.use(express.json());
@@ -67,9 +83,9 @@ server.installSubscriptionHandlers(httpServer);
 // app.use('/api/custom', customRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
 // Error handler
 app.use(function(err, req, res, next) {
@@ -88,7 +104,6 @@ app.use(function(err, req, res, next) {
 });
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
-httpServer.listen({ port: PORT }, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
-    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
+app.listen({ port: PORT }, () => {
+    console.log(`🚀 Server ready at http://localhost:${PORT}`);
 });

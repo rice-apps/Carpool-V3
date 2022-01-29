@@ -45,7 +45,6 @@ import {
 import { SERVICE_URL } from '../../config'; 
 import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
-
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const GET_RIDE = gql`
@@ -139,6 +138,11 @@ const RideSummary = () => {
       addToast("Sorry! This ride is full.", { appearance: 'error'});
 
     });
+  }
+
+  const goBack = () => {
+    let lastPage = '/' + localStorage.getItem('lastPage');
+    history.push(lastPage);
   }
 
   const goBack = () => {
