@@ -94,11 +94,20 @@ export default function ButtonAppBar (props) {
     }
   }, [location.pathname])
 
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-  if (!userData) return "User not found!"; 
+  // if (loading) return <LoadingDiv height={'9vh'} />;
+  // if (error) return `Error! ${error.message}`;
+  // if (!userData) return "User not found!"; 
 
-  const {userOne: user} = userData;
+  var user = {
+    firstName: "Loading",
+    lastName: " ",
+  }
+
+  if (!(loading || error || !userData)) {
+    user = userData.userOne
+  }
+
+  // const {userOne: user} = userData;
 
   const logout = () => {
     localStorage.clear();

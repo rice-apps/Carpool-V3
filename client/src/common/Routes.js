@@ -17,6 +17,7 @@ import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary/RideSummary.js'
 import jwt_decode from "jwt-decode";
 import YourRides from '../Pages/YourRides/YourRides.js'
+import LoadingDiv from './LoadingDiv.js'
 
 /**
  * Requests to verify the user's token on the backend
@@ -91,7 +92,7 @@ const PrivateRoute = ({ children, ...rest }) => {
     // Redirect the user to the login page
     return <Redirect path='login' />
   }
-  if (loading) return <p>Waiting...</p>
+  if (loading) return <LoadingDiv />
   if (!data || !data.verifyUser) {
     // Clear the token
     localStorage.removeItem('token')
