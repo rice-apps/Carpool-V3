@@ -42,7 +42,7 @@ export const IconBox = styled(Box)({
 });
 
 export const InputBox = styled(Box)({
-  height: "16%",
+  height: "50",
   width: "75%",
   display: "flex",
   flexDirection: "column",
@@ -53,6 +53,7 @@ export const ButtonBox = styled(Box)({
   height: "14%",
   width: "90%",
   display: "flex",
+  position: "70%",
 });
 
 export const ProfileEditButton = styled(IconButton)({

@@ -19,8 +19,14 @@ import {
   StyledText2,
   StyledText3,
   EditProfileButton,
+  College,
+  StyledImage,
+  ProfileImage,
 } from "./ProfileStyles.js";
 import { useState } from "react";
+import { Cloudinary } from "@cloudinary/url-gen";
+
+import { imageExists } from "../Utils/ApiUtil.js";
 
 const Profile = () => {
   const { id } = useParams();
@@ -36,6 +42,7 @@ const Profile = () => {
         netid
         phone
         payment
+        college
       }
     }
   `;
@@ -77,6 +84,24 @@ const Profile = () => {
   }
   console.log("paymentType", paymentType);
 
+  //profile image
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
+    },
+  });
+
+  // const ProfileImage = () => {
+  //   const netid = user.netid;
+  //   const classes = ProfileStyles();
+  //   const cld = new Cloudinary({
+  //     cloud: {
+  //       cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
+  //     },
+  //   });
+  // };
+  // const profileImage = cld.image(user.netid);
+
   return (
     <div>
       <ReturnHeader>
@@ -102,11 +127,16 @@ const Profile = () => {
         profileUser={user}
       ></ProfileDialog>
       <ProfileCard>
-        <UserPic></UserPic>
+        {imageExists ? (
+          <ProfileImage netid={user.netid}></ProfileImage>
+        ) : (
+          console.log("image does not exist")
+        )}
         <UserName>{user.firstName + " " + user.lastName}</UserName>
         <PhoneNumber>
           {user.phone ? user.phone : "Phone Number Unavailable"}
         </PhoneNumber>
+        <College>{user.college}</College>
         <TextBox
           onClick={() => {
             navigator.clipboard.writeText(user.netid + "@rice.edu").then(

@@ -11,6 +11,7 @@ var UserSchema = new Schema({
   lastName: String,
   phone: String,
   payment: { type: {}, default: { Venmo: "", Zelle: "", Other: "" } },
+  college: { type: String, default: "" },
   token: { type: String, default: "" }, // We will use this to store the user's JWT token
   recentUpdate: { type: Boolean, default: false }, // this field used for displaying banners/modals on version updates of our app
 });

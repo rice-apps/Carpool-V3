@@ -7,7 +7,6 @@ import {
   IconBox,
   StyledDialogContent,
   ButtonBox,
-  ProfileIcon,
   ProfileEditIcon,
   ProfileEditButton,
   ProfileImage,
@@ -29,6 +28,7 @@ export default function ProfileDialog(props) {
       $lastName: String!
       $phone: String!
       $payment: JSON!
+      $college: String!
     ) {
       userUpdateOne(
         record: {
@@ -36,6 +36,7 @@ export default function ProfileDialog(props) {
           lastName: $lastName
           phone: $phone
           payment: $payment
+          college: $college
         }
       ) {
         record {
@@ -44,6 +45,7 @@ export default function ProfileDialog(props) {
           lastName
           phone
           payment
+          college
         }
       }
     }
@@ -62,11 +64,11 @@ export default function ProfileDialog(props) {
     phone: profileUser.phone,
     email: profileUser.netid + "@rice.edu",
     payment: profileUser.payment ? profileUser.payment : {},
+    college: profileUser.college,
   });
 
   const [imageSelected, setImageSelected] = useState("");
   const [previewSource, setPreviewSource] = useState("");
-  // const [id, setid] = useState("");
   const uploadPic = useRef(null);
 
   const classes = ProfileStyles();
@@ -166,7 +168,8 @@ export default function ProfileDialog(props) {
             {previewSource ? (
               <StyledImage src={previewSource}></StyledImage>
             ) : (
-              <ProfileImage netid={profileUser.netid} />
+              // console.log("no preview source") //true
+              <ProfileImage netid={profileUser.netid} /> //this one
             )}
             <Tooltip title="Upload profile picture">
               <ProfileEditButton onClick={onUploadPic}>
@@ -214,6 +217,13 @@ export default function ProfileDialog(props) {
               disabled={true}
               defaultValue={user.email}
               clearTextField={() => {}}
+            ></InputTextField>
+            <InputTextField
+              label="College"
+              defaultValue={user.college}
+              name="college"
+              onChange={(e) => setUserProps("college", e.target.value)}
+              clearTextField={() => clearTextField("college")}
             ></InputTextField>
           </InputBox>
 
