@@ -239,7 +239,7 @@ const Create = ({onCreate}) => {
                             <DateBox
                                 labelid='Date and Time'
                                 inputVariant='outlined'
-                                format="MM/dd/yyyy"
+                                format="MM/dd/yyyy t"
                                 disablePast={true}
                                 value={date}
                                 onChange={setDate}
