@@ -8,6 +8,9 @@ import { List, ListItem, ListItemIcon, ListItemText,
 import { Link, useLocation } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
+// SSO imports
+import { SERVICE_URL } from '../../config'; 
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const useStyles = makeStyles((theme) => ({
   appbarRoot: {
@@ -106,7 +109,12 @@ export default function ButtonAppBar (props) {
   }
 
   const login = () => {
-    localStorage.setItem('nextPage', window.location.pathname);
+    localStorage.setItem('nextPage', window.location.pathname); 
+  }
+
+  const redirect = () => {
+    let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+    window.open(redirectURL, '_self');
   }
 
   const showUsername = (toggleDrawer) => (
@@ -118,7 +126,7 @@ export default function ButtonAppBar (props) {
 
   const showLogin = (toggleDrawer) => (
       <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
-        <LogInOutButton onClick = {() => {toggleDrawer(); login();}} component = {Link} to = "/login">Login</LogInOutButton>
+        <LogInOutButton onClick = {() => {toggleDrawer(); login(); redirect();}}>Login</LogInOutButton>
       </ListItem>
   )
 
