@@ -43,6 +43,7 @@ import {
 } from './RideSummaryStyles.js'
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
+import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
@@ -117,7 +118,7 @@ const RideSummary = () => {
   }, [data])
   console.log(data, loading, error);
   if (error) return <p>Error.</p>
-  if (loading) return <p>Loading...</p>
+  if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
 
   const join = () => {

@@ -15,6 +15,7 @@ import {
   SaveButton,
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
+import LoadingDiv from "../../common/LoadingDiv";
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -103,7 +104,7 @@ export default function ProfileDialog(props) {
     },
   });
 
-  if (loading) return "Loading...";
+  if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
   
 
