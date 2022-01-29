@@ -41,7 +41,7 @@ const Ride = ({ride}) => {
             <Grid item container  style={{height:"16vh", backgroundColor: "white", borderRadius: '10px', borderColor:'', boxShadow: '0px 3px 10px #bbdaff'}}>
                 <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}> 
                         <Box width={"60%"} height={"75%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
-                            <span className={classes.text}>{ride.spots}</span>
+                            <span className={classes.text}>{(ride.spots - ride.riders.length)}</span>
                             <span className={classes.subtext}>seats left</span>  
                         </Box>
                 </Grid>
