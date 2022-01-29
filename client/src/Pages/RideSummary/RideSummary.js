@@ -43,6 +43,8 @@ import {
 } from './RideSummaryStyles.js'
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
+import { useToasts } from "react-toast-notifications";
+
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const GET_RIDE = gql`
@@ -81,6 +83,7 @@ const RideSummary = () => {
     riders: []
   })
   const history = useHistory()
+  const { addToast } = useToasts();
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -112,21 +115,39 @@ const RideSummary = () => {
       console.log(ride)
     }
   }, [data])
-  console.log(data, loading, error);
-  if (error) return <p>Error.</p>
-  if (loading) return <p>Loading...</p>
-  if (!data) return <p>No data...</p>
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
+      localStorage.setItem('joinFromLogin', "true");
       localStorage.setItem('nextPage', `/ridesummary/${id}`)
       let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
       window.open(redirectURL, '_self');
       return
     }
+    else if (localStorage.getItem('joinFromLogin') == "true") {
+      localStorage.setItem('joinFromLogin', "false");
+      console.log("Inside login, join loop");
+    }
 
-    joinRide()
+    joinRide().then((result) => {
+      console.log(result);
+      window.location.reload();
+      console.log(result);
+
+    }).catch((err) => {
+      console.log("Caught error: Ride is full");
+      addToast("Sorry! This ride is full.", { appearance: 'error'});
+
+    });
   }
+  
+  console.log(data, loading, error);
+  if (localStorage.getItem('joinFromLogin') == "true") join();
+  if (error) return <p>Error.</p>
+  if (loading) return <p>Loading...</p>
+  if (!data) return <p>No data...</p>
+
+ 
 
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
