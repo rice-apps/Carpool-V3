@@ -21,6 +21,7 @@ import {
   EditProfileButton,
 } from "./ProfileStyles.js";
 import { useState } from "react";
+import LoadingDiv from "../../common/LoadingDiv.js";
 
 const Profile = () => {
   const { id } = useParams();
@@ -52,7 +53,7 @@ const Profile = () => {
     },
   });
 
-  if (loading) return "Loading...";
+  if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
 
   let { userOne: user } = JSON.parse(JSON.stringify(userData));
