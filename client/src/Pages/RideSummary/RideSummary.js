@@ -144,6 +144,12 @@ const RideSummary = () => {
 
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
+    localStorage.setItem('lastPage', `/ridesummary/${id}`);
+    // Any attempts to go back to edit the onboarding form
+    // should take you back to the current ride summary page.
+    if (lastPage === "/onboarding"){
+      localStorage.setItem('nextPage', `/ridesummary/${id}`); 
+    }
     history.push(lastPage);
   }
 

@@ -47,7 +47,7 @@ const Onboarding = () => {
     const nextPage = localStorage.getItem("nextPage");
     if (nextPage) {
       localStorage.removeItem('nextPage');
-      localStorage.setItem('lastPage', 'onboardingCompletion');
+      localStorage.setItem('lastPage', 'onboarding');
       window.open(nextPage, '_self');
     } else {
       history.push("/search");
