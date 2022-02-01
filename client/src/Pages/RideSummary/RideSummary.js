@@ -41,6 +41,12 @@ import {
   CalendarText,
   TimeText
 } from './RideSummaryStyles.js'
+// SSO imports
+import { SERVICE_URL } from '../../config'; 
+import LoadingDiv from '../../common/LoadingDiv.js'
+import { useToasts } from "react-toast-notifications";
+
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
@@ -78,6 +84,7 @@ const RideSummary = () => {
     riders: []
   })
   const history = useHistory()
+  const { addToast } = useToasts();
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -111,18 +118,28 @@ const RideSummary = () => {
   }, [data])
   console.log(data, loading, error);
   if (error) return <p>Error.</p>
-  if (loading) return <p>Loading...</p>
+  if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
       localStorage.setItem('nextPage', `/ridesummary/${id}`)
       localStorage.setItem('lastPage', `/ridesummary/${id}`);
-      history.push('/login');
+      let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+      window.open(redirectURL, '_self');
       return
     } 
 
-    joinRide()
+    joinRide().then((result) => {
+      console.log(result);
+      window.location.reload();
+      console.log(result);
+
+    }).catch((err) => {
+      console.log("Caught error: Ride is full");
+      addToast("Sorry! This ride is full.", { appearance: 'error'});
+
+    });
   }
 
   const goBack = () => {
@@ -142,7 +159,7 @@ const RideSummary = () => {
       </BackArrowDiv>
       <RideSummaryDiv>
         <SeatsLeftDiv>
-          <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
+          <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
@@ -199,7 +216,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.slice(0, 3).map((person) => (
+          {ride.riders.filter((x) => x.firstName + " " + x.lastName !== ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>

@@ -22,6 +22,7 @@ import {
     MenuSquare,
     BodyText
 } from './Create.styles'
+import LoadingDiv from '../../common/LoadingDiv.js';
 
 
 
@@ -31,6 +32,12 @@ const Create = ({onCreate}) => {
 
     const seats = [
         {
+            value: 2
+        }, 
+        {
+            value: 3
+        }, 
+        {
             value: 4
         }, 
         {
@@ -38,12 +45,6 @@ const Create = ({onCreate}) => {
         }, 
         {
             value: 6
-        }, 
-        {
-            value: 7
-        }, 
-        {
-            value: 8
         }
     ]
 
@@ -51,7 +52,7 @@ const Create = ({onCreate}) => {
     const [startLoc, setStartLoc] = useState('')
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date())
-    const [passengers, setPassengers] = useState(4)
+    const [passengers, setPassengers] = useState(3)
     const [confirmation, setConfirmation] = useState(false)
 
     // Function after Submit Button is Pressed
@@ -139,7 +140,7 @@ const Create = ({onCreate}) => {
         }
     );
 
-    if (locationLoading || userLoading) return 'Loading...';
+    if (locationLoading || userLoading) return <LoadingDiv />;
     if (error) return `Error! ${error.message}`;
 
     const {locationMany: locations} = locationData
@@ -239,7 +240,7 @@ const Create = ({onCreate}) => {
                             <DateBox
                                 labelid='Date and Time'
                                 inputVariant='outlined'
-                                format="MM/dd/yyyy"
+                                format="MM/dd/yyyy   t"
                                 disablePast={true}
                                 value={date}
                                 onChange={setDate}
@@ -274,7 +275,7 @@ const Create = ({onCreate}) => {
                         </SelectSquare> 
                     </Grid>
                     <Grid item>
-                        <BodyText>{"# of open seats"}</BodyText> 
+                        <BodyText>{"# of seats (include yourself)"}</BodyText> 
                     </Grid>
 
                 </Grid>
@@ -285,7 +286,7 @@ const Create = ({onCreate}) => {
                 >
                     <FormControlLabelBox
                         control={<CheckBox color='primary' checked={confirmation} onChange={onCheck}/>}
-                        label="I will be responsible for coordinating this ride."
+                        label="I am responsible for coordinating this ride."
                     />
                 </Grid>
 

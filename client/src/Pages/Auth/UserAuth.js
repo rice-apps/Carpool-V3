@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
+import LoadingDiv from '../../common/LoadingDiv';
 
 // Backend Query to Retrieve User Information
 const GET_USER = gql`
@@ -67,9 +68,7 @@ const UserAuth = () => {
   return(
     // Loading icon until the query is complete... in which case, the user is redirected 
     // to the appropriate page. 
-    <div>
-      Loading...
-    </div>
+    <LoadingDiv />
   )
 }
 
