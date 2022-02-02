@@ -60,6 +60,7 @@ const GET_RIDE = gql`
       arrivalLocation {
         title
       }
+      notes
       owner {
         netid
         firstName
@@ -198,6 +199,10 @@ const RideSummary = () => {
         </LocationDiv>
       </LocationDivContainer>
       <RidersDiv>
+        <div>
+          {ride.notes || '[No ride notes]'}
+        </div>
+
         <HostDiv>Host</HostDiv>
         <RidersComponents>
           <div onClick={e => history.push("/profile/" + ride.owner.netid)}>
