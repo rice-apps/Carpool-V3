@@ -199,9 +199,9 @@ const RideSummary = () => {
         </LocationDiv>
       </LocationDivContainer>
       <RidersDiv>
-        <div>
-          {ride.notes || '[No ride notes]'}
-        </div>
+        <LocationDivContainer>
+          {ride.notes || 'No ride notes'}
+        </LocationDivContainer>
 
         <HostDiv>Host</HostDiv>
         <RidersComponents>
