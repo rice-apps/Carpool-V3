@@ -232,7 +232,9 @@ const RideSummary = () => {
         </RidersComponents>
       </RidersDiv>
       <ButtonContainer>
-        <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+          Join Ride
+        </ButtonDiv>
       </ButtonContainer>
     </AllDiv>
   )
