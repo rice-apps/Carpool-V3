@@ -1,5 +1,5 @@
 import LocationOn from '@material-ui/icons/LocationOn'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const SeatsLeftDiv = styled.div`
   grid-column: 4;
@@ -199,7 +199,7 @@ const TextContainer = styled.div`
 `
 const ButtonDiv = styled.button`
   color: #ffffff;
-  background: #2075d8;
+  background: ${({ disabled }) => !disabled ? '#2075d8' : '#9e9e9e'};
   text-align: center;
   font-family: Josefin Sans;
   font-style: normal;
@@ -209,7 +209,7 @@ const ButtonDiv = styled.button`
   border-radius: 8px;
   width: 100%;
   height: 48px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => !disabled ? 'pointer' : 'inherit'};
   onclick='joinRide()';
   
 `
