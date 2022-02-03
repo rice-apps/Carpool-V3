@@ -75,13 +75,13 @@ export const AccountIconContainer = styled.div`
   position: relative;
   justify-content: center;
   top: 0vh;
-`
+`;
 
 export const EditIconContainer = styled.div`
   position: relative;
   left: 20vw;
   top: 0vh;
-`
+`;
 export const NameSectionHeader = styled.header`
   font-family: Josefin Sans;
   font-style: normal;
@@ -138,7 +138,7 @@ export const EmailTextBox = styled.div`
   top: 14.5vh;
   left: 9vw;
   border-radius: 2em;
-  margin-top: .5h;
+  margin-top: 0.5h;
 `;
 
 export const PaymentSectionHeader = styled.header`
@@ -149,7 +149,7 @@ export const PaymentSectionHeader = styled.header`
   line-height: 3px;
   color: #2075d8;
   position: relative;
-  top: 24vh;
+  top: 25.5vh;
   left: 10vw;
 `;
 
@@ -158,7 +158,7 @@ export const PaymentDropdown = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 21.5vh;
+  margin-top: 23vh;
   left: 14vw;
 
   background-color: white;
@@ -188,4 +188,4 @@ export const CloseIconContainer = styled.div`
   top: 1vh;
   position: relative;
   left: 65vw;
-`
+`;

@@ -49,8 +49,8 @@ const MailBox = withStyles({
 const ImageStyles = makeStyles((theme) => ({
   imageStyle: {
     borderRadius: "50%",
-    width: "45vw",
-    height: "26vh",
+    width: "50vw",
+    height: "24vh",
   },
 }));
 

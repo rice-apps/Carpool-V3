@@ -19,6 +19,7 @@ const ProfileForm = ({ onSubmit }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [college, setCollege] = useState("");
   const [paymentOption, setPaymentOption] = useState("");
   const [paymentAccount, setPaymentAccount] = useState("");
 
@@ -42,6 +43,13 @@ const ProfileForm = ({ onSubmit }) => {
           variant="filled"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+        />
+        <TextField
+          id="outlined-filled"
+          label="College"
+          variant="filled"
+          value={college}
+          onChange={(e) => setCollege(e.target.value)}
         />
       </EditName>
       <EditContactInfo>
@@ -92,7 +100,7 @@ const ProfileForm = ({ onSubmit }) => {
         <Button
           variant="contained"
           onClick={() => {
-            onSubmit({ firstName, lastName, phone });
+            onSubmit({ firstName, lastName, phone, college });
           }}
         >
           Submit

@@ -168,7 +168,6 @@ export default function ProfileDialog(props) {
             {previewSource ? (
               <StyledImage src={previewSource}></StyledImage>
             ) : (
-              // console.log("no preview source") //true
               <ProfileImage netid={profileUser.netid} /> //this one
             )}
             <Tooltip title="Upload profile picture">
