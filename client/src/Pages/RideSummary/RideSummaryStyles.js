@@ -1,5 +1,5 @@
 import LocationOn from '@material-ui/icons/LocationOn'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const SeatsLeftDiv = styled.div`
   grid-column: 4;
