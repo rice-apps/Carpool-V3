@@ -6,7 +6,6 @@ import {
   IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
-import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 import { useHistory } from 'react-router'

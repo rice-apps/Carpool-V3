@@ -1,7 +1,6 @@
 import LocationOn from '@material-ui/icons/LocationOn'
 import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 
