@@ -6,7 +6,6 @@ import {
   IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
-import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 import { useHistory } from 'react-router'
@@ -36,6 +35,8 @@ import {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
+  BackArrow,
+  BackText,
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
@@ -122,10 +123,16 @@ const RideSummary = () => {
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
-      localStorage.setItem('nextPage', `/ridesummary/${id}`)
+      localStorage.setItem('joinFromLogin', "true");
+      localStorage.setItem('nextPage', `ridesummary/${id}`);
+      localStorage.setItem('lastPage', `ridesummary/${id}`);
       let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
       window.open(redirectURL, '_self');
       return
+    }
+    else if (localStorage.getItem('joinFromLogin') === "true") {
+      localStorage.setItem('joinFromLogin', "false");
+      console.log("Inside login, join loop");
     }
 
     joinRide().then((result) => {
@@ -139,9 +146,23 @@ const RideSummary = () => {
 
     });
   }
+  
+  console.log(data, loading, error);
+  if (localStorage.getItem('joinFromLogin') === "true") join();
+  if (error) return <p>Error.</p>
+  if (loading) return <p>Loading...</p>
+  if (!data) return <p>No data...</p>
+
+ 
 
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
+    localStorage.setItem('lastPage', `ridesummary/${id}`);
+    // Any attempts to go back to edit the onboarding form
+    // should take you back to the current ride summary page.
+    if (lastPage === "/onboarding"){
+      localStorage.setItem('nextPage', `ridesummary/${id}`); 
+    }
     history.push(lastPage);
   }
 
@@ -153,16 +174,18 @@ const RideSummary = () => {
   return (
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
-        <IoIosArrowBack></IoIosArrowBack>
+        <BackArrow></BackArrow>
+        <BackText>Search Page</BackText>
       </BackArrowDiv>
+
       <RideSummaryDiv>
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
-          <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
+          <SeatsLeftText>seat(s) left</SeatsLeftText>
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
           </SocialIcon>
-      </SeatsLeftDiv>
+        </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
         <LocationDiv>
@@ -231,7 +254,9 @@ const RideSummary = () => {
         </RidersComponents>
       </RidersDiv>
       <ButtonContainer>
-        <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+          Join Ride
+        </ButtonDiv>
       </ButtonContainer>
     </AllDiv>
   )

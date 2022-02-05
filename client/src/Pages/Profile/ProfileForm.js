@@ -9,10 +9,9 @@ import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
-const ProfileForm = ({ onSubmit }) => {
+const ProfileForm = ({ onSubmit, onCancel }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [venmo, setVenmo] = useState(undefined);
 
@@ -21,8 +20,7 @@ const ProfileForm = ({ onSubmit }) => {
 
         return onSubmit({
             firstName, lastName,
-            email, phone,
-            venmo
+            phone, venmo
         });
     };
 
@@ -40,7 +38,6 @@ const ProfileForm = ({ onSubmit }) => {
             </EditName>
             <EditContactInfo>
                 Contact Information
-                <TextField id="outlined-filled" label="Email" variant="filled" value={email} required onChange={(e) => setEmail(e.target.value)}/>
                 <TextField id="outlined-filled" label="Phone #" variant="filled" value={phone} required onChange={(e) => setPhone(e.target.value)}/>
             </EditContactInfo>    
             <EditPaymentOptions>
@@ -61,6 +58,11 @@ const ProfileForm = ({ onSubmit }) => {
                     }}
                 >
                     Submit
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={() => { onCancel() }}>
+                    Cancel
                 </Button>
             </SubmitButton>
         </form>

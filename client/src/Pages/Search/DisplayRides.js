@@ -26,7 +26,7 @@ const isEqualRides = (ride1, ride2) => {
 
 const handleClickCreateRide = () => {
 
-    localStorage.setItem('nextPage', '/create-ride');
+    localStorage.setItem('nextPage', 'create-ride');
 
     let token = localStorage.getItem('token');
 
@@ -39,6 +39,14 @@ const handleClickCreateRide = () => {
         window.open(redirectURL, '_self');
     }
     
+}
+
+const sortRides = (rides) => {
+    rides.sort(function(a,b){
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(a.departureDate) - new Date(b.departureDate);
+    })
 }
 
 const handleClickSearchAgain = () => {
@@ -89,6 +97,9 @@ class DisplayRides extends Component {
         }
 
         const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
+        
+        // Sorts the rides!
+        sortRides(this.state.ridesPossible) 
 
         return <GridT container style={{gap: "2vh"}} direction="column" alignItems="center">
             <Box style={{fontSize: "4vh", paddingTop: '4vh', fontFamily: "Josefin Sans"}}>
@@ -106,7 +117,7 @@ class DisplayRides extends Component {
             }
             {
             <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
-            }
+            }   
             {
             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
             }

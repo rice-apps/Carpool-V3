@@ -68,7 +68,7 @@ const Profile = () => {
       <ReturnHeader>
         <ButtonBox onClick={goBack}>
           <BackArrow></BackArrow>
-          <StyledText3>Ride Summary</StyledText3>
+          <StyledText3>Back</StyledText3>
         </ButtonBox>
       </ReturnHeader>
       <EditProfileButton>

@@ -46,14 +46,13 @@ const FormOnly = (props) => {
 
   const displayRef = props.displayRef;
 
-  const todayDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
 
   // state for filter date
-  const [filterDate, setfilterDate] = useState(todayDate);
+  const [filterDate, setfilterDate] = useState(null);
 
   const [numberPeople, setNumberPeople] = useState(null)
 
