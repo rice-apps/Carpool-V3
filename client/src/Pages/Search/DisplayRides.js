@@ -81,6 +81,7 @@ class DisplayRides extends Component {
 
         this.state = {
             rides: props.rides,
+            allRides: props.allRides,
             ridesPossible: ridesPossible,
             locsPossible: locsPossible,
             testVar: props.testVar
@@ -169,7 +170,7 @@ class DisplayRides extends Component {
                 <div >
                     <div >
                         {
-                        this.displayRides(this.state.rides)
+                        this.displayRides(this.state.allRides)
                     }
                     </div>
                     <div >

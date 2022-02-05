@@ -19,7 +19,7 @@ const Search = () => {
   let resultDestArr = [];
   
   const [allRides, setAllRides] = useState([])
-  const displayRef = useRef(allRides);
+  const displayRef = useRef();
 
   const updateResultRides = (rides) => {
     resultDestArr = rides;
@@ -77,7 +77,6 @@ const Search = () => {
 
   useEffect(() => {
     axios.get('http://localhost:3000/getRides').then((res) => {
-      console.log("Test res", res)
       setAllRides(res.data.rides)
     })
   }, [])
@@ -86,10 +85,10 @@ const Search = () => {
   return (
     <React.Fragment>
       <div><Header subtitle = "Search Rides"/></div>
-      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
+      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} allRides={allRides} setAllRides={setAllRides} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
         {rideLoading ? 
           <LoadingDiv height={'15vh'} /> : 
-          <DisplayRides ref={displayRef} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
+          <DisplayRides ref={displayRef} rides={resultDestArr} rideLoading={rideLoading} allRides={allRides} testVar={3}/>
         }
     </React.Fragment>
   )

@@ -27,23 +27,23 @@ const FormOnly = (props) => {
   const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
 
   // initial filter: filters rides that are past current date
-  useEffect(() => {
-    axios.get('http://localhost:3000/getRides')
-    .then((res) => {
-      console.log("Get rides refetch", res.data.rides)
-      // const ridesPossibleNotBefore = res.data.rides.filter((ride) => {
-      //   const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
-      //   return rideDateAfterCurrentDate;
-      // });
+  // useEffect(() => {
+  //   axios.get('http://localhost:3000/getRides')
+  //   .then((res) => {
+  //     console.log("Get rides refetch", res.data.rides)
+  //     // const ridesPossibleNotBefore = res.data.rides.filter((ride) => {
+  //     //   const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
+  //     //   return rideDateAfterCurrentDate;
+  //     // });
       
-      setRidesPossibleForm(res.data.rides);
-      displayRef.current.setRidesPossible(res.data.rides);
-    })
-    .catch((err) => {
-      console.log("err=", err);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //     setRidesPossibleForm(res.data.rides);
+  //     displayRef.current.setRidesPossible(res.data.rides);
+  //   })
+  //   .catch((err) => {
+  //     console.log("err=", err);
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const displayRef = props.displayRef;
 
@@ -62,8 +62,8 @@ const FormOnly = (props) => {
     let resultDestArr = null;
     axios.get('http://localhost:3000/getRides')
     .then((res) => {
-      // console.log("Get rides refetch", res)
-      resultDestArr = ridesPossibleForm;
+      console.log("Get rides refetch",  res.data.rides)
+      resultDestArr = res.data.rides;
       if (startLoc !== "") {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});
       }
@@ -77,7 +77,8 @@ const FormOnly = (props) => {
       if (numberPeople != null) {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
       }
-      displayRef.current.setRides(resultDestArr);
+      // displayRef.current.setRides(resultDestArr);
+      props.setAllRides(resultDestArr)
     }).catch((err) => {
       console.log("err=", err);
     });
