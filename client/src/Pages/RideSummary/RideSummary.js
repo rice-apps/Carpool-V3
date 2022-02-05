@@ -124,7 +124,7 @@ const RideSummary = () => {
       window.open(redirectURL, '_self');
       return
     }
-    else if (localStorage.getItem('joinFromLogin') == "true") {
+    else if (localStorage.getItem('joinFromLogin') === "true") {
       localStorage.setItem('joinFromLogin', "false");
       console.log("Inside login, join loop");
     }
@@ -142,7 +142,7 @@ const RideSummary = () => {
   }
   
   console.log(data, loading, error);
-  if (localStorage.getItem('joinFromLogin') == "true") join();
+  if (localStorage.getItem('joinFromLogin') === "true") join();
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
