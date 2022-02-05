@@ -6,7 +6,6 @@ import {
   IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
-import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 import { useHistory } from 'react-router'
@@ -36,6 +35,8 @@ import {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
+  BackArrow,
+  BackText,
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
@@ -174,8 +175,10 @@ const RideSummary = () => {
   return (
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
-        <IoIosArrowBack></IoIosArrowBack>
+        <BackArrow></BackArrow>
+        <BackText>Search Page</BackText>
       </BackArrowDiv>
+
       <RideSummaryDiv>
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
@@ -183,7 +186,7 @@ const RideSummary = () => {
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
           </SocialIcon>
-      </SeatsLeftDiv>
+        </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
         <LocationDiv>
