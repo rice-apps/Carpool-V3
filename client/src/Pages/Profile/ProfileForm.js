@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
-const ProfileForm = ({ onSubmit }) => {
+const ProfileForm = ({ onSubmit, onCancel }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -58,6 +58,11 @@ const ProfileForm = ({ onSubmit }) => {
                     }}
                 >
                     Submit
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={() => { onCancel() }}>
+                    Cancel
                 </Button>
             </SubmitButton>
         </form>
