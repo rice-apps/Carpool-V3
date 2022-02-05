@@ -25,25 +25,10 @@ const Search = () => {
     rideMany {
       _id
       departureDate
-      riders {
-        netid
-        firstName
-        lastName
-      }
+      riders { netid }
       spots
-      departureLocation {
-        title
-        address
-      }
-      arrivalLocation {
-        title
-        address
-      }
-      owner {
-        netid
-        firstName
-        lastName
-      }
+      departureLocation { title }
+      arrivalLocation { title }
     }
   }
 `;
