@@ -6,6 +6,7 @@ import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
   Drawer, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
 import { Link, useLocation } from 'react-router-dom'
+import sendEmail from '../Notifications/Notifications';
 import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
 // SSO imports
@@ -158,6 +159,11 @@ export default function ButtonAppBar (props) {
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
+
+        <ListItem button>
+          {sendEmail()}
+         </ListItem> 
+        
         <ListItem button className = {classes.bottomItem} component = {Link} to = "/about" onClick = {toggleDrawer}>
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
@@ -170,7 +176,7 @@ export default function ButtonAppBar (props) {
     <div>
     {showBar ?
     <div>
-        <AppBar position="fixed" color="white" elevation="0" className={classes.appbarRoot}> 
+        <AppBar position="fixed" color="white" elevation="" className={classes.appbarRoot}> 
           <Toolbar>
             <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
