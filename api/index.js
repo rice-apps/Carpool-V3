@@ -68,7 +68,7 @@ function getRides(req, res) {
                 $gte: new Date(), 
                 $lt: new Date(8640000000000000)
               }
-          }).sort({departureDate: -1}).exec(function(err, result) {
+          }).populate({path: 'departureLocation'}).populate({path: 'arrivalLocation'}).sort({departureDate: -1}).exec(function(err, result) {
               if (err || !result) {
                   console.log(err)
                   res.sendStatus(401)
