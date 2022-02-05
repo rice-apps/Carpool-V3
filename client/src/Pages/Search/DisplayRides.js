@@ -75,29 +75,15 @@ const displayRideBottomOfPage = () => {
         </div>
 }
 
-class DisplayRides extends Component {
-    constructor(props) {
-        super(props);
+const DisplayRides = (props) => {
 
-        this.state = {
-            rides: props.rides,
-            allRides: props.allRides,
-            ridesPossible: ridesPossible,
-            locsPossible: locsPossible,
-            testVar: props.testVar
-        }
-    }
-
-    displayRides(ridesT)  {
+    const rideBox = (ridesT) =>  {
         
         if (ridesT === null || ridesT === undefined) {
             return null;
         }
 
         const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
-        
-        // Sorts the rides!
-        sortRides(this.state.ridesPossible) 
 
         return <GridT container style={{gap: "2vh"}} direction="column" alignItems="center">
             <Box style={{fontSize: "4vh", paddingTop: '4vh', fontFamily: "Josefin Sans"}}>
@@ -107,80 +93,147 @@ class DisplayRides extends Component {
             (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride} />))
             }
             {
-            (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff"}}>
-                <Box width={"100%"} height={"100%"} style={{fontSize: "2vh", fontFamily: "Josefin Sans", padding: "1vh"}}>
-                    No rides matched.
-                </Box>
-            </Grid>
+            (!isValidRidesT) && 
+                <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff"}}>
+                    <Box width={"100%"} height={"100%"} style={{fontSize: "2vh", fontFamily: "Josefin Sans", padding: "1vh"}}>
+                        No rides matched.
+                    </Box>
+                </Grid>
             }
             {
-            <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
+                <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
             }   
             {
-            this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
+                props.nonMatchingRides.map((ride, ind) => (<Ride ride={ride} />))
             }
-            <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
-                no more results
-            </Grid>
+                <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
+                    no more results
+                </Grid>
             </GridT>;
-
-      }
-    
-        setRides(ridesTest) {
-        console.log("setRides() run");
-
-        this.setState({
-            ...this.state,
-            rides: ridesTest
-        })
-        }
-
-        setRidesPossible(ridesTest) {
-        console.log("setRidesPossible() run");
-
-        this.setState({
-            ...this.state,
-            ridesPossible: ridesTest
-        })
-
-        console.log("this.state.ridesPossible=", this.state.ridesPossible);
-        }
-
-        setLocsPossible(locsTest) {
-            console.log("setLocsPossible() run");
-    
-            this.setState({
-                ...this.state,
-                locsPossible: locsTest
-            })
-    
-            console.log("this.state.locsPossible=", this.state.locsPossible);
-        }
-
-      incrementVar() {
-        this.setState({
-            ...this.state,
-            testVar: this.state.testVar + 1
-        });
-
       }
 
-      render() {
-            return (
-                <div >
-                    <div >
-                        {
-                        this.displayRides(this.state.allRides)
-                    }
-                    </div>
-                    <div >
-                        {
-                    displayRideBottomOfPage()
-                        }
-                    </div>
-                </div>
-            )
-      }
+    return (
+        <div >
+            <div >
+                {
+                rideBox(props.allRides)
+            }
+            </div>
+            <div >
+                {
+            displayRideBottomOfPage()
+                }
+            </div>
+        </div>
+    )
 }
+
+// class DisplayRides extends Component {
+//     constructor(props) {
+//         super(props);
+
+//         this.state = {
+//             rides: props.rides,
+//             allRides: props.allRides,
+//             ridesPossible: ridesPossible,
+//             locsPossible: locsPossible,
+//             testVar: props.testVar
+//         }
+//     }
+
+//     displayRides(ridesT)  {
+        
+//         if (ridesT === null || ridesT === undefined) {
+//             return null;
+//         }
+
+//         const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
+        
+//         // Sorts the rides!
+//         sortRides(this.state.ridesPossible) 
+
+//         return <GridT container style={{gap: "2vh"}} direction="column" alignItems="center">
+//             <Box style={{fontSize: "4vh", paddingTop: '4vh', fontFamily: "Josefin Sans"}}>
+//                 Matching Rides: 
+//             </Box>
+//             {
+//             (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride} />))
+//             }
+//             {
+//             (!isValidRidesT) && <Grid item xs={9} justify="center" align='center' alignItems='stretch' style={{height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#ddddff"}}>
+//                 <Box width={"100%"} height={"100%"} style={{fontSize: "2vh", fontFamily: "Josefin Sans", padding: "1vh"}}>
+//                     No rides matched.
+//                 </Box>
+//             </Grid>
+//             }
+//             {
+//             <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
+//             }   
+//             {
+//             this.state.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
+//             }
+//             <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
+//                 no more results
+//             </Grid>
+//             </GridT>;
+
+//       }
+    
+//         setRides(ridesTest) {
+//         console.log("setRides() run");
+
+//         this.setState({
+//             ...this.state,
+//             rides: ridesTest
+//         })
+//         }
+
+//         setRidesPossible(ridesTest) {
+//         console.log("setRidesPossible() run");
+
+//         this.setState({
+//             ...this.state,
+//             ridesPossible: ridesTest
+//         })
+
+//         console.log("this.state.ridesPossible=", this.state.ridesPossible);
+//         }
+
+//         setLocsPossible(locsTest) {
+//             console.log("setLocsPossible() run");
+    
+//             this.setState({
+//                 ...this.state,
+//                 locsPossible: locsTest
+//             })
+    
+//             console.log("this.state.locsPossible=", this.state.locsPossible);
+//         }
+
+//       incrementVar() {
+//         this.setState({
+//             ...this.state,
+//             testVar: this.state.testVar + 1
+//         });
+
+//       }
+
+//       render() {
+//             return (
+//                 <div >
+//                     <div >
+//                         {
+//                         this.displayRides(this.state.allRides)
+//                     }
+//                     </div>
+//                     <div >
+//                         {
+//                     displayRideBottomOfPage()
+//                         }
+//                     </div>
+//                 </div>
+//             )
+//       }
+// }
 
 export default DisplayRides

@@ -78,7 +78,9 @@ const FormOnly = (props) => {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
       }
       // displayRef.current.setRides(resultDestArr);
+      console.log("Result dest arr", resultDestArr)
       props.setAllRides(resultDestArr)
+      props.setNonMatchingRides(res.data.rides.filter(x => !resultDestArr.includes(x)))
     }).catch((err) => {
       console.log("err=", err);
     });

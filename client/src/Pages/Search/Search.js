@@ -19,6 +19,7 @@ const Search = () => {
   let resultDestArr = [];
   
   const [allRides, setAllRides] = useState([])
+  const [nonMatchingRides, setNonMatchingRides] = useState([])
   const displayRef = useRef();
 
   const updateResultRides = (rides) => {
@@ -81,14 +82,18 @@ const Search = () => {
     })
   }, [])
 
+  useEffect(() => {
+    console.log("LAKDSJFLKASDFJ ALL RIDES UPDATED", allRides)
+  }, [allRides])
+
 
   return (
     <React.Fragment>
       <div><Header subtitle = "Search Rides"/></div>
-      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} allRides={allRides} setAllRides={setAllRides} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
+      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} allRides={allRides} setAllRides={setAllRides} setNonMatchingRides={setNonMatchingRides} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
         {rideLoading ? 
           <LoadingDiv height={'15vh'} /> : 
-          <DisplayRides ref={displayRef} rides={resultDestArr} rideLoading={rideLoading} allRides={allRides} testVar={3}/>
+          <DisplayRides ref={displayRef} rides={resultDestArr} nonMatchingRides={nonMatchingRides} rideLoading={rideLoading} allRides={allRides} testVar={3}/>
         }
     </React.Fragment>
   )
