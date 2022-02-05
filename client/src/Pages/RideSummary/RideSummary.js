@@ -36,6 +36,8 @@ import {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
+  BackIcon,
+  BackText,
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
@@ -167,7 +169,8 @@ const RideSummary = () => {
   return (
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
-        <IoIosArrowBack></IoIosArrowBack>
+        <BackIcon><IoIosArrowBack/></BackIcon>
+        <BackText>Search Page</BackText>
       </BackArrowDiv>
       <RideSummaryDiv>
         <SeatsLeftDiv>
@@ -176,7 +179,7 @@ const RideSummary = () => {
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
           </SocialIcon>
-      </SeatsLeftDiv>
+        </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
         <LocationDiv>

@@ -256,7 +256,7 @@ justify-content: center;
 align-items: center;
 `
 const BackArrowDiv = styled.div`
-width:30px;
+width: 40vw;
 height: 30px;
 grid-column: 1;
 grid-row: 1;
@@ -266,9 +266,21 @@ margin-top: 30px;
 margin-left: 20px;
 font-family: Josefin Sans;
 font-style: normal;
-line-height: 11px;
-font-size: 24px;
+// line-height: 11px;
 cursor: pointer;
+display: grid;
+grid-template-columns: 14% 86%;
+`
+
+const BackIcon = styled.div`
+grid-column-start: 1;
+`
+
+const BackText = styled.div`
+grid-column-start: 2;
+font-family: Josefin Sans;
+font-style: normal;
+font-size: 15px;
 `
 
 const InnerLocationDiv = styled.div`
@@ -304,6 +316,8 @@ export {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
+  BackIcon,
+  BackText,
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
