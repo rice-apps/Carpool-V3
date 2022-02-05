@@ -7,7 +7,6 @@ import LoadingDiv from '../../common/LoadingDiv';
 import "@fontsource/source-sans-pro";
 import './Search.css'
 import { useAxios } from 'use-axios-client';
-import { BACKEND_URL } from '../../config';
 import axios from 'axios';
 
 
@@ -26,34 +25,6 @@ const Search = () => {
     resultDestArr = rides;
   }
 
-  const GET_RIDES = gql`
-  query {
-    rideMany {
-      _id
-      departureDate
-      riders {
-        netid
-        firstName
-        lastName
-      }
-      spots
-      departureLocation {
-        title
-        address
-      }
-      arrivalLocation {
-        title
-        address
-      }
-      owner {
-        netid
-        firstName
-        lastName
-      }
-    }
-  }
-`;
-
   const GET_LOCATIONS = gql`
     query {
       locationMany {
@@ -65,12 +36,6 @@ const Search = () => {
 
   const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
-  // const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES,
-  //   {
-  //     variables: {}
-  //   }
-  // );
-
   const { refetch: refetchRide, loading: rideLoading } = useAxios({
     url: 'http://localhost:3000/getRides',
     method: "get"
@@ -81,11 +46,6 @@ const Search = () => {
       setAllRides(res.data.rides)
     })
   }, [])
-
-  useEffect(() => {
-    console.log("LAKDSJFLKASDFJ ALL RIDES UPDATED", allRides)
-  }, [allRides])
-
 
   return (
     <React.Fragment>

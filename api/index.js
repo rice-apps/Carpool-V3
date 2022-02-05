@@ -59,7 +59,6 @@ app.use(exjwt({
 }));
 
 function getRides(req, res) {
-  console.log("get rides called")
   return (async () => {
       const connector = mongoose.connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
       await (connector.then(()=> {
