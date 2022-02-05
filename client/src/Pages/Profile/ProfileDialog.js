@@ -1,4 +1,4 @@
-import { Dialog, MenuItem } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 import React, { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import {
@@ -12,11 +12,10 @@ import {
   Label,
   InputTextField,
   InputBox,
-  PaymentSelect,
-  ProfileStyles,
   SaveButton,
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
+import LoadingDiv from "../../common/LoadingDiv";
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -24,14 +23,14 @@ export default function ProfileDialog(props) {
       $firstName: String!
       $lastName: String!
       $phone: String!
-      $payment: JSON!
+      $venmo: String
     ) {
       userUpdateOne(
         record: {
           firstName: $firstName
           lastName: $lastName
           phone: $phone
-          payment: $payment
+          venmo: $venmo
         }
       ) {
         record {
@@ -39,7 +38,7 @@ export default function ProfileDialog(props) {
           firstName
           lastName
           phone
-          payment
+          venmo
         }
       }
     }
@@ -60,50 +59,25 @@ export default function ProfileDialog(props) {
     payment: profileUser.payment ? profileUser.payment : {},
   });
 
-  const classes = ProfileStyles();
-
   const closeDialog = () => {
     setOpenDialog(false);
   };
-
-  function selectPayment(e) {
-    setUser((prestate) => {
-      const newPaymentMethod = e.target.value;
-      const newPayment = prestate.payment[newPaymentMethod]
-        ? prestate.payment[newPaymentMethod]
-        : "";
-      return {
-        ...prestate,
-        selectedPaymentMethod: newPaymentMethod,
-        selectedPayment: newPayment,
-      };
-    });
-  }
 
   function setUserPayment(e) {
     const newPayment = e.target.value;
     setUser((prestate) => {
       return {
         ...prestate,
-        payment: {
-          ...prestate.payment,
-          [prestate.selectedPaymentMethod]: newPayment,
-        },
-        selectedPayment: newPayment,
+        venmo: newPayment,
       };
     });
   }
 
-  function clearUserPayment(type) {
-    console.log("type", type);
+  function clearUserPayment() {
     setUser((prestate) => {
       return {
         ...prestate,
-        payment: {
-          ...prestate.payment,
-          [type]: "",
-        },
-        selectedPayment: "",
+        venmo: undefined,
       };
     });
   }
@@ -130,7 +104,7 @@ export default function ProfileDialog(props) {
     },
   });
 
-  if (loading) return "Loading...";
+  if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
   
 
@@ -171,38 +145,21 @@ export default function ProfileDialog(props) {
               onChange={(e) => setUserProps("phone", e.target.value)}
               clearTextField={() => clearTextField("phone")}
             ></InputTextField>
-            <InputTextField
-              label="Email"
-              disabled={true}
-              defaultValue={user.email}
-              clearTextField={() => {}}
-            ></InputTextField>
           </InputBox>
 
           <InputBox>
-            <Label>Payments:</Label>
-            <PaymentSelect
-              variant="outlined"
-              margin="dense"
-              defaultValue={user.selectedPaymentMethod}
-              classes={{ root: classes.inputLabel }}
-              onChange={(e) => selectPayment(e)}
-            >
-              <MenuItem value="Venmo">Venmo</MenuItem>
-              <MenuItem value="Zelle">Zelle</MenuItem>
-              <MenuItem value="Other">Other</MenuItem>
-            </PaymentSelect>
+            <Label>Venmo:</Label>
             <InputTextField
               label="Account ID"
-              name="selectedPayment"
-              defaultValue={user.selectedPayment}
-              value={user.selectedPayment}
+              name="venmo"
+              defaultValue={user.venmo}
+              value={user.venmo}
               onChange={(e) => {
                 setUserPayment(e);
               }}
               clearTextField={() => {
-                clearUserPayment(user.selectedPaymentMethod);
-                console.log(user.payment);
+                clearUserPayment();
+                console.log(user.venmo);
               }}
             ></InputTextField>
           </InputBox>

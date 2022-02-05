@@ -11,15 +11,22 @@ const Onboarding = () => {
       $firstName: String!
       $lastName: String!
       $phone: String!
+      $venmo: String
     ) {
       userUpdateOne(
-        record: { firstName: $firstName, lastName: $lastName, phone: $phone }
+        record: {
+          firstName: $firstName,
+          lastName: $lastName,
+          phone: $phone,
+          venmo: $venmo,
+        }
       ) {
         record {
           _id
           firstName
           lastName
           phone
+          venmo
         }
       }
     }
@@ -28,6 +35,8 @@ const Onboarding = () => {
   const [updateUser] = useMutation(UPDATE_USER);
 
   const updateUserInfo = (formData) => {
+    console.log(formData);
+    
     updateUser({ variables: formData });
 
     const nextPage = localStorage.getItem("nextPage");

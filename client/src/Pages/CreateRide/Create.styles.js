@@ -62,7 +62,7 @@ export const MenuBox = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'white',
-        width: '65vw',
+        width: '100%',
         border: 0,
         color: '#0B3669',
         height: 36,
@@ -180,7 +180,7 @@ export const ColorButton = withStyles({
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 2vh;
+    font-size: 1.75vh;
     line-height: 2vh;
     color: #0B3669;
     padding: 10px 0px 0px 0px;

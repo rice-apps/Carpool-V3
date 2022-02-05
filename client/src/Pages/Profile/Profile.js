@@ -21,6 +21,7 @@ import {
   EditProfileButton,
 } from "./ProfileStyles.js";
 import { useState } from "react";
+import LoadingDiv from "../../common/LoadingDiv.js";
 
 const Profile = () => {
   const { id } = useParams();
@@ -35,7 +36,7 @@ const Profile = () => {
         lastName
         netid
         phone
-        payment
+        venmo
       }
     }
   `;
@@ -52,7 +53,7 @@ const Profile = () => {
     },
   });
 
-  if (loading) return "Loading...";
+  if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
 
   let { userOne: user } = JSON.parse(JSON.stringify(userData));
@@ -61,21 +62,6 @@ const Profile = () => {
   function goBack() {
     window.history.back();
   }
-
-  const paymentKeys = user.payment ? Object.keys(user.payment) : undefined; //["Venmo", "Zelle", "Other"]
-  let paymentType = "";
-
-  //set paymentType to Venmo or Zelle or Other, in that order of priority
-  if (paymentKeys) {
-    if (user.payment["Venmo"] && user.payment["Venmo"] !== "") {
-      paymentType = "Venmo";
-    } else if (user.payment["Zelle"] && user.payment["Zelle"] !== "") {
-      paymentType = "Zelle";
-    } else {
-      paymentType = "Other";
-    }
-  }
-  console.log("paymentType", paymentType);
 
   return (
     <div>
@@ -118,21 +104,25 @@ const Profile = () => {
           <StyledText>{user.netid}@rice.edu</StyledText>
         </TextBox>
         <TextBox
-          onClick={() => {
-            navigator.clipboard.writeText("@comp182Luay").then(
-              addToast("Venmo ID Copied to Clipboard!", {
-                appearance: "success",
+          onClick={async () => {
+            if (user.venmo) {
+              navigator.clipboard.writeText(user.venmo).then(
+                addToast("Venmo ID Copied to Clipboard!", {
+                  appearance: "success",
+                })
+              );
+            } else {
+              addToast("Venmo ID Not Specified", {
+                appearance: "error",
               })
-            );
+            }
           }}
         >
           <StyledText2>
-            {user.payment[paymentType] !== ""
-              ? paymentType
-              : "No Payment Specified"}
+            Venmo
           </StyledText2>
           <StyledText>
-            {user.payment[paymentType] !== "" ? user.payment[paymentType] : ""}
+            {user.venmo ? `@${user.venmo}` : "Not Specified"}
           </StyledText>
         </TextBox>
       </ProfileCard>
