@@ -123,12 +123,17 @@ const RideSummary = () => {
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
-      localStorage.setItem('nextPage', `ridesummary/${id}`)
+      localStorage.setItem('joinFromLogin', "true");
+      localStorage.setItem('nextPage', `ridesummary/${id}`);
       localStorage.setItem('lastPage', `ridesummary/${id}`);
       let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
       window.open(redirectURL, '_self');
       return
-    } 
+    }
+    else if (localStorage.getItem('joinFromLogin') === "true") {
+      localStorage.setItem('joinFromLogin', "false");
+      console.log("Inside login, join loop");
+    }
 
     joinRide().then((result) => {
       console.log(result);
@@ -141,6 +146,14 @@ const RideSummary = () => {
 
     });
   }
+  
+  console.log(data, loading, error);
+  if (localStorage.getItem('joinFromLogin') === "true") join();
+  if (error) return <p>Error.</p>
+  if (loading) return <p>Loading...</p>
+  if (!data) return <p>No data...</p>
+
+ 
 
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');

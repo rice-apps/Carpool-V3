@@ -79,7 +79,7 @@ const Onboarding = () => {
   }
 
   useEffect(() => {
-    addToast("If you would not like to onboard, please use the \"Cancel\" button below. Please do not press back.", {
+    addToast("If you would not like to onboard, please use the \"Cancel\" button below.", {
       appearance: 'warning', 
       autoDismiss: true,
       autoDismissTimeout: 12000
