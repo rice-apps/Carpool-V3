@@ -24,7 +24,7 @@ root: {
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	marginTop: '25px',
+	marginTop: '4vh',
 	width: '75vw',
 	height: '10vh',
 	borderRadius: '9px',
@@ -46,7 +46,6 @@ const EditProfileButton = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	margin-top:20px;
 	font-family: Josefin Sans;
 	font-weight: 600;
 	font-size: 30px;
@@ -65,17 +64,17 @@ const ReturnHeader = styled.div`
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 10px 10px 10px 10px;
+	padding: 0 10px 10px 0;
 `;
 
 const UserPic = styled.img`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-top: 25px;
+	margin-top: 1vh;
 
-	width: 220px;
-	height: 220px;
+	width: 25vh;
+	height: 25vh;
 	background-image: url("https://www.kindpng.com/picc/m/229-2295555_not-my-art-pikachu-is-eating-pocky-kawaii.png");
 	border-radius: 50%;
 	background-size: cover;
@@ -85,7 +84,7 @@ const UserName = styled.p`
 	display: flex; 
 	justify-content: center;
 	align-items: center;
-	padding: 50px 0px 0px 0px;
+	padding: 4vh 0px 0px 0px;
 
 	font-family: Josefin Sans;
 	font-weight: 600;
@@ -100,7 +99,7 @@ const PhoneNumber = styled.p`
 	display: flex; 
 	justify-content: center;
 	align-items: center;
-	padding: 10px 0px 25px 0px;
+	padding: 1vh 0px 25px 0px;
 
 	font-family: Josefin Sans;
 	font-weight: 300;
@@ -113,7 +112,7 @@ const PhoneNumber = styled.p`
 
 const StyledText = styled.p`
 	display: flex; 
-	padding: 0px 0px 0px 10px;
+	padding: 0px 0px 0px 1vh;
 
 	font-family: Josefin Sans;
 	font-style: normal;
