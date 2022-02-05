@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import axios from 'axios';
 
 import {
     MenuItem,
@@ -27,16 +28,16 @@ const FormOnly = (props) => {
 
   // initial filter: filters rides that are past current date
   useEffect(() => {
-    props.getRidesRefetch()
+    axios.get('http://localhost:3000/getRides')
     .then((res) => {
-
-      const ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
-        const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
-        return rideDateAfterCurrentDate;
-      });
+      console.log("Get rides refetch", res.data.rides)
+      // const ridesPossibleNotBefore = res.data.rides.filter((ride) => {
+      //   const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
+      //   return rideDateAfterCurrentDate;
+      // });
       
-      setRidesPossibleForm(ridesPossibleNotBefore);
-      displayRef.current.setRidesPossible(ridesPossibleNotBefore);
+      setRidesPossibleForm(res.data.rides);
+      displayRef.current.setRidesPossible(res.data.rides);
     })
     .catch((err) => {
       console.log("err=", err);
@@ -59,8 +60,9 @@ const FormOnly = (props) => {
   // does actual filtering, produces resultDestArr
   useEffect(() => {
     let resultDestArr = null;
-    props.getRidesRefetch()
+    axios.get('http://localhost:3000/getRides')
     .then((res) => {
+      // console.log("Get rides refetch", res)
       resultDestArr = ridesPossibleForm;
       if (startLoc !== "") {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});

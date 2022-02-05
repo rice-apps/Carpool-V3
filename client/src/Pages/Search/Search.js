@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Header from '../../common/Header/Header';
 import Form from './Form';
 import DisplayRides from './DisplayRides'
@@ -6,6 +6,10 @@ import { gql, useQuery } from "@apollo/client";
 import LoadingDiv from '../../common/LoadingDiv';
 import "@fontsource/source-sans-pro";
 import './Search.css'
+import { useAxios } from 'use-axios-client';
+import { BACKEND_URL } from '../../config';
+import axios from 'axios';
+
 
 export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -13,8 +17,9 @@ const Search = () => {
   // Set last page visited
   localStorage.setItem('lastPage', 'search');
   let resultDestArr = [];
-    
-  const displayRef = React.useRef();
+  
+  const [allRides, setAllRides] = useState([])
+  const displayRef = useRef(allRides);
 
   const updateResultRides = (rides) => {
     resultDestArr = rides;
@@ -59,11 +64,24 @@ const Search = () => {
 
   const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
-  const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES,
-    {
-      variables: {}
-    }
-  );
+  // const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES,
+  //   {
+  //     variables: {}
+  //   }
+  // );
+
+  const { refetch: refetchRide, loading: rideLoading } = useAxios({
+    url: 'http://localhost:3000/getRides',
+    method: "get"
+  });
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/getRides').then((res) => {
+      console.log("Test res", res)
+      setAllRides(res.data.rides)
+    })
+  }, [])
+
 
   return (
     <React.Fragment>

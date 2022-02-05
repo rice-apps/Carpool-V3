@@ -88,9 +88,6 @@ class DisplayRides extends Component {
     }
 
     displayRides(ridesT)  {
-        console.log("ridesT=", ridesT);
-        console.log("ridesT.length=", ridesT.length);
-        console.log("Typeof(ridesT)=", typeof(ridesT))
         
         if (ridesT === null || ridesT === undefined) {
             return null;
