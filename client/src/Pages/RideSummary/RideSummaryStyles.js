@@ -1,5 +1,9 @@
 import LocationOn from '@material-ui/icons/LocationOn'
 import styled from 'styled-components'
+import { withStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+
 
 const SeatsLeftDiv = styled.div`
   grid-column: 4;
@@ -255,11 +259,15 @@ display: flex;
 justify-content: center;
 align-items: center;
 `
+
 const BackArrowDiv = styled.div`
-width: 40vw;
-height: 30px;
-grid-column: 1;
-grid-row: 1;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+
+// width: 40vw;
+// height: 30px;
+
 color: #2075d8;
 background: #f4f6f9;
 margin-top: 30px;
@@ -268,20 +276,37 @@ font-family: Josefin Sans;
 font-style: normal;
 // line-height: 11px;
 cursor: pointer;
-display: grid;
-grid-template-columns: 14% 86%;
+
 `
 
-const BackIcon = styled.div`
-grid-column-start: 1;
-`
+const BackArrow = withStyles({
+root: {
+	display: 'flex',
+	color: '#2075D8',
+	justifyContent: 'center',
+	alignItems: 'center'
+}
+})(ChevronLeftIcon);
 
-const BackText = styled.div`
-grid-column-start: 2;
-font-family: Josefin Sans;
-font-style: normal;
-font-size: 15px;
-`
+
+const BackText = styled.p`
+  width: 35vw;
+	display: flex; 
+	justify-content: left;
+	align-items: center;
+	margin-left: 0px;
+	margin-top: 3px;
+
+	font-family: Josefin Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 18px;
+	text-align: center;
+
+	color: #2075D8;
+`;
+
 
 const InnerLocationDiv = styled.div`
 padding: 20px;
@@ -315,9 +340,9 @@ export {
   DepartureDiv,
   ArrivalDiv,
   LocationArrowDiv,
-  BackArrowDiv,
-  BackIcon,
+  BackArrow,
   BackText,
+  BackArrowDiv,
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,

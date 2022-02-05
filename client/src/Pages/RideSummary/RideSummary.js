@@ -36,7 +36,7 @@ import {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
-  BackIcon,
+  BackArrow,
   BackText,
   InnerLocationDiv,
   DepartureIconDiv,
@@ -169,9 +169,10 @@ const RideSummary = () => {
   return (
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
-        <BackIcon><IoIosArrowBack/></BackIcon>
+        <BackArrow></BackArrow>
         <BackText>Search Page</BackText>
       </BackArrowDiv>
+
       <RideSummaryDiv>
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
