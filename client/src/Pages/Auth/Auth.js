@@ -57,7 +57,7 @@ const Auth = () => {
 
     // If came straight from login button, set the next destination to home
     if (localStorage.getItem('nextPage') == null) {
-        localStorage.setItem('nextPage', '/home');
+        localStorage.setItem('nextPage', 'home');
     }
 
     return (

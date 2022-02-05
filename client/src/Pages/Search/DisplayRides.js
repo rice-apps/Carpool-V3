@@ -26,7 +26,7 @@ const isEqualRides = (ride1, ride2) => {
 
 const handleClickCreateRide = () => {
 
-    localStorage.setItem('nextPage', '/create-ride');
+    localStorage.setItem('nextPage', 'create-ride');
 
     let token = localStorage.getItem('token');
 
