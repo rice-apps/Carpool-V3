@@ -17,7 +17,7 @@ const SeatsLeftDiv = styled.div`
 const SeatsLeftNum = styled.div`
   font-family: Josefin Sans;
   font-weight: normal;
-  font-size: 8vw;
+  font-size: 2em;
   line-height: 24px;
   text-align: center;
   padding: 4px;
@@ -29,7 +29,7 @@ const SeatsLeftText = styled.div`
   grid-column: 4;
   grid-row: 1;
   font-weight: 300;
-  font-size: 3vw;
+  font-size: 1em;
   line-height: 11px;
   padding-top: 6px;
 `
@@ -215,7 +215,7 @@ const ButtonDiv = styled.button`
 `
 const AllDiv = styled.div`
   background: #f4f6f9;
-  height: 100vh;
+  height: 90vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: min-content;
