@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -14,43 +15,62 @@ function renderTime(date) {
     return date.toLocaleTimeString('en-US', { timeStyle: 'short', hour12: true });
 }
 
+const useStyles = makeStyles((theme) => ({
+   text: {
+    fontSize: '1.3em',
+    fontFamily: 'Josefin Sans'
+   },
+   midtext: {
+    fontSize: '1.1em',
+    fontFamily: 'Josefin Sans'
+   },
+   subtext: {
+    fontSize: '.9em',
+    fontFamily: 'Josefin Sans'
+   }
+}));
+  
+
 const Ride = ({ride}) => {
+    const classes = useStyles();
     const date = new Date(ride.departureDate);
 
     return (
         <Link href={`/ridesummary/${ride._id}`} style={{textDecoration: 'none'}}>
         <Grid container key={ride._id} xs={12} alignItems='stretch' style={{height: '100%', width: "90vw", display: 'flex', borderRadius: '10px'}}>
             <Grid item container  style={{height:"16vh", backgroundColor: "white", borderRadius: '10px', borderColor:'', boxShadow: '0px 3px 10px #bbdaff'}}>
-                <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}>
-                    
+                <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}> 
                         <Box width={"60%"} height={"75%"} style={{display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(187, 218, 255, 0.22)', borderRadius: '5px', justifyContent: 'center'}}>
-                            <span style={{fontSize: '4vw', fontFamily: 'Josefin Sans'}}>{(ride.spots - ride.riders.length)}</span>
-                            <span style={{fontSize: '2.5vw', fontFamily: 'Josefin Sans'}}>seats left</span>  
+                            <span className={classes.text}>{(ride.spots - ride.riders.length)}</span>
+                            <span className={classes.subtext}>seats left</span>  
                         </Box>
                 </Grid>
 
-                <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
-                            {ride.departureLocation.title}      
-                    </BoxRide>
+                <Grid item container xs = {6}>
+                    <Grid item xs={5} justify="center" align='center'>
+                        <BoxRide className = {classes.text}>
+                                {ride.departureLocation.title}      
+                        </BoxRide>
+                    </Grid>
+                    
+                    <Grid item xs={2} justify="center" style={{display: 'flex', alignItems: 'center'}}>
+                            <ArrowForwardIcon/>
+                    </Grid>
+                    
+                    <Grid item xs={5} justify="center" align='center'>
+                        <BoxRide className = {classes.text}>
+                            {ride.arrivalLocation.title}
+                        </BoxRide>
+                    </Grid>
                 </Grid>
+
                 
-                <Grid item xs={2} justify="center" align='center'style={{display: 'flex', alignItems: 'center'}}>
-                        <ArrowForwardIcon/>
-                </Grid>
-                
-                <Grid item xs={2} justify="center" align='center'>
-                    <BoxRide style={{fontSize: '3vw', fontFamily: 'Josefin Sans'}}>
-                        {ride.arrivalLocation.title}
-                    </BoxRide>
-                </Grid>
-                
-                <Grid item xs={3}  align='center'>
-                    <Box width={"75%"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent:"flex-end", gap: "1vh"}}>
-                        <CalendarTodayIcon style ={{fontSize: "3vw"}}/>
+                <Grid item xs = {3} align='center'>
+                    <Box width={"100%"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent:"center", gap: "1vh"}}>
                         <span>
-                            <div style = {{fontSize: '3vw', fontFamily: 'Josefin Sans'}}> {renderDate(date)}</div>
-                            <div style={{fontSize: '2.5vw', fontFamily: "Josefin Sans"}}>{renderTime(date)}</div>
+                            <CalendarTodayIcon className = {classes.midtext}/>
+                            <div className = {classes.midtext}> {renderDate(date)}</div>
+                            <div className = {classes.subtext}>{renderTime(date)}</div>
                         </span>
                     </Box>
                 </Grid>

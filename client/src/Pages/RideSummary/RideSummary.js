@@ -43,6 +43,7 @@ import {
 } from './RideSummaryStyles.js'
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
+import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
@@ -115,6 +116,10 @@ const RideSummary = () => {
       console.log(ride)
     }
   }, [data])
+  console.log(data, loading, error);
+  if (error) return <p>Error.</p>
+  if (loading) return <LoadingDiv />
+  if (!data) return <p>No data...</p>
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
@@ -240,7 +245,9 @@ const RideSummary = () => {
         </RidersComponents>
       </RidersDiv>
       <ButtonContainer>
-        <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+          Join Ride
+        </ButtonDiv>
       </ButtonContainer>
     </AllDiv>
   )
