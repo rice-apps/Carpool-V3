@@ -6,7 +6,7 @@ import {
   SubmitButton,
 } from "./ProfileFormStyles";
 import React, { useState } from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, InputAdornment, FilledInput} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 const ProfileForm = ({ onSubmit }) => {
@@ -43,7 +43,10 @@ const ProfileForm = ({ onSubmit }) => {
             <EditPaymentOptions>
                 Payment
                 <br></br>
-                <TextField id = "outlined-filled" label = "Venmo Account" variant = "filled" value={venmo} onChange={(e) => setVenmo(e.target.value)}/>
+                <TextField id = "filled-adornment-amount"  label = "Venmo Account" variant = "filled" value={venmo} onChange={(e) => setVenmo(e.target.value)}
+                InputProps={{
+                    startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                }}/>
             </EditPaymentOptions>
             <SubmitButton>
                 <Button
