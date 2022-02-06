@@ -21,8 +21,10 @@ const Search = () => {
   }
 
   const GET_RIDES = gql`
-  query {
-    rideMany {
+  query($after: Date) {
+    rideMany(filter: {
+      _operators: { departureDate: { gte: $after } }
+    }) {
       _id
       departureDate
       riders { netid }
@@ -44,9 +46,10 @@ const Search = () => {
 
   const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
+  const today = new Date().toDateString();
   const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES,
     {
-      variables: {}
+      variables: { after: today }
     }
   );
 
