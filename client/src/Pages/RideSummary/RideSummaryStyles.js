@@ -194,6 +194,15 @@ const RiderText = styled.div`
   padding-left: 15px;
   font-family: Josefin Sans;
 `
+const NotesDiv = styled.div`
+  grid-column: 1/ 5;
+  grid-row: 4;
+  margin: 2em auto;
+  width: 85%;
+  padding: 10px;  
+  font-family: Josefin Sans;
+  background: #ffffff;
+`
 const TextContainer = styled.div`
   
 `
@@ -223,7 +232,7 @@ const AllDiv = styled.div`
 
 const ButtonContainer = styled.div`
   grid-column: 1/5;
-  grid-row: 4;
+  grid-row: 5;
   margin: auto;
   width: 95%;
   padding: 20px;
@@ -295,6 +304,7 @@ export {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  NotesDiv,
   TextContainer,
   ButtonDiv,
   AllDiv,

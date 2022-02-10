@@ -28,6 +28,7 @@ import {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  NotesDiv,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -199,10 +200,6 @@ const RideSummary = () => {
         </LocationDiv>
       </LocationDivContainer>
       <RidersDiv>
-        <LocationDivContainer>
-          {ride.notes || 'No ride notes'}
-        </LocationDivContainer>
-
         <HostDiv>Host</HostDiv>
         <RidersComponents>
           <div onClick={e => history.push("/profile/" + ride.owner.netid)}>
@@ -236,6 +233,11 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
+
+      <NotesDiv>
+        {ride.notes || 'No ride notes'}
+      </NotesDiv>
+
       <ButtonContainer>
         <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
       </ButtonContainer>
