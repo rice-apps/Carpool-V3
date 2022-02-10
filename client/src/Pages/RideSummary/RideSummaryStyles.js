@@ -202,6 +202,7 @@ const NotesDiv = styled.div`
   padding: 10px;  
   font-family: Josefin Sans;
   background: #ffffff;
+  border-radius: 5px;
 `
 const TextContainer = styled.div`
   
