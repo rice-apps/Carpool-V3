@@ -1,4 +1,9 @@
 import React from "react";
+import{
+    AllDiv,
+    AboutUsHeader,
+    Member
+} from "./AboutUsstyles";
 
 const AboutUs = () => {
 
@@ -9,7 +14,6 @@ const AboutUs = () => {
 
                 </Member>
 
-            
         </AllDiv>
 
 

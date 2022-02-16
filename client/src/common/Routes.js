@@ -18,6 +18,8 @@ import RideSummary from '../Pages/RideSummary/RideSummary.js'
 import jwt_decode from "jwt-decode";
 import YourRides from '../Pages/YourRides/YourRides.js'
 import LoadingDiv from './LoadingDiv.js'
+import AboutUs from '../Pages/AboutUs/AboutUs.js'
+
 
 /**
  * Requests to verify the user's token on the backend
@@ -148,6 +150,8 @@ export const Routes = () => {
           <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
           <CheckTokenRoute path={"/profileform"} component={withRouter(ProfileForm)} />
           <CheckTokenRoute path={"/your-rides"} component={withRouter(YourRides)} />
+          <CheckTokenRoute path={"/about-us"} component={withRouter(AboutUs)} />
+
         </Switch>
       </Router>
     </div>

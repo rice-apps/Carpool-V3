@@ -22,6 +22,7 @@ const AboutUsHeader = styled.div`
 `
 
 const Member = styled.div`
+  display: flex;
 
 `
 
