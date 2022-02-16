@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Card from '@material-ui/core/Card';
 
 
 const AllDiv = styled.div`
@@ -16,13 +17,52 @@ const AboutUsHeader = styled.div`
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 3.4em;
+  font-size: 3em;
   display: flex;
   color: white;
+  margin-bottom: 10%;
 `
 
-const Member = styled.div`
+const Member = styled(Card)({
+  display: "grid",
+  gridTemplateColumns: "30% 70%",
+  borderRadius: "8px",
+  backgroundColor: "white",
+  width: "85vw",
+  padding: "5%",
+  margin: "3%"
+})
+
+const Picture = styled.div`
+  grid-column: 1;
+
+
+`
+
+const Info = styled.div`
+  grid-column: 2;
   display: flex;
+  row-gap: 5px;
+  flex-direction: column;
+
+  
+`
+
+const Name = styled.div`
+
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4em;
+
+`
+
+const Title = styled.div`
+
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: .8em;
 
 `
 
@@ -30,5 +70,9 @@ const Member = styled.div`
 export {
   AllDiv,
   AboutUsHeader,
-  Member
+  Member,
+  Picture,
+  Info,
+  Name,
+  Title
 } 
