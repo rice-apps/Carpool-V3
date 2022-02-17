@@ -47,10 +47,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Apply cors for dev purposes
-app.use(cors({
-    //Set CORS options here
-    origin: "https://carpool.riceapps.org"
-}))
+// app.use(cors({
+    // Set CORS options here
+    // origin: "*"
+// })).
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());

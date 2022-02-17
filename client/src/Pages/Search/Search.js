@@ -7,6 +7,7 @@ import LoadingDiv from '../../common/LoadingDiv';
 import "@fontsource/source-sans-pro";
 import './Search.css'
 import { useAxios } from 'use-axios-client';
+import { BACKEND_URL } from '../../config';
 import axios from 'axios';
 
 
@@ -37,12 +38,12 @@ const Search = () => {
   const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
   const { refetch: refetchRide, loading: rideLoading } = useAxios({
-    url: 'http://localhost:3000/getRides',
+    url: BACKEND_URL + '/getRides',
     method: "get"
   });
 
   useEffect(() => {
-    axios.get('http://localhost:3000/getRides').then((res) => {
+    axios.get(BACKEND_URL + '/getRides').then((res) => {
       setAllRides(res.data.rides)
     })
   }, [])

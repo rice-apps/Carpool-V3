@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import axios from 'axios';
+import { BACKEND_URL } from '../../config';
 
 import {
     MenuItem,
@@ -35,7 +36,7 @@ const FormOnly = (props) => {
   // does actual filtering, produces resultDestArr
   useEffect(() => {
     let resultDestArr = null;
-    axios.get('http://localhost:3000/getRides')
+    axios.get(BACKEND_URL + '/getRides')
     .then((res) => {
       console.log("Get rides refetch",  res.data.rides)
       resultDestArr = res.data.rides;
