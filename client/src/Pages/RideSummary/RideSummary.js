@@ -27,6 +27,7 @@ import {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  NotesDiv,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -61,6 +62,7 @@ const GET_RIDE = gql`
       arrivalLocation {
         title
       }
+      notes
       owner {
         netid
         firstName
@@ -254,6 +256,11 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
+
+      <NotesDiv>
+        {ride.notes || 'No ride notes'}
+      </NotesDiv>
+
       <ButtonContainer>
         <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
           Join Ride
