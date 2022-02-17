@@ -1,6 +1,11 @@
 var createError = require('http-errors');
 var express = require('express');
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const { ApolloServer } = require('apollo-server-express');
+import { Ride } from './models';
+import http from 'http';
 
 // var path = require('path');
 // var cookieParser = require('cookie-parser');
@@ -8,7 +13,7 @@ var exjwt = require('express-jwt');
 var cors = require('cors')
 
 // Import hidden values from .env
-import { PORT, SECRET } from './config';
+import { PORT, SECRET, MONGODB_CONNECTION_STRING } from './config';
 
 // Apollo Imports
 import Schema from './schema';
@@ -43,14 +48,17 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Apply cors for dev purposes
-app.use(cors({
+// app.use(cors({
     // Set CORS options here
     // origin: "*"
-}))
+// }))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use(function(req, res, next) {
   if (req.headers.origin) {
-      // console.log(req.headers.origin)
+      console.log(req.headers.origin)
       res.header('Access-Control-Allow-Credentials', true)
       res.header('Access-Control-Allow-Headers', '*')
       res.header('Access-Control-Allow-Methods', '*')
@@ -67,25 +75,32 @@ app.use(exjwt({
   credentialsRequired: false 
 }));
 
+function getRides(req, res) {
+  return (async () => {
+      const connector = mongoose.connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
+      await (connector.then(()=> {
+          Ride.find({
+              departureDate: {
+                $gte: new Date(), 
+                $lt: new Date(8640000000000000)
+              }
+          }).populate({path: 'departureLocation'}).populate({path: 'arrivalLocation'}).sort({departureDate: -1}).exec(function(err, result) {
+              if (err || !result) {
+                  console.log(err)
+                  res.sendStatus(401)
+                  return
+              }
+              let msg = {rides: result};
+              res.send(msg);
+          })
+      }));
+  })();
+}
+
+app.get('/getRides', getRides)
+
 // This connects apollo with express
 server.applyMiddleware({ app });
-
-// Create WebSockets server for subscriptions: https://stackoverflow.com/questions/59254814/apollo-server-express-subscriptions-error
-// const httpServer = http.createServer(app);
-// server.installSubscriptionHandlers(httpServer);
-
-// If we have custom routes, we need these to accept JSON input
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-
-// This creates a route to our custom controller OUTSIDE of GraphQL
-// app.use('/api/custom', customRouter);
-
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
 
 // Error handler
 app.use(function(err, req, res, next) {

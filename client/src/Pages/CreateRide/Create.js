@@ -12,6 +12,7 @@ import {
     customTheme,
     Form,
     SelectBox,
+    TextFieldBox,
     MenuBox,
     ColorButton,
     InputBox,
@@ -50,6 +51,7 @@ const Create = ({onCreate}) => {
 
     // Variables for Tracking Attributes of the Form
     const [startLoc, setStartLoc] = useState('')
+    const [notes, setNotes] = useState('')
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date())
     const [passengers, setPassengers] = useState(3)
@@ -77,10 +79,11 @@ const Create = ({onCreate}) => {
         }
 
         // Pass arguments back to the top mutation queue
-        onCreate({ startLoc, endLoc, date, passengers, confirmation, users, owner})
+        onCreate({ startLoc, endLoc, date, passengers, notes, confirmation, users, owner})
 
         setStartLoc('')
         setEndLoc('')
+        setNotes('')
         setDate(new Date())
         setPassengers(4)
         setConfirmation(false)
@@ -93,6 +96,10 @@ const Create = ({onCreate}) => {
         setStartLoc(e.target.value);
     };
 
+    const onNotesChange = (e) => {
+        e.preventDefault()
+        setNotes(e.target.value);
+    }
 
     const onEndLocChange = (e) => {
         e.preventDefault()
@@ -249,6 +256,31 @@ const Create = ({onCreate}) => {
                         </MuiPickersUtilsProvider>
                     </MuiThemeProvider>
                 </Grid>
+
+
+                <Grid 
+                    item
+                    xs = {12}
+                >   
+                    <InputBox id = 'Notes'>Notes</InputBox>
+
+                    <TextFieldBox 
+                        id="outlined-basic"
+                        // label="Notes" Adding this would give it a label that moves when user enters textbox! cool effect
+                        labelId="Notes"
+                        variant="outlined"
+                        value={notes}
+                        onChange={onNotesChange}
+                    >
+
+                    </TextFieldBox>
+
+
+                        
+
+                </Grid>
+
+
 
                 <Grid
                 container

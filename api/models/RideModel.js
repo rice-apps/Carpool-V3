@@ -13,7 +13,7 @@ var RideSchema = new Schema({
     arrivalLocation: { type: Schema.Types.ObjectId, ref: Location, required: true },
     owner: { type: Schema.Types.ObjectId, ref: User, required: true },
     riders: [ { type: Schema.Types.ObjectId, ref: User } ],
-    note: String, // notes section for personal message from ride creator       
+    notes: String, // notes section for personal message from ride creator
     spots: { type: Number, default: 3 },
     //cost: { type: Number },
     //ownerDriving: { type: Boolean, default: false },
