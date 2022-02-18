@@ -2,8 +2,6 @@ import styled from "styled-components";
 import React from "react";
 import Box from "@material-ui/core/Box";
 import { withStyles } from '@material-ui/core/styles';
-import EditIcon from "@material-ui/icons/Edit";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import {
   Button,
   InputLabel,
@@ -24,34 +22,12 @@ export const Header = styled.div`
   color: #2075d8; 
 `;
 
-export const ProfileIcon = styled(AccountCircleIcon)({
-  fontSize: "18vh",
-  color: "#BBDAFF",
-  opacity: "30%"
-});
-
-export const ProfileEditIcon = styled(EditIcon)({
-  position: "absolute",
-  top: "14%",
-  left: "56%",
-  color: "#2075D8",
-  fontSize: "4vh",
-});
-
 export const Label = styled(InputLabel)({
   fontFamily: "Josefin Sans",
   color: "#2075d8",
   paddingBottom: "1vh"
 });
 
-
-export const IconBox = styled(Box)({
-  height: "15%",
-  width: "100%",
-  justifyContent: "center",
-  alignItems: "center",
-  display: "flex",
-});
 
 export const InputBox = styled(Box)({
   height: "16%",
@@ -70,7 +46,7 @@ export const ProfileFormContainer = styled.div`
   align-items: center;
 `;
 
-export const ProfileStyles = makeStyles((theme) => ({
+export const ProfileStyles = makeStyles(() => ({
   inputContent: {
     background: "rgb(187,218,255,0.22)",
     color: "#2075D8",

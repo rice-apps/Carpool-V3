@@ -1,10 +1,7 @@
 import {
   Header,
-  ProfileIcon, 
-  ProfileEditIcon,
   ProfileFormContainer,
   Label, 
-  IconBox, 
   InputBox, 
   SubmitButton,
   CancelButton,
@@ -13,7 +10,7 @@ import {
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
 
-const ProfileForm = ({ onSubmit, onCancel }) => {
+const OnboardingForm = ({ onSubmit, onCancel }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -32,10 +29,6 @@ const ProfileForm = ({ onSubmit, onCancel }) => {
         <form onSubmit={handleSubmit}>
             <ProfileFormContainer>
                 <Header> Sign up to use Carpool</Header>
-                <IconBox>
-                    <ProfileIcon />
-                    <ProfileEditIcon />
-                </IconBox>
                 <InputBox>
                     <Label>Name</Label>
                     <RequiredTextField
@@ -93,4 +86,4 @@ const ProfileForm = ({ onSubmit, onCancel }) => {
     ) 
 }
 
-export default ProfileForm;
+export default OnboardingForm;
