@@ -49,6 +49,7 @@ const CalendarIcon = withStyles({
   })(NotificationsOffIcon);
 
 
+
 const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => {
 
     const time = moment(datetime)
@@ -58,8 +59,13 @@ const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => 
     const history = useHistory();
     const summaryURL = "/ridesummary/" + id;
 
+    const toRide = (url) => {
+        localStorage.setItem("lastPage", "your-rides");
+        history.push(url);
+    }
+
     return (
-        <div onClick={e => history.push(summaryURL)}>
+        <div onClick={(e) => toRide(summaryURL)}>
             <RideCard>
                 <RideTimeInfo>
                     <CalendarIcon />
