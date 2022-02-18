@@ -2,7 +2,6 @@ import {
     Button, 
     Dialog,
     DialogActions,
-    IconButton
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -45,17 +44,7 @@ export const LoginDialog = withStyles({
 export const LoginDialogActions = withStyles({
     root: {
         justifyContent: 'center',
+        padding: '2vh 1vw'
     }
 })(DialogActions); 
 
-export const ExitDialogActions = withStyles({
-    root: {
-        justifyContent: 'flex-end',
-    }
-})(IconButton);
-
-export const LoginIconButton = withStyles({
-    root: {
-        padding: '4px 6px 8px'
-    }
-})(IconButton);
