@@ -31,7 +31,7 @@ let PossibleLocations = [
   // May cause 401 error if a request is made to the database before it's ready
   return (
     <React.Fragment>
-    <FormOnly resultRides={resultRides} displayRef={displayRef} getRidesRefetch={props.getRidesRefetch} getLocsRefetch={props.getLocsRefetch} testLocations={PossibleLocations}/>
+    <FormOnly setNonMatchingRides={props.setNonMatchingRides} allRides={props.allRides} setAllRides={props.setAllRides} resultRides={resultRides} displayRef={displayRef} getRidesRefetch={props.getRidesRefetch} getLocsRefetch={props.getLocsRefetch} testLocations={PossibleLocations}/>
     </React.Fragment>
   )
 }
