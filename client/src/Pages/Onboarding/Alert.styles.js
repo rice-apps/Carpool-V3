@@ -27,7 +27,6 @@ export const LoginButton = withStyles({
 
 export const LoginDialog = withStyles({
     root: {
-        background: '#FFFFFF',
         borderRadius: 8, 
         border: 0, 
     }, 
