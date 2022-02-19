@@ -7,9 +7,7 @@ grid-template-columns: 65% 35%;
 background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
-height: 10vh;
-margin-top: 2vh;
-margin-bottom: 2vh;
+margin: 1em 0;
 `;
 
 const PaidPastRide = styled.div`
@@ -19,17 +17,14 @@ grid-template-columns: 65% 35%;
 background: rgba(187, 218, 255, 0.22);
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
-height: 10vh;
-margin-top: 2vh;
-margin-bottom: 2vh;
+margin: 1em 0;
 `;
 
 const PastRideCardData = styled.div`
 display: grid;
 grid-column-start: 1;
-max-height: 10vh;
-margins: 5%;
-padding: 3%;
+margins: 5px;
+padding: 3px;
 grid-template-columns: 30% 70%;
 `
 
@@ -41,8 +36,8 @@ justify-content: space-between;
 align-items: center;
 flex-direction: column;
 border-radius: 9px;
-padding-top: 20%;
-padding-bottom: 20%;
+padding-top: 1em;
+padding-bottom: 1em;
 
 `;
 
@@ -50,20 +45,19 @@ const RideDate = styled.div`
 font-family: Josefin Sans;
 font-style: normal;
 font-weight: normal;
-font-size: 2.5vh;
+font-size: 1rem;
 `
 
 const RideTime = styled.div`
 font-family: Josefin Sans;
 font-style: normal;
 font-weight: 300;
-font-size: 2vh;
+font-size: 1rem;
 `;
 
 const Locations = styled.div`
 font-family: Josefin Sans;
-padding: 10%;
-max-height: 10vh;
+padding: 1em;
 grid-column-start: 2;
 display: flex;
 justify-content: space-between;
@@ -72,33 +66,31 @@ align-items: center;
 `
 
 const LocationText = styled.div`
-font-size: 3vh;
+font-size: 1rem;
 font-family: Josefin Sans;
 `
 
 const PaidPaymentInfo = styled.div`
 grid-column-start: 2;
-max-height: 10vh;
 display: flex;
 background: #BBDAFF;
 justify-content: space-between;
 align-items: center;
 border-radius: 0px 9px 9px 0px;
-padding: 10%;
+padding: 1em;
 `;
 
 const UnpaidPaymentInfo = styled.div`
 grid-column-start: 2;
 display: flex;
-max-height: 10vh;
 background: #EB5248;
 justify-content: space-between;
 align-items: center;
 border-radius: 0px 9px 9px 0px;
-padding: 10%;
+padding: 1em;
 `
 const PaymentText = styled.div`
-font-size: 2vh;
+fornt-size: 2em;
 font-family: Josefin Sans;
 font-style: normal;
 font-weight: normal;
