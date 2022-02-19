@@ -7,8 +7,7 @@ grid-template-columns: 65% 35%;
 background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
-margin-top: 2em;
-margin-bottom: 2em;
+margin: 1em 0;
 `;
 
 const PaidPastRide = styled.div`
@@ -18,8 +17,7 @@ grid-template-columns: 65% 35%;
 background: rgba(187, 218, 255, 0.22);
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
-margin-top: 2em;
-margin-bottom: 2em;
+margin: 1em 0;
 `;
 
 const PastRideCardData = styled.div`
@@ -38,8 +36,8 @@ justify-content: space-between;
 align-items: center;
 flex-direction: column;
 border-radius: 9px;
-padding-top: 20%;
-padding-bottom: 20%;
+padding-top: 1em;
+padding-bottom: 1em;
 
 `;
 
@@ -59,7 +57,7 @@ font-size: 1rem;
 
 const Locations = styled.div`
 font-family: Josefin Sans;
-padding: 10%;
+padding: 1em;
 grid-column-start: 2;
 display: flex;
 justify-content: space-between;
@@ -79,7 +77,7 @@ background: #BBDAFF;
 justify-content: space-between;
 align-items: center;
 border-radius: 0px 9px 9px 0px;
-padding: 10%;
+padding: 1em;
 `;
 
 const UnpaidPaymentInfo = styled.div`
@@ -89,7 +87,7 @@ background: #EB5248;
 justify-content: space-between;
 align-items: center;
 border-radius: 0px 9px 9px 0px;
-padding: 10%;
+padding: 1em;
 `
 const PaymentText = styled.div`
 fornt-size: 2em;
