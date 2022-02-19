@@ -17,7 +17,7 @@ const AboutUs = () => {
             <AboutUsHeader>Meet the Team</AboutUsHeader>
                 <Member>
                     
-                    <Picture image="/membersPictures/shreya_doerr_pic_2.JPG"/>
+                    <Picture image="/membersPictures/shreya.JPG"/>
                     <Info>
                         <Name>Shreya Nidadavolu</Name>
                         <Title>Product Manager | Wiess</Title>
@@ -25,7 +25,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image=""/>
+                    <Picture image="/membersPictures/willy.png"/>
                     <Info>
                         <Name>William Yao</Name>
                         <Title>Team Lead | Will Rice</Title>
@@ -33,8 +33,8 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image=""
-                    />
+                    <Picture image="/membersPictures/henry.JPG"/>
+                    
                     <Info>
                         <Name>Henry Qin</Name>
                         <Title>Team Lead | Will Rice</Title>
@@ -42,7 +42,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image="/membersPictures/audrey.JPeG"/>
                     <Info>
                         <Name>Audrey Kim</Name>
                         <Title>Developer | Wiess</Title>
@@ -50,7 +50,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image="/membersPictures/alexis.jpeg"/>
                     <Info>
                         <Name>Alexis Nicolas</Name>
                         <Title>Developer | Jones</Title>
@@ -58,7 +58,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image="/membersPictures/anya.JPG"/>
                     <Info>
                         <Name>Anya Gu</Name>
                         <Title>Developer | Brown</Title>
@@ -66,7 +66,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image="/membersPictures/kai.png"/>
                     <Info>
                         <Name>Kai Hung</Name>
                         <Title>Developer | Brown</Title>
@@ -74,7 +74,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image="/membersPictures/mitchell.JPeG"/>
                     <Info>
                         <Name>Mitchell Osborn</Name>
                         <Title>Developer | Brown</Title>
@@ -82,7 +82,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image="/membersPictures/shreya.JPG"/>
                     <Info>
                         <Name>Shreyas Minocha</Name>
                         <Title>Developer | Will Ricce</Title>
@@ -90,7 +90,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image="/membersPictures/katherine.JPG"/>
                     <Info>
                         <Name>Katherine Chui</Name>
                         <Title>Designer | Jones</Title>
