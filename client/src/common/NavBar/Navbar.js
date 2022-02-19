@@ -12,13 +12,22 @@ import { useEffect } from 'react';
 import { SERVICE_URL } from '../../config'; 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
+
+// set appbar colour
+const currURL = window.location.pathname;
+const appbarColor = ((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
+console.log(appbarColor);
+
+const hamburgerColor = ((currURL == "/about-us" || currURL == "/FAQ") ? "white" : "#002140")
+console.log(hamburgerColor);
+
 const useStyles = makeStyles((theme) => ({
   appbarRoot: {
     zIndex:"999",
-    color: "red",
+    background: appbarColor,
   },
   icon: {
-    color:"#002140",
+    color: hamburgerColor,
   },
   text : {
     color:"#002140",
@@ -146,10 +155,7 @@ export default function ButtonAppBar (props) {
     </ListItem>
   )
 
-  // set appbar colour
-  const currURL = window.location.pathname;
-  const appbarColor = ((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
-  console.log(appbarColor);
+
 
 
   // Eventually should make this extensible
@@ -165,7 +171,7 @@ export default function ButtonAppBar (props) {
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about" onClick = {toggleDrawer}>
+        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about-us" onClick = {toggleDrawer}>
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
         {loggedIn ? showLogout(toggleDrawer) : null}
