@@ -87,8 +87,11 @@ const DisplayRides = (props) => {
                     </Box>
                 </Grid>
             }
+            <StyledButton style={{fontSize: "2vh", color:"white",  height: '100%', display: 'flex', borderRadius: '10px', backgroundColor:"#2075D8"}} onClick={() => handleClickCreateRide()}> 
+                    Don't see a match? Create a new ride 
+            </StyledButton>
             {
-                <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
+                <div style = {{paddingTop: '1vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
             }
             {
                 props.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
