@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "66vw",
     height: "100vh",
+    maxWidth: 350,
   },
   usernameContainer:{
     gap: "5vw",
@@ -49,9 +50,10 @@ const useStyles = makeStyles((theme) => ({
 const LogInOutButton = withStyles({
   root: {
       background: '#2075D8',
-      width: '33vw',
+      width: '100%',
       borderRadius: 25,
       color: 'white',
+      margin: '0 1em',
   },
   label: {
     textTransform: 'capitalize',
