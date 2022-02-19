@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "66vw",
     height: "100vh",
+    maxWidth: 300,
   },
   usernameContainer:{
     gap: "5vw",
