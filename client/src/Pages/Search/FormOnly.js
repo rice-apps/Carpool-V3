@@ -36,15 +36,13 @@ const FormOnly = (props) => {
       });
       
       setRidesPossibleForm(ridesPossibleNotBefore);
-      displayRef.current.setRidesPossible(ridesPossibleNotBefore);
+      props.setRidesPossible(ridesPossibleNotBefore);
     })
     .catch((err) => {
       console.log("err=", err);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const displayRef = props.displayRef;
 
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   
@@ -75,7 +73,7 @@ const FormOnly = (props) => {
       if (numberPeople != null) {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
       }
-      displayRef.current.setRides(resultDestArr);
+      props.setRides(resultDestArr);
     }).catch((err) => {
       console.log("err=", err);
     });

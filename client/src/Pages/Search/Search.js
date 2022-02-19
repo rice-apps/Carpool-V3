@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../common/Header/Header';
 import Form from './Form';
 import DisplayRides from './DisplayRides'
@@ -13,6 +13,9 @@ const Search = () => {
   // Set last page visited
   localStorage.setItem('lastPage', 'search');
   let resultDestArr = [];
+
+  const [rides, setRides] = useState([])
+  const [ridesPossible, setRidesPossible] = useState([])
     
   const displayRef = React.useRef();
 
@@ -56,10 +59,10 @@ const Search = () => {
   return (
     <React.Fragment>
       <div><Header subtitle = "Search Rides"/></div>
-      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
+      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
         {rideLoading ? 
           <LoadingDiv height={'15vh'} /> : 
-          <DisplayRides ref={displayRef} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
+          <DisplayRides ref={displayRef} ridesT={rides} ridesPossible={ridesPossible} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
         }
     </React.Fragment>
   )
