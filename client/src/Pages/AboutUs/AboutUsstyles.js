@@ -31,15 +31,15 @@ const Member = styled(Card)({
   borderRadius: "8px",
   backgroundColor: "white",
   width: "85vw",
-  padding: "5%",
-  margin: "3%"
+  margin: "3%",
+  padding: "1%",
 })
 
 const Picture = styled(CardMedia)({
   gridColumn: "1",
-  padding: "2%",
+  padding: "3%",
   alignItems: "center",
-  borderRadius: "50%",
+  borderRadius: "8px",
 })
 
 
@@ -48,7 +48,7 @@ const Info = styled.div`
   display: flex;
   row-gap: 5px;
   flex-direction: column;
-
+  padding: 5%;
   
 `
 

@@ -17,8 +17,7 @@ const AboutUs = () => {
             <AboutUsHeader>Meet the Team</AboutUsHeader>
                 <Member>
                     
-                    <Picture image="/membersPictures/shreya_doerr_pic_2.JPG"
-                    />
+                    <Picture image="/membersPictures/shreya_doerr_pic_2.JPG"/>
                     <Info>
                         <Name>Shreya Nidadavolu</Name>
                         <Title>Product Manager | Wiess</Title>
@@ -26,7 +25,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image=""/>
                     <Info>
                         <Name>William Yao</Name>
                         <Title>Team Lead | Will Rice</Title>
@@ -34,7 +33,8 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture></Picture>
+                    <Picture image=""
+                    />
                     <Info>
                         <Name>Henry Qin</Name>
                         <Title>Team Lead | Will Rice</Title>
