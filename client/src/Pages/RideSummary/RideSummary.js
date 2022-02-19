@@ -6,7 +6,6 @@ import {
   IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
-import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 import { useHistory } from 'react-router'
@@ -28,6 +27,7 @@ import {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  NotesDiv,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -36,6 +36,8 @@ import {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
+  BackArrow,
+  BackText,
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
@@ -60,6 +62,7 @@ const GET_RIDE = gql`
       arrivalLocation {
         title
       }
+      notes
       owner {
         netid
         firstName
@@ -154,16 +157,16 @@ const RideSummary = () => {
   if (!data) return <p>No data...</p>
 
  
-
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
     localStorage.setItem('lastPage', `ridesummary/${id}`);
     // Any attempts to go back to edit the onboarding form
     // should take you back to the current ride summary page.
-    if (lastPage === "/onboarding"){
-      localStorage.setItem('nextPage', `ridesummary/${id}`); 
+    if (lastPage === "/your-rides"){
+      history.push(lastPage);
+    } else {
+      history.push("/search");
     }
-    history.push(lastPage);
   }
 
   const time = moment(ride.departureDate)
@@ -174,16 +177,18 @@ const RideSummary = () => {
   return (
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
-        <IoIosArrowBack></IoIosArrowBack>
+        <BackArrow></BackArrow>
+        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Search"}</BackText>
       </BackArrowDiv>
+
       <RideSummaryDiv>
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
-          <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
+          <SeatsLeftText>seat(s) left</SeatsLeftText>
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
           </SocialIcon>
-      </SeatsLeftDiv>
+        </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
         <LocationDiv>
@@ -251,6 +256,11 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
+
+      <NotesDiv>
+        {ride.notes || 'No ride notes'}
+      </NotesDiv>
+
       <ButtonContainer>
         <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
           Join Ride

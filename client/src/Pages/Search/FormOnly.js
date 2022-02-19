@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import axios from 'axios';
 
 import {
     MenuItem,
@@ -23,8 +24,6 @@ const FormOnly = (props) => {
 
   const currentDate = new Date();
 
-  const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
-
   // initial filter: filters rides that are past current date
   useEffect(() => {
     props.getRidesRefetch()
@@ -35,7 +34,6 @@ const FormOnly = (props) => {
         return rideDateAfterCurrentDate;
       });
       
-      setRidesPossibleForm(ridesPossibleNotBefore);
       props.setRidesPossible(ridesPossibleNotBefore);
     })
     .catch((err) => {
@@ -57,9 +55,10 @@ const FormOnly = (props) => {
   // does actual filtering, produces resultDestArr
   useEffect(() => {
     let resultDestArr = null;
-    props.getRidesRefetch()
+    axios.get('http://localhost:3000/getRides')
     .then((res) => {
-      resultDestArr = ridesPossibleForm;
+      console.log("Get rides refetch",  res.data.rides)
+      resultDestArr = res.data.rides;
       if (startLoc !== "") {
         resultDestArr = resultDestArr.filter((ele) => { return (ele.departureLocation.title === PossibleLocations[startLoc].title);});
       }
@@ -87,7 +86,6 @@ const FormOnly = (props) => {
             && date1.getDate() === date2.getDate());
   };
 
-  // checks that date1 < date2 (still need for the initial filter)
   const compareDates = (date1, date2, equals) => {
     const d1 = [date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getHours(), date1.getMinutes()]
     const d2 = [date2.getFullYear(), date2.getMonth(), date2.getDate(), date2.getHours(), date2.getMinutes()]

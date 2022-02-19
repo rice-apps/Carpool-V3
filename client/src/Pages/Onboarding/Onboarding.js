@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useHistory } from "react-router";
 import { useToasts } from "react-toast-notifications";
 import { gql, useMutation } from '@apollo/client';
-import ProfileForm from '../Profile/ProfileForm';
+import OnboardingForm from './OnboardingForm';
 
 const Onboarding = () => {
 
@@ -95,7 +95,7 @@ const Onboarding = () => {
 
   return (
     <div>
-      <ProfileForm onSubmit={updateUserInfo} onCancel={cancelOnboarding} />
+      <OnboardingForm onSubmit={updateUserInfo} onCancel={cancelOnboarding} />
     </div>
   );
 };
