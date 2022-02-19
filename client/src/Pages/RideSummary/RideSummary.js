@@ -290,7 +290,7 @@ const RideSummary = () => {
 
       <ButtonContainer>
         {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
-        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+        <ButtonDiv onClick={leave} leaveRide = {true} disabled={ride.spots === ride.riders.length}>
           Leave Ride
         </ButtonDiv>: 
         <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
