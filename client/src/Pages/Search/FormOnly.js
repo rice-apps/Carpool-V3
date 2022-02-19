@@ -211,7 +211,7 @@ const FormOnly = (props) => {
               </Select>
             </Grid>
             <Grid item>
-              <BodyText>{"Number of People"}</BodyText> 
+              <BodyText>{"# of Open Seats"}</BodyText> 
             </Grid>        
         </Grid>
       </Grid>
