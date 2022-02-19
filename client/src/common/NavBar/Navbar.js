@@ -14,7 +14,8 @@ const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login';
 
 const useStyles = makeStyles((theme) => ({
   appbarRoot: {
-    zIndex:"999"
+    zIndex:"999",
+    color: "red",
   },
   icon: {
     color:"#002140",
@@ -145,6 +146,12 @@ export default function ButtonAppBar (props) {
     </ListItem>
   )
 
+  // set appbar colour
+  const currURL = window.location.pathname;
+  const appbarColor = ((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
+  console.log(appbarColor);
+
+
   // Eventually should make this extensible
   const drawerItems = (toggleDrawer) => (
     <div>
@@ -170,7 +177,11 @@ export default function ButtonAppBar (props) {
     <div>
     {showBar ?
     <div>
-        <AppBar position="fixed" color="white" elevation="0" className={classes.appbarRoot}> 
+        <AppBar 
+          position="fixed" 
+          color= "black" 
+          elevation="0" 
+          className={classes.appbarRoot}> 
           <Toolbar>
             <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
