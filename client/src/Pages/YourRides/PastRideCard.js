@@ -7,7 +7,7 @@ import moment from 'moment';
 import { useHistory } from 'react-router';
 
 import { 
-    UnpaidPastRide,
+    // UnpaidPastRide,
 	PaidPastRide,
     PastRideCardData,
 	RideTimeInfo,
@@ -15,9 +15,10 @@ import {
 	RideTime,
 	Locations,
     LocationText,
-	PaidPaymentInfo,
-	UnpaidPaymentInfo,
-	PaymentText } 
+	// PaidPaymentInfo,
+	// UnpaidPaymentInfo,
+	// PaymentText 
+} 
     from './PastRideCard.styles.js';
 
 
@@ -78,30 +79,28 @@ const PastRideCard = ({id, origin, destination, datetime, paid}) => {
 
     return (
         <div>
-            { paid ? 
+            {/* { paid ?  */}
         
             <PaidPastRide>
                 <RideCardData />
-                <PaidPaymentInfo>
+                {/* <PaidPaymentInfo>
                     <PaidIcon />
                     <PaymentText>Payment Complete</PaymentText>
-                </PaidPaymentInfo>
+                </PaidPaymentInfo> */}
             </PaidPastRide>
 
-            :
-
-            <UnpaidPastRide>
-                <RideCardData />
-                <UnpaidPaymentInfo>
-                    <UnpaidIcon />
-                    <PaymentText>Payment Incomplete</PaymentText>
-                </UnpaidPaymentInfo>
-            </UnpaidPastRide>
-            }
+            {/* : */}
+{/* 
+             <UnpaidPastRide>
+                 <RideCardData />
+                 <UnpaidPaymentInfo>
+                     <UnpaidIcon />
+                     <PaymentText>Payment Incomplete</PaymentText>
+                 </UnpaidPaymentInfo>
+             </UnpaidPastRide>
+             } */}
             
 
-
-            
         </div>
     )
 }
