@@ -104,8 +104,8 @@ const RideSummary = () => {
   `
 
   const REMOVE_RIDER = gql`
-  mutation RemoveRider($_id: ID!) {
-      removeRider(rideID: $_id) {
+  mutation RemoveRider($rideID: ID!) {
+      removeRider(rideID: $rideID) {
           _id
       }
   }
@@ -165,13 +165,14 @@ const RideSummary = () => {
 
 
   const leave = () => {
+    console.log("This is my id: " +id);
     leaveRide().then((result) => {
       console.log(result);
       window.location.reload();
       console.log(result);
 
     }).catch((err) => {
-      console.log("Error leaving ride");
+      console.log(err);
       addToast("Error leaving ride", { appearance: 'error'});
 
     });
@@ -290,7 +291,7 @@ const RideSummary = () => {
 
       <ButtonContainer>
         {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
-        <ButtonDiv onClick={leave} leaveRide = {true} disabled={ride.spots === ride.riders.length}>
+        <ButtonDiv onClick={leave} leaveRide = {true}>
           Leave Ride
         </ButtonDiv>: 
         <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
