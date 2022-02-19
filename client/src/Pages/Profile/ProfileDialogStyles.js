@@ -14,9 +14,6 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { InputAdornment } from "@material-ui/core";
-import { AdvancedImage } from "@cloudinary/react";
-import { Cloudinary } from "@cloudinary/url-gen";
-import { imageExists } from "../Utils/ApiUtil";
 
 export const StyledDialogContent = styled(DialogContent)({
   overflow: "hidden",
@@ -122,39 +119,12 @@ export const ProfileStyles = makeStyles((theme) => ({
     top: theme.spacing(4),
     color: theme.palette.grey[500],
   },
-  imageStyle: {
-    borderRadius: "50%",
-    width: "20vw",
-    height: "14vh",
-  },
 }));
 
-export const ProfileImage = (props) => {
-  const { netid } = props;
-  const classes = ProfileStyles();
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
-    },
-  });
-
-  const hasImage = imageExists(netid);
-  console.log("hasImage=", hasImage);
-  const profileImage = cld.image(netid);
-
-  profileImage.format("jpg");
-  // .resize(thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face())))
-  // .roundCorners(byRadius(50));
-
-  return (
-    <div>
-      {hasImage ? (
-        <AdvancedImage className={classes.imageStyle} cldImg={profileImage} />
-      ) : (
-        <ProfileIcon />
-      )}
-    </div>
-  );
+export const ImageStyle = {
+  borderRadius: "50%",
+  width: "20vw",
+  height: "14vh",
 };
 
 export const InputTextField = (props) => {

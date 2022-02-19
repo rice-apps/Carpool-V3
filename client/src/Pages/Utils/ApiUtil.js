@@ -1,27 +1,96 @@
 import Axios from "axios";
+import { gql } from "@apollo/client";
 
-export const uploadImage = (image, netId) => {
+//cloudinary signature
+export const GET_SIGNATURE = gql`
+  query getSignature($publicId: String, $timestamp: Int, $folder: String) {
+    signature(publicId: $publicId, timestamp: $timestamp, folder: $folder) {
+      signature
+      timestamp
+      cloudname
+      folder
+      apikey
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query GetUserInfo($netID: String) {
+    userOne(filter: { netid: $netID }) {
+      _id
+      firstName
+      lastName
+      netid
+      phone
+      payment
+      college
+      imageVersion
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser(
+    $firstName: String!
+    $lastName: String!
+    $phone: String!
+    $payment: JSON!
+    $college: String!
+    $imageVersion: String
+  ) {
+    userUpdateOne(
+      record: {
+        firstName: $firstName
+        lastName: $lastName
+        phone: $phone
+        payment: $payment
+        college: $college
+        imageVersion: $imageVersion
+      }
+    ) {
+      record {
+        _id
+        firstName
+        lastName
+        phone
+        payment
+        college
+        imageVersion
+      }
+    }
+  }
+`;
+
+//async function to upload image and return version id
+export const toCloudinary = async (image, netId, signature) => {
   const url =
     "https://api.cloudinary.com/v1_1/" +
     process.env.REACT_APP_CLOUDINARY_NAME +
-    "/image/upload";
+    "/auto/upload"; //auto-upload
 
-  const formData = new FormData();
-  formData.append("file", image);
-  formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_FOLDER);
-  formData.append("public_id", netId);
-  Axios.post(url, formData)
-    .then((response) => {
-      console.log("RESPONSE", response);
-    })
-    .catch((error) => {
-      console.error("upload image error", error);
-      //TODO: addToast
-    });
+  if (image) {
+    //if there is a new image to upload
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("api_key", signature.apikey);
+    formData.append("timestamp", signature.timestamp);
+    formData.append("folder", signature.folder);
+    formData.append("signature", signature.signature);
+    formData.append("public_id", netId);
+    formData.append("overwrite", true);
+
+    try {
+      const resp = await Axios.post(url, formData);
+      return resp.data.version; //version id (imageVersion)
+    } catch (err) {
+      console.log(err);
+    }
+  }
 };
 
+//returns True if the user already has a profilepic
 export const imageExists = (netId) => {
-  console.log(process.env.REACT_APP_CLOUDINARY_NAME);
+  console.log("cloudinary name: ", process.env.REACT_APP_CLOUDINARY_NAME);
   const imageURL =
     "https://res.cloudinary.com/" +
     process.env.REACT_APP_CLOUDINARY_NAME +

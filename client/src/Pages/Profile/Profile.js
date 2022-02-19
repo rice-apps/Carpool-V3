@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,103 +13,49 @@ import {
   ProfileCard,
   ReturnHeader,
   UserName,
-  UserPic,
   PhoneNumber,
   StyledText,
   StyledText2,
   StyledText3,
   EditProfileButton,
   College,
-  StyledImage,
-  ProfileImage,
+  ImageStyle,
 } from "./ProfileStyles.js";
 import { useState } from "react";
-import { Cloudinary } from "@cloudinary/url-gen";
-
-import { imageExists } from "../Utils/ApiUtil.js";
-
+import { GET_USER } from "../Utils/ApiUtil.js";
+import { ProfileImage } from "./ProfileImage.js";
 const Profile = () => {
   const { id } = useParams();
 
   const { addToast } = useToasts();
 
-  const GET_USER = gql`
-    query GetUserInfo($netID: String) {
-      userOne(filter: { netid: $netID }) {
-        _id
-        firstName
-        lastName
-        netid
-        phone
-        payment
-        college
-      }
-    }
-  `;
-
   const [openDialog, setOpenDialog] = useState(false);
 
-  let {
-    data: userData,
-    loading,
-    error,
-  } = useQuery(GET_USER, {
-    variables: {
-      netID: id,
-    },
+  const [imageVersion, setImageVersion] = useState("");
+
+  let { data, loading, error } = useQuery(GET_USER, {
+    variables: { netID: id },
   });
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
-  let { userOne: user } = JSON.parse(JSON.stringify(userData));
+  let { userOne: user } = JSON.parse(JSON.stringify(data));
+
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
     window.history.back();
   }
 
-  const paymentKeys = user.payment ? Object.keys(user.payment) : undefined; //["Venmo", "Zelle", "Other"]
   let paymentType = "";
-
-  //set paymentType to Venmo or Zelle or Other, in that order of priority
-  if (paymentKeys) {
-    if (user.payment["Venmo"] && user.payment["Venmo"] !== "") {
-      paymentType = "Venmo";
-    } else if (user.payment["Zelle"] && user.payment["Zelle"] !== "") {
-      paymentType = "Zelle";
-    } else {
-      paymentType = "Other";
-    }
-  }
-  console.log("paymentType", paymentType);
-
-  //profile image
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
-    },
-  });
-
-  // const ProfileImage = () => {
-  //   const netid = user.netid;
-  //   const classes = ProfileStyles();
-  //   const cld = new Cloudinary({
-  //     cloud: {
-  //       cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
-  //     },
-  //   });
-  // };
-  // const profileImage = cld.image(user.netid);
-
   return (
     <div>
       <ReturnHeader>
         <ButtonBox onClick={goBack}>
-          <BackArrow></BackArrow>
-          <StyledText3>Ride Summary</StyledText3>
-        </ButtonBox>
-      </ReturnHeader>
+          <BackArrow></BackArrow> <StyledText3>Ride Summary</StyledText3>{" "}
+        </ButtonBox>{" "}
+      </ReturnHeader>{" "}
       {localStorage.getItem("netid") === user.netid && (
         <EditProfileButton>
           <IconButton
@@ -125,13 +71,14 @@ const Profile = () => {
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         profileUser={user}
+        setImageVersion={setImageVersion}
       ></ProfileDialog>
       <ProfileCard>
-        {imageExists ? (
-          <ProfileImage netid={user.netid}></ProfileImage>
-        ) : (
-          console.log("image does not exist")
-        )}
+        <ProfileImage
+          imageStyle={ImageStyle}
+          netid={user.netid}
+          imageVersion={imageVersion}
+        ></ProfileImage>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
         <PhoneNumber>
           {user.phone ? user.phone : "Phone Number Unavailable"}
@@ -146,8 +93,7 @@ const Profile = () => {
             );
           }}
         >
-          <MailBox></MailBox>
-          <StyledText>{user.netid}@rice.edu</StyledText>
+          <MailBox></MailBox> <StyledText>{user.netid}@rice.edu</StyledText>{" "}
         </TextBox>
         <TextBox
           onClick={() => {
@@ -171,5 +117,4 @@ const Profile = () => {
     </div>
   );
 };
-
 export default Profile;

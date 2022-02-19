@@ -1,7 +1,8 @@
 import { Dialog, MenuItem, Tooltip } from "@material-ui/core";
 import React, { useState, useRef } from "react";
 import { useToasts } from "react-toast-notifications";
-import { uploadImage } from "../Utils/ApiUtil.js";
+import { UPDATE_USER, GET_SIGNATURE, toCloudinary } from "../Utils/ApiUtil.js";
+
 import {
   ProfileDialogContainer,
   IconBox,
@@ -9,54 +10,32 @@ import {
   ButtonBox,
   ProfileEditIcon,
   ProfileEditButton,
-  ProfileImage,
   CloseProfileIcon,
   Label,
   InputTextField,
   InputBox,
   PaymentSelect,
   ProfileStyles,
+  ImageStyle,
   SaveButton,
   StyledImage,
 } from "./ProfileDialogStyles";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
+import { ProfileImage } from "./ProfileImage.js";
 
 export default function ProfileDialog(props) {
-  const UPDATE_USER = gql`
-    mutation UpdateUser(
-      $firstName: String!
-      $lastName: String!
-      $phone: String!
-      $payment: JSON!
-      $college: String!
-    ) {
-      userUpdateOne(
-        record: {
-          firstName: $firstName
-          lastName: $lastName
-          phone: $phone
-          payment: $payment
-          college: $college
-        }
-      ) {
-        record {
-          _id
-          firstName
-          lastName
-          phone
-          payment
-          college
-        }
-      }
-    }
-  `;
-
+  const classes = ProfileStyles();
   const { addToast } = useToasts();
-  const { openDialog, setOpenDialog, profileUser } = props;
+
+  const { openDialog, setOpenDialog, profileUser, setImageVersion } = props;
+  const closeDialog = () => {
+    setOpenDialog(false);
+  };
 
   let payment = profileUser.payment ? profileUser.payment : {};
 
   const [user, setUser] = useState({
+    //initialize user
     selectedPaymentMethod: "Venmo",
     selectedPayment: payment["Venmo"] ? payment["Venmo"] : "",
     firstName: profileUser.firstName,
@@ -67,21 +46,20 @@ export default function ProfileDialog(props) {
     college: profileUser.college,
   });
 
+  function setUserProps(key, value) {
+    user[key] = value;
+  }
+
+  //for image
   const [imageSelected, setImageSelected] = useState("");
   const [previewSource, setPreviewSource] = useState("");
+
   const uploadPic = useRef(null);
-
-  const classes = ProfileStyles();
-
-  const closeDialog = () => {
-    setOpenDialog(false);
-  };
-
   const onUploadPic = () => {
     uploadPic.current.click();
   };
 
-  const selectPayment = (e) => {
+  function selectPayment(e) {
     setUser((prestate) => {
       const newPaymentMethod = e.target.value;
       const newPayment = prestate.payment[newPaymentMethod]
@@ -93,9 +71,9 @@ export default function ProfileDialog(props) {
         selectedPayment: newPayment,
       };
     });
-  };
+  }
 
-  const setUserPayment = (e) => {
+  function setUserPayment(e) {
     const newPayment = e.target.value;
     setUser((prestate) => {
       return {
@@ -107,9 +85,9 @@ export default function ProfileDialog(props) {
         selectedPayment: newPayment,
       };
     });
-  };
+  }
 
-  const clearUserPayment = (type) => {
+  function clearUserPayment(type) {
     console.log("type", type);
     setUser((prestate) => {
       return {
@@ -121,44 +99,62 @@ export default function ProfileDialog(props) {
         selectedPayment: "",
       };
     });
-  };
+  }
 
-  const [updateUser] = useMutation(UPDATE_USER);
-
-  const updateUserInfo = () => {
-    updateUser({ variables: user });
-    if (imageSelected) {
-      uploadImage(imageSelected, profileUser.netid);
-    }
-  };
-
-  const setUserProps = (key, value) => {
-    user[key] = value;
-  };
-
-  const clearTextField = (key) => {
+  function clearTextField(key) {
     setUserProps(key, "");
     document.getElementsByName(key)[0].value = "";
-  };
+  }
 
-  const { loading, error, data } = useMutation(UPDATE_USER, {
-    variables: {
-      user,
-    },
-  });
-
-  const selectImage = (e) => {
+  function selectImage(e) {
     const file = e.target.files[0];
     setImageSelected(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewSource(reader.result);
+      setPreviewSource(reader.result); //there is now a previewsource
     };
-  };
+  }
 
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+  const [updateUser, { loading: mutateLoading, error: mutateError }] =
+    useMutation(UPDATE_USER);
+
+  const [loadSignature, { loading: signatureLoading, error: sigError }] =
+    useLazyQuery(GET_SIGNATURE, {
+      onCompleted: (sigData) => {
+        toCloudinary(imageSelected, profileUser.netid, sigData.signature) //get imageVersion
+          .then((imageVersion) => {
+            setImageVersion(imageVersion);
+          })
+          .catch((e) => {
+            console.log("error in uploading to cloudinary", e);
+          });
+      },
+      onError: (e) => {
+        console.log("error: ", e);
+      },
+    });
+
+  if (mutateLoading) return "Updating user...";
+  if (mutateError) return `Updating user error! ${mutateError.message}`;
+
+  if (signatureLoading) return "Querying cloudinary signature ...";
+  if (sigError) return `Querying Cloudinary Error! ${sigError.message}`;
+
+  function uploadImage() {
+    if (imageSelected) {
+      //if change profile pic
+      const timestamp = Math.round(new Date().getTime() / 1000);
+      const folder = process.env.REACT_APP_CLOUDINARY_FOLDER;
+      loadSignature({
+        variables: {
+          publicId: profileUser.netid,
+          timestamp: timestamp,
+          folder: folder,
+        },
+      });
+    }
+  }
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
@@ -166,9 +162,9 @@ export default function ProfileDialog(props) {
         <ProfileDialogContainer>
           <IconBox>
             {previewSource ? (
-              <StyledImage src={previewSource}></StyledImage>
+              <StyledImage src={previewSource}></StyledImage> //after the user changes their profile pic, this gives preview before saving
             ) : (
-              <ProfileImage netid={profileUser.netid} /> //this one
+              <ProfileImage netid={profileUser.netid} imageStyle={ImageStyle} /> //this is just the user's profile pic
             )}
             <Tooltip title="Upload profile picture">
               <ProfileEditButton onClick={onUploadPic}>
@@ -256,7 +252,8 @@ export default function ProfileDialog(props) {
             <SaveButton
               variant="contained"
               onClick={() => {
-                updateUserInfo();
+                uploadImage();
+                updateUser({ variables: user });
                 setOpenDialog(false);
                 addToast("User Information Updated", {
                   appearance: "success",

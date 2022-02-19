@@ -1,13 +1,8 @@
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
-import { Button, makeStyles } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import MailIcon from "@material-ui/icons/Mail";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { AdvancedImage } from "@cloudinary/react";
-import { Cloudinary } from "@cloudinary/url-gen";
-import { imageExists } from "../Utils/ApiUtil";
-import React from "react";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const ButtonBox = withStyles({
   label: {
@@ -46,13 +41,11 @@ const MailBox = withStyles({
   },
 })(MailIcon);
 
-const ImageStyles = makeStyles((theme) => ({
-  imageStyle: {
-    borderRadius: "50%",
-    width: "50vw",
-    height: "24vh",
-  },
-}));
+const ImageStyle = {
+  borderRadius: "50%",
+  width: "50vw",
+  height: "24vh",
+};
 
 const EditProfileButton = styled.div`
   display: flex;
@@ -92,36 +85,6 @@ const UserPic = styled.img`
   border-radius: 50%;
   background-size: cover;
 `;
-
-const ProfileIcon = styled(AccountCircleIcon)({
-  fontSize: "14vh",
-  color: "#002140",
-});
-
-const ProfileImage = (props) => {
-  const { netid } = props;
-  const classes = ImageStyles();
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
-    },
-  });
-
-  const hasImage = imageExists(netid);
-  console.log("hasImage=", hasImage);
-  const profileImage = cld.image(netid);
-  profileImage.format("jpg");
-
-  return (
-    <div>
-      {hasImage ? (
-        <AdvancedImage cldImg={profileImage} className={classes.imageStyle} />
-      ) : (
-        <ProfileIcon />
-      )}
-    </div>
-  );
-};
 
 const UserName = styled.p`
   display: flex;
@@ -228,5 +191,5 @@ export {
   StyledText,
   StyledText2,
   StyledText3,
-  ProfileImage,
+  ImageStyle,
 };
