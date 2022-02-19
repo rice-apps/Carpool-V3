@@ -182,16 +182,16 @@ const RideSummary = () => {
   if (!data) return <p>No data...</p>
 
  
-
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
     localStorage.setItem('lastPage', `ridesummary/${id}`);
     // Any attempts to go back to edit the onboarding form
     // should take you back to the current ride summary page.
-    if (lastPage === "/onboarding"){
-      localStorage.setItem('nextPage', `ridesummary/${id}`); 
+    if (lastPage === "/your-rides"){
+      history.push(lastPage);
+    } else {
+      history.push("/search");
     }
-    history.push(lastPage);
   }
 
   const time = moment(ride.departureDate)
@@ -203,7 +203,7 @@ const RideSummary = () => {
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
         <BackArrow></BackArrow>
-        <BackText>Search Page</BackText>
+        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Search"}</BackText>
       </BackArrowDiv>
 
       <RideSummaryDiv>

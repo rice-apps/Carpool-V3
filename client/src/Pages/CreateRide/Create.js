@@ -251,8 +251,7 @@ const Create = ({onCreate}) => {
                                 disablePast={true}
                                 value={date}
                                 onChange={setDate}
-                            >
-                            </DateBox>
+                            />
                         </MuiPickersUtilsProvider>
                     </MuiThemeProvider>
                 </Grid>
@@ -275,9 +274,6 @@ const Create = ({onCreate}) => {
 
                     </TextFieldBox>
 
-
-                        
-
                 </Grid>
 
 
@@ -291,6 +287,17 @@ const Create = ({onCreate}) => {
                 >
                     <Grid item>   
                         <SelectSquare
+                            MenuProps={{
+                                anchorOrigin: {
+                                    vertical: "bottom",
+                                    horizontal: "left"
+                                },
+                                transformOrigin: {
+                                    vertical: "top",
+                                    horizontal: "left"
+                                },
+                                getContentAnchorEl: null
+                            }}
                             id="Number of Passengers Occupied"
                             value={passengers}
                             onChange={onPassengerChange}

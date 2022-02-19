@@ -7,10 +7,7 @@ grid-template-columns: 30% 60% 10%;
 background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
-height: 15vh;
-padding: 1vh;
-margin-top: 2vh;
-margin-bottom: 2vh;
+margin: 1em 0;
 `;
 
 
@@ -22,8 +19,8 @@ justify-content: space-between;
 align-items: center;
 flex-direction: column;
 border-radius: 9px;
-padding-top: 20%;
-padding-bottom: 20%;
+padding-top: 1em;
+padding-bottom: 1em;
 `
 
 const RideDate = styled.div`
@@ -42,7 +39,7 @@ font-size: 2vh;
 
 const Locations = styled.div`
 font-family: Josefin Sans;
-padding: 10%;
+padding: 1em;
 grid-column-start: 2;
 display: flex;
 justify-content: space-between;
