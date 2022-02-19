@@ -15,7 +15,9 @@ const AboutUs = () => {
         <AllDiv>
             <AboutUsHeader>Meet the Team</AboutUsHeader>
                 <Member>
-                    <Picture></Picture>
+                    
+                    <Picture image="client\src\Pages\AboutUs\membersPictures\shreya_doerr_pic_2.JPG"
+                    />
                     <Info>
                         <Name>Shreya Nidadavolu</Name>
                         <Title>Product Manager | Wiess</Title>

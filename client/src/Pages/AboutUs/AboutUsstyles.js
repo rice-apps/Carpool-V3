@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+
 
 
 const AllDiv = styled.div`
@@ -33,11 +35,10 @@ const Member = styled(Card)({
   margin: "3%"
 })
 
-const Picture = styled.div`
-  grid-column: 1;
+const Picture = styled(CardMedia)({
+  gridColumn: "1",
+})
 
-
-`
 
 const Info = styled.div`
   grid-column: 2;
