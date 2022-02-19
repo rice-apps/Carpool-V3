@@ -37,6 +37,9 @@ const Member = styled(Card)({
 
 const Picture = styled(CardMedia)({
   gridColumn: "1",
+  padding: "2%",
+  alignItems: "center",
+  borderRadius: "50%",
 })
 
 

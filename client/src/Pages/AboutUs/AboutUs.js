@@ -9,6 +9,7 @@ import{
     Title
 } from "./AboutUsstyles";
 
+
 const AboutUs = () => {
 
     return (
@@ -16,7 +17,7 @@ const AboutUs = () => {
             <AboutUsHeader>Meet the Team</AboutUsHeader>
                 <Member>
                     
-                    <Picture image="client\src\Pages\AboutUs\membersPictures\shreya_doerr_pic_2.JPG"
+                    <Picture image="/membersPictures/shreya_doerr_pic_2.JPG"
                     />
                     <Info>
                         <Name>Shreya Nidadavolu</Name>
