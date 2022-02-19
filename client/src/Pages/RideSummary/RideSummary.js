@@ -78,6 +78,7 @@ const GET_RIDE = gql`
     }
   }
 `
+
 const RideSummary = () => {
   let { id } = useParams()
   const [ride, setRide] = useState({
@@ -102,7 +103,19 @@ const RideSummary = () => {
     }
   `
 
+  const REMOVE_RIDER = gql`
+  mutation RemoveRider($_id: ID!) {
+      removeRider(rideID: $_id) {
+          _id
+      }
+  }
+`
+
   const [joinRide] = useMutation(JOIN_RIDE, {
+    variables: { rideID: id }
+  })
+
+  const [leaveRide] = useMutation(REMOVE_RIDER, {
     variables: { rideID: id }
   })
 
@@ -146,6 +159,20 @@ const RideSummary = () => {
     }).catch((err) => {
       console.log("Caught error: Ride is full");
       addToast("Sorry! This ride is full.", { appearance: 'error'});
+
+    });
+  }
+
+
+  const leave = () => {
+    leaveRide().then((result) => {
+      console.log(result);
+      window.location.reload();
+      console.log(result);
+
+    }).catch((err) => {
+      console.log("Error leaving ride");
+      addToast("Error leaving ride", { appearance: 'error'});
 
     });
   }
@@ -262,9 +289,13 @@ const RideSummary = () => {
       </NotesDiv>
 
       <ButtonContainer>
+        {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
+        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+          Leave Ride
+        </ButtonDiv>: 
         <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
           Join Ride
-        </ButtonDiv>
+        </ButtonDiv>}
       </ButtonContainer>
     </AllDiv>
   )
