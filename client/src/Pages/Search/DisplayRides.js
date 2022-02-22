@@ -14,11 +14,22 @@ const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login';
 const DisplayRides = (props) => {
 
     const [openAlert, setOpenAlert] = useState(false);
+
+    const isEqualRides = (ride1, ride2) => {
+        if (ride1._id == null || ride2._id == null) {
+            return false;
+        }
+
+        return ride1._id === ride2._id;
+    }
     
     // Determine action when create ride is pressed
     const handleClickCreateRide = () => {
+
+        localStorage.setItem('nextPage', 'create-ride');
     
         let token = localStorage.getItem('token');
+
         if (token != null) { 
             // Route to UserAuth if user is logged in
             localStorage.setItem('nextPage', 'create-ride');
@@ -91,6 +102,8 @@ const DisplayRides = (props) => {
     }
 
     const rideBox = (ridesT) =>  {
+
+        console.log("ridesT", ridesT)
         
         if (ridesT === null || ridesT === undefined) {
             return null;
@@ -115,9 +128,9 @@ const DisplayRides = (props) => {
             }
             {
                 <div style = {{paddingTop: '4vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
-            }   
+            }
             {
-                props.nonMatchingRides.map((ride, ind) => (<Ride ride={ride} />))
+                props.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
             }
             <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
                 no more results
@@ -129,7 +142,7 @@ const DisplayRides = (props) => {
         <div>
             <div>
                 {
-                    rideBox(props.allRides)
+                    rideBox(props.ridesT)
                 }
             </div>
             <div>
