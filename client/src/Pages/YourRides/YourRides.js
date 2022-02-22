@@ -101,7 +101,10 @@ const YourRides = (paid) => {
                 </UpcomingRidesSection>
 
                 <PastRidesSection>
-                    <PastRideTitle><TitleText>Past Rides</TitleText><TitleText>Payments</TitleText></PastRideTitle>
+                    <PastRideTitle>
+                        <TitleText>Past Rides</TitleText>
+                        {/* <TitleText>Payments</TitleText> */}
+                    </PastRideTitle>
                     {prevRides.map(ride => {
                         return (
                             <PastRideCard 

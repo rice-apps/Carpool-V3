@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
-const UnpaidPastRide = styled.div`
-display: grid;
-width: 90vw;
-grid-template-columns: 65% 35%;
-background: #FFFFFF;
-box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
-border-radius: 9px;
-margin: 1em 0;
-`;
+// const UnpaidPastRide = styled.div`
+// display: grid;
+// width: 90vw;
+// grid-template-columns: 65% 35%;
+// background: #FFFFFF;
+// box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
+// border-radius: 9px;
+// margin: 1em 0;
+// `;
 
 const PaidPastRide = styled.div`
 display: grid;
 width: 90vw;
-grid-template-columns: 65% 35%;
+grid-template-columns: 100% // FOR FUTURE WHEN WE HAVE PAID RIDES: 65% 35%;
 background: rgba(187, 218, 255, 0.22);
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
@@ -70,36 +70,36 @@ font-size: 1rem;
 font-family: Josefin Sans;
 `
 
-const PaidPaymentInfo = styled.div`
-grid-column-start: 2;
-display: flex;
-background: #BBDAFF;
-justify-content: space-between;
-align-items: center;
-border-radius: 0px 9px 9px 0px;
-padding: 1em;
-`;
+// const PaidPaymentInfo = styled.div`
+// grid-column-start: 2;
+// display: flex;
+// background: #BBDAFF;
+// justify-content: space-between;
+// align-items: center;
+// border-radius: 0px 9px 9px 0px;
+// padding: 1em;
+// `;
 
-const UnpaidPaymentInfo = styled.div`
-grid-column-start: 2;
-display: flex;
-background: #EB5248;
-justify-content: space-between;
-align-items: center;
-border-radius: 0px 9px 9px 0px;
-padding: 1em;
-`
-const PaymentText = styled.div`
-fornt-size: 2em;
-font-family: Josefin Sans;
-font-style: normal;
-font-weight: normal;
-color: #FFFFFF;
-`
+// const UnpaidPaymentInfo = styled.div`
+// grid-column-start: 2;
+// display: flex;
+// background: #EB5248;
+// justify-content: space-between;
+// align-items: center;
+// border-radius: 0px 9px 9px 0px;
+// padding: 1em;
+// `
+// const PaymentText = styled.div`
+// fornt-size: 2em;
+// font-family: Josefin Sans;
+// font-style: normal;
+// font-weight: normal;
+// color: #FFFFFF;
+// `
 
 
 export {
-	UnpaidPastRide,
+	// UnpaidPastRide,
 	PaidPastRide,
 	PastRideCardData,
 	RideTimeInfo,
@@ -107,7 +107,7 @@ export {
 	RideTime,
 	LocationText,
 	Locations,
-	PaidPaymentInfo,
-	UnpaidPaymentInfo,
-	PaymentText
+	// PaidPaymentInfo,
+	// UnpaidPaymentInfo,
+	// PaymentText
 };
