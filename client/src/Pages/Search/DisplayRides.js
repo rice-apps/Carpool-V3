@@ -87,7 +87,7 @@ const DisplayRides = (props) => {
                     </Box>
                 </Grid>
             }
-            <StyledButton variant="outlined" style={{fontSize: "2vh", color:"#2075D8",  height: '100%', display: 'flex', borderRadius: '10px'}} onClick={() => handleClickCreateRide()}> 
+            <StyledButton style={{fontSize: "2vh", color:"#2075D8",  height: '100%', display: 'flex', borderRadius: '10px'}} onClick={() => handleClickCreateRide()}> 
                     Don't see a match? Create a new ride 
             </StyledButton>
             {
