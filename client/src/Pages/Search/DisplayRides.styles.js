@@ -17,8 +17,12 @@ export const BoxRide = styled(Box)({
 
 export const StyledButton = withStyles({
     root: {
-        fontSize: "2.5vh"
-    },
+        fontSize: "2.5vh",
+        '& p' : {
+            color: "black",
+            fontFamily: "Josefin Sans"
+        }
+    },  
     label: {
         fontFamily: "Josefin Sans",
         textTransform: "none",

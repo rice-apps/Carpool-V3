@@ -87,8 +87,8 @@ const DisplayRides = (props) => {
                     </Box>
                 </Grid>
             }
-            <StyledButton style={{fontSize: "2vh", color:"#2075D8",  height: '100%', display: 'flex', borderRadius: '10px'}} onClick={() => handleClickCreateRide()}> 
-                    Don't see a match? Create a new ride 
+            <StyledButton style={{fontSize: "1em", color:"#2075D8",  height: '100%', display: 'flex', borderRadius: '10px'}} onClick={() => handleClickCreateRide()}> 
+                    <p> Don't see a match? </p> &nbsp; Create a new ride 
             </StyledButton>
             {
                 <div style = {{paddingTop: '1vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
