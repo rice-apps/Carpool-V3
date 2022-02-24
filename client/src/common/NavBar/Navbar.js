@@ -3,8 +3,9 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
+import InfoIcon from '@material-ui/icons/PeopleRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
-  Drawer, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
+  Drawer, IconButton, AppBar, Toolbar, Avatar, Button, Divider } from '@material-ui/core';
 import { Link, useLocation } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
@@ -160,7 +161,9 @@ export default function ButtonAppBar (props) {
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about" onClick = {toggleDrawer}>
+        <Divider/>
+        <ListItem button component = {Link} to = "/about" onClick = {toggleDrawer}>
+          <ListItemIcon className= {classes.icon}> <InfoIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "About"/>
         </ListItem>
         {loggedIn ? showLogout(toggleDrawer) : null}
