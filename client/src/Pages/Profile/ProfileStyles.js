@@ -35,6 +35,27 @@ label: {
 }
 })(Button);
 
+const PhoneNumber = withStyles({
+	root:{
+		display: 'flex', 
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: '.5vh 0 0 0',
+	
+		background: 'white',
+		fontFamily: 'Josefin Sans',
+		fontWeight: '300',
+		fontSize: '18px',
+		textAlign: 'center',
+
+		color: '#002140'
+	},
+	label: {
+		textTransform: 'none',
+	}
+}) (Button);
+
+
 const MailBox = withStyles({
 root: {
 	color: '#2075D8'
@@ -95,19 +116,14 @@ const UserName = styled.p`
 	color: #002140;
 `;
 
-const PhoneNumber = styled.div`
+const StyledNumber = styled.p`
 	display: flex; 
-	justify-content: center;
-	align-items: center;
-	padding: 1vh 0px 0px 0px;
+	padding: 0px 0px 0px 1vh;
 
 	font-family: Josefin Sans;
-	font-weight: 300;
-	font-size: 18px;
-	line-height: 18px;
+	font-weight: '300';
 	text-align: center;
-
-	color: #002140;
+	color: black;
 `;
 
 const StyledText = styled.p`
@@ -168,6 +184,7 @@ export {
 	UserName,
 	UserPic,
 	PhoneNumber,
+	StyledNumber,
 	StyledText,
 	StyledText2,
 	StyledText3

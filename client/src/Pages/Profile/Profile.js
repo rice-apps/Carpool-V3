@@ -5,6 +5,8 @@ import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+
 import {
   ButtonBox,
   BackArrow,
@@ -15,6 +17,7 @@ import {
   UserName,
   UserPic,
   PhoneNumber,
+  StyledNumber,
   StyledText,
   StyledText2,
   StyledText3,
@@ -88,7 +91,7 @@ const Profile = () => {
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
-        <PhoneNumber onClick={async () => {
+        <PhoneNumber  onClick={async () => {
             if (user.phone) {
               navigator.clipboard.writeText(user.phone).then(
                 addToast("Phone Number Copied to Clipboard!", {
@@ -97,7 +100,9 @@ const Profile = () => {
               );
             }
           }}>
-          {user.phone ? user.phone : "Phone Number Unavailable"}
+           <StyledNumber> {user.phone ? user.phone : "Phone Number Unavailable"} &nbsp; </StyledNumber>
+           
+          {user.phone ? <FileCopyIcon fontSize = "small" style={{color: "#2075D8"}}/> : ""}
         </PhoneNumber>
         <TextBox
           onClick={() => {
