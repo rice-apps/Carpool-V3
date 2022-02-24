@@ -16,7 +16,7 @@ import {
   InputBox,
   PaymentSelect,
   ProfileStyles,
-  ImageStyle,
+  // ImageStyle,
   SaveButton,
   StyledImage,
 } from "./ProfileDialogStyles";
@@ -112,49 +112,67 @@ export default function ProfileDialog(props) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewSource(reader.result); //there is now a previewsource
+      setPreviewSource(reader.result);
     };
   }
 
   const [updateUser, { loading: mutateLoading, error: mutateError }] =
     useMutation(UPDATE_USER);
 
-  const [loadSignature, { loading: signatureLoading, error: sigError }] =
-    useLazyQuery(GET_SIGNATURE, {
-      onCompleted: (sigData) => {
-        toCloudinary(imageSelected, profileUser.netid, sigData.signature) //get imageVersion
-          .then((imageVersion) => {
-            setImageVersion(imageVersion);
-          })
-          .catch((e) => {
-            console.log("error in uploading to cloudinary", e);
-          });
-      },
-      onError: (e) => {
-        console.log("error: ", e);
-      },
-    });
+  //this function is used in saveUserWithImage, which is used in saveUser
+  const [uploadImageAndSaveUser] = useLazyQuery(GET_SIGNATURE, {
+    onCompleted: (sigData) => {
+      //uploads image to cloudinary with the image version
+      toCloudinary(imageSelected, profileUser.netid, sigData.signature)
+        .then((imageVersion) => {
+          setImageVersion(imageVersion); //update imageVersion
+          setUserProps("imageVersion", imageVersion); //update imageVersion for user
+          updateUser({ variables: user }); //update the rest of the user
+        })
+        .catch((e) => {
+          console.log("error in uploading to cloudinary", e);
+        });
+    },
+    onError: (e) => {
+      console.log("error: ", e);
+    },
+  });
 
   if (mutateLoading) return "Updating user...";
   if (mutateError) return `Updating user error! ${mutateError.message}`;
 
-  if (signatureLoading) return "Querying cloudinary signature ...";
-  if (sigError) return `Querying Cloudinary Error! ${sigError.message}`;
-
-  function uploadImage() {
-    if (imageSelected) {
-      //if change profile pic
-      const timestamp = Math.round(new Date().getTime() / 1000);
-      const folder = process.env.REACT_APP_CLOUDINARY_FOLDER;
-      loadSignature({
-        variables: {
-          publicId: profileUser.netid,
-          timestamp: timestamp,
-          folder: folder,
-        },
-      });
-    }
+  //this function is used in saveUser
+  function saveUserWithImage() {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const folder = process.env.REACT_APP_CLOUDINARY_FOLDER;
+    uploadImageAndSaveUser({
+      variables: {
+        publicId: profileUser.netid,
+        timestamp: timestamp,
+        folder: folder,
+      },
+    });
   }
+
+  //uses all helper functions to save user
+  function saveUser() {
+    if (imageSelected) {
+      //save image and update user if there is image
+      saveUserWithImage();
+    } else {
+      updateUser({ variables: user }); //else update all other variables
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewSource(imageSelected);
+    };
+  }
+
+  const ImageStyle = {
+    borderRadius: "50%",
+    width: "25vw",
+    height: "11vh",
+  };
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
@@ -162,9 +180,13 @@ export default function ProfileDialog(props) {
         <ProfileDialogContainer>
           <IconBox>
             {previewSource ? (
-              <StyledImage src={previewSource}></StyledImage> //after the user changes their profile pic, this gives preview before saving
+              <StyledImage src={previewSource}></StyledImage>
             ) : (
-              <ProfileImage netid={profileUser.netid} imageStyle={ImageStyle} /> //this is just the user's profile pic
+              <ProfileImage
+                netid={profileUser.netid}
+                imageStyle={ImageStyle}
+                imageVersion={profileUser.imageVersion} // changed this to user from profileuser
+              />
             )}
             <Tooltip title="Upload profile picture">
               <ProfileEditButton onClick={onUploadPic}>
@@ -252,8 +274,9 @@ export default function ProfileDialog(props) {
             <SaveButton
               variant="contained"
               onClick={() => {
-                uploadImage();
-                updateUser({ variables: user });
+                saveUser();
+                // uploadImage();
+                // updateUser({ variables: user });
                 setOpenDialog(false);
                 addToast("User Information Updated", {
                   appearance: "success",

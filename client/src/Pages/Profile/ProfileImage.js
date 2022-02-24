@@ -10,8 +10,7 @@ export const ProfileImage = (props) => {
   const cld = new Cloudinary({
     cloud: { cloudName: process.env.REACT_APP_CLOUDINARY_NAME },
   });
-  console.log("image version = " + imageVersion);
-  const hasImage = imageExists(netid);
+  const hasImage = imageExists(netid, imageVersion); //load updated image with imageVersion
   const folder = process.env.REACT_APP_CLOUDINARY_FOLDER;
   const profileImage = imageVersion //if there is a version, include it in the url
     ? cld.image(folder + "/" + netid).setVersion(imageVersion)
@@ -19,12 +18,11 @@ export const ProfileImage = (props) => {
   profileImage.format("jpg");
   return (
     <div>
-      {" "}
       {hasImage ? ( //set the profileimage to the profile pic if there is one
-        <AdvancedImage cldImg={profileImage} style={imageStyle} />
+        <AdvancedImage cldImg={profileImage} style={imageStyle} /> //fix this?
       ) : (
         <ProfileIcon /> //else, use the default profileicon
-      )}{" "}
+      )}
     </div>
   );
 };

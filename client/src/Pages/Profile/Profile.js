@@ -24,6 +24,7 @@ import {
 import { useState } from "react";
 import { GET_USER } from "../Utils/ApiUtil.js";
 import { ProfileImage } from "./ProfileImage.js";
+
 const Profile = () => {
   const { id } = useParams();
 
@@ -77,7 +78,7 @@ const Profile = () => {
         <ProfileImage
           imageStyle={ImageStyle}
           netid={user.netid}
-          imageVersion={imageVersion}
+          imageVersion={user.imageVersion}
         ></ProfileImage>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
         <PhoneNumber>

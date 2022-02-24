@@ -123,8 +123,8 @@ export const ProfileStyles = makeStyles((theme) => ({
 
 export const ImageStyle = {
   borderRadius: "50%",
-  width: "20vw",
-  height: "14vh",
+  width: "25vw",
+  height: "12vh",
 };
 
 export const InputTextField = (props) => {

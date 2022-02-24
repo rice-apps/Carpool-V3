@@ -36,7 +36,7 @@ export const UPDATE_USER = gql`
     $phone: String!
     $payment: JSON!
     $college: String!
-    $imageVersion: String
+    $imageVersion: Float
   ) {
     userUpdateOne(
       record: {
@@ -88,18 +88,23 @@ export const toCloudinary = async (image, netId, signature) => {
   }
 };
 
-//returns True if the user already has a profilepic
-export const imageExists = (netId) => {
+//returns True if the user already has a profile pic
+export const imageExists = (netId, imageVersion) => {
+  if (imageVersion) imageVersion = "v" + imageVersion + "/";
+  else imageVersion = "";
   console.log("cloudinary name: ", process.env.REACT_APP_CLOUDINARY_NAME);
   const imageURL =
     "https://res.cloudinary.com/" +
     process.env.REACT_APP_CLOUDINARY_NAME +
     "/image/upload/" +
+    imageVersion +
+    process.env.REACT_APP_CLOUDINARY_FOLDER +
+    "/" +
     netId +
     ".jpg";
-
+  console.log("imageURL", imageURL);
   const http = new XMLHttpRequest();
   http.open("HEAD", imageURL, false);
-  http.send();
+  // http.send(); //error
   return http.status !== 404;
 };

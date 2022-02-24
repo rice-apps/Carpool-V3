@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/MenuRounded";
 import HomeIcon from "@material-ui/icons/HomeRounded";
@@ -12,15 +12,13 @@ import {
   IconButton,
   AppBar,
   Toolbar,
-  Avatar,
   Button,
 } from "@material-ui/core";
 import { Link, useLocation } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
-import { imageExists } from "../../Pages/Utils/ApiUtil";
-import { AdvancedImage } from "@cloudinary/react";
-import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
+import { ProfileImage } from "../../Pages/Profile/ProfileImage";
+import { ImageStyle } from "../../Pages/Profile/ProfileDialogStyles";
 
 const useStyles = makeStyles((theme) => ({
   appbarRoot: {
@@ -54,11 +52,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     height: "15vh",
   },
-  imageStyle: {
-    borderRadius: "50%",
-    width: "10vw",
-    height: "5vh",
-  },
 }));
 
 const LogInOutButton = withStyles({
@@ -79,18 +72,10 @@ const GET_USER = gql`
     userOne(filter: { netid: $netID }) {
       firstName
       lastName
+      imageVersion
     }
   }
 `;
-
-//profile image
-const cld = new Cloudinary({
-  cloud: {
-    cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
-  },
-});
-const profileImage = cld.image(localStorage.getItem("netid"));
-profileImage.format("jpg");
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
@@ -142,11 +127,11 @@ export default function ButtonAppBar(props) {
       className={classes.usernameContainer}
       onClick={toggleDrawer}
     >
-      {imageExists(localStorage.getItem("netid")) ? (
-        <AdvancedImage className={classes.imageStyle} cldImg={profileImage} />
-      ) : (
-        <Avatar className={classes.avatarIcon} />
-      )}
+      <ProfileImage
+        imageStyle={ImageStyle}
+        netid={localStorage.getItem("netid")}
+        imageVersion={user.imageVersion}
+      ></ProfileImage>
       <ListItemText
         className={classes.text}
         primary={user.firstName + " " + user.lastName}
