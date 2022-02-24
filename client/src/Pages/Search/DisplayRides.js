@@ -65,19 +65,20 @@ const DisplayRides = (props) => {
         return <div style = {{display: "flex", alignItems: "center", flexDirection: "column", gap: "1vh"}}>
             <div style={{ fontSize: '2vw', fontFamily: "Josefin Sans"}}>
                 <Link to="/search" style = {{textDecoration: "none"}}>
-                    <StyledButton
+                    <StyledButton style ={{color:"#2075D8"}}
                     onClick={() => handleClickSearchAgain()}> 
-                        Continue Searching
+                        Try another search
                     </StyledButton>
                 </Link>
             </div>
-            <div style={{ fontSize: '2vh', fontFamily: "Josefin Sans", color: "#C7CBD3"}}>
+            <div style={{ fontSize: '2vh', fontFamily: "Josefin Sans", color: "#012E62"}}>
                 OR
             </div>
             <div>
                 <StyledButton
+                        style ={{color:"#2075D8"}}
                         onClick={() => handleClickCreateRide()}> 
-                        Create New Ride 
+                        Create a new ride 
                 </StyledButton>
                 <LoginDialog
                     open={openAlert}
@@ -135,7 +136,7 @@ const DisplayRides = (props) => {
             {
                 props.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
             }
-            <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#C7CBD3"}}>
+            <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#012E62"}}>
                 no more results
             </Grid>
         </GridT>;
