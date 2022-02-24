@@ -61,11 +61,15 @@ const useStyles = makeStyles((theme) => ({
   },
   usernameContainer:{
     gap: "5vw",
+    paddingLeft: '24px',
+    paddingRight: '24px',
     height: "15vh"
   },
   logInOutContainer:{
     display:"flex", 
-    justifyContent:"center", 
+    justifyContent:"center",
+    paddingLeft: '24px',
+    paddingRight: '24px', 
     height: "15vh",
   },
 }));
