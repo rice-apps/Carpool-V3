@@ -3,7 +3,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
-import InfoIcon from '@material-ui/icons/PeopleRounded';
+import InfoIcon from '@material-ui/icons/EmojiPeopleRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
   Drawer, IconButton, AppBar, Toolbar, Avatar, Button, Divider } from '@material-ui/core';
 import { Link, useLocation } from 'react-router-dom'
