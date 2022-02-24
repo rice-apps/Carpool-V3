@@ -65,7 +65,7 @@ const DisplayRides = (props) => {
         return <div style = {{display: "flex", alignItems: "center", flexDirection: "column", gap: "1vh"}}>
             <div style={{ fontSize: '2vw', fontFamily: "Josefin Sans"}}>
                 <Link to="/search" style = {{textDecoration: "none"}}>
-                    <StyledButton style ={{color:"#2075D8", textDecoration:"underline", paddingBottom:"0", lineHeight: "1.4"}}
+                    <StyledButton style ={{color:"#2075D8", paddingBottom:"0", lineHeight: "1.3"}}
                     onClick={() => handleClickSearchAgain()}> 
                         Try another search
                     </StyledButton>
