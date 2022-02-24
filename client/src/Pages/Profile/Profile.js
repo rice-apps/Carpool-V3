@@ -88,7 +88,15 @@ const Profile = () => {
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
-        <PhoneNumber>
+        <PhoneNumber onClick={async () => {
+            if (user.phone) {
+              navigator.clipboard.writeText(user.phone).then(
+                addToast("Phone Number Copied to Clipboard!", {
+                  appearance: "success",
+                })
+              );
+            }
+          }}>
           {user.phone ? user.phone : "Phone Number Unavailable"}
         </PhoneNumber>
         <TextBox

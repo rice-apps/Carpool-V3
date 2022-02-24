@@ -95,11 +95,11 @@ const UserName = styled.p`
 	color: #002140;
 `;
 
-const PhoneNumber = styled.p`
+const PhoneNumber = styled.div`
 	display: flex; 
 	justify-content: center;
 	align-items: center;
-	padding: 1vh 0px 25px 0px;
+	padding: 1vh 0px 0px 0px;
 
 	font-family: Josefin Sans;
 	font-weight: 300;
