@@ -162,7 +162,7 @@ export default function ProfileDialog(props) {
     } else {
       updateUser({ variables: user }); //else update all other variables
     }
-    const reader = new FileReader();
+    const reader = new FileReader(); //set new preview source
     reader.onloadend = () => {
       setPreviewSource(imageSelected);
     };
@@ -185,7 +185,7 @@ export default function ProfileDialog(props) {
               <ProfileImage
                 netid={profileUser.netid}
                 imageStyle={ImageStyle}
-                imageVersion={profileUser.imageVersion} // changed this to user from profileuser
+                imageVersion={profileUser.imageVersion}
               />
             )}
             <Tooltip title="Upload profile picture">
