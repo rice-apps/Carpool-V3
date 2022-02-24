@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   divider :{
     backgroundColor:"#BBDAFF",
+    margin: '1vh',
     height: '2px'
   },
   avatarIcon : {
@@ -183,7 +184,7 @@ export default function ButtonAppBar (props) {
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
           <ListItemText classes = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <Divider variant="middle" className = {classes.divider}/>
+        <Divider variant="middle" classes = {{root: classes.divider}}/>
         <ListItem button className = {classes.item} component = {Link} to = "/about" onClick = {toggleDrawer}>
           <ListItemIcon className= {classes.icon}> <InfoIcon/> </ListItemIcon>
           <ListItemText  className = {classes.text} primary = "About Us"/>
