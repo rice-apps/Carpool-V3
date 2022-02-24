@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex:"999"
   },
   icon: {
+    minWidth: '40px',
     color:"#002140",
   },
   secondaryIcon:{
@@ -28,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
     color:"#BAC3CE"
   },
   item:{
-    height: '9vh',
+    height: '8vh',
+    paddingLeft: '24px',
+    paddingRight: '24px'
   },
   text : {
     fontWeight: 'bold',
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   divider :{
     backgroundColor:"#BBDAFF",
-    margin: '1vh',
+    margin: '10px 30px 10px 30px',
     height: '2px'
   },
   avatarIcon : {
