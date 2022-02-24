@@ -65,7 +65,7 @@ const DisplayRides = (props) => {
         return <div style = {{display: "flex", alignItems: "center", flexDirection: "column", gap: "1vh"}}>
             <div style={{ fontSize: '2vw', fontFamily: "Josefin Sans"}}>
                 <Link to="/search" style = {{textDecoration: "none"}}>
-                    <StyledButton style ={{color:"#2075D8"}}
+                    <StyledButton style ={{color:"#2075D8", textDecoration:"underline", paddingBottom:"0", lineHeight: "1.4"}}
                     onClick={() => handleClickSearchAgain()}> 
                         Try another search
                     </StyledButton>
@@ -74,9 +74,9 @@ const DisplayRides = (props) => {
             <div style={{ fontSize: '2vh', fontFamily: "Josefin Sans", color: "#012E62"}}>
                 OR
             </div>
-            <div>
+            <div style={{paddingBottom: "2vh"}}>
                 <StyledButton
-                        style ={{color:"#2075D8"}}
+                        style ={{backgroundColor:"#2075D8", color:"white"}}
                         onClick={() => handleClickCreateRide()}> 
                         Create a new ride 
                 </StyledButton>
