@@ -43,6 +43,9 @@ import {
   CalendarText,
   TimeText
 } from './RideSummaryStyles.js'
+import { Grid, IconButton } from '@material-ui/core';
+import { LoginButton, LoginDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
+import CloseIcon from '@material-ui/icons/Close';
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
 import LoadingDiv from '../../common/LoadingDiv.js'
@@ -87,6 +90,8 @@ const RideSummary = () => {
   })
   const history = useHistory()
   const { addToast } = useToasts();
+  // States to control for Dialog
+  const [openAlert, setOpenAlert] = useState(false);
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -104,6 +109,26 @@ const RideSummary = () => {
   const [joinRide] = useMutation(JOIN_RIDE, {
     variables: { rideID: id }
   })
+
+
+  // Determine the behavior of button, verify if user is in Rice SSO
+  const handleClickOpen = () => {
+    // User is logged in already via Rice Verification
+    if (localStorage.getItem('token') != null) {
+        // Verify if user is in Carpool Database by triggering the Query
+        join();
+    } 
+    // User is not logged in, prompt them to log in
+    else {
+        setOpenAlert(true);
+    }
+    
+  };
+
+  // Close the dialog box
+  const handleClose = () => {
+      setOpenAlert(false);
+  };
 
   useEffect(() => {
     if (data) {
@@ -239,7 +264,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.filter((x) => x.firstName + " " + x.lastName !== ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
+          {ride.riders.filter((x) => x.netid !== ride.owner.netid).map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
@@ -261,10 +286,28 @@ const RideSummary = () => {
       </NotesDiv>
 
       <ButtonContainer>
-        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
           Join Ride
         </ButtonDiv>
       </ButtonContainer>
+      <LoginDialog
+                open={openAlert}
+                onClose={handleClose}
+            >
+            <Grid container spacing = {12}>
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleClose} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {12}>
+                    <LoginDialogActions>
+                        <LoginButton onClick={join} autoFocus>Rice SSO Login</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </LoginDialog>
     </AllDiv>
   )
 }

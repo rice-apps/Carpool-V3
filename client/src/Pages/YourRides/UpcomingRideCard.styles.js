@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const RideCard = styled.div`
 display: grid;
 width: 100%;
-grid-template-columns: 30% 60% 10%;
+grid-template-columns: 35% 65%; // FOR FUTURE USE WHEN WE HAVE NOTIFICATIONS: 10%;
 background: #FFFFFF;
 box-shadow: 3px 3px 12px -1px rgba(187, 218, 255, 0.98);
 border-radius: 9px;
@@ -52,9 +52,9 @@ font-size: 3vh;
 font-family: Josefin Sans;
 `
 
-const Notifications = styled.div`
-grid-column-start: 3;
-`
+// const Notifications = styled.div`
+// grid-column-start: 3;
+// `
 
 export {
 	RideCard,
@@ -63,5 +63,5 @@ export {
 	RideTime,
 	LocationText,
 	Locations,
-	Notifications
+	// Notifications
 };
