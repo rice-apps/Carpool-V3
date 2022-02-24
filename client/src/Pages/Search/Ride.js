@@ -36,7 +36,7 @@ const Ride = ({ride}) => {
     const date = new Date(ride.departureDate);
 
     return (
-        <Link href={`/ridesummary/${ride._id}`} style={{textDecoration: 'none'}}>
+        <Link href={`/ridesummary/${ride._id}`} style={{textDecoration: 'none', color:'#002140' }}>
         <Grid container key={ride._id} xs={12} alignItems='stretch' style={{height: '100%', width: "90vw", display: 'flex', borderRadius: '10px'}}>
             <Grid item container  style={{height:"16vh", backgroundColor: "white", borderRadius: '10px', borderColor:'', boxShadow: '0px 3px 10px #bbdaff'}}>
                 <Grid item xs={3} justify="center" align='center' style={{display: 'flex', placeItems: 'center'}}> 
