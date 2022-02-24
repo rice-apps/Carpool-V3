@@ -3,7 +3,9 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
-import InfoIcon from '@material-ui/icons/EmojiPeopleRounded';
+import InfoIcon from '@material-ui/icons/PeopleRounded';
+import MailIcon from '@material-ui/icons/MailRounded';
+import OpenInNewIcon from '@material-ui/icons/OpenInNewRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
   Drawer, IconButton, AppBar, Toolbar, Avatar, Button, Divider } from '@material-ui/core';
 import { Link, useLocation } from 'react-router-dom'
@@ -12,6 +14,7 @@ import { useEffect } from 'react';
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
+const feedbackURL = 'https://forms.gle/WFqf77FxSy8FVHgb9'
 
 const useStyles = makeStyles((theme) => ({
   appbarRoot: {
@@ -20,8 +23,23 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color:"#002140",
   },
+  secondaryIcon:{
+    fontSize: 'medium',
+    color:"#BAC3CE"
+  },
+  item:{
+    height: '9vh',
+  },
   text : {
+    fontWeight: 'bold',
     color:"#002140",
+  },
+  disabledText : {
+    fontStyle: 'italic',
+  },
+  divider :{
+    backgroundColor:"#BBDAFF",
+    height: '2px'
   },
   avatarIcon : {
     width: "8vh",
@@ -129,6 +147,10 @@ export default function ButtonAppBar (props) {
     window.open(redirectURL, '_self');
   }
 
+  const openFeedback = () => {
+    window.open(feedbackURL, '_blank');
+  }
+
   const showUsername = (toggleDrawer) => (
     <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer} onClick = {toggleDrawer}>
       <Avatar className = {classes.avatarIcon}/>
@@ -137,7 +159,7 @@ export default function ButtonAppBar (props) {
   )
 
   const showLogin = (toggleDrawer) => (
-      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+      <ListItem className={classes.logInOutContainer} disableGutters = "true">
         <LogInOutButton onClick = {() => {toggleDrawer(); login(); redirect();}}>Login</LogInOutButton>
       </ListItem>
   )
@@ -153,18 +175,23 @@ export default function ButtonAppBar (props) {
     <div>
       <List className = {classes.list}>
         {loggedIn ? showUsername(toggleDrawer) : showLogin(toggleDrawer)}
-        <ListItem button component = {Link} to = "/search" onClick = {toggleDrawer}>
+        <ListItem button  className = {classes.item} component = {Link} to = "/search" onClick = {toggleDrawer}>
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Home"/>
         </ListItem>
-        <ListItem button disabled = {!loggedIn} component = {Link} to = "/your-rides" onClick = {toggleDrawer}>
+        <ListItem button classes = {{root: classes.item, disabled: classes.disabledText}} disabled = {!loggedIn} component = {Link} to = "/your-rides" onClick = {toggleDrawer}>
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
-          <ListItemText className = {classes.text} primary = "Your Rides"/>
+          <ListItemText classes = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <Divider/>
-        <ListItem button component = {Link} to = "/about" onClick = {toggleDrawer}>
+        <Divider variant="middle" className = {classes.divider}/>
+        <ListItem button className = {classes.item} component = {Link} to = "/about" onClick = {toggleDrawer}>
           <ListItemIcon className= {classes.icon}> <InfoIcon/> </ListItemIcon>
-          <ListItemText className = {classes.text} primary = "About"/>
+          <ListItemText  className = {classes.text} primary = "About Us"/>
+        </ListItem>
+        <ListItem button className = {classes.item} onClick = {openFeedback}>
+          <ListItemIcon className= {classes.icon}> <MailIcon/> </ListItemIcon>
+          <ListItemText classses = {classes.text} primary = "Give us feedback!"/> 
+          <OpenInNewIcon className= {classes.secondaryIcon}/> 
         </ListItem>
         {loggedIn ? showLogout(toggleDrawer) : null}
       </List>
