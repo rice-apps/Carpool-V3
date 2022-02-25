@@ -1,7 +1,12 @@
 import { Avatar, Dialog, MenuItem, Tooltip } from "@material-ui/core";
 import React, { useState, useRef } from "react";
 import { useToasts } from "react-toast-notifications";
-import { UPDATE_USER, GET_SIGNATURE, toCloudinary } from "../Utils/ApiUtil.js";
+import {
+  UPDATE_USER,
+  GET_SIGNATURE,
+  toCloudinary,
+  imageExists,
+} from "../Utils/ApiUtil.js";
 
 import {
   ProfileDialogContainer,
@@ -23,7 +28,7 @@ import {
 } from "./ProfileDialogStyles";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { ProfileImage } from "./ProfileImage.js";
-import { StyledAvatar } from "./ProfileStyles.js";
+import { useLocation } from "react-router";
 
 export default function ProfileDialog(props) {
   const classes = ProfileStyles();
@@ -33,6 +38,7 @@ export default function ProfileDialog(props) {
   const closeDialog = () => {
     setOpenDialog(false);
   };
+  const location = useLocation();
 
   let payment = profileUser.payment ? profileUser.payment : {};
 
@@ -46,6 +52,7 @@ export default function ProfileDialog(props) {
     email: profileUser.netid + "@rice.edu",
     payment: profileUser.payment ? profileUser.payment : {},
     college: profileUser.college,
+    imageVersion: profileUser.imageVersion,
   });
 
   function setUserProps(key, value) {
@@ -176,19 +183,29 @@ export default function ProfileDialog(props) {
     height: "11vh",
   };
 
+  const hasImage = imageExists(
+    location.pathname.substring(9), //netid
+    user.imageVersion
+  );
+
+  const showAvatar = !hasImage;
+  const showOriginal = hasImage && !previewSource;
+
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
       <StyledDialogContent>
         <ProfileDialogContainer>
           <IconBox>
-            {previewSource ? (
+            {showOriginal ? ( //original version, no preview
               <ProfileImage
                 netid={localStorage.getItem("netid")}
                 imageStyle={ImageStyle}
                 imageVersion={profileUser.imageVersion}
               />
+            ) : showAvatar ? (
+              <ProfileIcon></ProfileIcon> //show avatar
             ) : (
-              <ProfileIcon></ProfileIcon>
+              <StyledImage src={previewSource}></StyledImage> //show previewsoure
             )}
             <Tooltip title="Upload profile picture">
               <ProfileEditButton onClick={onUploadPic}>
