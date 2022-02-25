@@ -59,7 +59,7 @@ const Search = () => {
 
   return (
     <React.Fragment>
-      <div><Header subtitle = "Search Rides"/></div>
+      <div><Header subtitle = "Find Rides"/></div>
       <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
         {rideLoading ? 
           <LoadingDiv height={'15vh'} /> : 
