@@ -75,7 +75,6 @@ export default function ButtonAppBar (props) {
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
   const [showBar, setShowBar] = useState(false);
-  const nonNavBarUrl = ["/", "/home", "/userAuth", "/onboarding"]
 
   const toggleDrawer = () => setDrawer(!drawer);
 
@@ -89,10 +88,10 @@ export default function ButtonAppBar (props) {
   );
   const location = useLocation();
   useEffect(() => {
-    if (nonNavBarUrl.includes(location.pathname)){
+    if (["/", "/home", "/userAuth", "/onboarding"].includes(location.pathname)){
       setShowBar(false)
     }
-    else{ 
+    else { 
       setShowBar(true)
     }
   }, [location.pathname])
