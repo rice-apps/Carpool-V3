@@ -9,12 +9,15 @@ import {
   RequiredTextField
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
+import { useToasts } from "react-toast-notifications";
 
 const OnboardingForm = ({ onSubmit, onCancel }) => {
+    
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [venmo, setVenmo] = useState(undefined);
+  const { addToast } = useToasts();
 
     const handleSubmit = (e) => {
         e.preventDefault();
