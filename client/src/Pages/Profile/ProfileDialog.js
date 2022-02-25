@@ -1,10 +1,9 @@
-import { Dialog } from "@material-ui/core";
+import { Dialog, Paper, List } from "@material-ui/core";
 import React, { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import {
   ProfileDialogContainer,
   IconBox,
-  StyledDialogContent,
   ButtonBox,
   ProfileIcon,
   ProfileEditIcon,
@@ -13,6 +12,7 @@ import {
   InputTextField,
   InputBox,
   SaveButton,
+  StyledDialogContent,
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv";
@@ -22,6 +22,7 @@ export default function ProfileDialog(props) {
     mutation UpdateUser(
       $firstName: String!
       $lastName: String!
+      $college: String!
       $phone: String!
       $venmo: String
     ) {
@@ -29,6 +30,7 @@ export default function ProfileDialog(props) {
         record: {
           firstName: $firstName
           lastName: $lastName
+          college: $college
           phone: $phone
           venmo: $venmo
         }
@@ -37,6 +39,7 @@ export default function ProfileDialog(props) {
           _id
           firstName
           lastName
+          college
           phone
           venmo
         }
@@ -54,6 +57,7 @@ export default function ProfileDialog(props) {
     selectedPayment: payment["Venmo"] ? payment["Venmo"] : "",
     firstName: profileUser.firstName,
     lastName: profileUser.lastName,
+    college: profileUser.college,
     phone: profileUser.phone,
     email: profileUser.netid + "@rice.edu",
     payment: profileUser.payment ? profileUser.payment : {},
@@ -95,10 +99,7 @@ export default function ProfileDialog(props) {
     document.getElementsByName(key)[0].value = "";
   };
 
-  let {
-    loading,
-    error,
-  } = useMutation(UPDATE_USER, {
+  let { loading, error } = useMutation(UPDATE_USER, {
     variables: {
       user,
     },
@@ -106,79 +107,84 @@ export default function ProfileDialog(props) {
 
   if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
-  
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
-      <StyledDialogContent>
-        <ProfileDialogContainer>
-          <IconBox>
-            <ProfileIcon />
-            <ProfileEditIcon />
-            <CloseProfileIcon onClick={closeDialog} />
-          </IconBox>
+      <Paper style={{ maxHeight: 600, overflow: "auto" }}>
+        <List>
+          <StyledDialogContent>
+            <ProfileDialogContainer>
+              <IconBox>
+                <ProfileIcon />
+                <ProfileEditIcon />
+                <CloseProfileIcon onClick={closeDialog} />
+              </IconBox>
 
-          <InputBox>
-            <Label>Name:</Label>
-            <InputTextField
-              label="First Name"
-              defaultValue={user.firstName}
-              name="firstName"
-              onChange={(e) => setUserProps("firstName", e.target.value)}
-              clearTextField={() => clearTextField("firstName")}
-            ></InputTextField>
-            <InputTextField
-              label="Last Name"
-              name="lastName"
-              defaultValue={user.lastName}
-              onChange={(e) => setUserProps("lastName", e.target.value)}
-              clearTextField={() => clearTextField("lastName")}
-            ></InputTextField>
-          </InputBox>
+              <InputBox>
+                <Label>Name:</Label>
+                <InputTextField
+                  label="First Name"
+                  defaultValue={user.firstName}
+                  name="firstName"
+                  onChange={(e) => setUserProps("firstName", e.target.value)}
+                  clearTextField={() => clearTextField("firstName")}
+                ></InputTextField>
+                <InputTextField
+                  label="Last Name"
+                  name="lastName"
+                  defaultValue={user.lastName}
+                  onChange={(e) => setUserProps("lastName", e.target.value)}
+                  clearTextField={() => clearTextField("lastName")}
+                ></InputTextField>
+                <InputTextField
+                  label="College"
+                  name="college"
+                  defaultValue={user.college}
+                  onChange={(e) => setUserProps("college", e.target.value)}
+                  clearTextField={() => clearTextField("college")}
+                ></InputTextField>
+                <Label>Contact:</Label>
+                <InputTextField
+                  label="Phone #"
+                  defaultValue={user.phone}
+                  name="phone"
+                  onChange={(e) => setUserProps("phone", e.target.value)}
+                  clearTextField={() => clearTextField("phone")}
+                ></InputTextField>
 
-          <InputBox>
-            <Label>Contact:</Label>
-            <InputTextField
-              label="Phone #"
-              defaultValue={user.phone}
-              name="phone"
-              onChange={(e) => setUserProps("phone", e.target.value)}
-              clearTextField={() => clearTextField("phone")}
-            ></InputTextField>
-          </InputBox>
-
-          <InputBox>
-            <Label>Venmo:</Label>
-            <InputTextField
-              label="Account ID"
-              name="venmo"
-              defaultValue={user.venmo}
-              value={user.venmo}
-              onChange={(e) => {
-                setUserPayment(e);
-              }}
-              clearTextField={() => {
-                clearUserPayment();
-                console.log(user.venmo);
-              }}
-            ></InputTextField>
-          </InputBox>
-          <ButtonBox>
-            <SaveButton
-              variant="contained"
-              onClick={() => {
-                updateUserInfo();
-                setOpenDialog(false);
-                addToast("User Information Updated", {
-                  appearance: "success",
-                });
-              }}
-            >
-              Save
-            </SaveButton>
-          </ButtonBox>
-        </ProfileDialogContainer>
-      </StyledDialogContent>
+                <Label>Venmo:</Label>
+                <InputTextField
+                  label="Account ID"
+                  name="venmo"
+                  defaultValue={user.venmo}
+                  value={user.venmo}
+                  onChange={(e) => {
+                    setUserPayment(e);
+                  }}
+                  clearTextField={() => {
+                    clearUserPayment();
+                    console.log(user.venmo);
+                  }}
+                ></InputTextField>
+              </InputBox>
+              <ButtonBox>
+                <SaveButton
+                  variant="contained"
+                  onClick={() => {
+                    updateUserInfo();
+                    setOpenDialog(false);
+                    addToast("User Information Updated", {
+                      appearance: "success",
+                    });
+                  }}
+                >
+                  Save
+                </SaveButton>
+              </ButtonBox>
+            </ProfileDialogContainer>
+          </StyledDialogContent>
+        </List>
+      </Paper>
     </Dialog>
   );
 }

@@ -9,6 +9,7 @@ var UserSchema = new Schema({
   netid: { type: String, required: true, unique: true }, // This will be our unique identifier across systems
   firstName: String,
   lastName: String,
+  college: String,
   phone: String,
   venmo: String,
   token: { type: String, default: "" }, // We will use this to store the user's JWT token

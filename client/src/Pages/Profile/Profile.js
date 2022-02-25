@@ -13,12 +13,13 @@ import {
   ProfileCard,
   ReturnHeader,
   UserName,
-  UserPic,
   PhoneNumber,
   StyledText,
   StyledText2,
   StyledText3,
   EditProfileButton,
+  College,
+  UserPic,
 } from "./ProfileStyles.js";
 import { useState } from "react";
 import LoadingDiv from "../../common/LoadingDiv.js";
@@ -43,20 +44,15 @@ const Profile = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
 
-  let {
-    data: userData,
-    loading,
-    error,
-  } = useQuery(GET_USER, {
-    variables: {
-      netID: id,
-    },
+  let { data, loading, error } = useQuery(GET_USER, {
+    variables: { netID: id },
   });
 
   if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
 
-  let { userOne: user } = JSON.parse(JSON.stringify(userData));
+  let { userOne: user } = JSON.parse(JSON.stringify(data));
+
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
@@ -71,15 +67,17 @@ const Profile = () => {
           <StyledText3>Back</StyledText3>
         </ButtonBox>
       </ReturnHeader>
-      <EditProfileButton>
-        <IconButton
-          aria-label="edit"
-          onClick={() => setOpenDialog(true)}
-          variant="outlined"
-        >
-          <EditIcon />
-        </IconButton>
-      </EditProfileButton>
+      {localStorage.getItem("netid") === user.netid && (
+        <EditProfileButton>
+          <IconButton
+            aria-label="edit"
+            onClick={() => setOpenDialog(true)}
+            variant="outlined"
+          >
+            <EditIcon />
+          </IconButton>
+        </EditProfileButton>
+      )}
       <ProfileDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
@@ -91,6 +89,7 @@ const Profile = () => {
         <PhoneNumber>
           {user.phone ? user.phone : "Phone Number Unavailable"}
         </PhoneNumber>
+        <College>{user.college}</College>
         <TextBox
           onClick={() => {
             navigator.clipboard.writeText(user.netid + "@rice.edu").then(
@@ -100,8 +99,7 @@ const Profile = () => {
             );
           }}
         >
-          <MailBox></MailBox>
-          <StyledText>{user.netid}@rice.edu</StyledText>
+          <MailBox></MailBox> <StyledText>{user.netid}@rice.edu</StyledText>{" "}
         </TextBox>
         <TextBox
           onClick={async () => {
@@ -114,13 +112,11 @@ const Profile = () => {
             } else {
               addToast("Venmo ID Not Specified", {
                 appearance: "error",
-              })
+              });
             }
           }}
         >
-          <StyledText2>
-            Venmo
-          </StyledText2>
+          <StyledText2>Venmo</StyledText2>
           <StyledText>
             {user.venmo ? `@${user.venmo}` : "Not Specified"}
           </StyledText>
@@ -129,5 +125,4 @@ const Profile = () => {
     </div>
   );
 };
-
 export default Profile;
