@@ -265,7 +265,8 @@ const Create = ({onCreate}) => {
 
                     <TextFieldBox 
                         id="outlined-basic"
-                        // label="Notes" Adding this would give it a label that moves when user enters textbox! cool effect
+                        multiline
+                        placeholder = "e.g. flight time, Rice meetup location, etc."
                         labelId="Notes"
                         variant="outlined"
                         value={notes}
