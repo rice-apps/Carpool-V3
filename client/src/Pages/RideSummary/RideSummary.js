@@ -111,6 +111,14 @@ const RideSummary = () => {
   }
 `
 
+// const UPDATE_OWNER = gql`
+// mutation UpdateOwner($fillthisIn){
+//   rideUpdateOne (record:{
+//     owner:
+//   })
+// }
+// `
+
   const [joinRide] = useMutation(JOIN_RIDE, {
     variables: { rideID: id }
   })
@@ -166,7 +174,7 @@ const RideSummary = () => {
 
   const leave = () => {
     console.log("This is my id: " +id);
-    leaveRide().then((result) => {
+    const returned = leaveRide().then((result) => {
       console.log(result);
       window.location.reload();
       console.log(result);
@@ -176,6 +184,8 @@ const RideSummary = () => {
       addToast("Error leaving ride", { appearance: 'error'});
 
     });
+    // If numUsers == 1, show delete ride
+    console.log(returned);
   }
   
   console.log(data, loading, error);
