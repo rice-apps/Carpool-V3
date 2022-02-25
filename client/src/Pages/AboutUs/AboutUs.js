@@ -12,12 +12,13 @@ import{
     Questions,
     Bold,
     QuestionAccordion,
+    Answer,
     AboutUsHeader,
     Member,
     Picture,
     Info,
     Name,
-    Title
+    Title,
 } from "./AboutUsstyles";
 
 
@@ -50,9 +51,9 @@ const AboutUs = () => {
                     <Typography>What is Rice Carpool?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
+                    <Answer>
                     Rice Carpool is a platform for the Rice community to coordinate ride-sharing - specifically, to and from the Houston airports. 
-                    </Typography>
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -65,9 +66,9 @@ const AboutUs = () => {
                     <Typography>How does Rice Carpool work?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
+                    <Answer>
                     Through our mobile-friendly site, it’s easy to find rides to create or join. Then use the riders’ contact information to arrange a meetup with your fellow carpoolers, hop in an Uber or Lyft together, and split the cost. 
-                    </Typography>
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -80,9 +81,9 @@ const AboutUs = () => {
                     <Typography>Who can use Carpool?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
+                    <Answer>
                     Carpool was created for the Rice University Community. A Net ID is required.
-                    </Typography>
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -95,9 +96,9 @@ const AboutUs = () => {
                     <Typography>Do I need to download Carpool on my phone?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
+                    <Answer>
                     No, Carpool is not a mobile app. It was created as a mobile-friendly website to be accessible to all devices, with desktop support coming soon. You can add a bookmark/shortcut to the Carpool site to your phone homepage for quicker access!
-                    </Typography>
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -110,9 +111,9 @@ const AboutUs = () => {
                     <Typography>How do I sign up for Carpool?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
+                    <Answer>
                     All you need is your Rice Net ID to log onto the site: carpool.riceapps.org
-                    </Typography>
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -125,9 +126,9 @@ const AboutUs = () => {
                     <Typography>I've signed in for the first time, now what?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
+                    <Answer>
                     Fill out your profile with your name, phone number, email, and payment information. Now you can view, join, and create rides!
-                    </Typography>
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -140,9 +141,9 @@ const AboutUs = () => {
                     <Typography>What are the <Bold>terms</Bold> of using Rice Carpool?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
+                    <Answer>
                     Creating or joining a ride on Carpool will connect you to other Rice students looking to ride and split cost together. You will still need to manually communicate with your fellow Carpoolers to meet up, order an Uber or Lyft to ride, and split payment accordingly - Carpool does not currently have support for those features. 
-                    </Typography>
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -155,8 +156,8 @@ const AboutUs = () => {
                     <Typography>How do I see my past and upcoming rides?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>You can find the rides you’ve taken in the past and the rides you’ve scheduled listed on your profile.
-                    </Typography>
+                    <Answer>You can find the rides you’ve taken in the past and the rides you’ve scheduled listed on your profile.
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -169,8 +170,8 @@ const AboutUs = () => {
                     <Typography>Do I need to have a car?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>No, you don’t need to have or use your own car. You can split an Uber or Lyft with your carpool instead. If you do have a car and want to drive other people, just mention that when creating a ride!
-                    </Typography>
+                    <Answer>No, you don’t need to have or use your own car. You can split an Uber or Lyft with your carpool instead. If you do have a car and want to drive other people, just mention that when creating a ride!
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -183,8 +184,8 @@ const AboutUs = () => {
                     <Typography>Where can I travel?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>Currently, the location options are limited to airports and Rice only. Let us know what other locations you’d like to carpool to via this: https://forms.gle/WFqf77FxSy8FVHgb9 
-                    </Typography>
+                    <Answer>Currently, the location options are limited to airports and Rice only. Let us know what other locations you’d like to carpool to via this: https://forms.gle/WFqf77FxSy8FVHgb9 
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -197,8 +198,8 @@ const AboutUs = () => {
                     <Typography>If I leave a ride, will the ride disappear?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>If you created a ride and were the only one on the ride, the ride will be deleted. If you joined a ride with other existing riders, the ride will exist but you will no longer be listed as a rider.
-                    </Typography>
+                    <Answer>If you created a ride and were the only one on the ride, the ride will be deleted. If you joined a ride with other existing riders, the ride will exist but you will no longer be listed as a rider.
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -211,8 +212,8 @@ const AboutUs = () => {
                     <Typography>How can I delete a ride?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>You can only leave a ride. If you are the last rider to leave, the ride will automatically be deleted.
-                    </Typography>
+                    <Answer>You can only leave a ride. If you are the last rider to leave, the ride will automatically be deleted.
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -225,8 +226,8 @@ const AboutUs = () => {
                     <Typography>How can I edit my ride?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>In our current version, you cannot edit a ride because other people will have signed up assuming the existing information. If you need to change the details on an empty ride, just leave (delete) the ride and create it again.
-                    </Typography>
+                    <Answer>In our current version, you cannot edit a ride because other people will have signed up assuming the existing information. If you need to change the details on an empty ride, just leave (delete) the ride and create it again.
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 
@@ -239,8 +240,8 @@ const AboutUs = () => {
                     <Typography>Is my information shared with outside parties?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>No, your information is not shared outside the application. It is only used for coordinating rides with your fellow Rice Owls.
-                    </Typography>
+                    <Answer>No, your information is not shared outside the application. It is only used for coordinating rides with your fellow Rice Owls.
+                    </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
 

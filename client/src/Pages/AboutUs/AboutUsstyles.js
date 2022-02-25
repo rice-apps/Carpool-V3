@@ -1,8 +1,12 @@
 import styled from "styled-components";
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
+
 
 const AllDiv = styled.div`
   background-color: #012E62;
@@ -24,8 +28,6 @@ const FeedbackButton = styled(Button)`
   height: 6vh;
   width: 16vh;
   justify-content: space-between;
-
-
 `
 
 const FeedbackText = styled.div`
@@ -62,6 +64,13 @@ const QuestionAccordion = styled(Accordion)`
   margin: 4%;
   filter: drop-shadow(2px 2px 2px #002140);
 `
+
+
+export const Answer = withStyles({
+  root: {
+      color: '#6688B2',
+  }
+})(Typography);
 
 const AboutUsHeader = styled.div`
   padding-top: 5%;
@@ -134,5 +143,5 @@ export {
   Picture,
   Info,
   Name,
-  Title
+  Title,
 } 
