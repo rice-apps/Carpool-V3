@@ -15,6 +15,7 @@ const SeatsLeftDiv = styled.div`
   font-style: normal;
   line-height: 11px;
   display: flex;
+  padding-right: 6px;
   align-items: stretch; /* Default */
 `
 const SeatsLeftNum = styled.div`
@@ -35,6 +36,7 @@ const SeatsLeftText = styled.div`
   font-size: 1em;
   line-height: 11px;
   padding-top: 6px;
+  padding-right: 6px;
 `
 const SocialIcon = styled.div`
   display: flex;
@@ -213,7 +215,7 @@ const TextContainer = styled.div`
 `
 const ButtonDiv = styled.button`
   color: #ffffff;
-  background: ${({ disabled }) => !disabled ? '#2075d8' : '#9e9e9e'};
+  background: ${({ disabled, leaveRide }) => leaveRide ? 'red' : !disabled ? '#2075d8' : '#9e9e9e'};
   text-align: center;
   font-family: Josefin Sans;
   font-style: normal;

@@ -3,7 +3,6 @@ import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
 import {
-  IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
@@ -13,7 +12,6 @@ import {
   SeatsLeftDiv,
   SeatsLeftNum,
   SeatsLeftText,
-  SocialIcon,
   RideSummaryDiv,
   LocationDiv,
   LocationText,
@@ -80,6 +78,7 @@ const GET_RIDE = gql`
     }
   }
 `
+
 const RideSummary = () => {
   let { id } = useParams()
   const [ride, setRide] = useState({
@@ -106,10 +105,29 @@ const RideSummary = () => {
     }
   `
 
+  const REMOVE_RIDER = gql`
+  mutation RemoveRider($rideID: ID!) {
+      removeRider(rideID: $rideID) {
+          _id
+      }
+  }
+`
+
+// const UPDATE_OWNER = gql`
+// mutation UpdateOwner($fillthisIn){
+//   rideUpdateOne (record:{
+//     owner:
+//   })
+// }
+// `
+
   const [joinRide] = useMutation(JOIN_RIDE, {
     variables: { rideID: id }
   })
 
+  const [leaveRide] = useMutation(REMOVE_RIDER, {
+    variables: { rideID: id }
+  })
 
   // Determine the behavior of button, verify if user is in Rice SSO
   const handleClickOpen = () => {
@@ -173,6 +191,23 @@ const RideSummary = () => {
 
     });
   }
+
+
+  const leave = () => {
+    console.log("This is my id: " +id);
+    const returned = leaveRide().then((result) => {
+      console.log(result);
+      window.location.reload();
+      console.log(result);
+
+    }).catch((err) => {
+      console.log(err);
+      addToast("Error leaving ride", { appearance: 'error'});
+
+    });
+    // If numUsers == 1, show delete ride
+    console.log(returned);
+  }
   
   console.log(data, loading, error);
   if (localStorage.getItem('joinFromLogin') === "true") join();
@@ -202,16 +237,13 @@ const RideSummary = () => {
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
         <BackArrow></BackArrow>
-        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Search"}</BackText>
+        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
       </BackArrowDiv>
 
       <RideSummaryDiv>
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) left</SeatsLeftText>
-          <SocialIcon>
-            <IoShareSocialSharp></IoShareSocialSharp>
-          </SocialIcon>
         </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
@@ -286,9 +318,13 @@ const RideSummary = () => {
       </NotesDiv>
 
       <ButtonContainer>
+        {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
+        <ButtonDiv onClick={leave} leaveRide = {true}>
+          Leave Ride
+        </ButtonDiv>: 
         <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
           Join Ride
-        </ButtonDiv>
+        </ButtonDiv>}
       </ButtonContainer>
       <LoginDialog
                 open={openAlert}
