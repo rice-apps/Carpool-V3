@@ -37,6 +37,7 @@ const Profile = () => {
         lastName
         netid
         phone
+        college
         venmo
       }
     }

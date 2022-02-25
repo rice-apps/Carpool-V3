@@ -123,7 +123,7 @@ export function InputTextField(props) {
       value={value}
       clearTextField={clearTextField}
       InputLabelProps={{
-        className: [classes.inputLabel],
+        className: classes.inputLabel,
       }}
       InputProps={{
         className: classes.inputContent,

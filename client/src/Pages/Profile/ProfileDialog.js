@@ -24,7 +24,7 @@ export default function ProfileDialog(props) {
       $lastName: String!
       $college: String!
       $phone: String!
-      $venmo: String
+      $venmo: String!
     ) {
       userUpdateOne(
         record: {
@@ -49,45 +49,43 @@ export default function ProfileDialog(props) {
 
   const { addToast } = useToasts();
   const { openDialog, setOpenDialog, profileUser } = props;
-
-  let payment = profileUser.payment ? profileUser.payment : {};
+  const [changesMade, setChangesMade] = useState(false);
 
   const [user, setUser] = useState({
-    selectedPaymentMethod: "Venmo",
-    selectedPayment: payment["Venmo"] ? payment["Venmo"] : "",
     firstName: profileUser.firstName,
     lastName: profileUser.lastName,
     college: profileUser.college,
     phone: profileUser.phone,
     email: profileUser.netid + "@rice.edu",
-    payment: profileUser.payment ? profileUser.payment : {},
+    venmo: profileUser.venmo,
   });
 
   const closeDialog = () => {
     setOpenDialog(false);
   };
 
-  function setUserPayment(e) {
-    const newPayment = e.target.value;
-    setUser((prestate) => {
-      return {
-        ...prestate,
-        venmo: newPayment,
-      };
-    });
-  }
+  // function setUserPayment(e) {
+  //   const newPayment = e.target.value;
+  //   setUser((prestate) => {
+  //     return {
+  //       ...prestate,
+  //       venmo: newPayment,
+  //     };
+  //   });
+  // }
 
-  function clearUserPayment() {
-    setUser((prestate) => {
-      return {
-        ...prestate,
-        venmo: undefined,
-      };
-    });
-  }
+  // function clearUserPayment() {
+  //   setUser((prestate) => {
+  //     return {
+  //       ...prestate,
+  //       venmo: undefined,
+  //     };
+  //   });
+  // }
 
   const [updateUser] = useMutation(UPDATE_USER);
   const updateUserInfo = () => {
+    console.log("user", user);
     updateUser({ variables: user });
   };
   function setUserProps(key, value) {
@@ -126,44 +124,67 @@ export default function ProfileDialog(props) {
                   label="First Name"
                   defaultValue={user.firstName}
                   name="firstName"
-                  onChange={(e) => setUserProps("firstName", e.target.value)}
-                  clearTextField={() => clearTextField("firstName")}
+                  onChange={(e) => {
+                    setUserProps("firstName", e.target.value);
+                    setChangesMade(true);
+                  }}
+                  clearTextField={() => {
+                    clearTextField("firstName");
+                    setChangesMade(true);
+                  }}
                 ></InputTextField>
                 <InputTextField
                   label="Last Name"
                   name="lastName"
                   defaultValue={user.lastName}
-                  onChange={(e) => setUserProps("lastName", e.target.value)}
-                  clearTextField={() => clearTextField("lastName")}
+                  onChange={(e) => {
+                    setUserProps("lastName", e.target.value);
+                    setChangesMade(true);
+                  }}
+                  clearTextField={() => {
+                    clearTextField("lastName");
+                    setChangesMade(true);
+                  }}
                 ></InputTextField>
                 <InputTextField
                   label="College"
                   name="college"
                   defaultValue={user.college}
-                  onChange={(e) => setUserProps("college", e.target.value)}
-                  clearTextField={() => clearTextField("college")}
+                  onChange={(e) => {
+                    setUserProps("college", e.target.value);
+                    setChangesMade(true);
+                  }}
+                  clearTextField={() => {
+                    clearTextField("college");
+                    setChangesMade(true);
+                  }}
                 ></InputTextField>
                 <Label>Contact:</Label>
                 <InputTextField
                   label="Phone #"
                   defaultValue={user.phone}
                   name="phone"
-                  onChange={(e) => setUserProps("phone", e.target.value)}
-                  clearTextField={() => clearTextField("phone")}
+                  onChange={(e) => {
+                    setUserProps("phone", e.target.value);
+                    setChangesMade(true);
+                  }}
+                  clearTextField={() => {
+                    clearTextField("phone");
+                    setChangesMade(true);
+                  }}
                 ></InputTextField>
-
                 <Label>Venmo:</Label>
                 <InputTextField
                   label="Account ID"
                   name="venmo"
                   defaultValue={user.venmo}
-                  value={user.venmo}
                   onChange={(e) => {
-                    setUserPayment(e);
+                    setUserProps("venmo", e.target.value);
+                    setChangesMade(true);
                   }}
                   clearTextField={() => {
-                    clearUserPayment();
-                    console.log(user.venmo);
+                    clearTextField("venmo");
+                    setChangesMade(true);
                   }}
                 ></InputTextField>
               </InputBox>
@@ -171,7 +192,9 @@ export default function ProfileDialog(props) {
                 <SaveButton
                   variant="contained"
                   onClick={() => {
-                    updateUserInfo();
+                    if (changesMade) {
+                      updateUserInfo();
+                    }
                     setOpenDialog(false);
                     addToast("User Information Updated", {
                       appearance: "success",

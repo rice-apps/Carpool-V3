@@ -106,7 +106,7 @@ const PhoneNumber = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1vh 0px 25px 0px;
+  padding: 2vh 0px 15px 0px;
 
   font-family: Josefin Sans;
   font-weight: 300;
@@ -121,7 +121,7 @@ const College = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2vh 0px 25px 0px;
+  padding: 0vh 0px 25px 0px;
 
   font-family: Josefin Sans;
   font-weight: 300;

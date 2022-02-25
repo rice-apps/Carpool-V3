@@ -16,7 +16,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
   const [lastName, setLastName] = useState("");
   const [college, setCollege] = useState("");
   const [phone, setPhone] = useState("");
-  const [venmo, setVenmo] = useState(undefined);
+  const [venmo, setVenmo] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();

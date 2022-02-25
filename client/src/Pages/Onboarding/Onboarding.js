@@ -16,7 +16,7 @@ const Onboarding = () => {
       $lastName: String!
       $college: String!
       $phone: String!
-      $venmo: String
+      $venmo: String!
     ) {
       userUpdateOne(
         record: {
