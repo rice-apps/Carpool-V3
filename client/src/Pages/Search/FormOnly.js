@@ -27,9 +27,10 @@ const FormOnly = (props) => {
     props.getRidesRefetch()
     .then((res) => {
 
-      const ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
+      var ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
         const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
-        return rideDateAfterCurrentDate;
+        const isNotFull = (ride.spots - ride.riders.length) > 0
+        return rideDateAfterCurrentDate && isNotFull;
       });
       
       setRidesPossibleForm(ridesPossibleNotBefore);
