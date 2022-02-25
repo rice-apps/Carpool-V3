@@ -8,7 +8,7 @@ var mongoose = require('mongoose')
 require('../db')
 
 var RideSchema = new Schema({
-    departureDate: { type: Date, default: Date.now() },
+    departureDate: { type: Date, default: Date.now(), index: true },
     departureLocation: { type: Schema.Types.ObjectId, ref: Location, required: true },
     arrivalLocation: { type: Schema.Types.ObjectId, ref: Location, required: true },
     owner: { type: Schema.Types.ObjectId, ref: User, required: true },

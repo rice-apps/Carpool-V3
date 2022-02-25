@@ -62,7 +62,7 @@ const YourRides = (paid) => {
                 if (ride.owner) {
                     ownerTrue = ride.owner.netid === netid
                 }
-                ride.riders.forEach(rider => riderTrue = rider.netid === netid)
+                ride.riders.forEach(rider => riderTrue = (riderTrue === true || rider.netid === netid))
                 return ownerTrue || riderTrue
             })
 
@@ -101,7 +101,10 @@ const YourRides = (paid) => {
                 </UpcomingRidesSection>
 
                 <PastRidesSection>
-                    <PastRideTitle><TitleText>Past Rides</TitleText><TitleText>Payments</TitleText></PastRideTitle>
+                    <PastRideTitle>
+                        <TitleText>Past Rides</TitleText>
+                        {/* <TitleText>Payments</TitleText> */}
+                    </PastRideTitle>
                     {prevRides.map(ride => {
                         return (
                             <PastRideCard 

@@ -39,10 +39,10 @@ const Onboarding = () => {
 
   const [updateUser] = useMutation(UPDATE_USER);
 
-  const updateUserInfo = (formData) => {
+  const updateUserInfo = async (formData) => {
     console.log(formData);
     
-    updateUser({ variables: formData });
+    await updateUser({ variables: formData });
 
     const nextPage = localStorage.getItem("nextPage");
     if (nextPage) {

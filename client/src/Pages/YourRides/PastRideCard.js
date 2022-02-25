@@ -1,13 +1,13 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+// import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
+// import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 
 import { 
-    UnpaidPastRide,
+    // UnpaidPastRide,
 	PaidPastRide,
     PastRideCardData,
 	RideTimeInfo,
@@ -15,32 +15,33 @@ import {
 	RideTime,
 	Locations,
     LocationText,
-	PaidPaymentInfo,
-	UnpaidPaymentInfo,
-	PaymentText } 
+	// PaidPaymentInfo,
+	// UnpaidPaymentInfo,
+	// PaymentText 
+} 
     from './PastRideCard.styles.js';
 
 
   const ArrowForward = withStyles({
   })(ArrowForwardIcon);
 
-  const UnpaidIcon = withStyles({
-    root: {
-        display: 'flex',
-        color: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }
-  })(PriorityHighIcon);
+//   const UnpaidIcon = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: '#FFFFFF',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
+//   })(PriorityHighIcon);
 
-  const PaidIcon = withStyles({
-    root: {
-        display: 'flex',
-        color: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }
-  })(AttachMoneyIcon);
+//   const PaidIcon = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: '#FFFFFF',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
+//   })(AttachMoneyIcon);
 
 
 const PastRideCard = ({id, origin, destination, datetime, paid}) => {
@@ -78,30 +79,28 @@ const PastRideCard = ({id, origin, destination, datetime, paid}) => {
 
     return (
         <div>
-            { paid ? 
+            {/* { paid ?  */}
         
             <PaidPastRide>
                 <RideCardData />
-                <PaidPaymentInfo>
+                {/* <PaidPaymentInfo>
                     <PaidIcon />
                     <PaymentText>Payment Complete</PaymentText>
-                </PaidPaymentInfo>
+                </PaidPaymentInfo> */}
             </PaidPastRide>
 
-            :
-
-            <UnpaidPastRide>
-                <RideCardData />
-                <UnpaidPaymentInfo>
-                    <UnpaidIcon />
-                    <PaymentText>Payment Incomplete</PaymentText>
-                </UnpaidPaymentInfo>
-            </UnpaidPastRide>
-            }
+            {/* : */}
+{/* 
+             <UnpaidPastRide>
+                 <RideCardData />
+                 <UnpaidPaymentInfo>
+                     <UnpaidIcon />
+                     <PaymentText>Payment Incomplete</PaymentText>
+                 </UnpaidPaymentInfo>
+             </UnpaidPastRide>
+             } */}
             
 
-
-            
         </div>
     )
 }

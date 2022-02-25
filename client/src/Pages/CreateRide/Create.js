@@ -251,8 +251,7 @@ const Create = ({onCreate}) => {
                                 disablePast={true}
                                 value={date}
                                 onChange={setDate}
-                            >
-                            </DateBox>
+                            />
                         </MuiPickersUtilsProvider>
                     </MuiThemeProvider>
                 </Grid>
@@ -266,7 +265,8 @@ const Create = ({onCreate}) => {
 
                     <TextFieldBox 
                         id="outlined-basic"
-                        // label="Notes" Adding this would give it a label that moves when user enters textbox! cool effect
+                        multiline
+                        placeholder = "e.g. flight time, Rice meetup location, etc."
                         labelId="Notes"
                         variant="outlined"
                         value={notes}
@@ -274,9 +274,6 @@ const Create = ({onCreate}) => {
                     >
 
                     </TextFieldBox>
-
-
-                        
 
                 </Grid>
 
@@ -291,6 +288,17 @@ const Create = ({onCreate}) => {
                 >
                     <Grid item>   
                         <SelectSquare
+                            MenuProps={{
+                                anchorOrigin: {
+                                    vertical: "bottom",
+                                    horizontal: "left"
+                                },
+                                transformOrigin: {
+                                    vertical: "top",
+                                    horizontal: "left"
+                                },
+                                getContentAnchorEl: null
+                            }}
                             id="Number of Passengers Occupied"
                             value={passengers}
                             onChange={onPassengerChange}
