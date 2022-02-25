@@ -19,6 +19,16 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (firstName === "" || lastName === "") { 
+            addToast("Please fill in your full name.", { appearance: 'error' });
+            return
+        }   
+
+        if (phone === "") { 
+            addToast("Please fill in your phone number.", { appearance: 'error' });
+            return
+        }  
+
         return onSubmit({
             firstName, lastName,
             phone, venmo
