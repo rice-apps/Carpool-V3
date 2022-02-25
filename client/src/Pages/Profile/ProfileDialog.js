@@ -1,4 +1,4 @@
-import { Dialog, MenuItem, Tooltip } from "@material-ui/core";
+import { Avatar, Dialog, MenuItem, Tooltip } from "@material-ui/core";
 import React, { useState, useRef } from "react";
 import { useToasts } from "react-toast-notifications";
 import { UPDATE_USER, GET_SIGNATURE, toCloudinary } from "../Utils/ApiUtil.js";
@@ -19,9 +19,11 @@ import {
   // ImageStyle,
   SaveButton,
   StyledImage,
+  ProfileIcon,
 } from "./ProfileDialogStyles";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { ProfileImage } from "./ProfileImage.js";
+import { StyledAvatar } from "./ProfileStyles.js";
 
 export default function ProfileDialog(props) {
   const classes = ProfileStyles();
@@ -180,13 +182,13 @@ export default function ProfileDialog(props) {
         <ProfileDialogContainer>
           <IconBox>
             {previewSource ? (
-              <StyledImage src={previewSource}></StyledImage>
-            ) : (
               <ProfileImage
-                netid={profileUser.netid}
+                netid={localStorage.getItem("netid")}
                 imageStyle={ImageStyle}
                 imageVersion={profileUser.imageVersion}
               />
+            ) : (
+              <ProfileIcon></ProfileIcon>
             )}
             <Tooltip title="Upload profile picture">
               <ProfileEditButton onClick={onUploadPic}>
