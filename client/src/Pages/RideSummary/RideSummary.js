@@ -203,7 +203,7 @@ const RideSummary = () => {
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
         <BackArrow></BackArrow>
-        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Search"}</BackText>
+        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
       </BackArrowDiv>
 
       <RideSummaryDiv>
