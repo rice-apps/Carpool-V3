@@ -17,6 +17,7 @@ import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary/RideSummary.js'
 import jwt_decode from "jwt-decode";
 import YourRides from '../Pages/YourRides/YourRides.js'
+import FAQ from '../Pages/FAQ/FAQ.js'
 import LoadingDiv from './LoadingDiv.js'
 import AboutUs from '../Pages/AboutUs/AboutUs.js'
 
