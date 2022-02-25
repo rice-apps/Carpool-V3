@@ -3,7 +3,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, InputLabel, makeStyles, TextField } from "@material-ui/core";
-import { InputAdornment } from "@material-ui/core";
+import { InputAdornment, Select } from "@material-ui/core";
 
 export const Header = styled.div`
   display: flex;
@@ -29,6 +29,12 @@ export const InputBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
+});
+
+export const CollegeSelect = styled(Select)({
+  borderRadius: "2vw",
+  border: "1px solid #2075D8",
+  paddingBottom: "1vh",
 });
 
 export const ProfileFormContainer = styled.div`

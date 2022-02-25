@@ -8,8 +8,11 @@ import {
   InputTextField,
   RequiredTextField,
   NonRequiredTextField,
+  CollegeSelect,
+  ProfileStyles,
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
+import { MenuItem } from "@material-ui/core";
 
 const OnboardingForm = ({ onSubmit, onCancel }) => {
   const [firstName, setFirstName] = useState("");
@@ -29,6 +32,8 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
       venmo,
     });
   };
+
+  const classes = ProfileStyles();
 
   return (
     <form onSubmit={handleSubmit}>
@@ -50,13 +55,6 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             required
             onChange={(e) => setLastName(e.target.value)}
           ></RequiredTextField>
-          <NonRequiredTextField
-            label="College"
-            name="college"
-            defaultValue={college}
-            required
-            onChange={(e) => setCollege(e.target.value)}
-          ></NonRequiredTextField>
         </InputBox>
         <InputBox>
           <Label>Contact</Label>
@@ -77,6 +75,29 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             value={venmo}
             onChange={(e) => setVenmo(e.target.value)}
           ></InputTextField>
+          <Label>College:</Label>
+          <CollegeSelect
+            variant="outlined"
+            margin="dense"
+            defaultValue={college}
+            classes={{ root: classes.inputLabel }}
+            onChange={(e) => {
+              setCollege(e.target.value);
+            }}
+          >
+            <MenuItem value="Brown">Brown</MenuItem>
+            <MenuItem value="Jones">Jones</MenuItem>
+            <MenuItem value="Duncan">Duncan</MenuItem>
+            <MenuItem value="McMurtry">McMurtry</MenuItem>
+            <MenuItem value="Martel">Martel</MenuItem>
+            <MenuItem value="Baker">Baker</MenuItem>
+            <MenuItem value="Will Rice">Will Rice</MenuItem>
+            <MenuItem value="Sid Rich">Sid Rich</MenuItem>
+            <MenuItem value="Wiess">Wiess</MenuItem>
+            <MenuItem value="Hanszen">Brown</MenuItem>
+            <MenuItem value="Lovett">Lovett</MenuItem>
+          </CollegeSelect>
+          <Label>Contact:</Label>
         </InputBox>
         <SubmitButton
           variant="contained"

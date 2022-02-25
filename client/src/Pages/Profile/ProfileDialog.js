@@ -73,25 +73,6 @@ export default function ProfileDialog(props) {
 
   const classes = ProfileStyles();
 
-  // function setUserPayment(e) {
-  //   const newPayment = e.target.value;
-  //   setUser((prestate) => {
-  //     return {
-  //       ...prestate,
-  //       venmo: newPayment,
-  //     };
-  //   });
-  // }
-
-  // function clearUserPayment() {
-  //   setUser((prestate) => {
-  //     return {
-  //       ...prestate,
-  //       venmo: undefined,
-  //     };
-  //   });
-  // }
-
   const [updateUser] = useMutation(UPDATE_USER);
   const updateUserInfo = () => {
     console.log("user", user);
@@ -160,7 +141,7 @@ export default function ProfileDialog(props) {
                   variant="outlined"
                   margin="dense"
                   defaultValue={user.college}
-                  classes={{ root: classes.inputLabelProps }}
+                  classes={{ root: classes.inputLabel }}
                   onChange={(e) => {
                     selectCollege(e);
                     setChangesMade(true);
@@ -178,19 +159,6 @@ export default function ProfileDialog(props) {
                   <MenuItem value="Hanszen">Brown</MenuItem>
                   <MenuItem value="Lovett">Lovett</MenuItem>
                 </CollegeSelect>
-                {/* <InputTextField
-                  label="College"
-                  name="college"
-                  defaultValue={user.college}
-                  onChange={(e) => {
-                    setUserProps("college", e.target.value);
-                    setChangesMade(true);
-                  }}
-                  clearTextField={() => {
-                    clearTextField("college");
-                    setChangesMade(true);
-                  }}
-                ></InputTextField> */}
                 <Label>Contact:</Label>
                 <InputTextField
                   label="Phone #"
