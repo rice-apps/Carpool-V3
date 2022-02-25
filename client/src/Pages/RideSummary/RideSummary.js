@@ -210,9 +210,9 @@ const RideSummary = () => {
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) left</SeatsLeftText>
-          <SocialIcon>
+          {/* <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
-          </SocialIcon>
+          </SocialIcon> */}
         </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
