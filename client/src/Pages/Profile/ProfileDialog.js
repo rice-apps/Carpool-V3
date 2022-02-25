@@ -11,6 +11,7 @@ import {
   CloseProfileIcon,
   Label,
   InputTextField,
+  VenmoTextField,
   InputBox,
   SaveButton,
 } from "./ProfileDialogStyles";
@@ -149,7 +150,7 @@ export default function ProfileDialog(props) {
 
           <InputBox>
             <Label>Venmo:</Label>
-            <InputTextField
+            <VenmoTextField
               label="Account ID"
               name="venmo"
               defaultValue={user.venmo}
@@ -161,8 +162,9 @@ export default function ProfileDialog(props) {
                 clearUserPayment();
                 console.log(user.venmo);
               }}
-            ></InputTextField>
+            ></VenmoTextField>
           </InputBox>
+
           <ButtonBox>
             <SaveButton
               variant="contained"

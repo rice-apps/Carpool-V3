@@ -6,7 +6,7 @@ import {
   SubmitButton,
 } from "./ProfileFormStyles";
 import React, { useState } from "react";
-import { TextField, InputAdornment, FilledInput} from "@material-ui/core";
+import { TextField, InputAdornment} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 const ProfileForm = ({ onSubmit }) => {
