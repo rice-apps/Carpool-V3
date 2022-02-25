@@ -3,7 +3,6 @@ import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
 import {
-  IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
@@ -13,7 +12,6 @@ import {
   SeatsLeftDiv,
   SeatsLeftNum,
   SeatsLeftText,
-  SocialIcon,
   RideSummaryDiv,
   LocationDiv,
   LocationText,
@@ -247,9 +245,6 @@ const RideSummary = () => {
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) left</SeatsLeftText>
-          <SocialIcon>
-            <IoShareSocialSharp></IoShareSocialSharp>
-          </SocialIcon>
         </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
