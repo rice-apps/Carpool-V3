@@ -3,8 +3,11 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MailIcon from '@material-ui/icons/Mail';
 import{
     AllDiv,
+    FeedbackButton,
+    FeedbackText,
     FAQHeader,
     Questions,
     QuestionAccordion,
@@ -22,9 +25,18 @@ const AboutUs = () => {
     return (
         <AllDiv>
 
-<FAQHeader>
+            <FAQHeader>
                 FAQ
             </FAQHeader>
+
+            <FeedbackButton
+                variant="contained"
+                onClick={() => {
+                    window.open("https://forms.gle/WFqf77FxSy8FVHgb9")
+                }}>
+                <MailIcon />
+                <FeedbackText>Feedback?</FeedbackText>
+            </FeedbackButton>
 
             <Questions>
                     
