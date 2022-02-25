@@ -132,6 +132,25 @@ const RideSummary = () => {
     variables: { rideID: id }
   })
 
+  // Determine the behavior of button, verify if user is in Rice SSO
+  const handleClickOpen = () => {
+    // User is logged in already via Rice Verification
+    if (localStorage.getItem('token') != null) {
+        // Verify if user is in Carpool Database by triggering the Query
+        join();
+    } 
+    // User is not logged in, prompt them to log in
+    else {
+        setOpenAlert(true);
+    }
+    
+  };
+
+  // Close the dialog box
+  const handleClose = () => {
+      setOpenAlert(false);
+  };
+
   useEffect(() => {
     if (data) {
       let ride;
@@ -309,7 +328,7 @@ const RideSummary = () => {
         <ButtonDiv onClick={leave} leaveRide = {true}>
           Leave Ride
         </ButtonDiv>: 
-        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
           Join Ride
         </ButtonDiv>}
       </ButtonContainer>
