@@ -13,6 +13,7 @@ import {
     TitleText,
     OverallPage, 
     } from './YourRidesStyles';
+import LoadingDiv from '../../common/LoadingDiv.js';
 
 
 const GET_RIDES = gql`
@@ -79,7 +80,7 @@ const YourRides = (paid) => {
     }, [data, netid])
 
     if (error) return <p>Error...</p>;
-    if (loading) return <p>loading...</p>;
+    if (loading) return <LoadingDiv />;
 
     return (
         // <div> 
@@ -100,7 +101,10 @@ const YourRides = (paid) => {
                 </UpcomingRidesSection>
 
                 <PastRidesSection>
-                    <PastRideTitle><TitleText>Past Rides</TitleText><TitleText>Payments</TitleText></PastRideTitle>
+                    <PastRideTitle>
+                        <TitleText>Past Rides</TitleText>
+                        {/* <TitleText>Payments</TitleText> */}
+                    </PastRideTitle>
                     {prevRides.map(ride => {
                         return (
                             <PastRideCard 

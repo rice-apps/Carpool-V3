@@ -22,14 +22,34 @@ import {
   ImageStyle,
 } from "./ProfileStyles.js";
 import { useState } from "react";
+<<<<<<< HEAD
 import { GET_USER } from "../Utils/ApiUtil.js";
 import { ProfileImage } from "./ProfileImage.js";
+=======
+import LoadingDiv from "../../common/LoadingDiv.js";
+>>>>>>> master
 
 const Profile = () => {
   const { id } = useParams();
 
   const { addToast } = useToasts();
 
+<<<<<<< HEAD
+=======
+  const GET_USER = gql`
+    query GetUserInfo($netID: String) {
+      userOne(filter: { netid: $netID }) {
+        _id
+        firstName
+        lastName
+        netid
+        phone
+        venmo
+      }
+    }
+  `;
+
+>>>>>>> master
   const [openDialog, setOpenDialog] = useState(false);
 
   const [imageVersion, setImageVersion] = useState("");
@@ -38,7 +58,7 @@ const Profile = () => {
     variables: { netID: id },
   });
 
-  if (loading) return "Loading...";
+  if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
 
   let { userOne: user } = JSON.parse(JSON.stringify(data));
@@ -49,11 +69,15 @@ const Profile = () => {
     window.history.back();
   }
 
+<<<<<<< HEAD
   let paymentType = "";
+=======
+>>>>>>> master
   return (
     <div>
       <ReturnHeader>
         <ButtonBox onClick={goBack}>
+<<<<<<< HEAD
           <BackArrow></BackArrow> <StyledText3>Ride Summary</StyledText3>{" "}
         </ButtonBox>{" "}
       </ReturnHeader>{" "}
@@ -68,6 +92,21 @@ const Profile = () => {
           </IconButton>
         </EditProfileButton>
       )}
+=======
+          <BackArrow></BackArrow>
+          <StyledText3>Back</StyledText3>
+        </ButtonBox>
+      </ReturnHeader>
+      <EditProfileButton>
+        <IconButton
+          aria-label="edit"
+          onClick={() => setOpenDialog(true)}
+          variant="outlined"
+        >
+          <EditIcon />
+        </IconButton>
+      </EditProfileButton>
+>>>>>>> master
       <ProfileDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
@@ -97,21 +136,25 @@ const Profile = () => {
           <MailBox></MailBox> <StyledText>{user.netid}@rice.edu</StyledText>{" "}
         </TextBox>
         <TextBox
-          onClick={() => {
-            navigator.clipboard.writeText("@comp182Luay").then(
-              addToast("Venmo ID Copied to Clipboard!", {
-                appearance: "success",
+          onClick={async () => {
+            if (user.venmo) {
+              navigator.clipboard.writeText(user.venmo).then(
+                addToast("Venmo ID Copied to Clipboard!", {
+                  appearance: "success",
+                })
+              );
+            } else {
+              addToast("Venmo ID Not Specified", {
+                appearance: "error",
               })
-            );
+            }
           }}
         >
           <StyledText2>
-            {user.payment[paymentType] !== ""
-              ? paymentType
-              : "No Payment Specified"}
+            Venmo
           </StyledText2>
           <StyledText>
-            {user.payment[paymentType] !== "" ? user.payment[paymentType] : ""}
+            {user.venmo ? `@${user.venmo}` : "Not Specified"}
           </StyledText>
         </TextBox>
       </ProfileCard>

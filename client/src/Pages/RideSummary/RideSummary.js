@@ -6,7 +6,6 @@ import {
   IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
-import { IoIosArrowBack } from 'react-icons/io'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 import { useHistory } from 'react-router'
@@ -28,6 +27,7 @@ import {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  NotesDiv,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -36,11 +36,22 @@ import {
   ArrivalDiv,
   LocationArrowDiv,
   BackArrowDiv,
+  BackArrow,
+  BackText,
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
   TimeText
 } from './RideSummaryStyles.js'
+import { Grid, IconButton } from '@material-ui/core';
+import { LoginButton, LoginDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
+import CloseIcon from '@material-ui/icons/Close';
+// SSO imports
+import { SERVICE_URL } from '../../config'; 
+import LoadingDiv from '../../common/LoadingDiv.js'
+import { useToasts } from "react-toast-notifications";
+
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
@@ -54,6 +65,7 @@ const GET_RIDE = gql`
       arrivalLocation {
         title
       }
+      notes
       owner {
         netid
         firstName
@@ -78,6 +90,9 @@ const RideSummary = () => {
     riders: []
   })
   const history = useHistory()
+  const { addToast } = useToasts();
+  // States to control for Dialog
+  const [openAlert, setOpenAlert] = useState(false);
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -96,6 +111,26 @@ const RideSummary = () => {
     variables: { rideID: id }
   })
 
+
+  // Determine the behavior of button, verify if user is in Rice SSO
+  const handleClickOpen = () => {
+    // User is logged in already via Rice Verification
+    if (localStorage.getItem('token') != null) {
+        // Verify if user is in Carpool Database by triggering the Query
+        join();
+    } 
+    // User is not logged in, prompt them to log in
+    else {
+        setOpenAlert(true);
+    }
+    
+  };
+
+  // Close the dialog box
+  const handleClose = () => {
+      setOpenAlert(false);
+  };
+
   useEffect(() => {
     if (data) {
       let ride;
@@ -111,22 +146,52 @@ const RideSummary = () => {
   }, [data])
   console.log(data, loading, error);
   if (error) return <p>Error.</p>
-  if (loading) return <p>Loading...</p>
+  if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
 
   const join = () => {
     if (localStorage.getItem('token') == null) {
-      localStorage.setItem('nextPage', `/ridesummary/${id}`)
-      history.push('/login')
+      localStorage.setItem('joinFromLogin', "true");
+      localStorage.setItem('nextPage', `ridesummary/${id}`);
+      localStorage.setItem('lastPage', `ridesummary/${id}`);
+      let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+      window.open(redirectURL, '_self');
       return
     }
+    else if (localStorage.getItem('joinFromLogin') === "true") {
+      localStorage.setItem('joinFromLogin', "false");
+      console.log("Inside login, join loop");
+    }
 
-    joinRide()
+    joinRide().then((result) => {
+      console.log(result);
+      window.location.reload();
+      console.log(result);
+
+    }).catch((err) => {
+      console.log("Caught error: Ride is full");
+      addToast("Sorry! This ride is full.", { appearance: 'error'});
+
+    });
   }
+  
+  console.log(data, loading, error);
+  if (localStorage.getItem('joinFromLogin') === "true") join();
+  if (error) return <p>Error.</p>
+  if (loading) return <p>Loading...</p>
+  if (!data) return <p>No data...</p>
 
+ 
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
-    history.push(lastPage);
+    localStorage.setItem('lastPage', `ridesummary/${id}`);
+    // Any attempts to go back to edit the onboarding form
+    // should take you back to the current ride summary page.
+    if (lastPage === "/your-rides"){
+      history.push(lastPage);
+    } else {
+      history.push("/search");
+    }
   }
 
   const time = moment(ride.departureDate)
@@ -137,16 +202,18 @@ const RideSummary = () => {
   return (
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
-        <IoIosArrowBack></IoIosArrowBack>
+        <BackArrow></BackArrow>
+        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Search"}</BackText>
       </BackArrowDiv>
+
       <RideSummaryDiv>
         <SeatsLeftDiv>
-          <SeatsLeftNum>{ride.spots}</SeatsLeftNum>
-          <SeatsLeftText>seat(s) <br/>left</SeatsLeftText>
+          <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
+          <SeatsLeftText>seat(s) left</SeatsLeftText>
           <SocialIcon>
             <IoShareSocialSharp></IoShareSocialSharp>
           </SocialIcon>
-      </SeatsLeftDiv>
+        </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
         <LocationDiv>
@@ -198,7 +265,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.slice(0, 3).map((person) => (
+          {ride.riders.filter((x) => x.netid !== ride.owner.netid).map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
@@ -214,9 +281,34 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
+
+      <NotesDiv>
+        {ride.notes || 'No ride notes'}
+      </NotesDiv>
+
       <ButtonContainer>
-        <ButtonDiv onClick={join}>Join Ride</ButtonDiv>
+        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
+          Join Ride
+        </ButtonDiv>
       </ButtonContainer>
+      <LoginDialog
+                open={openAlert}
+                onClose={handleClose}
+            >
+            <Grid container spacing = {12}>
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleClose} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {12}>
+                    <LoginDialogActions>
+                        <LoginButton onClick={join} autoFocus>Rice SSO Login</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </LoginDialog>
     </AllDiv>
   )
 }

@@ -4,8 +4,6 @@ import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
 import {
-    MenuItem,
-    Select,
     Grid, 
 } from '@material-ui/core';
 
@@ -15,7 +13,6 @@ import {
   SelectBox,
   MenuBox,
   InputBox,
-  BodyText,
 } from './FormOnly.styles'
 
 const FormOnly = (props) => {
@@ -30,13 +27,14 @@ const FormOnly = (props) => {
     props.getRidesRefetch()
     .then((res) => {
 
-      const ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
+      var ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
         const rideDateAfterCurrentDate = compareDates(new Date(ride.departureDate), currentDate, true);
-        return rideDateAfterCurrentDate;
+        const isNotFull = (ride.spots - ride.riders.length) > 0
+        return rideDateAfterCurrentDate && isNotFull;
       });
       
       setRidesPossibleForm(ridesPossibleNotBefore);
-      displayRef.current.setRidesPossible(ridesPossibleNotBefore);
+      props.setRidesPossible(ridesPossibleNotBefore);
     })
     .catch((err) => {
       console.log("err=", err);
@@ -44,18 +42,14 @@ const FormOnly = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const displayRef = props.displayRef;
-
-  const todayDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
   
   const [startLoc, setStartLoc] = useState('')
   const [endLoc, setEndLoc] = useState('')
 
   // state for filter date
-  const [filterDate, setfilterDate] = useState(todayDate);
+  const [filterDate, setfilterDate] = useState(null);
 
-  const [numberPeople, setNumberPeople] = useState(null)
 
   // does actual filtering, produces resultDestArr
   useEffect(() => {
@@ -73,15 +67,12 @@ const FormOnly = (props) => {
       if (filterDate != null) {
         resultDestArr = resultDestArr.filter((ele) => { return isSameDay(new Date(ele.departureDate), new Date(filterDate));});
       }
-      if (numberPeople != null) {
-        resultDestArr = resultDestArr.filter((ele) => { return (ele.spots >= numberPeople);});
-      }
-      displayRef.current.setRides(resultDestArr);
+      props.setRides(resultDestArr);
     }).catch((err) => {
       console.log("err=", err);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startLoc, endLoc, numberPeople, filterDate]);
+  }, [startLoc, endLoc, filterDate]);
 
   // returns true of date1 and date2 are on the same day, returns false otherwise
   const isSameDay = (date1, date2) => {
@@ -225,40 +216,6 @@ const FormOnly = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid  item xs = {12}>
-          <Grid 
-            container
-            direction='row'
-            justifyContent='center'
-            alignItems='center'
-            spacing = "1"
-          >
-            <Grid item>
-              <Select 
-                MenuProps={{
-                  anchorOrigin: {
-                    vertical: "bottom",
-                    horizontal: "left"
-                  },
-                  transformOrigin: {
-                    vertical: "top",
-                    horizontal: "left"
-                  },
-                  getContentAnchorEl: null
-                }} 
-                id="number-people" 
-                value={numberPeople} 
-                onChange={e => {setNumberPeople(e.target.value);}}>
-                  { [1,2,3,4,5].map((ele) => (
-                  <MenuItem value={ele}>{ele}</MenuItem>
-                  ))}
-              </Select>
-            </Grid>
-            <Grid item>
-              <BodyText>{"Number of People"}</BodyText> 
-            </Grid>        
-        </Grid>
-      </Grid>
     </Grid>
   </Form>
 </React.Fragment>

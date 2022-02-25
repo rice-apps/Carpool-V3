@@ -1,10 +1,11 @@
 import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import { KeyboardDateTimePicker } from '@material-ui/pickers';
+import { DateTimePicker } from '@material-ui/pickers';
 import {
     MenuItem,
     Button, 
     Select, 
+    TextField,
     InputLabel,
     FormControlLabel, 
     Checkbox, 
@@ -61,7 +62,7 @@ export const MenuBox = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'white',
-        width: '65vw',
+        width: '100%',
         border: 0,
         color: '#0B3669',
         height: 36,
@@ -96,6 +97,24 @@ export const ColorButton = withStyles({
     }
   })(InputLabel);
 
+
+  // NEW!
+  export const TextFieldBox = withStyles({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: 'white',
+      borderRadius: 8,
+      border: 0,
+      borderColor: '#0B3669',
+      color: '#0B3669',
+      fontFamily: 'Josefin Sans',
+      fontSize: '13px',
+    }
+  })(TextField);
+
+
   export const FormControlLabelBox = withStyles({
     label: {
         display: 'flex',
@@ -108,10 +127,9 @@ export const ColorButton = withStyles({
 
   export const DateBox = withStyles({
     root: {
-        width: '68vw',
-        height: '10vh'
+
     }, 
-  })(KeyboardDateTimePicker);
+  })(DateTimePicker);
 
   export const CheckBox = withStyles({
       root: {
@@ -144,13 +162,13 @@ export const ColorButton = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'white',
-        width: '15vw',
+        width: '100%',
         border: 0,
         color: '#0B3669',
-        height: '2vh',
+        // height: '2vh',
         fontFamily: 'Josefin Sans',
         fontSize: '13px',
-        padding: '8px 16px'
+        // padding: '8px 16px'
     }
   })(MenuItem);
 
@@ -161,7 +179,7 @@ export const ColorButton = withStyles({
     font-family: Josefin Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 2vh;
+    font-size: 1.75vh;
     line-height: 2vh;
     color: #0B3669;
     padding: 10px 0px 0px 0px;

@@ -8,7 +8,6 @@ import Auth from '../Pages/Auth/Auth.js'
 import Home from '../Pages/Home/Home.js'
 import Search from '../Pages/Search/Search.js'
 import UserAuth from '../Pages/Auth/UserAuth.js'
-import ProfileForm  from '../Pages/Profile/ProfileForm.js'
 import Profile from '../Pages/Profile/Profile.js'
 import CreateRide from '../Pages/CreateRide/CreateRide.js'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -17,6 +16,7 @@ import { withRouter } from 'react-router'
 import RideSummary from '../Pages/RideSummary/RideSummary.js'
 import jwt_decode from "jwt-decode";
 import YourRides from '../Pages/YourRides/YourRides.js'
+import LoadingDiv from './LoadingDiv.js'
 
 /**
  * Requests to verify the user's token on the backend
@@ -91,7 +91,7 @@ const PrivateRoute = ({ children, ...rest }) => {
     // Redirect the user to the login page
     return <Redirect path='login' />
   }
-  if (loading) return <p>Waiting...</p>
+  if (loading) return <LoadingDiv />
   if (!data || !data.verifyUser) {
     // Clear the token
     localStorage.removeItem('token')
@@ -145,7 +145,6 @@ export const Routes = () => {
           </CheckTokenRoute>
           <CheckTokenRoute path={'/auth'} component={withRouter(Auth)} />
           <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
-          <CheckTokenRoute path={"/profileform"} component={withRouter(ProfileForm)} />
           <CheckTokenRoute path={"/your-rides"} component={withRouter(YourRides)} />
         </Switch>
       </Router>

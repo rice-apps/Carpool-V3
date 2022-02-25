@@ -11,6 +11,7 @@ import { createBrowserHistory } from 'history';
 
 // Setup Toast for Notifications
 import { ToastProvider } from 'react-toast-notifications'
+import { DefaultToast } from 'react-toast-notifications';
 
 // Import apollo client for graphql
 import { client } from './apollo';
@@ -28,11 +29,17 @@ const theme = createTheme({
 
 export const history = createBrowserHistory();
 
+export const ShorterToast = ({ children, ...props }) => (
+    <DefaultToast {...props} style={{width: "250px"}}>
+        {children}
+    </DefaultToast>
+);
+
 render(
     <ThemeProvider theme = {theme}>
         <ApolloProvider client={client}>
         <Router history={history}>
-            <ToastProvider autoDismiss>
+            <ToastProvider autoDismiss components = {{Toast: ShorterToast}}>
                 <Routes />
             </ToastProvider>
         </Router>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useImperativeHandle, useState } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/MenuRounded";
@@ -19,6 +20,21 @@ import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { ProfileImage } from "../../Pages/Profile/ProfileImage";
 import { ImageStyle } from "../../Pages/Profile/ProfileDialogStyles";
+=======
+import React, {useState} from 'react';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import MenuIcon from '@material-ui/icons/MenuRounded';
+import HomeIcon from '@material-ui/icons/HomeRounded';
+import CarIcon from '@material-ui/icons/DirectionsCarRounded';
+import { List, ListItem, ListItemIcon, ListItemText, 
+  Drawer, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
+import { Link, useLocation } from 'react-router-dom'
+import { gql, useQuery} from "@apollo/client";
+import { useEffect } from 'react';
+// SSO imports
+import { SERVICE_URL } from '../../config'; 
+const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
+>>>>>>> master
 
 const useStyles = makeStyles((theme) => ({
   appbarRoot: {
@@ -42,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "66vw",
     height: "100vh",
+    maxWidth: 350,
   },
   usernameContainer: {
     gap: "5vw",
@@ -56,10 +73,18 @@ const useStyles = makeStyles((theme) => ({
 
 const LogInOutButton = withStyles({
   root: {
+<<<<<<< HEAD
     background: "#2075D8",
     width: "33vw",
     borderRadius: 25,
     color: "white",
+=======
+      background: '#2075D8',
+      width: '100%',
+      borderRadius: 25,
+      color: 'white',
+      margin: '0 1em',
+>>>>>>> master
   },
   label: {
     textTransform: "capitalize",
@@ -103,11 +128,28 @@ export default function ButtonAppBar(props) {
     }
   }, [location.pathname]);
 
+<<<<<<< HEAD
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   if (!userData) return "User not found!";
 
   const { userOne: user } = userData;
+=======
+  // if (loading) return <LoadingDiv height={'9vh'} />;
+  // if (error) return `Error! ${error.message}`;
+  // if (!userData) return "User not found!"; 
+
+  var user = {
+    firstName: "Loading",
+    lastName: " ",
+  }
+
+  if (!(loading || error || !userData)) {
+    user = userData.userOne
+  }
+
+  // const {userOne: user} = userData;
+>>>>>>> master
 
   const logout = () => {
     localStorage.clear();
@@ -116,8 +158,18 @@ export default function ButtonAppBar(props) {
   };
 
   const login = () => {
+<<<<<<< HEAD
     localStorage.setItem("nextPage", window.location.pathname);
   };
+=======
+    localStorage.setItem('nextPage', window.location.pathname); 
+  }
+
+  const redirect = () => {
+    let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+    window.open(redirectURL, '_self');
+  }
+>>>>>>> master
 
   const showUsername = (toggleDrawer) => (
     <ListItem
@@ -140,6 +192,7 @@ export default function ButtonAppBar(props) {
   );
 
   const showLogin = (toggleDrawer) => (
+<<<<<<< HEAD
     <ListItem
       className={classes.logInOutContainer}
       divider="true"
@@ -157,6 +210,12 @@ export default function ButtonAppBar(props) {
       </LogInOutButton>
     </ListItem>
   );
+=======
+      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+        <LogInOutButton onClick = {() => {toggleDrawer(); login(); redirect();}}>Login</LogInOutButton>
+      </ListItem>
+  )
+>>>>>>> master
 
   const showLogout = (toggleDrawer) => (
     <ListItem className={classes.logInOutContainer}>

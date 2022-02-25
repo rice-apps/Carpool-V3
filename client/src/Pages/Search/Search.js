@@ -1,26 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../common/Header/Header';
 import Form from './Form';
 import DisplayRides from './DisplayRides'
 import { gql, useQuery } from "@apollo/client";
-import ClipLoader from "react-spinners/ClipLoader";
-import styled from 'styled-components'
+import LoadingDiv from '../../common/LoadingDiv';
 import "@fontsource/source-sans-pro";
 import './Search.css'
 
+
 export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const LoadingDiv = styled.div`
-  display: flex;
-  width: 100%;
-  height: 15vh;
-  justify-content: center;
-  align-items: center;
-`
 const Search = () => {
   // Set last page visited
   localStorage.setItem('lastPage', 'search');
   let resultDestArr = [];
+
+  const [rides, setRides] = useState([])
+  const [ridesPossible, setRidesPossible] = useState([])
     
   const displayRef = React.useRef();
 
@@ -29,29 +25,16 @@ const Search = () => {
   }
 
   const GET_RIDES = gql`
-  query {
-    rideMany {
+  query($after: Date) {
+    rideMany(filter: {
+      _operators: { departureDate: { gte: $after } }
+    }) {
       _id
       departureDate
-      riders {
-        netid
-        firstName
-        lastName
-      }
+      riders { netid }
       spots
-      departureLocation {
-        title
-        address
-      }
-      arrivalLocation {
-        title
-        address
-      }
-      owner {
-        netid
-        firstName
-        lastName
-      }
+      departureLocation { title }
+      arrivalLocation { title }
     }
   }
 `;
@@ -67,21 +50,20 @@ const Search = () => {
 
   const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
+  const today = new Date().toDateString();
   const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES,
     {
-      variables: {}
+      variables: { after: today }
     }
   );
 
   return (
     <React.Fragment>
       <div><Header subtitle = "Search Rides"/></div>
-      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
+      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
         {rideLoading ? 
-          <LoadingDiv>
-            <ClipLoader />
-          </LoadingDiv> : 
-          <DisplayRides ref={displayRef} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
+          <LoadingDiv height={'15vh'} /> : 
+          <DisplayRides ref={displayRef} ridesT={rides} ridesPossible={ridesPossible} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
         }
     </React.Fragment>
   )

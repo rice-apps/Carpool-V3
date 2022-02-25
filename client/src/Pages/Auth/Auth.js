@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Redirect } from "react-router";
+import LoadingDiv from "../../common/LoadingDiv";
 
 const AUTHENTICATE_USER = gql`
     mutation AuthenticateMutation($ticket: String!) {
@@ -44,7 +45,7 @@ const Auth = () => {
     }, [authenticateUser]);
 
     if (error) return <Redirect path={"/login"} />;
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <LoadingDiv />;
     if (!data) return <p>Login data could not be reached.</p>;
 
     let { netid, token, recentUpdate } = data.authenticateUser;
@@ -56,7 +57,7 @@ const Auth = () => {
 
     // If came straight from login button, set the next destination to home
     if (localStorage.getItem('nextPage') == null) {
-        localStorage.setItem('nextPage', '/home');
+        localStorage.setItem('nextPage', 'home');
     }
 
     return (
