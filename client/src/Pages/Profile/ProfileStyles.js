@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import MailIcon from "@material-ui/icons/Mail";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const ButtonBox = withStyles({
   label: {
@@ -85,6 +86,11 @@ const UserPic = styled.img`
   border-radius: 50%;
   background-size: cover;
 `;
+
+const StyledAvatar = styled(AccountCircleIcon)({
+  fontSize: "25vh",
+  color: "#002140",
+});
 
 const UserName = styled.p`
   display: flex;
@@ -186,6 +192,7 @@ export {
   ReturnHeader,
   UserName,
   UserPic,
+  StyledAvatar,
   PhoneNumber,
   College,
   StyledText,

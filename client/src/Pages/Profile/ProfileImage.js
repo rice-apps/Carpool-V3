@@ -18,11 +18,7 @@ export const ProfileImage = (props) => {
   profileImage.format("jpg");
   return (
     <div>
-      {hasImage ? ( //set the profileimage to the profile pic if there is one
-        <AdvancedImage cldImg={profileImage} style={imageStyle} /> //fix this?
-      ) : (
-        <ProfileIcon /> //else, use the default profileicon
-      )}
+      <AdvancedImage cldImg={profileImage} style={imageStyle} />
     </div>
   );
 };

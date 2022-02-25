@@ -13,6 +13,7 @@ import {
   ProfileCard,
   ReturnHeader,
   UserName,
+  StyledAvatar,
   PhoneNumber,
   StyledText,
   StyledText2,
@@ -24,6 +25,8 @@ import {
 import { useState } from "react";
 import { GET_USER } from "../Utils/ApiUtil.js";
 import { ProfileImage } from "./ProfileImage.js";
+import { Avatar } from "@material-ui/core";
+import { useLocation } from "react-router";
 
 const Profile = () => {
   const { id } = useParams();
@@ -33,6 +36,8 @@ const Profile = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const [imageVersion, setImageVersion] = useState("");
+
+  const location = useLocation();
 
   let { data, loading, error } = useQuery(GET_USER, {
     variables: { netID: id },
@@ -49,6 +54,7 @@ const Profile = () => {
     window.history.back();
   }
 
+  const hasImage = user.imageVersion !== "" && user.imageVersion !== null;
   let paymentType = "";
   return (
     <div>
@@ -75,11 +81,17 @@ const Profile = () => {
         setImageVersion={setImageVersion}
       ></ProfileDialog>
       <ProfileCard>
-        <ProfileImage
-          imageStyle={ImageStyle}
-          netid={user.netid}
-          imageVersion={user.imageVersion}
-        ></ProfileImage>
+        {hasImage ? (
+          <ProfileImage
+            imageStyle={ImageStyle}
+            netid={location.pathname.substring(9)}
+            imageVersion={user.imageVersion}
+          ></ProfileImage>
+        ) : (
+          <StyledAvatar>
+            <Avatar />
+          </StyledAvatar>
+        )}
         <UserName>{user.firstName + " " + user.lastName}</UserName>
         <PhoneNumber>
           {user.phone ? user.phone : "Phone Number Unavailable"}

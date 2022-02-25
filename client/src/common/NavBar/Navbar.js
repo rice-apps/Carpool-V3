@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/MenuRounded";
 import HomeIcon from "@material-ui/icons/HomeRounded";
@@ -12,6 +12,7 @@ import {
   IconButton,
   AppBar,
   Toolbar,
+  Avatar,
   Button,
 } from "@material-ui/core";
 import { Link, useLocation } from "react-router-dom";
@@ -19,6 +20,8 @@ import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { ProfileImage } from "../../Pages/Profile/ProfileImage";
 import { ImageStyle } from "../../Pages/Profile/ProfileDialogStyles";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import styled from "styled-components";
 
 const useStyles = makeStyles((theme) => ({
   appbarRoot: {
@@ -57,15 +60,21 @@ const useStyles = makeStyles((theme) => ({
 const LogInOutButton = withStyles({
   root: {
     background: "#2075D8",
-    width: "33vw",
+    width: "100%",
     borderRadius: 25,
     color: "white",
+    margin: "0 1em",
   },
   label: {
     textTransform: "capitalize",
     fontFamily: "Josefin Sans",
   },
 })(Button);
+
+const StyledAvatar = styled(AccountCircleIcon)({
+  fontSize: "50vw",
+  color: "#002140",
+});
 
 const GET_USER = gql`
   query GetUserInfo($netID: String) {
@@ -108,6 +117,7 @@ export default function ButtonAppBar(props) {
   if (!userData) return "User not found!";
 
   const { userOne: user } = userData;
+  const hasImage = user.imageVersion !== "";
 
   const logout = () => {
     localStorage.clear();
@@ -127,11 +137,18 @@ export default function ButtonAppBar(props) {
       className={classes.usernameContainer}
       onClick={toggleDrawer}
     >
-      <ProfileImage
-        imageStyle={ImageStyle}
-        netid={localStorage.getItem("netid")}
-        imageVersion={user.imageVersion}
-      ></ProfileImage>
+      {hasImage ? (
+        <ProfileImage
+          imageStyle={ImageStyle}
+          netid={localStorage.getItem("netid")}
+          imageVersion={user.imageVersion}
+        ></ProfileImage>
+      ) : (
+        <StyledAvatar>
+          <Avatar />
+        </StyledAvatar>
+      )}
+
       <ListItemText
         className={classes.text}
         primary={user.firstName + " " + user.lastName}

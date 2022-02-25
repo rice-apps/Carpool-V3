@@ -105,6 +105,6 @@ export const imageExists = (netId, imageVersion) => {
   console.log("imageURL", imageURL);
   const http = new XMLHttpRequest();
   http.open("HEAD", imageURL, false);
-  // http.send(); //error
+  http.send();
   return http.status !== 404;
 };
