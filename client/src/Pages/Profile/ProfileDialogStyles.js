@@ -9,6 +9,7 @@ import {
   InputLabel,
   makeStyles,
   TextField,
+  Select,
 } from "@material-ui/core";
 import { InputAdornment } from "@material-ui/core";
 
@@ -60,7 +61,7 @@ export const ProfileEditIcon = styled(EditIcon)({
 });
 
 export const ProfileIcon = styled(AccountCircleIcon)({
-  fontSize: "14vh",
+  fontSize: "15vh",
   color: "#002140",
   position: "absolute",
   top: "6%",
@@ -74,8 +75,15 @@ export const CloseProfileIcon = styled(CloseIcon)({
 });
 
 export const Label = styled(InputLabel)({
+  paddingTop: "1vh",
   fontFamily: "Josefin Sans",
   color: "#2075d8",
+  paddingBottom: "1vh",
+});
+
+export const CollegeSelect = styled(Select)({
+  borderRadius: "2vw",
+  border: "1px solid #2075D8",
   paddingBottom: "1vh",
 });
 
@@ -97,6 +105,7 @@ export const ProfileStyles = makeStyles((theme) => ({
     height: "5vh",
   },
   inputLabel: {
+    background: "rgb(187,218,255,0.22)",
     fontSize: 15,
     color: "#2075D8",
   },

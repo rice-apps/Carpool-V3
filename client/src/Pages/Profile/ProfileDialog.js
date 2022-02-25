@@ -1,4 +1,4 @@
-import { Dialog, Paper, List } from "@material-ui/core";
+import { Dialog, Paper, List, MenuItem } from "@material-ui/core";
 import React, { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import {
@@ -13,6 +13,8 @@ import {
   InputBox,
   SaveButton,
   StyledDialogContent,
+  CollegeSelect,
+  ProfileStyles,
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv";
@@ -63,6 +65,13 @@ export default function ProfileDialog(props) {
   const closeDialog = () => {
     setOpenDialog(false);
   };
+
+  function selectCollege(e) {
+    const newCollege = e.target.value;
+    setUserProps("college", newCollege);
+  }
+
+  const classes = ProfileStyles();
 
   // function setUserPayment(e) {
   //   const newPayment = e.target.value;
@@ -146,7 +155,30 @@ export default function ProfileDialog(props) {
                     setChangesMade(true);
                   }}
                 ></InputTextField>
-                <InputTextField
+                <Label>College:</Label>
+                <CollegeSelect
+                  variant="outlined"
+                  margin="dense"
+                  defaultValue={user.college}
+                  classes={{ root: classes.inputLabelProps }}
+                  onChange={(e) => {
+                    selectCollege(e);
+                    setChangesMade(true);
+                  }}
+                >
+                  <MenuItem value="Brown">Brown</MenuItem>
+                  <MenuItem value="Jones">Jones</MenuItem>
+                  <MenuItem value="Duncan">Duncan</MenuItem>
+                  <MenuItem value="McMurtry">McMurtry</MenuItem>
+                  <MenuItem value="Martel">Martel</MenuItem>
+                  <MenuItem value="Baker">Baker</MenuItem>
+                  <MenuItem value="Will Rice">Will Rice</MenuItem>
+                  <MenuItem value="Sid Rich">Sid Rich</MenuItem>
+                  <MenuItem value="Wiess">Wiess</MenuItem>
+                  <MenuItem value="Hanszen">Brown</MenuItem>
+                  <MenuItem value="Lovett">Lovett</MenuItem>
+                </CollegeSelect>
+                {/* <InputTextField
                   label="College"
                   name="college"
                   defaultValue={user.college}
@@ -158,7 +190,7 @@ export default function ProfileDialog(props) {
                     clearTextField("college");
                     setChangesMade(true);
                   }}
-                ></InputTextField>
+                ></InputTextField> */}
                 <Label>Contact:</Label>
                 <InputTextField
                   label="Phone #"
