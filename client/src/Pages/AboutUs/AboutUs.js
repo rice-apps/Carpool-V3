@@ -10,6 +10,7 @@ import{
     FeedbackText,
     FAQHeader,
     Questions,
+    Bold,
     QuestionAccordion,
     AboutUsHeader,
     Member,
@@ -39,7 +40,37 @@ const AboutUs = () => {
             </FeedbackButton>
 
             <Questions>
-                    
+                
+                <QuestionAccordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                    <Typography>What is Rice Carpool?</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>
+                    Rice Carpool is a platform for the Rice community to coordinate ride-sharing - specifically, to and from the Houston airports. 
+                    </Typography>
+                    </AccordionDetails>
+                </QuestionAccordion>
+
+                <QuestionAccordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                    <Typography>How does Rice Carpool work?</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>
+                    Through our mobile-friendly site, it’s easy to find rides to create or join. Then use the riders’ contact information to arrange a meetup with your fellow carpoolers, hop in an Uber or Lyft together, and split the cost. 
+                    </Typography>
+                    </AccordionDetails>
+                </QuestionAccordion>
+
                 <QuestionAccordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -54,8 +85,6 @@ const AboutUs = () => {
                     </Typography>
                     </AccordionDetails>
                 </QuestionAccordion>
-
-
 
                 <QuestionAccordion>
                     <AccordionSummary
@@ -72,8 +101,6 @@ const AboutUs = () => {
                     </AccordionDetails>
                 </QuestionAccordion>
 
-
-
                 <QuestionAccordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -88,7 +115,6 @@ const AboutUs = () => {
                     </Typography>
                     </AccordionDetails>
                 </QuestionAccordion>
-
 
                 <QuestionAccordion>
                     <AccordionSummary
@@ -105,6 +131,20 @@ const AboutUs = () => {
                     </AccordionDetails>
                 </QuestionAccordion>
 
+                <QuestionAccordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                    <Typography>What are the <Bold>terms</Bold> of using Rice Carpool?</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>
+                    Creating or joining a ride on Carpool will connect you to other Rice students looking to ride and split cost together. You will still need to manually communicate with your fellow Carpoolers to meet up, order an Uber or Lyft to ride, and split payment accordingly - Carpool does not currently have support for those features. 
+                    </Typography>
+                    </AccordionDetails>
+                </QuestionAccordion>
 
                 <QuestionAccordion>
                     <AccordionSummary
@@ -116,6 +156,20 @@ const AboutUs = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography>You can find the rides you’ve taken in the past and the rides you’ve scheduled listed on your profile.
+                    </Typography>
+                    </AccordionDetails>
+                </QuestionAccordion>
+
+                <QuestionAccordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                    <Typography>Do I need to have a car?</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>No, you don’t need to have or use your own car. You can split an Uber or Lyft with your carpool instead. If you do have a car and want to drive other people, just mention that when creating a ride!
                     </Typography>
                     </AccordionDetails>
                 </QuestionAccordion>
@@ -168,6 +222,20 @@ const AboutUs = () => {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
+                    <Typography>How can I edit my ride?</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>In our current version, you cannot edit a ride because other people will have signed up assuming the existing information. If you need to change the details on an empty ride, just leave (delete) the ride and create it again.
+                    </Typography>
+                    </AccordionDetails>
+                </QuestionAccordion>
+
+                <QuestionAccordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
                     <Typography>Is my information shared with outside parties?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -184,7 +252,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/shreya.JPG"/>
                     <Info>
                         <Name>Shreya Nidadavolu</Name>
-                        <Title>Product Manager | Wiess</Title>
+                        <Title>Product Manager | Wiess College</Title>
                     </Info>
                 </Member>
 
@@ -192,7 +260,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/willy.png"/>
                     <Info>
                         <Name>William Yao</Name>
-                        <Title>Team Lead | Will Rice</Title>
+                        <Title>Team Lead | Will Rice College</Title>
                     </Info>
                 </Member>
 
@@ -201,7 +269,7 @@ const AboutUs = () => {
                     
                     <Info>
                         <Name>Henry Qin</Name>
-                        <Title>Team Lead | Will Rice</Title>
+                        <Title>Team Lead | Will Rice College</Title>
                     </Info>
                 </Member>
 
@@ -209,7 +277,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/audrey.JPeG"/>
                     <Info>
                         <Name>Audrey Kim</Name>
-                        <Title>Developer | Wiess</Title>
+                        <Title>Developer | Wiess College</Title>
                     </Info>
                 </Member>
 
@@ -217,7 +285,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/alexis.jpeg"/>
                     <Info>
                         <Name>Alexis Nicolas</Name>
-                        <Title>Developer | Jones</Title>
+                        <Title>Developer | Jones College</Title>
                     </Info>
                 </Member>
 
@@ -225,7 +293,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/anya.JPG"/>
                     <Info>
                         <Name>Anya Gu</Name>
-                        <Title>Developer | Brown</Title>
+                        <Title>Developer | Brown College</Title>
                     </Info>
                 </Member>
 
@@ -233,7 +301,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/kai.png"/>
                     <Info>
                         <Name>Kai Hung</Name>
-                        <Title>Developer | Brown</Title>
+                        <Title>Developer | Brown College</Title>
                     </Info>
                 </Member>
 
@@ -241,7 +309,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/mitchell.JPeG"/>
                     <Info>
                         <Name>Mitchell Osborn</Name>
-                        <Title>Developer | Brown</Title>
+                        <Title>Developer | Brown College</Title>
                     </Info>
                 </Member>
 
@@ -249,7 +317,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/shreya.JPG"/>
                     <Info>
                         <Name>Shreyas Minocha</Name>
-                        <Title>Developer | Will Ricce</Title>
+                        <Title>Developer | Will Rice College</Title>
                     </Info>
                 </Member>
 
@@ -257,7 +325,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/katherine.JPG"/>
                     <Info>
                         <Name>Katherine Chui</Name>
-                        <Title>Designer | Jones</Title>
+                        <Title>Designer | Jones College</Title>
                     </Info>
                 </Member>
                 

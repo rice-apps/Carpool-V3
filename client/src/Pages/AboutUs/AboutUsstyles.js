@@ -15,13 +15,16 @@ const AllDiv = styled.div`
 `
 
 const FeedbackButton = styled(Button)`
-  // top: 75vh;
-  // bottom: 75vh;
+  z-index: 999;
+  position: fixed;
+  top: 90vh;
+  left: 60vw;  
   background: #C1CCE0;
   border-radius: 10px 10px 0px 10px;
   height: 6vh;
   width: 16vh;
   justify-content: space-between;
+
 
 `
 
@@ -30,7 +33,6 @@ font-family: Josefin Sans;
 font-style: normal;
 font-weight: normal;
 font-size: 1em;
-
 `
 
 const FAQHeader = styled.div`
@@ -43,8 +45,16 @@ const FAQHeader = styled.div`
   color: white;
 `
 
+const Bold = styled.div`
+  display: inline-block;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: bold;
+`
+
 const Questions = styled.div`
-  padding-top: 5%;
+  position: relative;
+  padding-top: 3%;
 `
 
 const QuestionAccordion = styled(Accordion)`
@@ -54,7 +64,7 @@ const QuestionAccordion = styled(Accordion)`
 `
 
 const AboutUsHeader = styled.div`
-  padding-top: 4vh;
+  padding-top: 5%;
   align-text: center;
   font-family: Josefin Sans;
   font-style: normal;
@@ -62,7 +72,7 @@ const AboutUsHeader = styled.div`
   font-size: 3em;
   display: flex;
   color: white;
-  margin-bottom: 10%;
+  padding-bottom: 3%;
 `
 
 const Member = styled(Card)({
@@ -117,6 +127,7 @@ export {
   FeedbackText,
   FAQHeader,
   Questions,
+  Bold,
   QuestionAccordion,
   AboutUsHeader,
   Member,
