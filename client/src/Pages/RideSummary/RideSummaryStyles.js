@@ -213,7 +213,7 @@ const TextContainer = styled.div`
 `
 const ButtonDiv = styled.button`
   color: #ffffff;
-  background: ${({ disabled }) => !disabled ? '#2075d8' : '#9e9e9e'};
+  background: ${({ disabled, leaveRide }) => leaveRide ? 'red' : !disabled ? '#2075d8' : '#9e9e9e'};
   text-align: center;
   font-family: Josefin Sans;
   font-style: normal;
