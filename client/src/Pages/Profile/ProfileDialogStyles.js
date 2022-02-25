@@ -38,6 +38,7 @@ export const IconBox = styled(Box)({
   display: "flex",
 });
 
+
 export const InputBox = styled(Box)({
   height: "16%",
   width: "75%",
@@ -45,6 +46,7 @@ export const InputBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "space-around",
 });
+
 
 export const ButtonBox = styled(Box)({
   height: "14%",
@@ -160,10 +162,10 @@ export function VenmoTextField(props) {
       }}
       InputProps={{
         className: classes.inputContent,
-        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8", height: "5vh" },
+        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8", height: "7.3vh" },
         startAdornment: (
         <InputAdornment position="start">
-          <AlternateEmailIcon />
+          <AlternateEmailIcon/>
         </InputAdornment>
         ),
         endAdornment: (
