@@ -26,7 +26,7 @@ root: {
 	alignItems: 'center',
 	marginTop: '4vh',
 	width: '75vw',
-	height: '10vh',
+	height: '6vh',
 	borderRadius: '9px',
 	background: 'rgba(187, 218, 255, 0.22)'
 }, 
@@ -35,26 +35,6 @@ label: {
 }
 })(Button);
 
-const PhoneNumber = withStyles({
-	root:{
-		display: 'flex', 
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: '.5vh 0 0 0',
-	
-		background: 'white',
-		fontFamily: 'Josefin Sans',
-		fontWeight: '300',
-		fontSize: '18px',
-		textAlign: 'center',
-
-		color: '#002140'
-	},
-	label: {
-		textTransform: 'none',
-	}
-}) (Button);
-
 
 const MailBox = withStyles({
 root: {
@@ -62,17 +42,6 @@ root: {
 }
 })(MailIcon);
 
-const EditProfileButton = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: Josefin Sans;
-	font-weight: 600;
-	font-size: 30px;
-	line-height: 30px;
-	text-align: center;
-`
 
 const ProfileCard = styled.div`
 	display: flex;
@@ -81,11 +50,12 @@ const ProfileCard = styled.div`
 	flex-direction: column;
 `;
 
-const ReturnHeader = styled.div`
+const TopHeader = styled.div`
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
+	margin-right: 25px;
 	align-items: center;
-	padding: 0 10px 10px 0;
+	padding: 15px;
 `;
 
 const UserPic = styled.img`
@@ -109,21 +79,10 @@ const UserName = styled.p`
 
 	font-family: Josefin Sans;
 	font-weight: 600;
-	font-size: 30px;
-	line-height: 30px;
+	font-size: 2.2em;
 	text-align: center;
 
 	color: #002140;
-`;
-
-const StyledNumber = styled.p`
-	display: flex; 
-	padding: 0px 0px 0px 1vh;
-
-	font-family: Josefin Sans;
-	font-weight: '300';
-	text-align: center;
-	color: black;
 `;
 
 const StyledText = styled.p`
@@ -133,10 +92,9 @@ const StyledText = styled.p`
 	font-family: Josefin Sans;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 18px;
-	line-height: 18px;
+	font-size: 1.5em;
 	text-align: center;
-	color: #2075D8;
+	color: #002140;
 `;
 
 const StyledText2 = styled.p`
@@ -150,10 +108,9 @@ const StyledText2 = styled.p`
 	font-weight: 600;
 	font-size: 13px;
 	line-height: 13px;
-	text-align: center;
-	letter-spacing: 0.07em;
+	text-align: center;	
 
-	color: #2075D8;
+	color: #002140;
 `;
 
 const StyledText3 = styled.p`
@@ -173,19 +130,29 @@ const StyledText3 = styled.p`
 	color: #2075D8;
 `;
 
+const StyledTextVenmo = styled.p`
+	display: flex; 
+	padding: 0px 0px 0px 1vh;
+
+	font-family: Josefin Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1.5em;
+	text-align: center;
+	color: rgba(32, 117, 216, 1);
+`;
+
 export {
 	ButtonBox,
 	BackArrow,
 	TextBox,
 	MailBox,
-	EditProfileButton,
 	ProfileCard,
-	ReturnHeader,
+	TopHeader,
 	UserName,
 	UserPic,
-	PhoneNumber,
-	StyledNumber,
 	StyledText,
 	StyledText2,
-	StyledText3
+	StyledText3,
+	StyledTextVenmo
 };
