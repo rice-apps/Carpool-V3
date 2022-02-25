@@ -200,6 +200,7 @@ const RiderText = styled.div`
 const NotesDiv = styled.div`
   grid-column: 1/ 5;
   grid-row: 4;
+  overflow-wrap: break-word;
   margin: 2em auto;
   width: 85%;
   padding: 10px;  
