@@ -9,15 +9,29 @@ import {
   RequiredTextField
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
+import { useToasts } from "react-toast-notifications";
 
 const OnboardingForm = ({ onSubmit, onCancel }) => {
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [venmo, setVenmo] = useState(undefined);
+  const { addToast } = useToasts();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
+
+        console.log(firstName);
+
+        if (firstName === "" || lastName === "") { 
+            addToast("Please fill in your full name.", { appearance: 'error' });
+            return
+        }   
+
+        if (phone === "") { 
+            addToast("Please fill in your phone number.", { appearance: 'error' });
+            return
+        }  
 
         return onSubmit({
             firstName, lastName,
@@ -26,7 +40,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
             <ProfileFormContainer>
                 <Header> Sign up to use Carpool</Header>
                 <InputBox>
@@ -65,20 +79,12 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
                 </InputBox>
                 <SubmitButton 
                     variant="contained"
-                    onClick={() => {
-                        onSubmit({
-                        firstName,
-                        lastName,
-                        phone,
-                        venmo,
-                        });
-                    }}>
+                    onClick={() => { handleSubmit()}}>
                         Submit
                 </SubmitButton>
                 <CancelButton
                     variant="contained"
-                    onClick={() => { onCancel()}
-                    }>
+                    onClick={() => { onCancel()}}>
                         Cancel
                 </CancelButton>
             </ProfileFormContainer>
