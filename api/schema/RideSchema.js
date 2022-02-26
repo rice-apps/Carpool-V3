@@ -46,11 +46,11 @@ RideTC.addRelation('arrivalLocation', {
 RideTC.addResolver({
   name: 'findByUser',
   type: [RideTC],
-  args: { _id: 'ID!' },
   resolve: async ({ source, args, context, info }) => {
+    const { id } = context.decodedJWT
     // Return all rides where the user is an owner or a rider
     return await Ride.find({
-      $or: [{ owner: args._id }, { riders: { $in: [args._id] } }],
+      $or: [{ owner: id }, { riders: { $in: [id] } }],
     })
   },
 })
@@ -94,6 +94,7 @@ RideTC.addResolver({
 const RideQuery = {
   rideOne: RideTC.getResolver('findOne'),
   rideMany: RideTC.getResolver('findMany'),
+  rideByUser: RideTC.getResolver('findByUser'),
 }
 
 // TODO: Add [authMiddleware] back to all getResolver calls once login is implemented!
