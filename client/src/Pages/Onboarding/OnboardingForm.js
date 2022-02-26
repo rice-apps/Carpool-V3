@@ -48,7 +48,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
   const classes = ProfileStyles();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <ProfileFormContainer>
         <Header> Sign up to use Carpool</Header>
         <InputBox>
@@ -112,16 +112,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         </InputBox>
         <SubmitButton
           variant="contained"
-          onClick={() => {
-            onSubmit({
-              firstName,
-              lastName,
-              phone,
-              college,
-              venmo,
-            });
-          }}
-        >
+          onClick={() => { handleSubmit()}}>
           Submit
         </SubmitButton>
         <CancelButton
