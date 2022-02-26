@@ -25,8 +25,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
 
     const handleSubmit = () => {
 
-        console.log(firstName);
-
+ 
         if (firstName === "" || lastName === "") { 
             addToast("Please fill in your full name.", { appearance: 'error' });
             return

@@ -104,8 +104,7 @@ const DisplayRides = (props) => {
 
     const rideBox = (ridesT) =>  {
 
-        console.log("ridesT", ridesT)
-        
+         
         if (ridesT === null || ridesT === undefined) {
             return null;
         }

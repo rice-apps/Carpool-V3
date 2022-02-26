@@ -81,13 +81,11 @@ export default function ProfileDialog(props) {
         college: newCollege,
       };
     });
-    console.log("user", user);
-  }
+   }
 
   const [updateUser] = useMutation(UPDATE_USER);
   const updateUserInfo = () => {
-    console.log("user", user);
-    updateUser({ variables: user });
+     updateUser({ variables: user });
   };
   function setUserProps(key, value) {
     user[key] = value;
