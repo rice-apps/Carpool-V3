@@ -42,6 +42,11 @@ const MailBox = withStyles({
   },
 })(MailIcon);
 
+const AllDiv = styled.div`
+  background: #f4f6f9;
+  height: 90vh;
+`
+
 const EditProfileButton = styled.div`
   display: flex;
   justify-content: center;
@@ -60,6 +65,7 @@ const ProfileCard = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+	padding-bottom: 10vh;
 `;
 
 const TopHeader = styled.div`
@@ -170,6 +176,7 @@ const StyledTextVenmo = styled.p`
 `;
 
 export {
+	AllDiv,
 	ButtonBox,
 	BackArrow,
   College,
