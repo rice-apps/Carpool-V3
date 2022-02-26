@@ -68,6 +68,7 @@ const Search = () => {
   const today = new Date().toDateString();
   const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES, {
     variables: { after: today },
+    notifyOnNetworkStatusChange: true,
   });
 
   return (

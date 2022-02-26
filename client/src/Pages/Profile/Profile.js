@@ -86,6 +86,8 @@ const Profile = () => {
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
+        <College>{user.college}</College>
+
         <TextBox
           onClick={async () => {
             if (user.phone) {
@@ -102,7 +104,6 @@ const Profile = () => {
             {" "}
             {user.phone ? user.phone : "Phone Number Unavailable"}{" "}
           </StyledText>
-          <College>{user.college}</College>
         </TextBox>
         <TextBox
           onClick={() => {
