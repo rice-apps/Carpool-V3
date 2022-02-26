@@ -73,7 +73,7 @@ const Search = () => {
   return (
     <React.Fragment>
       <div>
-        <Header subtitle="Search Rides" />
+        <Header subtitle="Find Rides" />
       </div>
       <Form
         resultRides={resultDestArr}

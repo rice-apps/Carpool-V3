@@ -5,21 +5,25 @@ import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
+import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
+
 import {
   ButtonBox,
   BackArrow,
   TextBox,
   MailBox,
   ProfileCard,
-  ReturnHeader,
+  TopHeader,
   UserName,
-  PhoneNumber,
   StyledText,
   StyledText2,
   StyledText3,
-  EditProfileButton,
   College,
   UserPic,
+  StyledText,
+  StyledText2,
+  StyledText3,
+  StyledTextVenmo,
 } from "./ProfileStyles.js";
 import { useState } from "react";
 import LoadingDiv from "../../common/LoadingDiv.js";
@@ -62,23 +66,21 @@ const Profile = () => {
 
   return (
     <div>
-      <ReturnHeader>
+      <TopHeader>
         <ButtonBox onClick={goBack}>
           <BackArrow></BackArrow>
           <StyledText3>Back</StyledText3>
         </ButtonBox>
-      </ReturnHeader>
-      {localStorage.getItem("netid") === user.netid && (
-        <EditProfileButton>
+        {localStorage.getItem("netid") === user.netid && (
           <IconButton
             aria-label="edit"
             onClick={() => setOpenDialog(true)}
             variant="outlined"
           >
-            <EditIcon />
+            <EditIcon style={{ color: "#2075D8" }} />
           </IconButton>
-        </EditProfileButton>
-      )}
+        )}
+      </TopHeader>
       <ProfileDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
@@ -87,10 +89,24 @@ const Profile = () => {
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
-        <PhoneNumber>
-          {user.phone ? user.phone : "Phone Number Unavailable"}
-        </PhoneNumber>
-        <College>{user.college}</College>
+        <TextBox
+          onClick={async () => {
+            if (user.phone) {
+              navigator.clipboard.writeText(user.phone).then(
+                addToast("Phone Number Copied to Clipboard!", {
+                  appearance: "success",
+                })
+              );
+            }
+          }}
+        >
+          <PhoneIcon />
+          <StyledText>
+            {" "}
+            {user.phone ? user.phone : "Phone Number Unavailable"}{" "}
+          </StyledText>
+          <College>{user.college}</College>
+        </TextBox>
         <TextBox
           onClick={() => {
             navigator.clipboard.writeText(user.netid + "@rice.edu").then(
@@ -100,7 +116,8 @@ const Profile = () => {
             );
           }}
         >
-          <MailBox></MailBox> <StyledText>{user.netid}@rice.edu</StyledText>{" "}
+          <MailBox style={{ color: "#002140" }} />
+          <StyledText>{user.netid}@rice.edu</StyledText>
         </TextBox>
         <TextBox
           onClick={async () => {
@@ -118,9 +135,9 @@ const Profile = () => {
           }}
         >
           <StyledText2>Venmo</StyledText2>
-          <StyledText>
+          <StyledTextVenmo>
             {user.venmo ? `@${user.venmo}` : "Not Specified"}
-          </StyledText>
+          </StyledTextVenmo>
         </TextBox>
       </ProfileCard>
     </div>

@@ -62,7 +62,7 @@ const YourRides = (paid) => {
                 if (ride.owner) {
                     ownerTrue = ride.owner.netid === netid
                 }
-                ride.riders.forEach(rider => riderTrue = rider.netid === netid)
+                ride.riders.forEach(rider => riderTrue = (riderTrue === true || rider.netid === netid))
                 return ownerTrue || riderTrue
             })
 
