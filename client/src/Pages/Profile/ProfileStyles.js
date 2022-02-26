@@ -28,7 +28,8 @@ root: {
 	width: '75vw',
 	height: '6vh',
 	borderRadius: '9px',
-	background: 'rgba(187, 218, 255, 0.22)'
+	background: 'rgba(187, 218, 255, 0.22)',
+	boxShadow: '2px 4px 8px rgba(0, 0, 0, 0.25)',
 }, 
 label: {
 	textTransform: 'none',
