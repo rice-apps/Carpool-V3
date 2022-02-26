@@ -1,43 +1,58 @@
-import React, { useState } from 'react'
-import Header from '../../common/Header/Header';
-import Form from './Form';
-import DisplayRides from './DisplayRides'
+import React, { useState } from "react";
+import Header from "../../common/Header/Header";
+import Form from "./Form";
+import DisplayRides from "./DisplayRides";
 import { gql, useQuery } from "@apollo/client";
-import LoadingDiv from '../../common/LoadingDiv';
+import LoadingDiv from "../../common/LoadingDiv";
 import "@fontsource/source-sans-pro";
-import './Search.css'
+import "./Search.css";
 
-
-export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export const monthToStr = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const Search = () => {
   // Set last page visited
-  localStorage.setItem('lastPage', 'search');
+  localStorage.setItem("lastPage", "search");
   let resultDestArr = [];
 
-  const [rides, setRides] = useState([])
-  const [ridesPossible, setRidesPossible] = useState([])
-    
+  const [rides, setRides] = useState([]);
+  const [ridesPossible, setRidesPossible] = useState([]);
+
   const displayRef = React.useRef();
 
   const updateResultRides = (rides) => {
     resultDestArr = rides;
-  }
+  };
 
   const GET_RIDES = gql`
-  query($after: Date) {
-    rideMany(filter: {
-      _operators: { departureDate: { gte: $after } }
-    }) {
-      _id
-      departureDate
-      riders { netid }
-      spots
-      departureLocation { title }
-      arrivalLocation { title }
+    query ($after: Date) {
+      rideMany(filter: { _operators: { departureDate: { gte: $after } } }) {
+        _id
+        departureDate
+        riders {
+          netid
+        }
+        spots
+        departureLocation {
+          title
+        }
+        arrivalLocation {
+          title
+        }
+      }
     }
-  }
-`;
+  `;
 
   const GET_LOCATIONS = gql`
     query {
@@ -51,11 +66,10 @@ const Search = () => {
   const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
   const today = new Date().toDateString();
-  const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES,
-    {
-      variables: { after: today }
-    }
-  );
+  const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES, {
+    variables: { after: today },
+    notifyOnNetworkStatusChange: true,
+  });
 
   return (
     <React.Fragment>
@@ -66,7 +80,7 @@ const Search = () => {
           <DisplayRides ref={displayRef} ridesT={rides} ridesPossible={ridesPossible} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
         }
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
