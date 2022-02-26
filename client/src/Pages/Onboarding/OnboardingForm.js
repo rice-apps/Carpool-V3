@@ -1,22 +1,26 @@
 import {
   Header,
   ProfileFormContainer,
-  Label, 
-  InputBox, 
+  Label,
+  InputBox,
   SubmitButton,
   CancelButton,
   InputTextField,
-  RequiredTextField
+  RequiredTextField,
+  CollegeSelect,
+  ProfileStyles,
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
+import { MenuItem } from "@material-ui/core";
 import { useToasts } from "react-toast-notifications";
 
 const OnboardingForm = ({ onSubmit, onCancel }) => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [college, setCollege] = useState("");
   const [phone, setPhone] = useState("");
-  const [venmo, setVenmo] = useState(undefined);
+  const [venmo, setVenmo] = useState("");
   const { addToast } = useToasts();
 
     const handleSubmit = () => {
@@ -33,63 +37,105 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             return
         }  
 
-        return onSubmit({
-            firstName, lastName,
-            phone, venmo
-        });
-    };
+    return onSubmit({
+      firstName,
+      lastName,
+      college,
+      phone,
+      venmo,
+    });
+  };
 
-    return (
-        <form>
-            <ProfileFormContainer>
-                <Header> Sign up to use Carpool</Header>
-                <InputBox>
-                    <Label>Name</Label>
-                    <RequiredTextField
-                        label="First Name"
-                        defaultValue={firstName}
-                        name="firstName"
-                        required onChange={(e) => setFirstName(e.target.value)}
-                    ></RequiredTextField>
-                    <RequiredTextField
-                        label="Last Name"
-                        name="lastName"
-                        defaultValue={lastName}
-                        required onChange={(e) => setLastName(e.target.value)}
-                    ></RequiredTextField>
-                </InputBox>
-                <InputBox>
-                    <Label>Contact</Label>
-                    <RequiredTextField
-                        label="Phone #"
-                        defaultValue={phone}
-                        name="phone"
-                        required onChange={(e) => setPhone(e.target.value)}
-                    ></RequiredTextField>
-                </InputBox>
-                <InputBox>
-                    <Label>Venmo</Label>
-                    <InputTextField
-                    label="Account ID"
-                    name="venmo"
-                    defaultValue={venmo}
-                    value={venmo}
-                    onChange={(e) => setVenmo(e.target.value)}
-                    ></InputTextField>
-                </InputBox>
-                <SubmitButton 
-                    variant="contained"
-                    onClick={() => { handleSubmit()}}>
-                        Submit
-                </SubmitButton>
-                <CancelButton
-                    variant="contained"
-                    onClick={() => { onCancel()}}>
-                        Cancel
-                </CancelButton>
-            </ProfileFormContainer>
-        </form>
-    ) 
-}
+  const classes = ProfileStyles();
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <ProfileFormContainer>
+        <Header> Sign up to use Carpool</Header>
+        <InputBox>
+          <Label>Name</Label>
+          <RequiredTextField
+            label="First Name"
+            defaultValue={firstName}
+            name="firstName"
+            required
+            onChange={(e) => setFirstName(e.target.value)}
+          ></RequiredTextField>
+          <RequiredTextField
+            label="Last Name"
+            name="lastName"
+            defaultValue={lastName}
+            required
+            onChange={(e) => setLastName(e.target.value)}
+          ></RequiredTextField>
+        </InputBox>
+        <InputBox>
+          <Label>Contact</Label>
+          <RequiredTextField
+            label="Phone #"
+            defaultValue={phone}
+            name="phone"
+            required
+            onChange={(e) => setPhone(e.target.value)}
+          ></RequiredTextField>
+        </InputBox>
+        <InputBox>
+          <Label>Venmo</Label>
+          <InputTextField
+            label="Account ID"
+            name="venmo"
+            defaultValue={venmo}
+            value={venmo}
+            onChange={(e) => setVenmo(e.target.value)}
+          ></InputTextField>
+          <Label>College:</Label>
+          <CollegeSelect
+            variant="outlined"
+            margin="dense"
+            defaultValue={college}
+            classes={{ root: classes.inputLabel }}
+            onChange={(e) => {
+              setCollege(e.target.value);
+            }}
+          >
+            <MenuItem value="Brown">Brown</MenuItem>
+            <MenuItem value="Jones">Jones</MenuItem>
+            <MenuItem value="Duncan">Duncan</MenuItem>
+            <MenuItem value="McMurtry">McMurtry</MenuItem>
+            <MenuItem value="Martel">Martel</MenuItem>
+            <MenuItem value="Baker">Baker</MenuItem>
+            <MenuItem value="Will Rice">Will Rice</MenuItem>
+            <MenuItem value="Sid Rich">Sid Rich</MenuItem>
+            <MenuItem value="Wiess">Wiess</MenuItem>
+            <MenuItem value="Hanszen">Brown</MenuItem>
+            <MenuItem value="Lovett">Lovett</MenuItem>
+          </CollegeSelect>
+        </InputBox>
+        <SubmitButton
+          variant="contained"
+          onClick={() => {
+            onSubmit({
+              firstName,
+              lastName,
+              phone,
+              college,
+              venmo,
+            });
+          }}
+        >
+          Submit
+        </SubmitButton>
+        <CancelButton
+          variant="contained"
+          onClick={() => {
+            onCancel();
+          }}
+        >
+          Cancel
+        </CancelButton>
+      </ProfileFormContainer>
+    </form>
+  );
+};
 
 export default OnboardingForm;

@@ -82,6 +82,9 @@ const GET_RIDE = gql`
 `
 
 const RideSummary = () => {
+
+  document.title = "Ride Summary";
+
   let { id } = useParams()
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading"},

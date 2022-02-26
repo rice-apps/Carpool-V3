@@ -1,22 +1,22 @@
-import styled from 'styled-components';
-import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import styled from "styled-components";
+import { withStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+import MailIcon from "@material-ui/icons/Mail";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 const ButtonBox = withStyles({
-	label: {
-	  textTransform: 'capitalize',
-	}
-  })(Button);
-  
+  label: {
+    textTransform: "capitalize",
+  },
+})(Button);
+
 const BackArrow = withStyles({
-root: {
-	display: 'flex',
-	color: '#2075D8',
-	justifyContent: 'center',
-	alignItems: 'center'
-}
+  root: {
+    display: "flex",
+    color: "#2075D8",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 })(ChevronLeftIcon);
 
 const TextBox = withStyles({
@@ -37,17 +37,29 @@ label: {
 
 
 const MailBox = withStyles({
-root: {
-	color: '#2075D8'
-}
+  root: {
+    color: "#2075D8",
+  },
 })(MailIcon);
 
+const EditProfileButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: center;
+`;
 
 const ProfileCard = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const TopHeader = styled.div`
@@ -59,16 +71,31 @@ const TopHeader = styled.div`
 `;
 
 const UserPic = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1vh;
 
-	width: 25vh;
-	height: 25vh;
-	background-image: url("https://www.kindpng.com/picc/m/229-2295555_not-my-art-pikachu-is-eating-pocky-kawaii.png");
-	border-radius: 50%;
-	background-size: cover;
+  width: 25vh;
+  height: 25vh;
+  background-image: url("https://www.kindpng.com/picc/m/229-2295555_not-my-art-pikachu-is-eating-pocky-kawaii.png");
+  border-radius: 50%;
+  background-size: cover;
+`;
+
+const College = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0vh 0px 25px 0px;
+
+  font-family: Josefin Sans;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+
+  color: #002140;
 `;
 
 const UserName = styled.p`
@@ -114,20 +141,20 @@ const StyledText2 = styled.p`
 `;
 
 const StyledText3 = styled.p`
-	display: flex; 
-	justify-content: center;
-	align-items: center;
-	margin-left: 10px;
-	margin-top: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 3px;
 
-	font-family: Josefin Sans;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 18px;
-	line-height: 18px;
-	text-align: center;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
 
-	color: #2075D8;
+  color: #2075d8;
 `;
 
 const StyledTextVenmo = styled.p`
@@ -145,6 +172,8 @@ const StyledTextVenmo = styled.p`
 export {
 	ButtonBox,
 	BackArrow,
+  College,
+  EditProfileButton,
 	TextBox,
 	MailBox,
 	ProfileCard,

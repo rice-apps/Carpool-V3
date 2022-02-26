@@ -15,16 +15,21 @@ import {
   ProfileCard,
   TopHeader,
   UserName,
-  UserPic,
   StyledText,
   StyledText2,
   StyledText3,
-  StyledTextVenmo,
+  EditProfileButton,
+  College,
+  UserPic,
+  StyledTextVenmo
 } from "./ProfileStyles.js";
 import { useState } from "react";
 import LoadingDiv from "../../common/LoadingDiv.js";
 
 const Profile = () => {
+
+  document.title = "Profile";
+
   const { id } = useParams();
 
   const { addToast } = useToasts();
@@ -37,6 +42,7 @@ const Profile = () => {
         lastName
         netid
         phone
+        college
         venmo
       }
     }
@@ -44,20 +50,15 @@ const Profile = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
 
-  let {
-    data: userData,
-    loading,
-    error,
-  } = useQuery(GET_USER, {
-    variables: {
-      netID: id,
-    },
+  let { data, loading, error } = useQuery(GET_USER, {
+    variables: { netID: id },
   });
 
   if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
 
-  let { userOne: user } = JSON.parse(JSON.stringify(userData));
+  let { userOne: user } = JSON.parse(JSON.stringify(data));
+
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
@@ -71,13 +72,17 @@ const Profile = () => {
           <BackArrow></BackArrow>
           <StyledText3>Back</StyledText3>
         </ButtonBox>
-        <IconButton
-          aria-label="edit"
-          onClick={() => setOpenDialog(true)}
-          variant="outlined"
-        >
-          <EditIcon style={{color:"#2075D8"}} />
-        </IconButton>
+      {localStorage.getItem("netid") === user.netid && (
+        <EditProfileButton>
+          <IconButton
+            aria-label="edit"
+            onClick={() => setOpenDialog(true)}
+            variant="outlined"
+          >
+            <EditIcon />
+          </IconButton>
+        </EditProfileButton>
+      )}
       </TopHeader>
       <ProfileDialog
         openDialog={openDialog}
@@ -87,6 +92,7 @@ const Profile = () => {
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
+        <College>{user.college}</College>
         <TextBox onClick={async () => {
             if (user.phone) {
               navigator.clipboard.writeText(user.phone).then(
@@ -122,7 +128,7 @@ const Profile = () => {
             } else {
               addToast("Venmo ID Not Specified", {
                 appearance: "error",
-              })
+              });
             }
           }}
         >
@@ -137,5 +143,4 @@ const Profile = () => {
     </div>
   );
 };
-
 export default Profile;
