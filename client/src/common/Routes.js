@@ -45,13 +45,9 @@ const CheckTokenRoute = ({ children, ...rest }) => {
   let token = localStorage.getItem('token');
 
   if (token) {
-    console.log("Token found");
     const {exp} = jwt_decode(token);
     const expirationTime = (exp * 1000) - 60000;
-    console.log("Expriration time", expirationTime);
-    console.log("Date now", Date.now());
     if (Date.now() >= expirationTime) {
-      console.log("Token expired, removing");
       localStorage.removeItem('token');
       localStorage.removeItem('netid');
       localStorage.removeItem('nextPage');

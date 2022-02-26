@@ -199,7 +199,7 @@ const RideSummary = () => {
 
 
   const leave = () => {
-     const returned = leaveRide().then((result) => {
+    leaveRide().then((result) => {
        window.location.reload();
  
     }).catch((err) => {
