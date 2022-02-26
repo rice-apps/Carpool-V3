@@ -73,6 +73,17 @@ export default function ProfileDialog(props) {
 
   const classes = ProfileStyles();
 
+  function setCollege(e) {
+    const newCollege = e.target.value;
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        college: newCollege,
+      };
+    });
+    console.log("user", user);
+  }
+
   const [updateUser] = useMutation(UPDATE_USER);
   const updateUserInfo = () => {
     console.log("user", user);
@@ -141,9 +152,10 @@ export default function ProfileDialog(props) {
                   variant="outlined"
                   margin="dense"
                   defaultValue={user.college}
-                  classes={{ root: classes.inputLabel }}
+                  classes={{ root: classes.inputLabelProps }}
                   onChange={(e) => {
                     selectCollege(e);
+                    setCollege(e);
                     setChangesMade(true);
                   }}
                 >

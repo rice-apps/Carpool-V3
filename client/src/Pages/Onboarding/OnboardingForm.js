@@ -7,7 +7,6 @@ import {
   CancelButton,
   InputTextField,
   RequiredTextField,
-  NonRequiredTextField,
   CollegeSelect,
   ProfileStyles,
 } from "./OnboardingFormStyle.js";
@@ -97,7 +96,6 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             <MenuItem value="Hanszen">Brown</MenuItem>
             <MenuItem value="Lovett">Lovett</MenuItem>
           </CollegeSelect>
-          <Label>Contact:</Label>
         </InputBox>
         <SubmitButton
           variant="contained"
