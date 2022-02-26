@@ -12,63 +12,6 @@ import { useEffect } from 'react';
 import { SERVICE_URL } from '../../config'; 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 
-
-// set appbar colour
-const currURL = window.location.pathname;
-const appbarColor = ((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
-console.log(appbarColor);
-
-const hamburgerColor = ((currURL == "/about-us" || currURL == "/FAQ") ? "white" : "#002140")
-console.log(hamburgerColor);
-
-const useStyles = makeStyles((theme) => ({
-  appbarRoot: {
-    zIndex:"999",
-    background: appbarColor,
-  },
-  icon: {
-    color: hamburgerColor,
-  },
-  text : {
-    color:"#002140",
-  },
-  avatarIcon : {
-    width: "8vh",
-    height: "8vh"
-  },
-  bottomItem : {
-    marginTop: "auto"
-  },
-  list: {
-    display: "flex",
-    flexDirection: "column",
-    width: "66vw",
-    height: "100vh",
-  },
-  usernameContainer:{
-    gap: "5vw",
-    height: "15vh"
-  },
-  logInOutContainer:{
-    display:"flex", 
-    justifyContent:"center", 
-    height: "15vh",
-  },
-}));
-
-const LogInOutButton = withStyles({
-  root: {
-      background: '#2075D8',
-      width: '33vw',
-      borderRadius: 25,
-      color: 'white',
-  },
-  label: {
-    textTransform: 'capitalize',
-    fontFamily: 'Josefin Sans'
-  },
-})(Button);
-
 const GET_USER = gql`
 query GetUserInfo ($netID: String)
 {
@@ -79,6 +22,61 @@ query GetUserInfo ($netID: String)
 }`
 
 export default function ButtonAppBar (props) {
+
+    // set appbar colour
+  const currURL = window.location.pathname;
+  const [appbarColor, setAppbarColor] = useState((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
+
+  const [hamburgerColor, setHamburgerColor] = useState((currURL == "/about-us" || currURL == "/FAQ") ? "white" : "#002140")
+
+  const useStyles = makeStyles((theme) => ({
+    appbarRoot: {
+      zIndex:"999",
+      background: appbarColor,
+    },
+    icon: {
+      color: hamburgerColor,
+    },
+    text : {
+      color:"#002140",
+    },
+    avatarIcon : {
+      width: "8vh",
+      height: "8vh"
+    },
+    bottomItem : {
+      marginTop: "auto"
+    },
+    list: {
+      display: "flex",
+      flexDirection: "column",
+      width: "66vw",
+      height: "100vh",
+    },
+    usernameContainer:{
+      gap: "5vw",
+      height: "15vh"
+    },
+    logInOutContainer:{
+      display:"flex", 
+      justifyContent:"center", 
+      height: "15vh",
+    },
+  }));
+  
+  const LogInOutButton = withStyles({
+    root: {
+        background: '#2075D8',
+        width: '33vw',
+        borderRadius: 25,
+        color: 'white',
+    },
+    label: {
+      textTransform: 'capitalize',
+      fontFamily: 'Josefin Sans'
+    },
+  })(Button);
+
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
@@ -102,6 +100,12 @@ export default function ButtonAppBar (props) {
     else{ 
       setShowBar(true)
     }
+
+    setAppbarColor((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
+
+    setHamburgerColor((currURL == "/about-us" || currURL == "/FAQ") ? "white" : "#002140")
+
+    
   }, [location.pathname])
 
   // if (loading) return <LoadingDiv height={'9vh'} />;

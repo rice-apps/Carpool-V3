@@ -4,8 +4,11 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MailIcon from '@material-ui/icons/Mail';
+
 import{
     AllDiv,
+    PageHeader,
+    TitleDivider,
     FeedbackButton,
     FeedbackText,
     FAQHeader,
@@ -29,6 +32,13 @@ const AboutUs = () => {
 
     return (
         <AllDiv>
+
+            <PageHeader>
+                About Us
+            </PageHeader>
+
+            <TitleDivider variant='inset'/>
+
 
             <FAQHeader>
                 FAQ
@@ -318,7 +328,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image="/membersPictures/shreya.JPG"/>
+                    <Picture image="/membersPictures/shreyas.JPG"/>
                     <Info>
                         <Name>Shreyas Minocha</Name>
                         <Title>Developer | Will Rice College</Title>

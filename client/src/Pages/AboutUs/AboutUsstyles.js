@@ -5,6 +5,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Accordion from '@material-ui/core/Accordion';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+
 
 
 const AllDiv = styled.div`
@@ -17,6 +19,23 @@ const AllDiv = styled.div`
   font-family: Josefin Sans;
 `
 
+const PageHeader = styled.div`
+  align-text: center;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 3.4em;
+  display: flex;
+  color: white;
+`
+
+export const TitleDivider = withStyles({
+  root: {
+      margin: '5%',
+      borderTop: '1% solid white',
+  }
+})(Divider);
+
 const FeedbackButton = styled(Button)`
   z-index: 999;
   position: fixed;
@@ -28,7 +47,6 @@ const FeedbackButton = styled(Button)`
   width: 16vh;
   justify-content: space-between;
   filter: drop-shadow(2px 2px 2px #002140);
-
 `
 
 const FeedbackText = styled.div`
@@ -165,6 +183,7 @@ text-align: center;
 
 export {
   AllDiv,
+  PageHeader,
   FeedbackButton,
   FeedbackText,
   FAQHeader,
