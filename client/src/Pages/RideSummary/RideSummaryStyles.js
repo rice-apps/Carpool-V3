@@ -324,6 +324,18 @@ const InnerLocationDiv = styled.div`
 padding: 20px;
 `
 
+const ConfirmationText = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: Josefin Sans;
+font-style: italic;
+font-weight: lighter;
+font-size: 1.5vh;
+line-height: 2vh;
+color: #0B3669;
+padding: 0px 10px 10px 10px;
+`;
 
 export {
   SeatsLeftDiv,
@@ -359,5 +371,6 @@ export {
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
-  TimeText
+  TimeText, 
+  ConfirmationText
 }

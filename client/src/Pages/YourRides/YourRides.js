@@ -18,7 +18,7 @@ import LoadingDiv from '../../common/LoadingDiv.js';
 
 const GET_RIDES = gql`
 	query {
-		rideMany {
+		rideByUser {
 			_id
 			departureDate
 			riders {
@@ -44,27 +44,17 @@ const GET_RIDES = gql`
 	}
 `;
 
-
 const YourRides = (paid) => {
-
     let netid = localStorage.getItem("netid")
 
-		// const [allRides, setAllRides] = useEffect([])
-		const [prevRides, setPrevRides] = useState([])
-		const [futureRides, setFutureRides] = useState([])
+    // const [allRides, setAllRides] = useEffect([])
+    const [prevRides, setPrevRides] = useState([])
+    const [futureRides, setFutureRides] = useState([])
     const { data, loading, error } = useQuery(GET_RIDES);
 
     useEffect(() => {
         if (data) {
-            let rides = data.rideMany.filter(ride => {
-                let ownerTrue = false
-                let riderTrue = false
-                if (ride.owner) {
-                    ownerTrue = ride.owner.netid === netid
-                }
-                ride.riders.forEach(rider => riderTrue = (riderTrue === true || rider.netid === netid))
-                return ownerTrue || riderTrue
-            })
+            let rides = data.rideByUser
 
             let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date())
             previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
@@ -101,10 +91,7 @@ const YourRides = (paid) => {
                 </UpcomingRidesSection>
 
                 <PastRidesSection>
-                    <PastRideTitle>
-                        <TitleText>Past Rides</TitleText>
-                        {/* <TitleText>Payments</TitleText> */}
-                    </PastRideTitle>
+                    <PastRideTitle><TitleText>Past Rides</TitleText><TitleText>Payments</TitleText></PastRideTitle>
                     {prevRides.map(ride => {
                         return (
                             <PastRideCard 
