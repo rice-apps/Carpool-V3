@@ -25,6 +25,9 @@ import { useState } from "react";
 import LoadingDiv from "../../common/LoadingDiv.js";
 
 const Profile = () => {
+
+  document.title = "Profile";
+
   const { id } = useParams();
 
   const { addToast } = useToasts();

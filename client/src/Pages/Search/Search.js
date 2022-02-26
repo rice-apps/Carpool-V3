@@ -11,6 +11,9 @@ import './Search.css'
 export const monthToStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const Search = () => {
+
+  document.title = "Find Rides";
+
   // Set last page visited
   localStorage.setItem('lastPage', 'search');
   let resultDestArr = [];

@@ -7,6 +7,8 @@ import OnboardingForm from './OnboardingForm';
 
 const Onboarding = () => {
 
+  document.title = "Onboarding";
+
   const history = useHistory();
   const { addToast } = useToasts();
   const previous = localStorage.getItem('lastPage');
@@ -91,7 +93,6 @@ const Onboarding = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <div>

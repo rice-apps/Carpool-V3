@@ -45,6 +45,9 @@ const GET_RIDES = gql`
 `;
 
 const YourRides = (paid) => {
+
+    document.title = "Your Rides";
+
     let netid = localStorage.getItem("netid")
 
     // const [allRides, setAllRides] = useEffect([])
