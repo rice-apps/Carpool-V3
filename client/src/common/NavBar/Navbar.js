@@ -16,77 +16,6 @@ import { SERVICE_URL } from '../../config';
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const feedbackURL = 'https://forms.gle/WFqf77FxSy8FVHgb9'
 
-const useStyles = makeStyles((theme) => ({
-  appbarRoot: {
-    zIndex:"999"
-  },
-  icon: {
-    minWidth: '40px',
-    color:"#002140",
-  },
-  secondaryIcon:{
-    fontSize: 'medium',
-    color:"#BAC3CE"
-  },
-  item:{
-    height: '8vh',
-    paddingLeft: '24px',
-    paddingRight: '24px'
-  },
-  text : {
-    fontWeight: 'bold',
-    color:"#002140",
-  },
-  disabledText : {
-    fontStyle: 'italic',
-  },
-  divider :{
-    backgroundColor:"#BBDAFF",
-    margin: '10px 30px 10px 30px',
-    height: '2px'
-  },
-  avatarIcon : {
-    width: "8vh",
-    height: "8vh"
-  },
-  bottomItem : {
-    marginTop: "auto"
-  },
-  list: {
-    display: "flex",
-    flexDirection: "column",
-    width: "66vw",
-    height: "100vh",
-    maxWidth: 350,
-  },
-  usernameContainer:{
-    gap: "5vw",
-    paddingLeft: '24px',
-    paddingRight: '24px',
-    height: "15vh"
-  },
-  logInOutContainer:{
-    display:"flex", 
-    justifyContent:"center",
-    paddingLeft: '24px',
-    paddingRight: '24px', 
-    height: "15vh",
-  },
-}));
-
-const LogInOutButton = withStyles({
-  root: {
-      background: '#2075D8',
-      width: '100%',
-      borderRadius: 25,
-      color: 'white',
-      margin: '0 1em',
-  },
-  label: {
-    textTransform: 'capitalize',
-    fontFamily: 'Josefin Sans'
-  },
-})(Button);
 
 const GET_USER = gql`
 query GetUserInfo ($netID: String)
@@ -101,9 +30,9 @@ export default function ButtonAppBar (props) {
 
     // set appbar colour
   const currURL = window.location.pathname;
-  const [appbarColor, setAppbarColor] = useState((currURL == "/about" || currURL == "/FAQ") ? "#012E62" : "white")
+  const [appbarColor, setAppbarColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
 
-  const [hamburgerColor, setHamburgerColor] = useState((currURL == "/about" || currURL == "/FAQ") ? "white" : "#002140")
+  const [hamburgerColor, setHamburgerColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
 
   const useStyles = makeStyles((theme) => ({
     appbarRoot: {
@@ -177,12 +106,12 @@ export default function ButtonAppBar (props) {
       setShowBar(true)
     }
 
-    setAppbarColor((currURL == "/about" || currURL == "/FAQ") ? "#012E62" : "white")
+    setAppbarColor((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
 
-    setHamburgerColor((currURL == "/about" || currURL == "/FAQ") ? "white" : "#002140")
+    setHamburgerColor((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
 
     
-  }, [location.pathname])
+  }, [location.pathname, currURL])
 
   // if (loading) return <LoadingDiv height={'9vh'} />;
   // if (error) return `Error! ${error.message}`;
