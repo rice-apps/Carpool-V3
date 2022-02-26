@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import LoadingDiv from "../../common/LoadingDiv";
+// import LoadingDiv from "../../common/LoadingDiv";
 
 import { Grid } from "@material-ui/core";
 
@@ -16,14 +16,16 @@ const FormOnly = (props) => {
 
   const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
 
-  const [showLoader, setShowLoader] = useState(true);
+  // const [showLoader, setShowLoader] = useState(false);
 
-  const closeLoaderIn2Seconds = () => {
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 1500);
-    console.log("loader disappear");
-  };
+  // const closeLoaderIn2Seconds = () => {
+  //   console.log("showLoader", showLoader);
+  //   setShowLoader(true);
+  //   setTimeout(() => {
+  //     setShowLoader(false);
+  //   }, 1500);
+  //   console.log("loader disappear");
+  // };
 
   // initial filter: filters rides that are past current date
   useEffect(() => {
@@ -234,13 +236,13 @@ const FormOnly = (props) => {
                     value={filterDate}
                     onChange={(date) => {
                       setfilterDate(date);
-                      closeLoaderIn2Seconds();
+                      // closeLoaderIn2Seconds();
                     }}
                     minDate={minDate}
                     format="MMM dd, yyyy"
                   />
                 </MuiPickersUtilsProvider>
-                {showLoader && <LoadingDiv height={"15vh"} />}
+                {/* {showLoader && <LoadingDiv height={"15vh"} />} */}
               </Grid>
             </Grid>
           </Grid>
