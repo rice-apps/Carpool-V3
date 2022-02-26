@@ -150,3 +150,33 @@ export function InputTextField(props) {
     ></TextField>
   );
 }
+
+export function RequiredTextField(props) {
+  const classes = ProfileStyles();
+  const { label, name, defaultValue, onChange, value } = props;
+  return (
+    <TextField
+      required
+      name={name}
+      style={{ paddingBottom: "1vh" }}
+      variant="filled"
+      label={label}
+      defaultValue={defaultValue}
+      fullWidth={true}
+      onChange={onChange}
+      value={value}
+      InputLabelProps={{
+        className: [classes.inputLabel],
+      }}
+      InputProps={{
+        className: classes.inputContent,
+        style: {
+          background: "rgb(187,218,255,0.22)",
+          color: "#2075D8",
+          height: "6vh",
+        },
+        endAdornment: <InputAdornment position="end"></InputAdornment>,
+      }}
+    ></TextField>
+  );
+}
