@@ -64,12 +64,14 @@ const GET_RIDE = gql`
       }
       notes
       owner {
+        _id
         netid
         firstName
         lastName
         phone
       }
       riders {
+        _id
         netid
         firstName
         lastName
@@ -81,11 +83,14 @@ const GET_RIDE = gql`
 
 const RideSummary = () => {
   let { id } = useParams()
+  const [newOwner, setNewOwner] = useState({"owner":{_id:""}});
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading"},
     arrivalLocation: {title: "Loading"},
     owner: {netid: "Loading"},
-    riders: []
+    riders: [],
+    notes: "",
+    spots: -1
   })
   const history = useHistory()
   const { addToast } = useToasts();
@@ -111,13 +116,30 @@ const RideSummary = () => {
   }
 `
 
-// const UPDATE_OWNER = gql`
-// mutation UpdateOwner($fillthisIn){
-//   rideUpdateOne (record:{
-//     owner:
-//   })
-// }
-// `
+const DELETE_RIDE = gql`
+  mutation DeleteRide($id: MongoID!) {
+      rideDeleteOne(_id: $id) {
+          recordId
+      }
+  }
+`
+// Query ride
+
+// Get ride
+
+// Update ride
+
+
+const UPDATE_RIDE = gql`
+mutation UpdateRideOwner($id: MongoID!, $record: UpdateOneridesInput!){
+    rideUpdateOne(filter: { _id: $id }, record: $record){
+    recordId
+  }
+}
+`
+const [deleteRide] = useMutation(DELETE_RIDE, {
+  variables: { id: ride._id }
+})
 
   const [joinRide] = useMutation(JOIN_RIDE, {
     variables: { rideID: id }
@@ -126,6 +148,28 @@ const RideSummary = () => {
   const [leaveRide] = useMutation(REMOVE_RIDER, {
     variables: { rideID: id }
   })
+
+  console.log("Before mutation:",ride.owner._id);
+  const [updateRide] = useMutation(UPDATE_RIDE, {
+    variables: {id: ride._id, record: {owner: newOwner.owner._id}}
+  })
+
+  useEffect(() => {
+    if(newOwner.owner._id != "") {
+      console.log(newOwner.owner);
+      updateRide().then(result => {
+        console.log("This worked??");
+        console.log(ride);
+        window.location.reload();
+        console.log(result);
+      }).catch((err) => {
+        console.log(ride);
+        console.log(err)})
+    }
+    console.log("CALLED UPDATE OWNER");
+    console.log(newOwner);
+    
+  }, [newOwner]) 
 
   useEffect(() => {
     if (data) {
@@ -173,12 +217,39 @@ const RideSummary = () => {
 
 
   const leave = () => {
+    // await (async () => {
+    //   console.log("print this");
+    // })();
     console.log("This is my id: " +id);
-    const returned = leaveRide().then((result) => {
-      console.log(result);
-      window.location.reload();
-      console.log(result);
+    let currentUser = localStorage.getItem('netid');
 
+    const returned = leaveRide().then(async (result) => {
+      if (ride.riders.length === 1) {
+        // DELETE ride - use result (MongoID) to delete
+        deleteRide().then(() => {
+          history.push('/search');
+        }).catch((err) => console.log(err));
+      }
+      else if (ride.owner.netid === currentUser) {
+        // Update owner of ride 
+        console.log("Inside update owner case");
+        let newRiders = ride.riders.filter((key) => key.netid != currentUser);
+        console.log("newRiders", newRiders);
+        console.log("actual ride",{...ride, owner:newRiders[0], riders:newRiders});
+        setNewOwner({owner:newRiders[0]});
+        console.log("Ride after change:",ride);
+        // Do update mutation
+        // updateRide().then(result => {
+        //   console.log("This worked??");
+        //   console.log(ride);
+        //   console.log(result);
+        // })
+        // .catch((err) => {
+        //   console.log(ride);
+        //   console.log(err)})
+
+      }
+      return result
     }).catch((err) => {
       console.log(err);
       addToast("Error leaving ride", { appearance: 'error'});
@@ -186,6 +257,9 @@ const RideSummary = () => {
     });
     // If numUsers == 1, show delete ride
     console.log(returned);
+    // console.log(result);
+    // window.location.reload();
+    // console.log(result);
   }
   
   console.log(data, loading, error);
