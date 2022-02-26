@@ -217,12 +217,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
 
   const leave = () => {
-    // await (async () => {
-    //   console.log("print this");
-    // })();
-    console.log("This is my id: " +id);
     let currentUser = localStorage.getItem('netid');
-
     const returned = leaveRide().then(async (result) => {
       if (ride.riders.length === 1) {
         // DELETE ride - use result (MongoID) to delete
@@ -232,22 +227,11 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       }
       else if (ride.owner.netid === currentUser) {
         // Update owner of ride 
-        console.log("Inside update owner case");
         let newRiders = ride.riders.filter((key) => key.netid != currentUser);
-        console.log("newRiders", newRiders);
-        console.log("actual ride",{...ride, owner:newRiders[0], riders:newRiders});
         setNewOwner({owner:newRiders[0]});
-        console.log("Ride after change:",ride);
-        // Do update mutation
-        // updateRide().then(result => {
-        //   console.log("This worked??");
-        //   console.log(ride);
-        //   console.log(result);
-        // })
-        // .catch((err) => {
-        //   console.log(ride);
-        //   console.log(err)})
-
+      }
+      else {
+        window.location.reload();
       }
       return result
     }).catch((err) => {
