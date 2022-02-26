@@ -1,36 +1,43 @@
 import styled from 'styled-components'
 
-const Header = styled.header`
+const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
   background-color: #002140;
   width: 100vw;
   height: 100vh;
-  position:absolute;
+  position: relative;
   backdrop-filter: blur(20px);
 `
-const WelcomeHeader = styled.header`
-  align-items: center;
-  font-family: Josefin Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 3.4em;
-  display: flex;
-  color: white;
-`
 
-const CarpoolHeader = styled.header`
+const FunctionTextTop = styled.div`
+  position: absolute;
   align-items: center;
   justify-content: center;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 5.6em;
+  font-size: 1.2em;
   color: white;
-  margin-top: 3vh;
   line-height:0.90;
+  top: 60vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+`
+
+const FunctionTextBot = styled.div`
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2em;
+  color: white;
+  line-height:0.90;
+  top: 64vh;
   margin-left: 5vw;
   margin-right: 5vw;
 `
@@ -59,8 +66,8 @@ const SearchButton = styled.button`
 `
 
 export {
-  Header,
-  CarpoolHeader, 
-  WelcomeHeader,
+  Header, 
+  FunctionTextTop,
+  FunctionTextBot,
   SearchButton,
 }
