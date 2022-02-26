@@ -43,7 +43,7 @@ export const MailBox = withStyles({
 })(MailIcon);
 
 
-const AllDiv = styled.div`
+export const AllDiv = styled.div`
   background: #f4f6f9;
   height: 90vh;
 `
@@ -175,20 +175,3 @@ export const StyledTextVenmo = styled.p`
   color: rgba(32, 117, 216, 1);
 `;
 
-export {
-	AllDiv,
-	ButtonBox,
-	BackArrow,
-  College,
-  EditProfileButton,
-	TextBox,
-	MailBox,
-	ProfileCard,
-	TopHeader,
-	UserName,
-	UserPic,
-	StyledText,
-	StyledText2,
-	StyledText3,
-	StyledTextVenmo
-};
