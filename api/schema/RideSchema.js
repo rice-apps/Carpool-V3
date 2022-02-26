@@ -1,5 +1,17 @@
-import { UserTC, RideTC, LocationTC, Ride } from '../models'
+import nodemailer from 'nodemailer'
+import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    // TODO: Use OAuth instead 😳
+    user: process.env.SENDER_EMAIL,
+    pass: process.env.SENDER_EMAIL_PASSWORD,
+  },
+})
 
 /**
  * Add relations since the Ride model has ObjectIds (references) for some fields
@@ -82,11 +94,50 @@ RideTC.addResolver({
     update[operation] = { riders: id }
 
     // Execute update
-    return await Ride.findByIdAndUpdate(
+    let updatedRide = await Ride.findByIdAndUpdate(
       args.rideID,
       update,
       { new: true } // we want to return the updated ride
     )
+
+    const owner = await User.findById(updatedRide.owner)
+    const user = await User.findById(id)
+
+    const departure = await Location.findById(updatedRide.departureLocation)
+    const arrival = await Location.findById(updatedRide.arrivalLocation)
+
+    const joinedOrLeft = args.push ? 'joined' : 'left'
+    const dateFormatted = updatedRide.departureDate.toDateString()
+
+    const subject = `Rice Carpool: ${user.firstName} ${joinedOrLeft} your ride`
+    const plaintextBody = `
+      ${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.\n\nSee <https://carpool.riceapps.org/ridesummary/${updatedRide.id}> for details.
+    `.trim()
+
+    const htmlBody = `
+      <p>
+        <a href="https://carpool.riceapps.org/profile/${user.netid}">${user.firstName} ${user.lastName}</a> ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.
+      </p>
+
+      <p>
+        See <a href="https://carpool.riceapps.org/ridesummary/${updatedRide.id}">the ride page</a> for details.
+      </p>
+
+      <p>
+        <a href="https://carpool.riceapps.org/">
+          <img src="https://carpool.riceapps.org/logo.png" alt="Rice Carpool logo" />
+        </a>
+      </p>
+    `
+
+    transporter.sendMail({
+      to: `${owner.netid}@rice.edu`,
+      subject: subject,
+      text: plaintextBody,
+      html: htmlBody,
+    })
+
+    return updatedRide
   },
 })
 
