@@ -10,8 +10,8 @@ import {
   makeStyles,
   TextField,
   Select,
+  InputAdornment,
 } from "@material-ui/core";
-import { InputAdornment } from "@material-ui/core";
 
 export const StyledDialogContent = styled(DialogContent)({
   display: "flex",
