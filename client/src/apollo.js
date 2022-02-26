@@ -3,7 +3,8 @@ import { ApolloClient, HttpLink, InMemoryCache, gql } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
 
 // Apollo Subscriptions Setup
-import { GRAPHQL_URL, SERVICE_URL } from './config';
+import { WebSocketLink } from '@apollo/link-ws';
+import { GRAPHQL_URL, GRAPHQL_WS_URL, SERVICE_URL } from './config';
 
 // Wraps our requests with a token if one exists
 // Copied from: https://www.apollographql.com/docs/react/v3.0-beta/networking/authentication/

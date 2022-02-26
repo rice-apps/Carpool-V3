@@ -109,8 +109,7 @@ const RideMutation = {
   removeRider: RideTC.getResolver('updateRiders').wrapResolve(
     (next) => (rp) => {
       rp.args.push = false // we want to remove a rider
-      console.log("call to removeRider");
-      return next(rp)
+       return next(rp)
     }
   ),
 }
