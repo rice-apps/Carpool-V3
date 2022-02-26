@@ -67,7 +67,7 @@ RideTC.addResolver({
   resolve: async ({ source, args, context, info }) => {
     // Check that there are still spots left on the requested ride
     let isFull = await isRideFull(args.rideID)
-    if (isFull) {
+    if (isFull && args.push) {
       throw Error('Sorry, this ride is already full.')
     }
 
@@ -109,6 +109,7 @@ const RideMutation = {
   removeRider: RideTC.getResolver('updateRiders').wrapResolve(
     (next) => (rp) => {
       rp.args.push = false // we want to remove a rider
+      console.log("call to removeRider");
       return next(rp)
     }
   ),

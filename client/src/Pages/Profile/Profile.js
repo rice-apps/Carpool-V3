@@ -5,7 +5,7 @@ import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
+import PhoneIcon from '@material-ui/icons/PhoneInTalkOutlined';
 
 import {
   ButtonBox,
@@ -15,11 +15,10 @@ import {
   ProfileCard,
   TopHeader,
   UserName,
+  UserPic,
   StyledText,
   StyledText2,
   StyledText3,
-  College,
-  UserPic,
   StyledTextVenmo,
 } from "./ProfileStyles.js";
 import { useState } from "react";
@@ -38,7 +37,6 @@ const Profile = () => {
         lastName
         netid
         phone
-        college
         venmo
       }
     }
@@ -46,15 +44,20 @@ const Profile = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
 
-  let { data, loading, error } = useQuery(GET_USER, {
-    variables: { netID: id },
+  let {
+    data: userData,
+    loading,
+    error,
+  } = useQuery(GET_USER, {
+    variables: {
+      netID: id,
+    },
   });
 
   if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
 
-  let { userOne: user } = JSON.parse(JSON.stringify(data));
-
+  let { userOne: user } = JSON.parse(JSON.stringify(userData));
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
@@ -68,15 +71,13 @@ const Profile = () => {
           <BackArrow></BackArrow>
           <StyledText3>Back</StyledText3>
         </ButtonBox>
-        {localStorage.getItem("netid") === user.netid && (
-          <IconButton
-            aria-label="edit"
-            onClick={() => setOpenDialog(true)}
-            variant="outlined"
-          >
-            <EditIcon style={{ color: "#2075D8" }} />
-          </IconButton>
-        )}
+        <IconButton
+          aria-label="edit"
+          onClick={() => setOpenDialog(true)}
+          variant="outlined"
+        >
+          <EditIcon style={{color:"#2075D8"}} />
+        </IconButton>
       </TopHeader>
       <ProfileDialog
         openDialog={openDialog}
@@ -86,10 +87,7 @@ const Profile = () => {
       <ProfileCard>
         <UserPic></UserPic>
         <UserName>{user.firstName + " " + user.lastName}</UserName>
-        <College>{user.college}</College>
-
-        <TextBox
-          onClick={async () => {
+        <TextBox onClick={async () => {
             if (user.phone) {
               navigator.clipboard.writeText(user.phone).then(
                 addToast("Phone Number Copied to Clipboard!", {
@@ -97,13 +95,9 @@ const Profile = () => {
                 })
               );
             }
-          }}
-        >
-          <PhoneIcon />
-          <StyledText>
-            {" "}
-            {user.phone ? user.phone : "Phone Number Unavailable"}{" "}
-          </StyledText>
+          }}>
+            <PhoneIcon/>
+           <StyledText> {user.phone ? user.phone : "Phone Number Unavailable"} </StyledText>
         </TextBox>
         <TextBox
           onClick={() => {
@@ -114,7 +108,7 @@ const Profile = () => {
             );
           }}
         >
-          <MailBox style={{ color: "#002140" }} />
+          <MailBox style={{color:"#002140"}}/>
           <StyledText>{user.netid}@rice.edu</StyledText>
         </TextBox>
         <TextBox
@@ -128,11 +122,13 @@ const Profile = () => {
             } else {
               addToast("Venmo ID Not Specified", {
                 appearance: "error",
-              });
+              })
             }
           }}
         >
-          <StyledText2>Venmo</StyledText2>
+          <StyledText2>
+            Venmo
+          </StyledText2>
           <StyledTextVenmo>
             {user.venmo ? `@${user.venmo}` : "Not Specified"}
           </StyledTextVenmo>
@@ -141,4 +137,5 @@ const Profile = () => {
     </div>
   );
 };
+
 export default Profile;
