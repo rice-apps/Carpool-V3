@@ -38,8 +38,7 @@ const FormOnly = (props) => {
             currentDate,
             true
           );
-          const isNotFull = ride.spots - ride.riders.length > 0;
-          return rideDateAfterCurrentDate && isNotFull;
+          return rideDateAfterCurrentDate;
         });
 
         setRidesPossibleForm(ridesPossibleNotBefore);

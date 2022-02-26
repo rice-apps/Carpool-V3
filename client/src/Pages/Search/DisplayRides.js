@@ -131,10 +131,11 @@ const DisplayRides = (props) => {
                     <p> Don't see a match? </p> &nbsp; Create a new ride 
             </StyledButton>
             {
-                <div style = {{paddingTop: '1vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Rides:</div>
+                <div style = {{paddingTop: '1vh', fontSize: "4vh", fontFamily: "Josefin Sans"}}>All Open Rides:</div>
             }
             {
-                props.ridesPossible.filter((ride) => { return !ridesT.some(e => isEqualRides(ride, e))}).map((ride, ind) => (<Ride ride={ride} />))
+                props.ridesPossible.filter((ride) => { 
+                    return !ridesT.some(e => isEqualRides(ride, e))}).filter(ride => (ride.spots - ride.riders.length > 0)).map((ride, ind) => (<Ride ride={ride} />))
             }
             <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#012E62"}}>
                 no more results
