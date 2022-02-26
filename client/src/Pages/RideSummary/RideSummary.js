@@ -169,11 +169,9 @@ const RideSummary = () => {
         ride = {...data.rideOne}
       }
       setRide(ride)
-      console.log(ride)
-    }
+     }
   }, [data])
-  console.log(data, loading, error);
-  if (error) return <p>Error.</p>
+   if (error) return <p>Error.</p>
   if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
 
@@ -188,40 +186,30 @@ const RideSummary = () => {
     }
     else if (localStorage.getItem('joinFromLogin') === "true") {
       localStorage.setItem('joinFromLogin', "false");
-      console.log("Inside login, join loop");
-    }
+     }
 
     joinRide().then((result) => {
-      console.log(result);
-      window.location.reload();
-      console.log(result);
-
+       window.location.reload();
+ 
     }).catch((err) => {
-      console.log("Caught error: Ride is full");
-      addToast("Sorry! This ride is full.", { appearance: 'error'});
+       addToast("Sorry! This ride is full.", { appearance: 'error'});
 
     });
   }
 
 
   const leave = () => {
-    console.log("This is my id: " +id);
-    const returned = leaveRide().then((result) => {
-      console.log(result);
-      window.location.reload();
-      console.log(result);
-
+     const returned = leaveRide().then((result) => {
+       window.location.reload();
+ 
     }).catch((err) => {
-      console.log(err);
-      addToast("Error leaving ride", { appearance: 'error'});
+       addToast("Error leaving ride", { appearance: 'error'});
 
     });
     // If numUsers == 1, show delete ride
-    console.log(returned);
-  }
+   }
   
-  console.log(data, loading, error);
-  if (localStorage.getItem('joinFromLogin') === "true") join();
+   if (localStorage.getItem('joinFromLogin') === "true") join();
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>

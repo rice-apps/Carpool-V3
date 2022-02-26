@@ -64,9 +64,7 @@ const YourRides = (paid) => {
             let upcomingrides = rides.filter(ride => moment(ride.departureDate) >= new Date())
             upcomingrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
 
-            console.log("previousRides", previousrides)
-            console.log("upcomingRides", upcomingrides)
-
+  
             setPrevRides(previousrides)
             setFutureRides(upcomingrides)
         }
