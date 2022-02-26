@@ -52,6 +52,14 @@ font-size: 3vh;
 font-family: Josefin Sans;
 `
 
+const RiderText = styled.div`
+padding: 10px 0px 0px 0px;
+font-size: 1.5vh;
+font-family: Josefin Sans; 
+font-style: italic; 
+color: rgba(0, 33, 64, 0.6);
+`
+
 // const Notifications = styled.div`
 // grid-column-start: 3;
 // `
@@ -63,5 +71,6 @@ export {
 	RideTime,
 	LocationText,
 	Locations,
+	RiderText,
 	// Notifications
 };

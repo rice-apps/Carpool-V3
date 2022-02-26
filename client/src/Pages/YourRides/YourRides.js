@@ -88,6 +88,7 @@ const YourRides = (paid) => {
                                 origin={ride.departureLocation.title} 
                                 destination={ride.arrivalLocation.title}
                                 datetime={ride.departureDate}
+                                num_riders={ride.riders.length}
                             />
                         )
                     })}
