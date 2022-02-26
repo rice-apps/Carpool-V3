@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import {
   Button,
@@ -141,6 +142,41 @@ export function InputTextField(props) {
           color: "#2075D8",
           height: "6vh",
         },
+        endAdornment: (
+          <InputAdornment position="end">
+            <CloseIcon onClick={() => clearTextField()} />
+          </InputAdornment>
+        ),
+      }}
+    ></TextField>
+  );
+}
+
+export function VenmoTextField(props) {
+  const classes = ProfileStyles();
+  const { label, name, defaultValue, onChange, value, clearTextField } = props;
+  return (
+    <TextField
+      name={name}
+      style={{paddingBottom: "1vh"}}
+      variant="filled"
+      label={label}
+      defaultValue={defaultValue}
+      fullWidth={true}
+      onChange={onChange}
+      value={value}
+      clearTextField={clearTextField}
+      InputLabelProps={{
+        className: [classes.inputLabel],
+      }}
+      InputProps={{
+        className: classes.inputContent,
+        style: { background: "rgb(187,218,255,0.22)", color: "#2075D8", height: "6vh" },
+        startAdornment: (
+        <InputAdornment position="start">
+          <AlternateEmailIcon fontSize = 'small'/>
+        </InputAdornment>
+        ),
         endAdornment: (
           <InputAdornment position="end">
             <CloseIcon onClick={() => clearTextField()} />
