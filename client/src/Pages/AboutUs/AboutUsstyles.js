@@ -109,17 +109,18 @@ const AboutUsHeader = styled.div`
 
 const Member = styled(Card)({
   display: "grid",
-  gridTemplateColumns: "30% 70%",
+  gridTemplateColumns: "150px 70%",
   borderRadius: "8px",
   backgroundColor: "white",
   width: "85vw",
-  height: "10vh",
   margin: "3%",
   padding: "1%",
 })
 
 const Picture = styled(CardMedia)({
   gridColumn: "1",
+  height: "150px",
+  width:'150px',
   padding: "3%",
   alignItems: "center",
   borderRadius: "8px",

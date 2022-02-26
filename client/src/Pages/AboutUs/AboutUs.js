@@ -30,6 +30,8 @@ import{
 
 const AboutUs = () => {
 
+    document.title = "About Us";
+
     return (
         <AllDiv>
             <FeedbackButton
