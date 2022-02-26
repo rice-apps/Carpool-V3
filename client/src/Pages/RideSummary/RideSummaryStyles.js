@@ -183,6 +183,16 @@ const RidersComponents = styled.div`
   background: #f4f6f9;
 `
 
+const RideNotesHeader = styled.div`
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  margin-top: 3vh;
+  line-height: 12px;
+  color: rgba(187, 199, 221, 0.91);
+`
+
 const IoPersonCircleSharpDiv = styled.span`
   font-size: 43px;
 `
@@ -193,7 +203,6 @@ const OneRiderContainer = styled.div`
   margin: 15px;
   width: 97%;
   font-family: Josefin Sans;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25);
 `
 const RiderText = styled.div`
   padding-top: 17px;
@@ -204,9 +213,11 @@ const NotesDiv = styled.div`
   grid-column: 1/ 5;
   grid-row: 4;
   overflow-wrap: break-word;
-  margin: 2em auto;
-  width: 85%;
+  margin: 15px;
+  width: 97%;
   padding: 10px;  
+  color: rgba(128, 128, 128, 1);
+  
   font-family: Josefin Sans;
   background: #ffffff;
   border-radius: 5px;
@@ -216,7 +227,7 @@ const TextContainer = styled.div`
 `
 const ButtonDiv = styled.button`
   color: #ffffff;
-  background: ${({ disabled, leaveRide }) => leaveRide ? 'rgba(235, 82, 72, 1)' : !disabled ? '#2075d8' : '#9e9e9e'};
+  background: ${({ disabled, leaveRide }) => leaveRide ? 'red' : !disabled ? '#2075d8' : '#9e9e9e'};
   text-align: center;
   font-family: Josefin Sans;
   font-style: normal;
@@ -357,6 +368,7 @@ export {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  RideNotesHeader,
   NotesDiv,
   TextContainer,
   ButtonDiv,

@@ -26,6 +26,7 @@ import {
   OneRiderContainer,
   RiderText,
   NotesDiv,
+  RideNotesHeader,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -310,12 +311,14 @@ const RideSummary = () => {
             </div>
           ))}
         </RidersComponents>
+        <RideNotesHeader>Ride Notes</RideNotesHeader> 
+        <NotesDiv>
+        {ride.notes || 'No ride notes'}
+        </NotesDiv>
       </RidersDiv>
 
-      <NotesDiv>
-        {ride.notes || 'No ride notes'}
-      </NotesDiv>
-
+      
+            
       <ButtonContainer>
         {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
         <ButtonDiv onClick={leave} leaveRide = {true}>
