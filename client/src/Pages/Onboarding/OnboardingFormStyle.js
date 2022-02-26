@@ -14,7 +14,8 @@ export const Header = styled.div`
   font-weight: normal;
   font-size: 2.5vh;
   line-height: 2vh;
-  color: #2075d8;
+  color: #2075d8; 
+  padding-bottom: 3vh;
 `;
 
 export const Label = styled(InputLabel)({
@@ -44,6 +45,7 @@ export const ProfileFormContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  padding-top: 8vh;
 `;
 
 export const ProfileStyles = makeStyles(() => ({

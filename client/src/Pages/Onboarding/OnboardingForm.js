@@ -12,16 +12,30 @@ import {
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
 import { MenuItem } from "@material-ui/core";
+import { useToasts } from "react-toast-notifications";
 
 const OnboardingForm = ({ onSubmit, onCancel }) => {
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [college, setCollege] = useState("");
   const [phone, setPhone] = useState("");
   const [venmo, setVenmo] = useState("");
+  const { addToast } = useToasts();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const handleSubmit = () => {
+
+        console.log(firstName);
+
+        if (firstName === "" || lastName === "") { 
+            addToast("Please fill in your full name.", { appearance: 'error' });
+            return
+        }   
+
+        if (phone === "") { 
+            addToast("Please fill in your phone number.", { appearance: 'error' });
+            return
+        }  
 
     return onSubmit({
       firstName,

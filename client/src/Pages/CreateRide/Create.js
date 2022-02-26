@@ -16,12 +16,11 @@ import {
     MenuBox,
     ColorButton,
     InputBox,
-    FormControlLabelBox,
     DateBox,
-    CheckBox,
     SelectSquare,
     MenuSquare,
-    BodyText
+    BodyText, 
+    ConfirmationText
 } from './Create.styles'
 import LoadingDiv from '../../common/LoadingDiv.js';
 
@@ -55,7 +54,7 @@ const Create = ({onCreate}) => {
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date())
     const [passengers, setPassengers] = useState(3)
-    const [confirmation, setConfirmation] = useState(false)
+    const confirmationText = "You will still need to contact your fellow riders and order an Uber or Lyft on the day of."
 
     // Function after Submit Button is Pressed
     const onSubmit = (e) => {
@@ -73,20 +72,14 @@ const Create = ({onCreate}) => {
             return;
         }
 
-        if (!confirmation) {
-            addToast("You must agree to lead the ride to create this ride.", { appearance: 'error' });
-            return
-        }
-
         // Pass arguments back to the top mutation queue
-        onCreate({ startLoc, endLoc, date, passengers, notes, confirmation, users, owner})
+        onCreate({ startLoc, endLoc, date, passengers, notes, users, owner })
 
         setStartLoc('')
         setEndLoc('')
         setNotes('')
         setDate(new Date())
         setPassengers(4)
-        setConfirmation(false)
     }
 
     // OnChange Functions: Triggers for User Changing Fields
@@ -104,10 +97,6 @@ const Create = ({onCreate}) => {
     const onEndLocChange = (e) => {
         e.preventDefault()
         setEndLoc(e.target.value);
-    };
-
-    const onCheck = (e) => {
-        setConfirmation(e.target.checked);
     };
 
     const onPassengerChange = (e) => {
@@ -322,12 +311,9 @@ const Create = ({onCreate}) => {
 
                 <Grid
                     item
-                    xs = {12}
+                    xs = {11}
                 >
-                    <FormControlLabelBox
-                        control={<CheckBox color='primary' checked={confirmation} onChange={onCheck}/>}
-                        label="I am responsible for coordinating this ride."
-                    />
+                    <ConfirmationText>{confirmationText}</ConfirmationText>
                 </Grid>
 
                 <Grid 

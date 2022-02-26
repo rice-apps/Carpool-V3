@@ -68,36 +68,17 @@ const Search = () => {
   const today = new Date().toDateString();
   const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES, {
     variables: { after: today },
+    notifyOnNetworkStatusChange: true,
   });
 
   return (
     <React.Fragment>
-      <div>
-        <Header subtitle="Search Rides" />
-      </div>
-      <Form
-        resultRides={resultDestArr}
-        setResultRides={(rides) => {
-          updateResultRides(rides);
-        }}
-        setRides={setRides}
-        setRidesPossible={setRidesPossible}
-        displayRef={displayRef}
-        getRidesRefetch={() => refetchRide()}
-        getLocsRefetch={() => refetchLoc()}
-      />
-      {rideLoading ? (
-        <LoadingDiv height={"15vh"} />
-      ) : (
-        <DisplayRides
-          ref={displayRef}
-          ridesT={rides}
-          ridesPossible={ridesPossible}
-          rides={resultDestArr}
-          rideLoading={rideLoading}
-          testVar={3}
-        />
-      )}
+      <div><Header subtitle = "Find Rides"/></div>
+      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
+        {rideLoading ? 
+          <LoadingDiv height={'15vh'} /> : 
+          <DisplayRides ref={displayRef} ridesT={rides} ridesPossible={ridesPossible} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
+        }
     </React.Fragment>
   );
 };

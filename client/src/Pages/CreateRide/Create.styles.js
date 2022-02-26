@@ -7,8 +7,6 @@ import {
     Select, 
     TextField,
     InputLabel,
-    FormControlLabel, 
-    Checkbox, 
     createTheme
 } from '@material-ui/core';
 
@@ -114,29 +112,11 @@ export const ColorButton = withStyles({
     }
   })(TextField);
 
-
-  export const FormControlLabelBox = withStyles({
-    label: {
-        display: 'flex',
-        alignItems: 'center',
-        color: '#0B3669',
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
-    }
-  })(FormControlLabel);
-
   export const DateBox = withStyles({
     root: {
 
     }, 
   })(DateTimePicker);
-
-  export const CheckBox = withStyles({
-      root: {
-        color: '#0B3669', 
-        backgroundColor: 'transparent'
-      }
-  })(Checkbox);
 
   export const SelectSquare = withStyles({
     root: {
@@ -184,3 +164,16 @@ export const ColorButton = withStyles({
     color: #0B3669;
     padding: 10px 0px 0px 0px;
   `;
+
+  export const ConfirmationText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Josefin Sans;
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 1.50vh;
+  line-height: 2vh;
+  color: #0B3669;
+  padding: 10px 0px 0px 0px;
+`;
