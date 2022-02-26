@@ -8,6 +8,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
 
 import {
+  AllDiv,
   ButtonBox,
   BackArrow,
   TextBox,
@@ -66,7 +67,7 @@ const Profile = () => {
   }
 
   return (
-    <div>
+    <AllDiv>
       <TopHeader>
         <ButtonBox onClick={goBack}>
           <BackArrow></BackArrow>
@@ -143,7 +144,7 @@ const Profile = () => {
           </StyledTextVenmo>
         </TextBox>
       </ProfileCard>
-    </div>
+    </AllDiv>
   );
 };
 export default Profile;

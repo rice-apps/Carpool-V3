@@ -42,6 +42,12 @@ export const MailBox = withStyles({
   },
 })(MailIcon);
 
+
+export const AllDiv = styled.div`
+  background: #f4f6f9;
+  height: 90vh;
+`
+
 export const EditProfileButton = styled.div`
   display: flex;
   justify-content: center;
@@ -60,6 +66,7 @@ export const ProfileCard = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+	padding-bottom: 10vh;
 `;
 
 export const TopHeader = styled.div`
@@ -167,3 +174,4 @@ export const StyledTextVenmo = styled.p`
   text-align: center;
   color: rgba(32, 117, 216, 1);
 `;
+
