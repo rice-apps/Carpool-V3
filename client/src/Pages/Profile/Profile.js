@@ -20,9 +20,6 @@ import {
   StyledText3,
   College,
   UserPic,
-  StyledText,
-  StyledText2,
-  StyledText3,
   StyledTextVenmo,
 } from "./ProfileStyles.js";
 import { useState } from "react";

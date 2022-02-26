@@ -41,12 +41,6 @@ const MailBox = withStyles({
   },
 })(MailIcon);
 
-const ImageStyle = {
-  borderRadius: "50%",
-  width: "52vw",
-  height: "24vh",
-};
-
 const ProfileCard = styled.div`
   display: flex;
   justify-content: center;
