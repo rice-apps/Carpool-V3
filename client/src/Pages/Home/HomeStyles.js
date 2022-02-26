@@ -42,11 +42,11 @@ const SearchButton = styled.button`
   background-color: #FFFFFF;
   display: flex;
   text-align: center;
+  cursor: pointer;
 
   width:50vw;
   height: 7vh;
   border-radius: 20vw;
-  margin-top: 2.5em;
 
   font-family: Josefin Sans;
   font-style: normal;
@@ -54,21 +54,13 @@ const SearchButton = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #002140;
-`
-
-const ButtonContainer = styled.button`
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  display: flex;
   top: 70vh;
   left: 25vw;
 `
+
 export {
   Header,
   CarpoolHeader, 
   WelcomeHeader,
   SearchButton,
-  ButtonContainer
 }

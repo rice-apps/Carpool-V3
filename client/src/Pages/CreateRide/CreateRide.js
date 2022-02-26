@@ -1,16 +1,15 @@
 import React from 'react';
-import Create from './Create.js'; 
+import Create from './Create.js';
 import { gql, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 
 const CreateRide = () => {
-    
+
     const { addToast } = useToasts();
-    // Set the last page visited
-    localStorage.setItem('lastPage', 'create-ride');
+
     const CREATE_RIDE = gql`
         mutation CreateRide (
-            $startLoc: MongoID!, $endLoc: MongoID!, $date: Date, $passengers: Float, $users: [MongoID!], $owner: MongoID!) 
+            $startLoc: MongoID!, $endLoc: MongoID!, $date: Date, $passengers: Float, $users: [MongoID!], $owner: MongoID!, $notes: String) 
         {
             rideCreateOne(record: {
             owner: $owner,
@@ -19,6 +18,7 @@ const CreateRide = () => {
             departureDate: $date,
             riders: $users,
             spots: $passengers,
+            notes: $notes,
             }) {
             record {
                 _id

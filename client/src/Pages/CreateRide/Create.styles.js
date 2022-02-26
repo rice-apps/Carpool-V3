@@ -1,13 +1,12 @@
 import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import { KeyboardDateTimePicker } from '@material-ui/pickers';
+import { DateTimePicker } from '@material-ui/pickers';
 import {
     MenuItem,
     Button, 
     Select, 
+    TextField,
     InputLabel,
-    FormControlLabel, 
-    Checkbox, 
     createTheme
 } from '@material-ui/core';
 
@@ -96,29 +95,28 @@ export const ColorButton = withStyles({
     }
   })(InputLabel);
 
-  export const FormControlLabelBox = withStyles({
-    label: {
-        display: 'flex',
-        alignItems: 'center',
-        color: '#0B3669',
-        fontFamily: 'Josefin Sans',
-        fontSize: '13px',
+
+  // NEW!
+  export const TextFieldBox = withStyles({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: 'white',
+      borderRadius: 8,
+      border: 0,
+      borderColor: '#0B3669',
+      color: '#0B3669',
+      fontFamily: 'Josefin Sans',
+      fontSize: '13px',
     }
-  })(FormControlLabel);
+  })(TextField);
 
   export const DateBox = withStyles({
     root: {
-        width: '68vw',
-        height: '10vh'
-    }, 
-  })(KeyboardDateTimePicker);
 
-  export const CheckBox = withStyles({
-      root: {
-        color: '#0B3669', 
-        backgroundColor: 'transparent'
-      }
-  })(Checkbox);
+    }, 
+  })(DateTimePicker);
 
   export const SelectSquare = withStyles({
     root: {
@@ -144,13 +142,13 @@ export const ColorButton = withStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'white',
-        width: '15vw',
+        width: '100%',
         border: 0,
         color: '#0B3669',
-        height: '2vh',
+        // height: '2vh',
         fontFamily: 'Josefin Sans',
         fontSize: '13px',
-        padding: '8px 16px'
+        // padding: '8px 16px'
     }
   })(MenuItem);
 
@@ -166,3 +164,16 @@ export const ColorButton = withStyles({
     color: #0B3669;
     padding: 10px 0px 0px 0px;
   `;
+
+  export const ConfirmationText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Josefin Sans;
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 1.50vh;
+  line-height: 2vh;
+  color: #0B3669;
+  padding: 10px 0px 0px 0px;
+`;

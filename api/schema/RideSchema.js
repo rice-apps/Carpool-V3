@@ -46,11 +46,11 @@ RideTC.addRelation('arrivalLocation', {
 RideTC.addResolver({
   name: 'findByUser',
   type: [RideTC],
-  args: { _id: 'ID!' },
   resolve: async ({ source, args, context, info }) => {
+    const { id } = context.decodedJWT
     // Return all rides where the user is an owner or a rider
     return await Ride.find({
-      $or: [{ owner: args._id }, { riders: { $in: [args._id] } }],
+      $or: [{ owner: id }, { riders: { $in: [id] } }],
     })
   },
 })
@@ -67,7 +67,7 @@ RideTC.addResolver({
   resolve: async ({ source, args, context, info }) => {
     // Check that there are still spots left on the requested ride
     let isFull = await isRideFull(args.rideID)
-    if (isFull) {
+    if (isFull && args.push) {
       throw Error('Sorry, this ride is already full.')
     }
 
@@ -94,6 +94,7 @@ RideTC.addResolver({
 const RideQuery = {
   rideOne: RideTC.getResolver('findOne'),
   rideMany: RideTC.getResolver('findMany'),
+  rideByUser: RideTC.getResolver('findByUser'),
 }
 
 // TODO: Add [authMiddleware] back to all getResolver calls once login is implemented!
@@ -108,6 +109,7 @@ const RideMutation = {
   removeRider: RideTC.getResolver('updateRiders').wrapResolve(
     (next) => (rp) => {
       rp.args.push = false // we want to remove a rider
+      console.log("call to removeRider");
       return next(rp)
     }
   ),

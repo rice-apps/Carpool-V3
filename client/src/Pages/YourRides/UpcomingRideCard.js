@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
+// import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+// import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
 import { useHistory } from 'react-router';
@@ -14,7 +14,8 @@ import {
     RideTime, 
     LocationText, 
     Locations, 
-    Notifications } 
+    // Notifications 
+} 
     from './UpcomingRideCard.styles.js';
 
 const CalendarIcon = withStyles({
@@ -29,24 +30,25 @@ const CalendarIcon = withStyles({
   const ArrowForward = withStyles({
   })(ArrowForwardIcon);
 
-  const NotificationsOn = withStyles({
-    root: {
-        display: 'flex',
-        color: '#2075D8',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }
+//   const NotificationsOn = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: '#2075D8',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
  
-  })(NotificationsActiveIcon);
+//   })(NotificationsActiveIcon);
   
-  const NotificationsOff = withStyles({
-    root: {
-        display: 'flex',
-        color: 'rgba(32, 117, 216, 0.42)',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }
-  })(NotificationsOffIcon);
+//   const NotificationsOff = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: 'rgba(32, 117, 216, 0.42)',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
+//   })(NotificationsOffIcon);
+
 
 
 const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => {
@@ -58,8 +60,13 @@ const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => 
     const history = useHistory();
     const summaryURL = "/ridesummary/" + id;
 
+    const toRide = (url) => {
+        localStorage.setItem("lastPage", "your-rides");
+        history.push(url);
+    }
+
     return (
-        <div onClick={e => history.push(summaryURL)}>
+        <div onClick={(e) => toRide(summaryURL)}>
             <RideCard>
                 <RideTimeInfo>
                     <CalendarIcon />
@@ -77,9 +84,9 @@ const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => 
                     <LocationText>{ destination }</LocationText>
                 </Locations>
 
-                <Notifications>
+                {/* <Notifications>
                     { notification ? <NotificationsOn /> : <NotificationsOff /> }
-                </Notifications>
+                </Notifications> */}
             </RideCard>
         </div>
     )

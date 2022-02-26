@@ -54,10 +54,6 @@ app.use(exjwt({
 // This connects apollo with express
 server.applyMiddleware({ app });
 
-// Create WebSockets server for subscriptions: https://stackoverflow.com/questions/59254814/apollo-server-express-subscriptions-error
-const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
-
 // If we have custom routes, we need these to accept JSON input
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
@@ -88,7 +84,7 @@ app.use(function(err, req, res, next) {
 });
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
-httpServer.listen({ port: PORT }, () => {
+app.listen({ port: PORT }, () => {
     console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
     console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
 });
