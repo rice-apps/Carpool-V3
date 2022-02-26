@@ -125,7 +125,7 @@ RideTC.addResolver({
 
       <p>
         <a href="https://carpool.riceapps.org/">
-          <img src="https://carpool.riceapps.org/logo.png" alt="Rice Carpool logo" />
+          <img src="https://carpool.riceapps.org/logo-with-wordmark.png" alt="Rice Carpool logo" />
         </a>
       </p>
     `
