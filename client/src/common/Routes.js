@@ -148,7 +148,7 @@ export const Routes = () => {
           <CheckTokenRoute path={'/auth'} component={withRouter(Auth)} />
           <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
           <CheckTokenRoute path={"/your-rides"} component={withRouter(YourRides)} />
-          <CheckTokenRoute path={"/about-us"} component={withRouter(AboutUs)} />
+          <CheckTokenRoute path={"/about"} component={withRouter(AboutUs)} />
 
         </Switch>
       </Router>

@@ -101,9 +101,9 @@ export default function ButtonAppBar (props) {
 
     // set appbar colour
   const currURL = window.location.pathname;
-  const [appbarColor, setAppbarColor] = useState((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
+  const [appbarColor, setAppbarColor] = useState((currURL == "/about" || currURL == "/FAQ") ? "#012E62" : "white")
 
-  const [hamburgerColor, setHamburgerColor] = useState((currURL == "/about-us" || currURL == "/FAQ") ? "white" : "#002140")
+  const [hamburgerColor, setHamburgerColor] = useState((currURL == "/about" || currURL == "/FAQ") ? "white" : "#002140")
 
   const useStyles = makeStyles((theme) => ({
     appbarRoot: {
@@ -177,9 +177,9 @@ export default function ButtonAppBar (props) {
       setShowBar(true)
     }
 
-    setAppbarColor((currURL == "/about-us" || currURL == "/FAQ") ? "#012E62" : "white")
+    setAppbarColor((currURL == "/about" || currURL == "/FAQ") ? "#012E62" : "white")
 
-    setHamburgerColor((currURL == "/about-us" || currURL == "/FAQ") ? "white" : "#002140")
+    setHamburgerColor((currURL == "/about" || currURL == "/FAQ") ? "white" : "#002140")
 
     
   }, [location.pathname])
