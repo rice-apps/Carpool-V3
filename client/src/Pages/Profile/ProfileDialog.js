@@ -10,6 +10,7 @@ import {
   CloseProfileIcon,
   Label,
   InputTextField,
+  RequiredTextField,
   InputBox,
   SaveButton,
   StyledDialogContent,
@@ -119,10 +120,11 @@ export default function ProfileDialog(props) {
 
               <InputBox>
                 <Label>Name:</Label>
-                <InputTextField
+                <RequiredTextField
                   label="First Name"
                   defaultValue={user.firstName}
                   name="firstName"
+                  required
                   onChange={(e) => {
                     setUserProps("firstName", e.target.value);
                     setChangesMade(true);
@@ -131,11 +133,12 @@ export default function ProfileDialog(props) {
                     clearTextField("firstName");
                     setChangesMade(true);
                   }}
-                ></InputTextField>
-                <InputTextField
+                ></RequiredTextField>
+                <RequiredTextField
                   label="Last Name"
                   name="lastName"
                   defaultValue={user.lastName}
+                  required
                   onChange={(e) => {
                     setUserProps("lastName", e.target.value);
                     setChangesMade(true);
@@ -144,7 +147,7 @@ export default function ProfileDialog(props) {
                     clearTextField("lastName");
                     setChangesMade(true);
                   }}
-                ></InputTextField>
+                ></RequiredTextField>
                 <Label>College:</Label>
                 <CollegeSelect
                   variant="outlined"
@@ -170,10 +173,11 @@ export default function ProfileDialog(props) {
                   <MenuItem value="Lovett">Lovett</MenuItem>
                 </CollegeSelect>
                 <Label>Contact:</Label>
-                <InputTextField
+                <RequiredTextField
                   label="Phone #"
                   defaultValue={user.phone}
                   name="phone"
+                  required
                   onChange={(e) => {
                     setUserProps("phone", e.target.value);
                     setChangesMade(true);
@@ -182,7 +186,7 @@ export default function ProfileDialog(props) {
                     clearTextField("phone");
                     setChangesMade(true);
                   }}
-                ></InputTextField>
+                ></RequiredTextField>
                 <Label>Venmo:</Label>
                 <InputTextField
                   label="Account ID"
@@ -202,6 +206,16 @@ export default function ProfileDialog(props) {
                 <SaveButton
                   variant="contained"
                   onClick={() => {
+                    if (user.firstName === "" || user.lastName === "") { 
+                      addToast("Please fill in your full name.", { appearance: 'error' });
+                      return
+                    }   
+            
+                    if (user.phone === "") { 
+                        addToast("Please fill in your phone number.", { appearance: 'error' });
+                        return
+                    } 
+
                     if (changesMade) {
                       updateUserInfo();
                     }
