@@ -47,7 +47,6 @@ export const EditProfileButton = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 20px;
   font-family: Josefin Sans;
   font-weight: 600;
   font-size: 30px;
