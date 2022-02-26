@@ -5,8 +5,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Accordion from '@material-ui/core/Accordion';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-
+import OpenInNewIcon from '@material-ui/icons/OpenInNewRounded';
 
 
 const AllDiv = styled.div`
@@ -29,39 +28,44 @@ const PageHeader = styled.div`
   color: white;
 `
 
-export const TitleDivider = withStyles({
-  root: {
-      margin: '5%',
-      borderTop: '1% solid white',
-  }
-})(Divider);
+const Divider = styled.div`
+width: 80vw;
+border-bottom: 2px solid #fff;
+margin: 5% 5% 10% 5%;
+`
 
 const FeedbackButton = styled(Button)`
   z-index: 999;
   position: fixed;
-  top: 90vh;
-  left: 60vw;  
+  bottom: 3vh;
+  right: -10px;
   background: #C1CCE0;
-  border-radius: 15px 15px 0px 15px;
-  height: 6vh;
-  width: 16vh;
-  justify-content: space-between;
-  filter: drop-shadow(2px 2px 2px #002140);
+  border-radius: 8px 0px 0px 8px;
+  width: 2vw;
 `
 
 const FeedbackText = styled.div`
-font-family: Josefin Sans;
-font-style: normal;
-font-weight: normal;
-font-size: 1em;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1em;
+  justify-content: space-between;
+  filter: drop-shadow(2px 2px 2px 0px #002140);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  height: 18vh;
+`
+
+const FeedbackIcon = styled(OpenInNewIcon)`
+  transform: rotate(90deg);
 `
 
 const FAQHeader = styled.div`
   align-text: center;
   font-family: Josefin Sans;
   font-style: normal;
-  font-weight: normal;
-  font-size: 3.4em;
+  font-weight: bold;
+  font-size: 1.5em;
   display: flex;
   color: white;
 `
@@ -96,8 +100,8 @@ const AboutUsHeader = styled.div`
   align-text: center;
   font-family: Josefin Sans;
   font-style: normal;
-  font-weight: normal;
-  font-size: 3em;
+  font-weight: bold;
+  font-size: 2em;
   display: flex;
   color: white;
   padding-bottom: 3%;
@@ -184,8 +188,10 @@ text-align: center;
 export {
   AllDiv,
   PageHeader,
+  Divider,
   FeedbackButton,
   FeedbackText,
+  FeedbackIcon,
   FAQHeader,
   Questions,
   Bold,

@@ -3,14 +3,14 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MailIcon from '@material-ui/icons/Mail';
 
 import{
     AllDiv,
     PageHeader,
-    TitleDivider,
+    Divider,
     FeedbackButton,
     FeedbackText,
+    FeedbackIcon,
     FAQHeader,
     Questions,
     Bold,
@@ -32,26 +32,30 @@ const AboutUs = () => {
 
     return (
         <AllDiv>
+            <FeedbackButton
+                variant="contained"
+                onClick={() => {
+                    window.open("https://tinyurl.com/carpool-feedback")
+                }}>
+                <FeedbackText>
+                    <FeedbackIcon />
+                    Feedback? 
+                    </FeedbackText>
+            </FeedbackButton>
+            
+            
 
             <PageHeader>
                 About Us
             </PageHeader>
-
-            <TitleDivider variant='inset'/>
-
+            
+            <Divider />
 
             <FAQHeader>
-                FAQ
+                Frequently Asked Questions
             </FAQHeader>
 
-            <FeedbackButton
-                variant="contained"
-                onClick={() => {
-                    window.open("https://forms.gle/WFqf77FxSy8FVHgb9")
-                }}>
-                <MailIcon />
-                <FeedbackText>Feedback?</FeedbackText>
-            </FeedbackButton>
+            
 
             <Questions>
                 
@@ -197,7 +201,7 @@ const AboutUs = () => {
                     <Typography>Where can I travel?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Answer>Currently, the location options are limited to airports and Rice only. Let us know what other locations you’d like to carpool to via this: https://forms.gle/WFqf77FxSy8FVHgb9 
+                    <Answer>Currently, the location options are limited to airports and Rice only. Let us know what other locations you’d like to carpool to via this: https://tinyurl.com/carpool-feedback 
                     </Answer>
                     </AccordionDetails>
                 </QuestionAccordion>
