@@ -6,6 +6,8 @@ import { gql, useMutation } from "@apollo/client";
 import OnboardingForm from "./OnboardingForm";
 
 const Onboarding = () => {
+  document.title = "Onboarding";
+
   const history = useHistory();
   const { addToast } = useToasts();
   const previous = localStorage.getItem("lastPage");

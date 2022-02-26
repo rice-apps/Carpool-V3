@@ -28,6 +28,8 @@ import LoadingDiv from '../../common/LoadingDiv.js';
 
 const Create = ({onCreate}) => {
 
+    document.title = "Create Ride";
+
     const { addToast } = useToasts();
 
     const seats = [
