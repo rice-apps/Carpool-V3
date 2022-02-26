@@ -41,10 +41,11 @@ import {
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
-  TimeText
+  TimeText, 
+  ConfirmationText
 } from './RideSummaryStyles.js'
 import { Grid, IconButton } from '@material-ui/core';
-import { LoginButton, LoginDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
+import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
 import CloseIcon from '@material-ui/icons/Close';
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
@@ -52,6 +53,7 @@ import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
+const confirmationText = "You will still need to contact your fellow riders and order an Uber or Lyft on the day of."
 
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
@@ -92,7 +94,8 @@ const RideSummary = () => {
   const history = useHistory()
   const { addToast } = useToasts();
   // States to control for Dialog
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -116,19 +119,23 @@ const RideSummary = () => {
   const handleClickOpen = () => {
     // User is logged in already via Rice Verification
     if (localStorage.getItem('token') != null) {
-        // Verify if user is in Carpool Database by triggering the Query
-        join();
+      // Show the confirmation pop-up for joining ride
+      setOpenConfirmation(true); 
     } 
     // User is not logged in, prompt them to log in
     else {
-        setOpenAlert(true);
+      setOpenLogin(true);
     }
-    
   };
 
-  // Close the dialog box
-  const handleClose = () => {
-      setOpenAlert(false);
+  // Close the  box
+  const handleCloseLogin= () => {
+      setOpenLogin(false);
+  };
+
+  // Close the confirmation panel
+  const handleCloseConfirmation = () => {
+      setOpenConfirmation(false);
   };
 
   useEffect(() => {
@@ -291,24 +298,44 @@ const RideSummary = () => {
           Join Ride
         </ButtonDiv>
       </ButtonContainer>
-      <LoginDialog
-                open={openAlert}
-                onClose={handleClose}
+      <JoinRideDialog
+                open={openLogin}
+                onClose={handleCloseLogin}
             >
-            <Grid container spacing = {12}>
+            <Grid container spacing = {12} justifyContent = "center">
                 <Grid item sm = {11} xs = {10}/>
                 <Grid item sm = {1} xs = {2}>
-                    <IconButton onClick = {handleClose} size = "medium">
+                    <IconButton onClick = {handleCloseLogin} size = "medium">
                         <CloseIcon />
                     </IconButton>
                 </Grid>
-                <Grid item xs = {12}>
+                <Grid item xs = {10} justifyContent = "center">
+                    <ConfirmationText>{confirmationText}</ConfirmationText>
                     <LoginDialogActions>
-                        <LoginButton onClick={join} autoFocus>Rice SSO Login</LoginButton>
+                        <LoginButton onClick={join} autoFocus>Got it! Login with Rice SSO</LoginButton>
                     </LoginDialogActions>
                   </Grid>
             </Grid>
-      </LoginDialog>
+      </JoinRideDialog>
+      <JoinRideDialog
+                open={openConfirmation}
+                onClose={handleCloseConfirmation}
+            >
+            <Grid container spacing = {12} justifyContent = "center">
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleCloseConfirmation} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {10} justifyContent = "center">
+                  <ConfirmationText>{confirmationText}</ConfirmationText>
+                    <LoginDialogActions>
+                        <LoginButton onClick={join} autoFocus>Got it! Join Ride</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </JoinRideDialog>
     </AllDiv>
   )
 }
