@@ -19,13 +19,11 @@ const FormOnly = (props) => {
   // const [showLoader, setShowLoader] = useState(false);
 
   // const closeLoaderIn2Seconds = () => {
-  //   console.log("showLoader", showLoader);
-  //   setShowLoader(true);
+   //   setShowLoader(true);
   //   setTimeout(() => {
   //     setShowLoader(false);
   //   }, 1500);
-  //   console.log("loader disappear");
-  // };
+   // };
 
   // initial filter: filters rides that are past current date
   useEffect(() => {
@@ -38,16 +36,14 @@ const FormOnly = (props) => {
             currentDate,
             true
           );
-          const isNotFull = ride.spots - ride.riders.length > 0;
-          return rideDateAfterCurrentDate && isNotFull;
+          return rideDateAfterCurrentDate;
         });
 
         setRidesPossibleForm(ridesPossibleNotBefore);
         props.setRidesPossible(ridesPossibleNotBefore);
       })
       .catch((err) => {
-        console.log("err=", err);
-      });
+       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -93,8 +89,7 @@ const FormOnly = (props) => {
         props.setRides(resultDestArr);
       })
       .catch((err) => {
-        console.log("err=", err);
-      });
+       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startLoc, endLoc, filterDate]);
 

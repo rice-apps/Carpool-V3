@@ -8,8 +8,7 @@ const Form = (props) => {
   const resultRides = props.resultRides;
   const displayRef = props.displayRef;
 
-  console.log("Rice date=", new Date("2021-09-01T01:30:49.000+00:00"));
-
+ 
 // TODO: Get this from the API!!
 let PossibleLocations = [
   {

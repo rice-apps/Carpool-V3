@@ -5,7 +5,6 @@ import {
   InputBox,
   SubmitButton,
   CancelButton,
-  InputTextField,
   VenmoTextField,
   RequiredTextField,
   CollegeSelect,
@@ -26,8 +25,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
 
     const handleSubmit = () => {
 
-        console.log(firstName);
-
+ 
         if (firstName === "" || lastName === "") { 
             addToast("Please fill in your full name.", { appearance: 'error' });
             return
@@ -50,7 +48,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
   const classes = ProfileStyles();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <ProfileFormContainer>
         <Header> Sign up to use Carpool</Header>
         <InputBox>
@@ -114,16 +112,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         </InputBox>
         <SubmitButton
           variant="contained"
-          onClick={() => {
-            onSubmit({
-              firstName,
-              lastName,
-              phone,
-              college,
-              venmo,
-            });
-          }}
-        >
+          onClick={() => { handleSubmit()}}>
           Submit
         </SubmitButton>
         <CancelButton

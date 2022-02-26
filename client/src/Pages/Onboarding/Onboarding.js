@@ -6,6 +6,8 @@ import { gql, useMutation } from "@apollo/client";
 import OnboardingForm from "./OnboardingForm";
 
 const Onboarding = () => {
+  document.title = "Onboarding";
+
   const history = useHistory();
   const { addToast } = useToasts();
   const previous = localStorage.getItem("lastPage");
@@ -42,8 +44,7 @@ const Onboarding = () => {
   const [updateUser] = useMutation(UPDATE_USER);
 
   const updateUserInfo = async (formData) => {
-    console.log(formData);
-
+ 
     await updateUser({ variables: formData });
 
     const nextPage = localStorage.getItem("nextPage");

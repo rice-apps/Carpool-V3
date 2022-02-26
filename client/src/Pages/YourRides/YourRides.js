@@ -45,6 +45,9 @@ const GET_RIDES = gql`
 `;
 
 const YourRides = (paid) => {
+
+    document.title = "Your Rides";
+
     let netid = localStorage.getItem("netid")
 
     // const [allRides, setAllRides] = useEffect([])
@@ -59,11 +62,9 @@ const YourRides = (paid) => {
             let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date())
             previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
             let upcomingrides = rides.filter(ride => moment(ride.departureDate) >= new Date())
-            upcomingrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
+            upcomingrides.sort((a, b) => moment(a.departureDate) - moment(b.departureDate))
 
-            console.log("previousRides", previousrides)
-            console.log("upcomingRides", upcomingrides)
-
+  
             setPrevRides(previousrides)
             setFutureRides(upcomingrides)
         }

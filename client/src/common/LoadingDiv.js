@@ -3,8 +3,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import styled from 'styled-components'
 
 const LoadingDiv = ({height}) => {
-  console.log("height: ", height)
-  if (!height) {
+   if (!height) {
     height = '15vh'
   }
   const LoadingContainer = styled.div`

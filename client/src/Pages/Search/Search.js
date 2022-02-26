@@ -22,6 +22,9 @@ export const monthToStr = [
 ];
 
 const Search = () => {
+
+  document.title = "Find Rides";
+
   // Set last page visited
   localStorage.setItem("lastPage", "search");
   let resultDestArr = [];
