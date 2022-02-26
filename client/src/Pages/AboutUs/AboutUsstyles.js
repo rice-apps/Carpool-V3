@@ -27,6 +27,8 @@ const FeedbackButton = styled(Button)`
   height: 6vh;
   width: 16vh;
   justify-content: space-between;
+  filter: drop-shadow(2px 2px 2px #002140);
+
 `
 
 const FeedbackText = styled.div`
