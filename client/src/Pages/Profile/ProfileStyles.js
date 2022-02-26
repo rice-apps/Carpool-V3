@@ -1,22 +1,22 @@
-import styled from 'styled-components';
-import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import styled from "styled-components";
+import { withStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+import MailIcon from "@material-ui/icons/Mail";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 const ButtonBox = withStyles({
-	label: {
-	  textTransform: 'capitalize',
-	}
-  })(Button);
-  
+  label: {
+    textTransform: "capitalize",
+  },
+})(Button);
+
 const BackArrow = withStyles({
-root: {
-	display: 'flex',
-	color: '#2075D8',
-	justifyContent: 'center',
-	alignItems: 'center'
-}
+  root: {
+    display: "flex",
+    color: "#2075D8",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 })(ChevronLeftIcon);
 
 const TextBox = withStyles({
@@ -26,7 +26,7 @@ root: {
 	alignItems: 'center',
 	marginTop: '4vh',
 	width: '75vw',
-	height: '10vh',
+	height: '6vh',
 	borderRadius: '9px',
 	background: 'rgba(187, 218, 255, 0.22)'
 }, 
@@ -35,49 +35,67 @@ label: {
 }
 })(Button);
 
+
 const MailBox = withStyles({
-root: {
-	color: '#2075D8'
-}
+  root: {
+    color: "#2075D8",
+  },
 })(MailIcon);
 
 const EditProfileButton = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: Josefin Sans;
-	font-weight: 600;
-	font-size: 30px;
-	line-height: 30px;
-	text-align: center;
-`
-
-const ProfileCard = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: center;
 `;
 
-const ReturnHeader = styled.div`
+const ProfileCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const TopHeader = styled.div`
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
+	margin-right: 25px;
 	align-items: center;
-	padding: 0 10px 10px 0;
+	padding: 15px;
 `;
 
 const UserPic = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1vh;
 
-	width: 25vh;
-	height: 25vh;
-	background-image: url("https://www.kindpng.com/picc/m/229-2295555_not-my-art-pikachu-is-eating-pocky-kawaii.png");
-	border-radius: 50%;
-	background-size: cover;
+  width: 25vh;
+  height: 25vh;
+  background-image: url("https://www.kindpng.com/picc/m/229-2295555_not-my-art-pikachu-is-eating-pocky-kawaii.png");
+  border-radius: 50%;
+  background-size: cover;
+`;
+
+const College = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0vh 0px 25px 0px;
+
+  font-family: Josefin Sans;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+
+  color: #002140;
 `;
 
 const UserName = styled.p`
@@ -88,23 +106,7 @@ const UserName = styled.p`
 
 	font-family: Josefin Sans;
 	font-weight: 600;
-	font-size: 30px;
-	line-height: 30px;
-	text-align: center;
-
-	color: #002140;
-`;
-
-const PhoneNumber = styled.p`
-	display: flex; 
-	justify-content: center;
-	align-items: center;
-	padding: 1vh 0px 25px 0px;
-
-	font-family: Josefin Sans;
-	font-weight: 300;
-	font-size: 18px;
-	line-height: 18px;
+	font-size: 2.2em;
 	text-align: center;
 
 	color: #002140;
@@ -117,10 +119,9 @@ const StyledText = styled.p`
 	font-family: Josefin Sans;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 18px;
-	line-height: 18px;
+	font-size: 1.5em;
 	text-align: center;
-	color: #2075D8;
+	color: #002140;
 `;
 
 const StyledText2 = styled.p`
@@ -134,41 +135,53 @@ const StyledText2 = styled.p`
 	font-weight: 600;
 	font-size: 13px;
 	line-height: 13px;
-	text-align: center;
-	letter-spacing: 0.07em;
+	text-align: center;	
 
-	color: #2075D8;
+	color: #002140;
 `;
 
 const StyledText3 = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 3px;
+
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+
+  color: #2075d8;
+`;
+
+const StyledTextVenmo = styled.p`
 	display: flex; 
-	justify-content: center;
-	align-items: center;
-	margin-left: 10px;
-	margin-top: 3px;
+	padding: 0px 0px 0px 1vh;
 
 	font-family: Josefin Sans;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 18px;
-	line-height: 18px;
+	font-size: 1.5em;
 	text-align: center;
-
-	color: #2075D8;
+	color: rgba(32, 117, 216, 1);
 `;
 
 export {
 	ButtonBox,
 	BackArrow,
+  College,
+  EditProfileButton,
 	TextBox,
 	MailBox,
-	EditProfileButton,
 	ProfileCard,
-	ReturnHeader,
+	TopHeader,
 	UserName,
 	UserPic,
-	PhoneNumber,
 	StyledText,
 	StyledText2,
-	StyledText3
+	StyledText3,
+	StyledTextVenmo
 };

@@ -15,6 +15,7 @@ const SeatsLeftDiv = styled.div`
   font-style: normal;
   line-height: 11px;
   display: flex;
+  padding-right: 6px;
   align-items: stretch; /* Default */
 `
 const SeatsLeftNum = styled.div`
@@ -35,6 +36,7 @@ const SeatsLeftText = styled.div`
   font-size: 1em;
   line-height: 11px;
   padding-top: 6px;
+  padding-right: 6px;
 `
 const SocialIcon = styled.div`
   display: flex;
@@ -191,18 +193,30 @@ const OneRiderContainer = styled.div`
   margin: 15px;
   width: 97%;
   font-family: Josefin Sans;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25);
 `
 const RiderText = styled.div`
   padding-top: 17px;
   padding-left: 15px;
   font-family: Josefin Sans;
 `
+const NotesDiv = styled.div`
+  grid-column: 1/ 5;
+  grid-row: 4;
+  overflow-wrap: break-word;
+  margin: 2em auto;
+  width: 85%;
+  padding: 10px;  
+  font-family: Josefin Sans;
+  background: #ffffff;
+  border-radius: 5px;
+`
 const TextContainer = styled.div`
   
 `
 const ButtonDiv = styled.button`
   color: #ffffff;
-  background: ${({ disabled }) => !disabled ? '#2075d8' : '#9e9e9e'};
+  background: ${({ disabled, leaveRide }) => leaveRide ? 'rgba(235, 82, 72, 1)' : !disabled ? '#2075d8' : '#9e9e9e'};
   text-align: center;
   font-family: Josefin Sans;
   font-style: normal;
@@ -226,7 +240,7 @@ const AllDiv = styled.div`
 
 const ButtonContainer = styled.div`
   grid-column: 1/5;
-  grid-row: 4;
+  grid-row: 5;
   margin: auto;
   width: 95%;
   padding: 20px;
@@ -311,6 +325,18 @@ const InnerLocationDiv = styled.div`
 padding: 20px;
 `
 
+const ConfirmationText = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: Josefin Sans;
+font-style: italic;
+font-weight: lighter;
+font-size: 1.5vh;
+line-height: 2vh;
+color: #0B3669;
+padding: 0px 10px 10px 10px;
+`;
 
 export {
   SeatsLeftDiv,
@@ -331,6 +357,7 @@ export {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  NotesDiv,
   TextContainer,
   ButtonDiv,
   AllDiv,
@@ -345,5 +372,6 @@ export {
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
-  TimeText
+  TimeText, 
+  ConfirmationText
 }

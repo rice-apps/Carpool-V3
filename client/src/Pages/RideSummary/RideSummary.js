@@ -3,7 +3,6 @@ import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
 import {
-  IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
@@ -13,7 +12,6 @@ import {
   SeatsLeftDiv,
   SeatsLeftNum,
   SeatsLeftText,
-  SocialIcon,
   RideSummaryDiv,
   LocationDiv,
   LocationText,
@@ -27,6 +25,7 @@ import {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  NotesDiv,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -40,14 +39,19 @@ import {
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
-  TimeText
+  TimeText, 
+  ConfirmationText
 } from './RideSummaryStyles.js'
+import { Grid, IconButton } from '@material-ui/core';
+import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
+import CloseIcon from '@material-ui/icons/Close';
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
 import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
+const confirmationText = "You will still need to contact your fellow riders and order an Uber or Lyft on the day of."
 
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
@@ -61,6 +65,7 @@ const GET_RIDE = gql`
       arrivalLocation {
         title
       }
+      notes
       owner {
         netid
         firstName
@@ -76,7 +81,11 @@ const GET_RIDE = gql`
     }
   }
 `
+
 const RideSummary = () => {
+
+  document.title = "Ride Summary";
+
   let { id } = useParams()
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading"},
@@ -86,6 +95,9 @@ const RideSummary = () => {
   })
   const history = useHistory()
   const { addToast } = useToasts();
+  // States to control for Dialog
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -100,9 +112,52 @@ const RideSummary = () => {
     }
   `
 
+  const REMOVE_RIDER = gql`
+  mutation RemoveRider($rideID: ID!) {
+      removeRider(rideID: $rideID) {
+          _id
+      }
+  }
+`
+
+// const UPDATE_OWNER = gql`
+// mutation UpdateOwner($fillthisIn){
+//   rideUpdateOne (record:{
+//     owner:
+//   })
+// }
+// `
+
   const [joinRide] = useMutation(JOIN_RIDE, {
     variables: { rideID: id }
   })
+
+  const [leaveRide] = useMutation(REMOVE_RIDER, {
+    variables: { rideID: id }
+  })
+
+  // Determine the behavior of button, verify if user is in Rice SSO
+  const handleClickOpen = () => {
+    // User is logged in already via Rice Verification
+    if (localStorage.getItem('token') != null) {
+      // Show the confirmation pop-up for joining ride
+      setOpenConfirmation(true); 
+    } 
+    // User is not logged in, prompt them to log in
+    else {
+      setOpenLogin(true);
+    }
+  };
+
+  // Close the  box
+  const handleCloseLogin= () => {
+      setOpenLogin(false);
+  };
+
+  // Close the confirmation panel
+  const handleCloseConfirmation = () => {
+      setOpenConfirmation(false);
+  };
 
   useEffect(() => {
     if (data) {
@@ -147,6 +202,23 @@ const RideSummary = () => {
 
     });
   }
+
+
+  const leave = () => {
+    console.log("This is my id: " +id);
+    const returned = leaveRide().then((result) => {
+      console.log(result);
+      window.location.reload();
+      console.log(result);
+
+    }).catch((err) => {
+      console.log(err);
+      addToast("Error leaving ride", { appearance: 'error'});
+
+    });
+    // If numUsers == 1, show delete ride
+    console.log(returned);
+  }
   
   console.log(data, loading, error);
   if (localStorage.getItem('joinFromLogin') === "true") join();
@@ -155,16 +227,16 @@ const RideSummary = () => {
   if (!data) return <p>No data...</p>
 
  
-
   const goBack = () => {
     let lastPage = '/' + localStorage.getItem('lastPage');
     localStorage.setItem('lastPage', `ridesummary/${id}`);
     // Any attempts to go back to edit the onboarding form
     // should take you back to the current ride summary page.
-    if (lastPage === "/onboarding"){
-      localStorage.setItem('nextPage', `ridesummary/${id}`); 
+    if (lastPage === "/your-rides"){
+      history.push(lastPage);
+    } else {
+      history.push("/search");
     }
-    history.push(lastPage);
   }
 
   const time = moment(ride.departureDate)
@@ -176,16 +248,13 @@ const RideSummary = () => {
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
         <BackArrow></BackArrow>
-        <BackText>Search Page</BackText>
+        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
       </BackArrowDiv>
 
       <RideSummaryDiv>
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) left</SeatsLeftText>
-          <SocialIcon>
-            <IoShareSocialSharp></IoShareSocialSharp>
-          </SocialIcon>
         </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
@@ -238,7 +307,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.filter((x) => x.firstName + " " + x.lastName !== ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
+          {ride.riders.filter((x) => x.netid !== ride.owner.netid).map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
@@ -254,11 +323,58 @@ const RideSummary = () => {
           ))}
         </RidersComponents>
       </RidersDiv>
+
+      <NotesDiv>
+        {ride.notes || 'No ride notes'}
+      </NotesDiv>
+
       <ButtonContainer>
-        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+        {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
+        <ButtonDiv onClick={leave} leaveRide = {true}>
+          Leave Ride
+        </ButtonDiv>: 
+        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
           Join Ride
-        </ButtonDiv>
+        </ButtonDiv>}
       </ButtonContainer>
+      <JoinRideDialog
+                open={openLogin}
+                onClose={handleCloseLogin}
+            >
+            <Grid container spacing = {12} justifyContent = "center">
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleCloseLogin} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {10} justifyContent = "center">
+                    <ConfirmationText>{confirmationText}</ConfirmationText>
+                    <LoginDialogActions>
+                        <LoginButton onClick={join} autoFocus>Got it! Login with Rice SSO</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </JoinRideDialog>
+      <JoinRideDialog
+                open={openConfirmation}
+                onClose={handleCloseConfirmation}
+            >
+            <Grid container spacing = {12} justifyContent = "center">
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleCloseConfirmation} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {10} justifyContent = "center">
+                  <ConfirmationText>{confirmationText}</ConfirmationText>
+                    <LoginDialogActions>
+                        <LoginButton onClick={join} autoFocus>Got it! Join Ride</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </JoinRideDialog>
     </AllDiv>
   )
 }

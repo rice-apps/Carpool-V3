@@ -19,6 +19,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "cross-env": "^7.0.3",
     "graphql": "^15.0.0",
     "history": "^4.10.1",
     "jwt-decode": "^3.1.2",
@@ -41,7 +42,7 @@
     "use-axios-client": "^2.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

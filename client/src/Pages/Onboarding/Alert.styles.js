@@ -2,7 +2,6 @@ import {
     Button, 
     Dialog,
     DialogActions,
-    IconButton
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -15,26 +14,23 @@ export const LoginButton = withStyles({
         display: 'absolute',
         justifyContent: 'center',
         background: '#2075D8',
-        width: '50vw',
+        width: '55vw',
         borderRadius: 25,
         color: 'white',
         height: '5vh',
     },
     label: {
       textTransform: 'capitalize',
-      fontFamily: 'Josefin Sans'
+      fontFamily: 'Josefin Sans',
     },
 })(Button);
 
 export const LoginDialog = withStyles({
     root: {
-        background: '#FFFFFF',
         borderRadius: 8, 
         border: 0, 
     }, 
     paper: {
-        display: 'flex',
-        justifyContent: 'align-start',
         background: '#FFFFFF',
         width: '75vw',
         height: '20vh',
@@ -42,20 +38,24 @@ export const LoginDialog = withStyles({
     }
 })(Dialog); 
 
+export const JoinRideDialog = withStyles({
+    root: {
+        borderRadius: 8, 
+        border: 0, 
+    }, 
+    paper: {
+        background: '#FFFFFF',
+        width: '75vw',
+        height: '25vh',
+        padding: '0px'
+    }
+})(Dialog); 
+
 export const LoginDialogActions = withStyles({
     root: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        padding: '2vh 1vw'
     }
 })(DialogActions); 
 
-export const ExitDialogActions = withStyles({
-    root: {
-        justifyContent: 'flex-end',
-    }
-})(IconButton);
-
-export const LoginIconButton = withStyles({
-    root: {
-        padding: '4px 6px 8px'
-    }
-})(IconButton);

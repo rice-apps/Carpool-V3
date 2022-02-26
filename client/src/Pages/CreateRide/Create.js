@@ -12,21 +12,23 @@ import {
     customTheme,
     Form,
     SelectBox,
+    TextFieldBox,
     MenuBox,
     ColorButton,
     InputBox,
-    FormControlLabelBox,
     DateBox,
-    CheckBox,
     SelectSquare,
     MenuSquare,
-    BodyText
+    BodyText, 
+    ConfirmationText
 } from './Create.styles'
 import LoadingDiv from '../../common/LoadingDiv.js';
 
 
 
 const Create = ({onCreate}) => {
+
+    document.title = "Create Ride";
 
     const { addToast } = useToasts();
 
@@ -50,10 +52,11 @@ const Create = ({onCreate}) => {
 
     // Variables for Tracking Attributes of the Form
     const [startLoc, setStartLoc] = useState('')
+    const [notes, setNotes] = useState('')
     const [endLoc, setEndLoc] = useState('')
     const [date, setDate] = useState(new Date())
     const [passengers, setPassengers] = useState(3)
-    const [confirmation, setConfirmation] = useState(false)
+    const confirmationText = "You will still need to contact your fellow riders and order an Uber or Lyft on the day of."
 
     // Function after Submit Button is Pressed
     const onSubmit = (e) => {
@@ -71,19 +74,14 @@ const Create = ({onCreate}) => {
             return;
         }
 
-        if (!confirmation) {
-            addToast("You must agree to lead the ride to create this ride.", { appearance: 'error' });
-            return
-        }
-
         // Pass arguments back to the top mutation queue
-        onCreate({ startLoc, endLoc, date, passengers, confirmation, users, owner})
+        onCreate({ startLoc, endLoc, date, passengers, notes, users, owner })
 
         setStartLoc('')
         setEndLoc('')
+        setNotes('')
         setDate(new Date())
         setPassengers(4)
-        setConfirmation(false)
     }
 
     // OnChange Functions: Triggers for User Changing Fields
@@ -93,14 +91,14 @@ const Create = ({onCreate}) => {
         setStartLoc(e.target.value);
     };
 
+    const onNotesChange = (e) => {
+        e.preventDefault()
+        setNotes(e.target.value);
+    }
 
     const onEndLocChange = (e) => {
         e.preventDefault()
         setEndLoc(e.target.value);
-    };
-
-    const onCheck = (e) => {
-        setConfirmation(e.target.checked);
     };
 
     const onPassengerChange = (e) => {
@@ -244,11 +242,33 @@ const Create = ({onCreate}) => {
                                 disablePast={true}
                                 value={date}
                                 onChange={setDate}
-                            >
-                            </DateBox>
+                            />
                         </MuiPickersUtilsProvider>
                     </MuiThemeProvider>
                 </Grid>
+
+
+                <Grid 
+                    item
+                    xs = {12}
+                >   
+                    <InputBox id = 'Notes'>Notes</InputBox>
+
+                    <TextFieldBox 
+                        id="outlined-basic"
+                        multiline
+                        placeholder = "e.g. flight time, Rice meetup location, etc."
+                        labelId="Notes"
+                        variant="outlined"
+                        value={notes}
+                        onChange={onNotesChange}
+                    >
+
+                    </TextFieldBox>
+
+                </Grid>
+
+
 
                 <Grid
                 container
@@ -259,6 +279,17 @@ const Create = ({onCreate}) => {
                 >
                     <Grid item>   
                         <SelectSquare
+                            MenuProps={{
+                                anchorOrigin: {
+                                    vertical: "bottom",
+                                    horizontal: "left"
+                                },
+                                transformOrigin: {
+                                    vertical: "top",
+                                    horizontal: "left"
+                                },
+                                getContentAnchorEl: null
+                            }}
                             id="Number of Passengers Occupied"
                             value={passengers}
                             onChange={onPassengerChange}
@@ -282,12 +313,9 @@ const Create = ({onCreate}) => {
 
                 <Grid
                     item
-                    xs = {12}
+                    xs = {11}
                 >
-                    <FormControlLabelBox
-                        control={<CheckBox color='primary' checked={confirmation} onChange={onCheck}/>}
-                        label="I am responsible for coordinating this ride."
-                    />
+                    <ConfirmationText>{confirmationText}</ConfirmationText>
                 </Grid>
 
                 <Grid 
