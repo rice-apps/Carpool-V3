@@ -23,7 +23,7 @@ const FeedbackButton = styled(Button)`
   top: 90vh;
   left: 60vw;  
   background: #C1CCE0;
-  border-radius: 10px 10px 0px 10px;
+  border-radius: 15px 15px 0px 15px;
   height: 6vh;
   width: 16vh;
   justify-content: space-between;
@@ -116,7 +116,7 @@ const Name = styled.div`
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 1.5em;
+  font-size: 1.4em;
 `
 
 const Title = styled.div`
@@ -128,6 +128,38 @@ const Title = styled.div`
 
 `
 
+const AcknowledgementsHeader = styled.div`
+  padding-top: 5%;
+  align-text: center;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2.5em;
+  display: flex;
+  color: white;
+  padding-bottom: 3%;
+`
+
+const AcknowledgedGroup = styled.div`
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 1.5em;
+color: white;
+margin-bottom: 3%;
+margin-top: 5%;
+text-decoration: underline;
+`
+
+const AcknowledgedNames = styled.div`
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: .8em;
+color: white;
+padding: 0% 10% 0% 10%;
+text-align: center;
+`
 
 export {
   AllDiv,
@@ -143,4 +175,7 @@ export {
   Info,
   Name,
   Title,
+  AcknowledgementsHeader,
+  AcknowledgedGroup,
+  AcknowledgedNames
 } 

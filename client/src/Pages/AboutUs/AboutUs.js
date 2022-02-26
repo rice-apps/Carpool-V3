@@ -19,6 +19,9 @@ import{
     Info,
     Name,
     Title,
+    AcknowledgementsHeader,
+    AcknowledgedGroup,
+    AcknowledgedNames
 } from "./AboutUsstyles";
 
 
@@ -338,8 +341,28 @@ const AboutUs = () => {
                     </Info>
                 </Member>
 
-        </AllDiv>
+                <AcknowledgementsHeader>Acknowledgements</AcknowledgementsHeader>
 
+                <AcknowledgedGroup>Carpool v1 Team</AcknowledgedGroup>
+
+                <AcknowledgedNames>Diksha Gupta, Myra Ramdenbourg, Katherine Ngo, Angela Hwang, Emmett Bertram, Gerald Wang, Josie Garza, Lingyin Wu
+                </AcknowledgedNames>
+
+                <AcknowledgedGroup>Carpool v2 Team</AcknowledgedGroup>
+
+                <AcknowledgedNames>Winnie Li, Will Mundy, Guancong Jia, Shryans Goyal, Helena Hu, Cloris Cai
+                </AcknowledgedNames>
+
+                <AcknowledgedGroup>OSA Carpool Team</AcknowledgedGroup>
+
+                <AcknowledgedNames>Shourya Munjal, Zachary Katz, Freda Zhang
+                </AcknowledgedNames>
+  
+                <AcknowledgedGroup>Rice Apps Chairs/Mentors</AcknowledgedGroup>
+
+                <AcknowledgedNames>Adam Zawierucha, Cloris Cai
+                </AcknowledgedNames>
+        </AllDiv>
 
     )
 
