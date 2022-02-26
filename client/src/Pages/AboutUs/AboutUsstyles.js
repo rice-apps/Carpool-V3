@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
 
@@ -90,6 +89,7 @@ const Member = styled(Card)({
   borderRadius: "8px",
   backgroundColor: "white",
   width: "85vw",
+  height: "10vh",
   margin: "3%",
   padding: "1%",
 })
@@ -108,16 +108,15 @@ const Info = styled.div`
   row-gap: 5px;
   flex-direction: column;
   padding: 5%;
-  
+  align-self: center;
+
 `
 
 const Name = styled.div`
-
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 1.4em;
-
+  font-size: 1.5em;
 `
 
 const Title = styled.div`

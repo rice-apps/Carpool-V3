@@ -330,6 +330,13 @@ const AboutUs = () => {
                     </Info>
                 </Member>
                 
+                <Member>
+                    <Picture image="/membersPictures/jessica.JPG"/>
+                    <Info>
+                        <Name>Jessica Huang</Name>
+                        <Title>Designer | Wiess College</Title>
+                    </Info>
+                </Member>
 
         </AllDiv>
 
