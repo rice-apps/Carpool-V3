@@ -5,7 +5,7 @@ import {
   InputBox,
   SubmitButton,
   CancelButton,
-  InputTextField,
+  VenmoTextField,
   RequiredTextField,
   CollegeSelect,
   ProfileStyles,
@@ -48,7 +48,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
   const classes = ProfileStyles();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <ProfileFormContainer>
         <Header> Sign up to use Carpool</Header>
         <InputBox>
@@ -80,13 +80,13 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         </InputBox>
         <InputBox>
           <Label>Venmo</Label>
-          <InputTextField
+          <VenmoTextField
             label="Account ID"
             name="venmo"
             defaultValue={venmo}
             value={venmo}
             onChange={(e) => setVenmo(e.target.value)}
-          ></InputTextField>
+          ></VenmoTextField>
           <Label>College:</Label>
           <CollegeSelect
             variant="outlined"
@@ -112,16 +112,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         </InputBox>
         <SubmitButton
           variant="contained"
-          onClick={() => {
-            onSubmit({
-              firstName,
-              lastName,
-              phone,
-              college,
-              venmo,
-            });
-          }}
-        >
+          onClick={() => { handleSubmit()}}>
           Submit
         </SubmitButton>
         <CancelButton

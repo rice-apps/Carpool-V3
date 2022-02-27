@@ -4,6 +4,7 @@ import Box from "@material-ui/core/Box";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, InputLabel, makeStyles, TextField } from "@material-ui/core";
 import { InputAdornment, Select } from "@material-ui/core";
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 
 export const Header = styled.div`
   display: flex;
@@ -83,6 +84,42 @@ export function InputTextField(props) {
           color: "#2075D8",
           height: "6vh",
         },
+        endAdornment: <InputAdornment position="end"></InputAdornment>,
+      }}
+    ></TextField>
+  );
+}
+
+
+
+export function VenmoTextField(props) {
+  const classes = ProfileStyles();
+  const { label, name, defaultValue, onChange, value } = props;
+  return (
+    <TextField
+      name={name}
+      style={{ paddingBottom: "1vh" }}
+      variant="filled"
+      label={label}
+      defaultValue={defaultValue}
+      fullWidth={true}
+      onChange={onChange}
+      value={value}
+      InputLabelProps={{
+        className: [classes.inputLabel],
+      }}
+      InputProps={{
+        className: classes.inputContent,
+        style: {
+          background: "rgb(187,218,255,0.22)",
+          color: "#2075D8",
+          height: "6vh",
+        },
+        startAdornment: (
+          <InputAdornment position="start" >
+            <AlternateEmailIcon fontSize="small"/>
+          </InputAdornment>
+          ),
         endAdornment: <InputAdornment position="end"></InputAdornment>,
       }}
     ></TextField>
