@@ -1,25 +1,33 @@
 import React from "react";
 import '../../App.css';
 import { Link } from 'react-router-dom';
-import {FunctionTextTop, FunctionTextBot, Header, SearchButton} from './HomeStyles.js'
+import {FunctionTextTop, 
+        FunctionTextBot, 
+        HomePage, 
+        ImageBox,
+        SearchButton} from './HomeStyles.js'
 
 const Home = () => {
 
     return (
-        <div className="App">
-        <Header>
-            <img alt='Carpool Logo' src="/dark mode.png" width="400" height="400"/>
+        <div>
+            <HomePage>
+            <ImageBox
+                component="img"
+                alt="Carpool Logo"
+                src="/dark mode.png"
+            >
+            </ImageBox>
             <FunctionTextTop>
                 Find and coordinate rides with 
             </FunctionTextTop>
             <FunctionTextBot>
                 other students - all in one place.
             </FunctionTextBot>
-            <Link to="/search"><SearchButton>Start Riding</SearchButton></Link>
-
-        </Header>
-    
+            <Link to="/search" style={{ textDecoration:"none" }}><SearchButton>Start Riding</SearchButton></Link>
+        </HomePage>
         </div>
+        
     )
 }
 
