@@ -86,7 +86,7 @@ const UpcomingRideCard = ({id, origin, destination, datetime, num_riders, notifi
                             <ArrowForward />
                             <LocationText>{ destination }</LocationText>
                         <Grid sm = {9} xs = {11} justifyContent='center'>
-                            <RiderText>{num_riders + " rider"}</RiderText>
+                            <RiderText>{num_riders > 1 ? num_riders + " riders" : num_riders + " rider"}</RiderText>
                         </Grid>
                     </Grid>
                 </Locations>
