@@ -1,11 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
+// import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+// import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
 import { useHistory } from 'react-router';
+import { Grid } from "@material-ui/core";
 
 import { 
     RideCard, 
@@ -13,8 +14,10 @@ import {
     RideDate, 
     RideTime, 
     LocationText, 
-    Locations, 
-    Notifications } 
+    Locations,
+    RiderText, 
+    // Notifications 
+} 
     from './UpcomingRideCard.styles.js';
 
 const CalendarIcon = withStyles({
@@ -29,28 +32,28 @@ const CalendarIcon = withStyles({
   const ArrowForward = withStyles({
   })(ArrowForwardIcon);
 
-  const NotificationsOn = withStyles({
-    root: {
-        display: 'flex',
-        color: '#2075D8',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }
+//   const NotificationsOn = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: '#2075D8',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
  
-  })(NotificationsActiveIcon);
+//   })(NotificationsActiveIcon);
   
-  const NotificationsOff = withStyles({
-    root: {
-        display: 'flex',
-        color: 'rgba(32, 117, 216, 0.42)',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }
-  })(NotificationsOffIcon);
+//   const NotificationsOff = withStyles({
+//     root: {
+//         display: 'flex',
+//         color: 'rgba(32, 117, 216, 0.42)',
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//       }
+//   })(NotificationsOffIcon);
 
 
 
-const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => {
+const UpcomingRideCard = ({id, origin, destination, datetime, num_riders, notification}) => {
 
     const time = moment(datetime)
     const dateString = time.format('MMM DD')
@@ -78,14 +81,19 @@ const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => 
                 </RideTimeInfo>
                 
                 <Locations>
-                    <LocationText>{ origin }</LocationText>
-                    <ArrowForward />
-                    <LocationText>{ destination }</LocationText>
+                    <Grid container justifyContent='space-around'>
+                            <LocationText>{ origin }</LocationText>
+                            <ArrowForward />
+                            <LocationText>{ destination }</LocationText>
+                        <Grid sm = {9} xs = {11} justifyContent='center'>
+                            <RiderText>{num_riders + " rider"}</RiderText>
+                        </Grid>
+                    </Grid>
                 </Locations>
 
-                <Notifications>
+                {/* <Notifications>
                     { notification ? <NotificationsOn /> : <NotificationsOff /> }
-                </Notifications>
+                </Notifications> */}
             </RideCard>
         </div>
     )

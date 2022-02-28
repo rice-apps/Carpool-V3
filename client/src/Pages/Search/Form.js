@@ -8,8 +8,7 @@ const Form = (props) => {
   const resultRides = props.resultRides;
   const displayRef = props.displayRef;
 
-  console.log("Rice date=", new Date("2021-09-01T01:30:49.000+00:00"));
-
+ 
 // TODO: Get this from the API!!
 let PossibleLocations = [
   {
@@ -31,7 +30,7 @@ let PossibleLocations = [
   // May cause 401 error if a request is made to the database before it's ready
   return (
     <React.Fragment>
-    <FormOnly setNonMatchingRides={props.setNonMatchingRides} allRides={props.allRides} setAllRides={props.setAllRides} resultRides={resultRides} displayRef={displayRef} getRidesRefetch={props.getRidesRefetch} getLocsRefetch={props.getLocsRefetch} testLocations={PossibleLocations}/>
+    <FormOnly setRides={props.setRides} setRidesPossible={props.setRidesPossible} resultRides={resultRides} displayRef={displayRef} getRidesRefetch={props.getRidesRefetch} getLocsRefetch={props.getLocsRefetch} testLocations={PossibleLocations}/>
     </React.Fragment>
   )
 }

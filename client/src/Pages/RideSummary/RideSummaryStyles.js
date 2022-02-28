@@ -15,6 +15,7 @@ const SeatsLeftDiv = styled.div`
   font-style: normal;
   line-height: 11px;
   display: flex;
+  padding-right: 6px;
   align-items: stretch; /* Default */
 `
 const SeatsLeftNum = styled.div`
@@ -35,6 +36,7 @@ const SeatsLeftText = styled.div`
   font-size: 1em;
   line-height: 11px;
   padding-top: 6px;
+  padding-right: 6px;
 `
 const SocialIcon = styled.div`
   display: flex;
@@ -181,6 +183,16 @@ const RidersComponents = styled.div`
   background: #f4f6f9;
 `
 
+const RideNotesHeader = styled.div`
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  margin-top: 3vh;
+  line-height: 12px;
+  color: rgba(187, 199, 221, 0.91);
+`
+
 const IoPersonCircleSharpDiv = styled.span`
   font-size: 43px;
 `
@@ -200,9 +212,12 @@ const RiderText = styled.div`
 const NotesDiv = styled.div`
   grid-column: 1/ 5;
   grid-row: 4;
-  margin: 2em auto;
-  width: 85%;
+  overflow-wrap: break-word;
+  margin: 15px;
+  width: 97%;
   padding: 10px;  
+  color: rgba(128, 128, 128, 1);
+  
   font-family: Josefin Sans;
   background: #ffffff;
   border-radius: 5px;
@@ -228,7 +243,7 @@ const ButtonDiv = styled.button`
 `
 const AllDiv = styled.div`
   background: #f4f6f9;
-  height: 90vh;
+  height: 100vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: min-content;
@@ -321,6 +336,18 @@ const InnerLocationDiv = styled.div`
 padding: 20px;
 `
 
+const ConfirmationText = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: Josefin Sans;
+font-style: italic;
+font-weight: lighter;
+font-size: 1.5vh;
+line-height: 2vh;
+color: #0B3669;
+padding: 0px 10px 10px 10px;
+`;
 
 export {
   SeatsLeftDiv,
@@ -341,6 +368,7 @@ export {
   IoPersonCircleSharpDiv,
   OneRiderContainer,
   RiderText,
+  RideNotesHeader,
   NotesDiv,
   TextContainer,
   ButtonDiv,
@@ -356,5 +384,6 @@ export {
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
-  TimeText
+  TimeText, 
+  ConfirmationText
 }

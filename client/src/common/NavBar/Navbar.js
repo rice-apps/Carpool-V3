@@ -3,61 +3,19 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
+import InfoIcon from '@material-ui/icons/PeopleRounded';
+import MailIcon from '@material-ui/icons/MailRounded';
+import OpenInNewIcon from '@material-ui/icons/OpenInNewRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
-  Drawer, IconButton, AppBar, Toolbar, Avatar, Button } from '@material-ui/core';
+  Drawer, IconButton, AppBar, Toolbar, Avatar, Button, Divider } from '@material-ui/core';
 import { Link, useLocation } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
+const feedbackURL = 'https://forms.gle/WFqf77FxSy8FVHgb9'
 
-const useStyles = makeStyles((theme) => ({
-  appbarRoot: {
-    zIndex:"999"
-  },
-  icon: {
-    color:"#002140",
-  },
-  text : {
-    color:"#002140",
-  },
-  avatarIcon : {
-    width: "8vh",
-    height: "8vh"
-  },
-  bottomItem : {
-    marginTop: "auto"
-  },
-  list: {
-    display: "flex",
-    flexDirection: "column",
-    width: "66vw",
-    height: "100vh",
-  },
-  usernameContainer:{
-    gap: "5vw",
-    height: "15vh"
-  },
-  logInOutContainer:{
-    display:"flex", 
-    justifyContent:"center", 
-    height: "15vh",
-  },
-}));
-
-const LogInOutButton = withStyles({
-  root: {
-      background: '#2075D8',
-      width: '33vw',
-      borderRadius: 25,
-      color: 'white',
-  },
-  label: {
-    textTransform: 'capitalize',
-    fontFamily: 'Josefin Sans'
-  },
-})(Button);
 
 const GET_USER = gql`
 query GetUserInfo ($netID: String)
@@ -69,6 +27,61 @@ query GetUserInfo ($netID: String)
 }`
 
 export default function ButtonAppBar (props) {
+
+    // set appbar colour
+  const currURL = window.location.pathname;
+  const [appbarColor, setAppbarColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
+
+  const [hamburgerColor, setHamburgerColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
+
+  const useStyles = makeStyles((theme) => ({
+    appbarRoot: {
+      zIndex:"999",
+      background: appbarColor,
+    },
+    icon: {
+      color: hamburgerColor,
+    },
+    text : {
+      color:"#002140",
+    },
+    avatarIcon : {
+      width: "8vh",
+      height: "8vh"
+    },
+    bottomItem : {
+      marginTop: "auto"
+    },
+    list: {
+      display: "flex",
+      flexDirection: "column",
+      width: "66vw",
+      height: "100vh",
+    },
+    usernameContainer:{
+      gap: "5vw",
+      height: "15vh"
+    },
+    logInOutContainer:{
+      display:"flex", 
+      justifyContent:"center", 
+      height: "15vh",
+    },
+  }));
+  
+  const LogInOutButton = withStyles({
+    root: {
+        background: '#2075D8',
+        width: '33vw',
+        borderRadius: 25,
+        color: 'white',
+    },
+    label: {
+      textTransform: 'capitalize',
+      fontFamily: 'Josefin Sans'
+    },
+  })(Button);
+
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
@@ -86,13 +99,19 @@ export default function ButtonAppBar (props) {
   );
   const location = useLocation();
   useEffect(() => {
-    if (location.pathname === "/home" || location.pathname === "/"){
+    if (["/", "/home", "/userAuth", "/onboarding"].includes(location.pathname)){
       setShowBar(false)
     }
-    else{ 
+    else { 
       setShowBar(true)
     }
-  }, [location.pathname])
+
+    setAppbarColor((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
+
+    setHamburgerColor((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
+
+    
+  }, [location.pathname, currURL])
 
   // if (loading) return <LoadingDiv height={'9vh'} />;
   // if (error) return `Error! ${error.message}`;
@@ -126,6 +145,10 @@ export default function ButtonAppBar (props) {
     window.open(redirectURL, '_self');
   }
 
+  const openFeedback = () => {
+    window.open(feedbackURL, '_blank');
+  }
+
   const showUsername = (toggleDrawer) => (
     <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer} onClick = {toggleDrawer}>
       <Avatar className = {classes.avatarIcon}/>
@@ -134,7 +157,7 @@ export default function ButtonAppBar (props) {
   )
 
   const showLogin = (toggleDrawer) => (
-      <ListItem className={classes.logInOutContainer} divider = "true" disableGutters = "true">
+      <ListItem className={classes.logInOutContainer} disableGutters = "true">
         <LogInOutButton onClick = {() => {toggleDrawer(); login(); redirect();}}>Login</LogInOutButton>
       </ListItem>
   )
@@ -145,21 +168,31 @@ export default function ButtonAppBar (props) {
     </ListItem>
   )
 
+
+
+
   // Eventually should make this extensible
   const drawerItems = (toggleDrawer) => (
     <div>
       <List className = {classes.list}>
         {loggedIn ? showUsername(toggleDrawer) : showLogin(toggleDrawer)}
-        <ListItem button component = {Link} to = "/search" onClick = {toggleDrawer}>
+        <ListItem button  className = {classes.item} component = {Link} to = "/search" onClick = {toggleDrawer}>
           <ListItemIcon className= {classes.icon}> <HomeIcon/> </ListItemIcon>
           <ListItemText className = {classes.text} primary = "Home"/>
         </ListItem>
-        <ListItem button disabled = {!loggedIn} component = {Link} to = "/your-rides" onClick = {toggleDrawer}>
+        <ListItem button classes = {{root: classes.item, disabled: classes.disabledText}} disabled = {!loggedIn} component = {Link} to = "/your-rides" onClick = {toggleDrawer}>
           <ListItemIcon className = {classes.icon}> <CarIcon/> </ListItemIcon>
-          <ListItemText className = {classes.text} primary = "Your Rides"/>
+          <ListItemText classes = {classes.text} primary = "Your Rides"/>
         </ListItem>
-        <ListItem button className = {classes.bottomItem} component = {Link} to = "/about" onClick = {toggleDrawer}>
-          <ListItemText className = {classes.text} primary = "About"/>
+        <Divider variant="middle" classes = {{root: classes.divider}}/>
+        <ListItem button className = {classes.item} component = {Link} to = "/about" onClick = {toggleDrawer}>
+          <ListItemIcon className= {classes.icon}> <InfoIcon/> </ListItemIcon>
+          <ListItemText  className = {classes.text} primary = "About Us"/>
+        </ListItem>
+        <ListItem button className = {classes.item} onClick = {openFeedback}>
+          <ListItemIcon className= {classes.icon}> <MailIcon/> </ListItemIcon>
+          <ListItemText classses = {classes.text} primary = "Give us feedback!"/> 
+          <OpenInNewIcon className= {classes.secondaryIcon}/> 
         </ListItem>
         {loggedIn ? showLogout(toggleDrawer) : null}
       </List>
@@ -170,7 +203,11 @@ export default function ButtonAppBar (props) {
     <div>
     {showBar ?
     <div>
-        <AppBar position="fixed" color="white" elevation="0" className={classes.appbarRoot}> 
+        <AppBar 
+          position="fixed" 
+          color= "black" 
+          elevation="0" 
+          className={classes.appbarRoot}> 
           <Toolbar>
             <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
