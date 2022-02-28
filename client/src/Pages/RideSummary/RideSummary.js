@@ -26,6 +26,7 @@ import {
   OneRiderContainer,
   RiderText,
   NotesDiv,
+  RideNotesHeader,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -66,12 +67,14 @@ const GET_RIDE = gql`
       }
       notes
       owner {
+        _id
         netid
         firstName
         lastName
         phone
       }
       riders {
+        _id
         netid
         firstName
         lastName
@@ -86,11 +89,14 @@ const RideSummary = () => {
   document.title = "Ride Summary";
 
   let { id } = useParams()
+  const [newOwner, setNewOwner] = useState({"owner":{_id:""}});
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading"},
     arrivalLocation: {title: "Loading"},
     owner: {netid: "Loading"},
-    riders: []
+    riders: [],
+    notes: "",
+    spots: -1
   })
   const history = useHistory()
   const { addToast } = useToasts();
@@ -119,13 +125,30 @@ const RideSummary = () => {
   }
 `
 
-// const UPDATE_OWNER = gql`
-// mutation UpdateOwner($fillthisIn){
-//   rideUpdateOne (record:{
-//     owner:
-//   })
-// }
-// `
+const DELETE_RIDE = gql`
+  mutation DeleteRide($id: MongoID!) {
+      rideDeleteOne(_id: $id) {
+          recordId
+      }
+  }
+`
+// Query ride
+
+// Get ride
+
+// Update ride
+
+
+const UPDATE_RIDE = gql`
+mutation UpdateRideOwner($id: MongoID!, $record: UpdateOneridesInput!){
+    rideUpdateOne(filter: { _id: $id }, record: $record){
+    recordId
+  }
+}
+`
+const [deleteRide] = useMutation(DELETE_RIDE, {
+  variables: { id: ride._id }
+})
 
   const [joinRide] = useMutation(JOIN_RIDE, {
     variables: { rideID: id }
@@ -135,18 +158,21 @@ const RideSummary = () => {
     variables: { rideID: id }
   })
 
-  // Determine the behavior of button, verify if user is in Rice SSO
-  const handleClickOpen = () => {
-    // User is logged in already via Rice Verification
-    if (localStorage.getItem('token') != null) {
-      // Show the confirmation pop-up for joining ride
-      setOpenConfirmation(true); 
-    } 
-    // User is not logged in, prompt them to log in
-    else {
-      setOpenLogin(true);
+  // console.log("Before mutation:",ride.owner._id);
+  const [updateRide] = useMutation(UPDATE_RIDE, {
+    variables: {id: ride._id, record: {owner: newOwner.owner._id}}
+  })
+
+  useEffect(() => {
+    if(newOwner.owner._id !== "") {
+      updateRide().then(result => {
+        window.location.reload();
+      }).catch((err) => {
+        console.log(err)
+      })
     }
-  };
+    
+  }, [newOwner, updateRide]) 
 
   // Close the  box
   const handleCloseLogin= () => {
@@ -185,30 +211,49 @@ const RideSummary = () => {
     }
     else if (localStorage.getItem('joinFromLogin') === "true") {
       localStorage.setItem('joinFromLogin', "false");
-     }
+    }
 
     joinRide().then((result) => {
-       window.location.reload();
- 
-    }).catch((err) => {
-       addToast("Sorry! This ride is full.", { appearance: 'error'});
+      window.location.reload();
 
+    }).catch((err) => {
+      addToast("Sorry! This ride is full.", { appearance: 'error'});
     });
   }
 
 
   const leave = () => {
-    leaveRide().then((result) => {
-       window.location.reload();
- 
+    let currentUser = localStorage.getItem('netid');
+    const returned = leaveRide().then(async (result) => {
+      if (ride.riders.length === 1) {
+        // DELETE ride - use result (MongoID) to delete
+        deleteRide().then(() => {
+          history.push('/search');
+        }).catch((err) => console.log(err));
+      }
+      else if (ride.owner.netid === currentUser) {
+        // Update owner of ride 
+        let newRiders = ride.riders.filter((key) => key.netid !== currentUser);
+        setNewOwner({owner:newRiders[0]});
+      }
+      else {
+        window.location.reload();
+      }
+      return result
     }).catch((err) => {
-       addToast("Error leaving ride", { appearance: 'error'});
+      console.log(err);
+      addToast("Error leaving ride", { appearance: 'error'});
 
     });
     // If numUsers == 1, show delete ride
-   }
-  
-   if (localStorage.getItem('joinFromLogin') === "true") join();
+    console.log(returned);
+    // console.log(result);
+    // window.location.reload();
+    // console.log(result);
+  }
+
+  // console.log(data, loading, error);
+  if (localStorage.getItem('joinFromLogin') === "true") join();
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
@@ -309,18 +354,20 @@ const RideSummary = () => {
             </div>
           ))}
         </RidersComponents>
+        <RideNotesHeader>Ride Notes</RideNotesHeader> 
+        <NotesDiv>
+        {ride.notes || 'No ride notes'}
+        </NotesDiv>
       </RidersDiv>
 
-      <NotesDiv>
-        {ride.notes || 'No ride notes'}
-      </NotesDiv>
-
+      
+            
       <ButtonContainer>
         {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
         <ButtonDiv onClick={leave} leaveRide = {true}>
           Leave Ride
         </ButtonDiv>: 
-        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
+        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
           Join Ride
         </ButtonDiv>}
       </ButtonContainer>

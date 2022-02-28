@@ -16,77 +16,6 @@ import { SERVICE_URL } from '../../config';
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const feedbackURL = 'https://forms.gle/WFqf77FxSy8FVHgb9'
 
-const useStyles = makeStyles((theme) => ({
-  appbarRoot: {
-    zIndex:"999"
-  },
-  icon: {
-    minWidth: '40px',
-    color:"#002140",
-  },
-  secondaryIcon:{
-    fontSize: 'medium',
-    color:"#BAC3CE"
-  },
-  item:{
-    height: '8vh',
-    paddingLeft: '24px',
-    paddingRight: '24px'
-  },
-  text : {
-    fontWeight: 'bold',
-    color:"#002140",
-  },
-  disabledText : {
-    fontStyle: 'italic',
-  },
-  divider :{
-    backgroundColor:"#BBDAFF",
-    margin: '10px 30px 10px 30px',
-    height: '2px'
-  },
-  avatarIcon : {
-    width: "8vh",
-    height: "8vh"
-  },
-  bottomItem : {
-    marginTop: "auto"
-  },
-  list: {
-    display: "flex",
-    flexDirection: "column",
-    width: "66vw",
-    height: "100vh",
-    maxWidth: 350,
-  },
-  usernameContainer:{
-    gap: "5vw",
-    paddingLeft: '24px',
-    paddingRight: '24px',
-    height: "15vh"
-  },
-  logInOutContainer:{
-    display:"flex", 
-    justifyContent:"center",
-    paddingLeft: '24px',
-    paddingRight: '24px', 
-    height: "15vh",
-  },
-}));
-
-const LogInOutButton = withStyles({
-  root: {
-      background: '#2075D8',
-      width: '100%',
-      borderRadius: 25,
-      color: 'white',
-      margin: '0 1em',
-  },
-  label: {
-    textTransform: 'capitalize',
-    fontFamily: 'Josefin Sans'
-  },
-})(Button);
 
 const GET_USER = gql`
 query GetUserInfo ($netID: String)
@@ -98,6 +27,87 @@ query GetUserInfo ($netID: String)
 }`
 
 export default function ButtonAppBar (props) {
+
+    // set appbar colour
+  const currURL = window.location.pathname;
+  const [appbarColor, setAppbarColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
+
+  const [hamburgerColor, setHamburgerColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
+
+  const useStyles = makeStyles((theme) => ({
+    appbarRoot: {
+      zIndex:"999",
+      background: appbarColor,
+    },
+    icon: {
+      color: "#002140"
+    },
+    secondaryIcon: {
+      fontSize: 'medium',
+      color: '#BAC3CE'
+    },
+    burgerIcon: {
+      minWidth: '40px',
+      color: hamburgerColor,
+    },
+    item: {
+      height: '8vh',
+      paddingLeft: '24px',
+      paddingRight: '24px'
+    },
+    text : {
+      color:"#002140",
+    },
+    disabledText: {
+      fontStyle: 'italic'
+    },
+    divider: {
+      backgroundColor: '#BBDAFF',
+      margin: '10px 30px 10px 30px',
+      height: '2px'
+    },
+    avatarIcon : {
+      width: "8vh",
+      height: "8vh"
+    },
+    bottomItem : {
+      marginTop: "auto"
+    },
+    list: {
+      display: "flex",
+      flexDirection: "column",
+      width: "66vw",
+      height: "100vh",
+      maxWidth: '350px',
+    },
+    usernameContainer:{
+      gap: "15%",
+      height: "15vh",
+      paddingLeft: '24px',
+      paddingRight: '24px'
+    },
+    logInOutContainer:{
+      display:"flex", 
+      justifyContent:"center", 
+      height: "15vh",
+      paddingLeft: '24px',
+      paddingRight: '24px'
+    },
+  }));
+  
+  const LogInOutButton = withStyles({
+    root: {
+        background: '#2075D8',
+        width: '33vw',
+        borderRadius: 25,
+        color: 'white',
+    },
+    label: {
+      textTransform: 'capitalize',
+      fontFamily: 'Josefin Sans'
+    },
+  })(Button);
+
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
@@ -121,7 +131,13 @@ export default function ButtonAppBar (props) {
     else { 
       setShowBar(true)
     }
-  }, [location.pathname])
+
+    setAppbarColor((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
+
+    setHamburgerColor((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
+
+    
+  }, [location.pathname, currURL])
 
   // if (loading) return <LoadingDiv height={'9vh'} />;
   // if (error) return `Error! ${error.message}`;
@@ -178,6 +194,9 @@ export default function ButtonAppBar (props) {
     </ListItem>
   )
 
+
+
+
   // Eventually should make this extensible
   const drawerItems = (toggleDrawer) => (
     <div>
@@ -210,9 +229,13 @@ export default function ButtonAppBar (props) {
     <div>
     {showBar ?
     <div>
-        <AppBar position="fixed" color="white" elevation="0" className={classes.appbarRoot}> 
+        <AppBar 
+          position="fixed" 
+          color= "black" 
+          elevation="0" 
+          className={classes.appbarRoot}> 
           <Toolbar>
-            <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
+            <IconButton edge="start" className={classes.burgerIcon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
             </IconButton>
             <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>

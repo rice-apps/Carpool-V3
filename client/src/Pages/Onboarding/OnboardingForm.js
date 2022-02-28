@@ -5,7 +5,7 @@ import {
   InputBox,
   SubmitButton,
   CancelButton,
-  InputTextField,
+  VenmoTextField,
   RequiredTextField,
   CollegeSelect,
   ProfileStyles,
@@ -80,13 +80,13 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         </InputBox>
         <InputBox>
           <Label>Venmo</Label>
-          <InputTextField
+          <VenmoTextField
             label="Account ID"
             name="venmo"
             defaultValue={venmo}
             value={venmo}
             onChange={(e) => setVenmo(e.target.value)}
-          ></InputTextField>
+          ></VenmoTextField>
           <Label>College:</Label>
           <CollegeSelect
             variant="outlined"

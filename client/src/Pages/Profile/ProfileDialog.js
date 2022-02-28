@@ -9,7 +9,7 @@ import {
   ProfileEditIcon,
   CloseProfileIcon,
   Label,
-  InputTextField,
+  VenmoTextField,
   RequiredTextField,
   InputBox,
   SaveButton,
@@ -188,7 +188,7 @@ export default function ProfileDialog(props) {
                   }}
                 ></RequiredTextField>
                 <Label>Venmo:</Label>
-                <InputTextField
+                <VenmoTextField
                   label="Account ID"
                   name="venmo"
                   defaultValue={user.venmo}
@@ -200,7 +200,7 @@ export default function ProfileDialog(props) {
                     clearTextField("venmo");
                     setChangesMade(true);
                   }}
-                ></InputTextField>
+                ></VenmoTextField>
               </InputBox>
               <ButtonBox>
                 <SaveButton

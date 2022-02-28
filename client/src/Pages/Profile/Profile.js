@@ -79,8 +79,9 @@ const Profile = () => {
               aria-label="edit"
               onClick={() => setOpenDialog(true)}
               variant="outlined"
+              
             >
-              <EditIcon />
+              <EditIcon style={{color: "rgba(32, 117, 216, 1)"}}/>
             </IconButton>
           </EditProfileButton>
         )}
