@@ -109,7 +109,7 @@ const AboutUsHeader = styled.div`
 
 const Member = styled(Card)({
   display: "grid",
-  gridTemplateColumns: "150px 70%",
+  gridTemplateColumns: "125px",
   borderRadius: "8px",
   backgroundColor: "white",
   width: "85vw",
@@ -119,8 +119,8 @@ const Member = styled(Card)({
 
 const Picture = styled(CardMedia)({
   gridColumn: "1",
-  height: "150px",
-  width:'150px',
+  width:'125px',
+  height:'150px',
   padding: "3%",
   alignItems: "center",
   borderRadius: "8px",
@@ -132,7 +132,7 @@ const Info = styled.div`
   display: flex;
   row-gap: 5px;
   flex-direction: column;
-  padding: 5%;
+  padding-left: 5%;
   align-self: center;
 
 `
