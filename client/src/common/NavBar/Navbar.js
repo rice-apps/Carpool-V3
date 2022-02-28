@@ -30,7 +30,8 @@ export default function ButtonAppBar (props) {
 
     // set appbar colour
   const currURL = window.location.pathname;
-  const [appbarColor, setAppbarColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
+  const [appbarColor, setAppbarColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : 
+  ((currURL.includes("/ridesummary") || currURL.includes("/profile")) ? "rgb(244, 246, 249)" : "white"))
 
   const [hamburgerColor, setHamburgerColor] = useState((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
 
@@ -132,7 +133,8 @@ export default function ButtonAppBar (props) {
       setShowBar(true)
     }
 
-    setAppbarColor((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : "white")
+    setAppbarColor((currURL === "/about" || currURL === "/FAQ") ? "#012E62" : 
+    ((currURL.includes("/ridesummary") || currURL.includes("/profile")) ? "rgb(244, 246, 249)" : "white"))
 
     setHamburgerColor((currURL === "/about" || currURL === "/FAQ") ? "white" : "#002140")
 
@@ -234,7 +236,7 @@ export default function ButtonAppBar (props) {
           color= "black" 
           elevation="0" 
           className={classes.appbarRoot}> 
-          <Toolbar>
+          <Toolbar style ={{height: "64px"}}>
             <IconButton edge="start" className={classes.burgerIcon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
             </IconButton>
@@ -243,7 +245,7 @@ export default function ButtonAppBar (props) {
             </Drawer>
           </Toolbar>
         </AppBar>
-        <Toolbar/>
+        <Toolbar style ={{height: "64px"}}/>
     </div>
     : null
   }
