@@ -123,9 +123,11 @@ RideTC.addResolver({
         See <a href="https://carpool.riceapps.org/ridesummary/${updatedRide.id}">the ride page</a> for details.
       </p>
 
+      <br /><br />
+
       <p>
         <a href="https://carpool.riceapps.org/">
-          <img src="https://carpool.riceapps.org/logo-with-wordmark.png" alt="Rice Carpool logo" />
+          <img src="https://carpool.riceapps.org/logo-with-wordmark.png" width="250" alt="Rice Carpool logo" />
         </a>
       </p>
     `
