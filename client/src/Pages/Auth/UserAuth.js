@@ -37,12 +37,17 @@ const UserAuth = () => {
     }
   );
   
-  // Check to see if the user came here via going back
+  // Check to see if the user came here via going back from onboarding
   if (previous === 'onboarding'){
     localStorage.clear();
     // Go back further
     history.goBack();
   } 
+
+  // If the user returned to UserAuth from profile page, let them go further back
+  if (previous === "profile"){
+    history.goBack();
+  }
 
   // Determining where to route to
   useEffect(() => {
