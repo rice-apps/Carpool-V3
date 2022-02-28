@@ -40,10 +40,31 @@ export default function ButtonAppBar (props) {
       background: appbarColor,
     },
     icon: {
+      color: "#002140"
+    },
+    secondaryIcon: {
+      fontSize: 'medium',
+      color: '#BAC3CE'
+    },
+    burgerIcon: {
+      minWidth: '40px',
       color: hamburgerColor,
+    },
+    item: {
+      height: '8vh',
+      paddingLeft: '24px',
+      paddingRight: '24px'
     },
     text : {
       color:"#002140",
+    },
+    disabledText: {
+      fontStyle: 'italic'
+    },
+    divider: {
+      backgroundColor: '#BBDAFF',
+      margin: '10px 30px 10px 30px',
+      height: '2px'
     },
     avatarIcon : {
       width: "8vh",
@@ -57,15 +78,20 @@ export default function ButtonAppBar (props) {
       flexDirection: "column",
       width: "66vw",
       height: "100vh",
+      maxWidth: '350px',
     },
     usernameContainer:{
-      gap: "5vw",
-      height: "15vh"
+      gap: "15%",
+      height: "15vh",
+      paddingLeft: '24px',
+      paddingRight: '24px'
     },
     logInOutContainer:{
       display:"flex", 
       justifyContent:"center", 
       height: "15vh",
+      paddingLeft: '24px',
+      paddingRight: '24px'
     },
   }));
   
@@ -209,7 +235,7 @@ export default function ButtonAppBar (props) {
           elevation="0" 
           className={classes.appbarRoot}> 
           <Toolbar>
-            <IconButton edge="start" className={classes.icon} onClick = {toggleDrawer} aria-label="menu">
+            <IconButton edge="start" className={classes.burgerIcon} onClick = {toggleDrawer} aria-label="menu">
               <MenuIcon fontSize="large"/>
             </IconButton>
             <Drawer anchor = "left" open = {drawer} onClose = {toggleDrawer}>
