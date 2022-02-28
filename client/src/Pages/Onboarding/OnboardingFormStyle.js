@@ -36,7 +36,6 @@ export const InputBox = styled(Box)({
 export const CollegeSelect = styled(Select)({
   borderRadius: "2vw",
   border: "1px solid #2075D8",
-  paddingBottom: "1vh",
 });
 
 export const ProfileFormContainer = styled.div`
