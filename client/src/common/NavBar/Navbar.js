@@ -81,7 +81,7 @@ export default function ButtonAppBar (props) {
       maxWidth: '350px',
     },
     usernameContainer:{
-      gap: "5vw",
+      gap: "15%",
       height: "15vh",
       paddingLeft: '24px',
       paddingRight: '24px'
@@ -90,6 +90,8 @@ export default function ButtonAppBar (props) {
       display:"flex", 
       justifyContent:"center", 
       height: "15vh",
+      paddingLeft: '24px',
+      paddingRight: '24px'
     },
   }));
   
