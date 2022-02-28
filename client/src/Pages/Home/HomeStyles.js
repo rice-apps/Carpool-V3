@@ -9,9 +9,10 @@ const HomePage = withStyles({
     alignItems: "center",
     background: "#002140",
     backdropFilter: "blur(20px)",
+    borderRadius: "0",
     height: "100vh", 
     width: "100vw",
-    overflow: "hidden"
+    overflow: "hidden",
   }
 })(Paper); 
 
