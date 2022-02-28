@@ -6,7 +6,7 @@ import {
   IconBox,
   ButtonBox,
   ProfileIcon,
-  ProfileEditIcon,
+//  ProfileEditIcon,
   CloseProfileIcon,
   Label,
   VenmoTextField,
@@ -114,7 +114,7 @@ export default function ProfileDialog(props) {
             <ProfileDialogContainer>
               <IconBox>
                 <ProfileIcon />
-                <ProfileEditIcon />
+                {/* <ProfileEditIcon /> */}
                 <CloseProfileIcon onClick={closeDialog} />
               </IconBox>
 
