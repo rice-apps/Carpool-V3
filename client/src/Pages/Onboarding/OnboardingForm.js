@@ -97,17 +97,17 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
               setCollege(e.target.value);
             }}
           >
-            <MenuItem value="Brown">Brown</MenuItem>
-            <MenuItem value="Jones">Jones</MenuItem>
-            <MenuItem value="Duncan">Duncan</MenuItem>
-            <MenuItem value="McMurtry">McMurtry</MenuItem>
-            <MenuItem value="Martel">Martel</MenuItem>
             <MenuItem value="Baker">Baker</MenuItem>
             <MenuItem value="Will Rice">Will Rice</MenuItem>
-            <MenuItem value="Sid Rich">Sid Rich</MenuItem>
+            <MenuItem value="Hanszen">Hanszen</MenuItem>
             <MenuItem value="Wiess">Wiess</MenuItem>
-            <MenuItem value="Hanszen">Brown</MenuItem>
+            <MenuItem value="Jones">Jones</MenuItem>
+            <MenuItem value="Brown">Brown</MenuItem>
             <MenuItem value="Lovett">Lovett</MenuItem>
+            <MenuItem value="Sid Rich">Sid Rich</MenuItem>
+            <MenuItem value="Martel">Martel</MenuItem>
+            <MenuItem value="McMurtry">McMurtry</MenuItem>
+            <MenuItem value="Duncan">Duncan</MenuItem>
           </CollegeSelect>
         </InputBox>
         <SubmitButton
