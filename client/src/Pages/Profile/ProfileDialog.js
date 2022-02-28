@@ -169,7 +169,7 @@ export default function ProfileDialog(props) {
                   <MenuItem value="Will Rice">Will Rice</MenuItem>
                   <MenuItem value="Sid Rich">Sid Rich</MenuItem>
                   <MenuItem value="Wiess">Wiess</MenuItem>
-                  <MenuItem value="Hanszen">Brown</MenuItem>
+                  <MenuItem value="Hanszen">Hanszen</MenuItem>
                   <MenuItem value="Lovett">Lovett</MenuItem>
                 </CollegeSelect>
                 <Label>Contact:</Label>
