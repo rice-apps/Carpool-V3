@@ -174,18 +174,6 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     }
     
   }, [newOwner, updateRide]) 
-  // Determine the behavior of button, verify if user is in Rice SSO
-  const handleClickOpen = () => {
-    // User is logged in already via Rice Verification
-    if (localStorage.getItem('token') != null) {
-      // Show the confirmation pop-up for joining ride
-      setOpenConfirmation(true); 
-    } 
-    // User is not logged in, prompt them to log in
-    else {
-      setOpenLogin(true);
-    }
-  };
 
   // Close the  box
   const handleCloseLogin= () => {
@@ -265,18 +253,6 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     // console.log(result);
   }
 
-
-  const leave = () => {
-    leaveRide().then((result) => {
-       window.location.reload();
- 
-    }).catch((err) => {
-       addToast("Error leaving ride", { appearance: 'error'});
-
-    });
-    // If numUsers == 1, show delete ride
-   }
-  
   // console.log(data, loading, error);
   if (localStorage.getItem('joinFromLogin') === "true") join();
   if (error) return <p>Error.</p>
