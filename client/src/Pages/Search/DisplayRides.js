@@ -85,8 +85,7 @@ const DisplayRides = (props) => {
                     onClose={handleClose}
                 >
                     <Grid container spacing = {12}>
-                        <Grid item sm = {11} xs = {10}/>
-                        <Grid item sm = {1} xs = {2}>
+                        <Grid item>
                             <IconButton onClick = {handleClose} size = "medium">
                                 <CloseIcon />
                             </IconButton>

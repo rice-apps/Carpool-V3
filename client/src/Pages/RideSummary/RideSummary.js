@@ -377,8 +377,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                 onClose={handleCloseLogin}
             >
             <Grid container spacing = {12} justifyContent = "center">
-                <Grid item sm = {11} xs = {10}/>
-                <Grid item sm = {1} xs = {2}>
+                <Grid item>
                     <IconButton onClick = {handleCloseLogin} size = "medium">
                         <CloseIcon />
                     </IconButton>
@@ -396,8 +395,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                 onClose={handleCloseConfirmation}
             >
             <Grid container spacing = {12} justifyContent = "center">
-                <Grid item sm = {11} xs = {10}/>
-                <Grid item sm = {1} xs = {2}>
+                <Grid item >
                     <IconButton onClick = {handleCloseConfirmation} size = "medium">
                         <CloseIcon />
                     </IconButton>

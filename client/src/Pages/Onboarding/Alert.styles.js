@@ -14,7 +14,7 @@ export const LoginButton = withStyles({
         display: 'absolute',
         justifyContent: 'center',
         background: '#2075D8',
-        width: '55vw',
+        width: '85%',
         borderRadius: 25,
         color: 'white',
         height: '5vh',
