@@ -45,7 +45,7 @@ export const MailBox = withStyles({
 
 export const AllDiv = styled.div`
   background: #f4f6f9;
-  height: 100vh;
+  height: calc(100vh - 64px);
 `
 
 export const EditProfileButton = styled.div`
@@ -71,7 +71,6 @@ export const ProfileCard = styled.div`
 export const TopHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-right: 25px;
   align-items: center;
   padding: 15px;
 `;

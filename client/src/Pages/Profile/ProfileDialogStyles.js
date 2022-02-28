@@ -85,7 +85,6 @@ export const Label = styled(InputLabel)({
 export const CollegeSelect = styled(Select)({
   borderRadius: "2vw",
   border: "1px solid #2075D8",
-  paddingBottom: "1vh",
 });
 
 export const SaveButton = styled(Button)({
