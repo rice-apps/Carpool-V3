@@ -200,6 +200,8 @@ const OneRiderContainer = styled.div`
   display: flex;
   background: #ffffff;
   border-radius: 30px 17px 17px 30px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
   margin: 15px;
   width: 97%;
   font-family: Josefin Sans;
@@ -227,7 +229,7 @@ const TextContainer = styled.div`
 `
 const ButtonDiv = styled.button`
   color: #ffffff;
-  background: ${({ disabled, leaveRide }) => leaveRide ? 'red' : !disabled ? '#2075d8' : '#9e9e9e'};
+  background: ${({ disabled, leaveRide }) => leaveRide ? 'rgba(235, 82, 72, 1)' : !disabled ? '#2075d8' : '#9e9e9e'};
   text-align: center;
   font-family: Josefin Sans;
   font-style: normal;
@@ -243,7 +245,7 @@ const ButtonDiv = styled.button`
 `
 const AllDiv = styled.div`
   background: #f4f6f9;
-  height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: min-content;
