@@ -149,27 +149,21 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     variables: { rideID: id }
   })
 
-  console.log("Before mutation:",ride.owner._id);
+  // console.log("Before mutation:",ride.owner._id);
   const [updateRide] = useMutation(UPDATE_RIDE, {
     variables: {id: ride._id, record: {owner: newOwner.owner._id}}
   })
 
   useEffect(() => {
-    if(newOwner.owner._id != "") {
-      console.log(newOwner.owner);
+    if(newOwner.owner._id !== "") {
       updateRide().then(result => {
-        console.log("This worked??");
-        console.log(ride);
         window.location.reload();
-        console.log(result);
       }).catch((err) => {
-        console.log(ride);
-        console.log(err)})
+        console.log(err)
+      })
     }
-    console.log("CALLED UPDATE OWNER");
-    console.log(newOwner);
     
-  }, [newOwner]) 
+  }, [newOwner, updateRide]) 
 
   useEffect(() => {
     if (data) {
@@ -181,10 +175,8 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
         ride = {...data.rideOne}
       }
       setRide(ride)
-      console.log(ride)
     }
   }, [data])
-  console.log(data, loading, error);
   if (error) return <p>Error.</p>
   if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
@@ -200,18 +192,13 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     }
     else if (localStorage.getItem('joinFromLogin') === "true") {
       localStorage.setItem('joinFromLogin', "false");
-      console.log("Inside login, join loop");
     }
 
     joinRide().then((result) => {
-      console.log(result);
       window.location.reload();
-      console.log(result);
 
     }).catch((err) => {
-      console.log("Caught error: Ride is full");
       addToast("Sorry! This ride is full.", { appearance: 'error'});
-
     });
   }
 
@@ -227,7 +214,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       }
       else if (ride.owner.netid === currentUser) {
         // Update owner of ride 
-        let newRiders = ride.riders.filter((key) => key.netid != currentUser);
+        let newRiders = ride.riders.filter((key) => key.netid !== currentUser);
         setNewOwner({owner:newRiders[0]});
       }
       else {
@@ -246,7 +233,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     // console.log(result);
   }
   
-  console.log(data, loading, error);
+  // console.log(data, loading, error);
   if (localStorage.getItem('joinFromLogin') === "true") join();
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
