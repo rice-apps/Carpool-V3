@@ -34,7 +34,12 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         if (phone === "") { 
             addToast("Please fill in your phone number.", { appearance: 'error' });
             return
-        }  
+        }
+        
+        if (/^[0-9]+$/.test(phone) === false) {
+            addToast("Phone number must only contain digits.", { appearance: 'error' });
+            return
+        }
 
     return onSubmit({
       firstName,
