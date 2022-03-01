@@ -63,6 +63,10 @@ const Profile = () => {
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
+    if (localStorage.getItem("lastPage") === "onboarding"){
+      localStorage.setItem("skipOnboarding", "true");
+    }
+    localStorage.setItem('lastPage', 'profile/' + user.netid);
     window.history.back();
   }
 
