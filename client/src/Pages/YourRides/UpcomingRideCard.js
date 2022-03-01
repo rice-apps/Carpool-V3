@@ -6,6 +6,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
 import { useHistory } from 'react-router';
+import { Grid } from "@material-ui/core";
 
 import { 
     RideCard, 
@@ -13,7 +14,8 @@ import {
     RideDate, 
     RideTime, 
     LocationText, 
-    Locations, 
+    Locations,
+    RiderText, 
     // Notifications 
 } 
     from './UpcomingRideCard.styles.js';
@@ -51,7 +53,7 @@ const CalendarIcon = withStyles({
 
 
 
-const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => {
+const UpcomingRideCard = ({id, origin, destination, datetime, num_riders, notification}) => {
 
     const time = moment(datetime)
     const dateString = time.format('MMM DD')
@@ -79,9 +81,14 @@ const UpcomingRideCard = ({id, origin, destination, datetime, notification}) => 
                 </RideTimeInfo>
                 
                 <Locations>
-                    <LocationText>{ origin }</LocationText>
-                    <ArrowForward />
-                    <LocationText>{ destination }</LocationText>
+                    <Grid container justifyContent='space-around'>
+                            <LocationText>{ origin }</LocationText>
+                            <ArrowForward />
+                            <LocationText>{ destination }</LocationText>
+                        <Grid sm = {9} xs = {11} justifyContent='center'>
+                            <RiderText>{num_riders > 1 ? num_riders + " riders" : num_riders + " rider"}</RiderText>
+                        </Grid>
+                    </Grid>
                 </Locations>
 
                 {/* <Notifications>

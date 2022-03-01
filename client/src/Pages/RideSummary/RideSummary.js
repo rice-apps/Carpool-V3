@@ -3,7 +3,6 @@ import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
 import {
-  IoShareSocialSharp,
   IoPersonCircleSharp,
 } from 'react-icons/io5'
 import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
@@ -13,7 +12,6 @@ import {
   SeatsLeftDiv,
   SeatsLeftNum,
   SeatsLeftText,
-  SocialIcon,
   RideSummaryDiv,
   LocationDiv,
   LocationText,
@@ -28,6 +26,7 @@ import {
   OneRiderContainer,
   RiderText,
   NotesDiv,
+  RideNotesHeader,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -41,14 +40,19 @@ import {
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
-  TimeText
+  TimeText, 
+  ConfirmationText
 } from './RideSummaryStyles.js'
+import { Grid, IconButton } from '@material-ui/core';
+import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
+import CloseIcon from '@material-ui/icons/Close';
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
 import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
+const confirmationText = "You will still need to contact your fellow riders and order an Uber or Lyft on the day of."
 
 const GET_RIDE = gql`
   query getRide($id: MongoID) {
@@ -64,12 +68,14 @@ const GET_RIDE = gql`
       }
       notes
       owner {
+        _id
         netid
         firstName
         lastName
         phone
       }
       riders {
+        _id
         netid
         firstName
         lastName
@@ -78,16 +84,26 @@ const GET_RIDE = gql`
     }
   }
 `
+
 const RideSummary = () => {
+
+  document.title = "Ride Summary";
+
   let { id } = useParams()
+  const [newOwner, setNewOwner] = useState({"owner":{_id:""}});
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading"},
     arrivalLocation: {title: "Loading"},
     owner: {netid: "Loading"},
-    riders: []
+    riders: [],
+    notes: "",
+    spots: -1
   })
   const history = useHistory()
   const { addToast } = useToasts();
+  // States to control for Dialog
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -102,9 +118,72 @@ const RideSummary = () => {
     }
   `
 
+  const REMOVE_RIDER = gql`
+  mutation RemoveRider($rideID: ID!) {
+      removeRider(rideID: $rideID) {
+          _id
+      }
+  }
+`
+
+const DELETE_RIDE = gql`
+  mutation DeleteRide($id: MongoID!) {
+      rideDeleteOne(_id: $id) {
+          recordId
+      }
+  }
+`
+// Query ride
+
+// Get ride
+
+// Update ride
+
+
+const UPDATE_RIDE = gql`
+mutation UpdateRideOwner($id: MongoID!, $record: UpdateOneridesInput!){
+    rideUpdateOne(filter: { _id: $id }, record: $record){
+    recordId
+  }
+}
+`
+const [deleteRide] = useMutation(DELETE_RIDE, {
+  variables: { id: ride._id }
+})
+
   const [joinRide] = useMutation(JOIN_RIDE, {
     variables: { rideID: id }
   })
+
+  const [leaveRide] = useMutation(REMOVE_RIDER, {
+    variables: { rideID: id }
+  })
+
+  // console.log("Before mutation:",ride.owner._id);
+  const [updateRide] = useMutation(UPDATE_RIDE, {
+    variables: {id: ride._id, record: {owner: newOwner.owner._id}}
+  })
+
+  useEffect(() => {
+    if(newOwner.owner._id !== "") {
+      updateRide().then(result => {
+        window.location.reload();
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    
+  }, [newOwner, updateRide]) 
+
+  // Close the  box
+  const handleCloseLogin= () => {
+      setOpenLogin(false);
+  };
+
+  // Close the confirmation panel
+  const handleCloseConfirmation = () => {
+      setOpenConfirmation(false);
+  };
 
   useEffect(() => {
     if (data) {
@@ -116,11 +195,9 @@ const RideSummary = () => {
         ride = {...data.rideOne}
       }
       setRide(ride)
-      console.log(ride)
-    }
+     }
   }, [data])
-  console.log(data, loading, error);
-  if (error) return <p>Error.</p>
+   if (error) return <p>Error.</p>
   if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
 
@@ -135,22 +212,48 @@ const RideSummary = () => {
     }
     else if (localStorage.getItem('joinFromLogin') === "true") {
       localStorage.setItem('joinFromLogin', "false");
-      console.log("Inside login, join loop");
     }
 
     joinRide().then((result) => {
-      console.log(result);
       window.location.reload();
-      console.log(result);
 
     }).catch((err) => {
-      console.log("Caught error: Ride is full");
       addToast("Sorry! This ride is full.", { appearance: 'error'});
-
     });
   }
-  
-  console.log(data, loading, error);
+
+
+  const leave = () => {
+    let currentUser = localStorage.getItem('netid');
+    const returned = leaveRide().then(async (result) => {
+      if (ride.riders.length === 1) {
+        // DELETE ride - use result (MongoID) to delete
+        deleteRide().then(() => {
+          history.push('/search');
+        }).catch((err) => console.log(err));
+      }
+      else if (ride.owner.netid === currentUser) {
+        // Update owner of ride 
+        let newRiders = ride.riders.filter((key) => key.netid !== currentUser);
+        setNewOwner({owner:newRiders[0]});
+      }
+      else {
+        window.location.reload();
+      }
+      return result
+    }).catch((err) => {
+      console.log(err);
+      addToast("Error leaving ride", { appearance: 'error'});
+
+    });
+    // If numUsers == 1, show delete ride
+    console.log(returned);
+    // console.log(result);
+    // window.location.reload();
+    // console.log(result);
+  }
+
+  // console.log(data, loading, error);
   if (localStorage.getItem('joinFromLogin') === "true") join();
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
@@ -178,16 +281,13 @@ const RideSummary = () => {
     <AllDiv>
       <BackArrowDiv onClick={() => goBack()}>
         <BackArrow></BackArrow>
-        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Search"}</BackText>
+        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
       </BackArrowDiv>
 
       <RideSummaryDiv>
         <SeatsLeftDiv>
           <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
           <SeatsLeftText>seat(s) left</SeatsLeftText>
-          <SocialIcon>
-            <IoShareSocialSharp></IoShareSocialSharp>
-          </SocialIcon>
         </SeatsLeftDiv>
       </RideSummaryDiv>
       <LocationDivContainer>
@@ -240,7 +340,7 @@ const RideSummary = () => {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.filter((x) => x.firstName + " " + x.lastName !== ride.owner.firstName + " " + ride.owner.lastName).map((person) => (
+          {ride.riders.filter((x) => x.netid !== ride.owner.netid).map((person) => (
             <div onClick={e => history.push("/profile/" + person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
@@ -255,17 +355,61 @@ const RideSummary = () => {
             </div>
           ))}
         </RidersComponents>
+        <RideNotesHeader>Ride Notes</RideNotesHeader> 
+        <NotesDiv>
+        {ride.notes || 'No ride notes'}
+        </NotesDiv>
       </RidersDiv>
 
-      <NotesDiv>
-        {ride.notes || 'No ride notes'}
-      </NotesDiv>
-
+      
+            
       <ButtonContainer>
+        {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
+        <ButtonDiv onClick={leave} leaveRide = {true}>
+          Leave Ride
+        </ButtonDiv>: 
         <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
           Join Ride
-        </ButtonDiv>
+        </ButtonDiv>}
       </ButtonContainer>
+      <JoinRideDialog
+                open={openLogin}
+                onClose={handleCloseLogin}
+            >
+            <Grid container spacing = {12} justifyContent = "center">
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleCloseLogin} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {10} justifyContent = "center">
+                    <ConfirmationText>{confirmationText}</ConfirmationText>
+                    <LoginDialogActions>
+                        <LoginButton onClick={join} autoFocus>Got it! Login with Rice SSO</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </JoinRideDialog>
+      <JoinRideDialog
+                open={openConfirmation}
+                onClose={handleCloseConfirmation}
+            >
+            <Grid container spacing = {12} justifyContent = "center">
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleCloseConfirmation} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {10} justifyContent = "center">
+                  <ConfirmationText>{confirmationText}</ConfirmationText>
+                    <LoginDialogActions>
+                        <LoginButton onClick={join} autoFocus>Got it! Join Ride</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </JoinRideDialog>
     </AllDiv>
   )
 }

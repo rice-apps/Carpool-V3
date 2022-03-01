@@ -18,7 +18,7 @@ import LoadingDiv from '../../common/LoadingDiv.js';
 
 const GET_RIDES = gql`
 	query {
-		rideMany {
+		rideByUser {
 			_id
 			departureDate
 			riders {
@@ -44,36 +44,27 @@ const GET_RIDES = gql`
 	}
 `;
 
-
 const YourRides = (paid) => {
+
+    document.title = "Your Rides";
 
     let netid = localStorage.getItem("netid")
 
-		// const [allRides, setAllRides] = useEffect([])
-		const [prevRides, setPrevRides] = useState([])
-		const [futureRides, setFutureRides] = useState([])
+    // const [allRides, setAllRides] = useEffect([])
+    const [prevRides, setPrevRides] = useState([])
+    const [futureRides, setFutureRides] = useState([])
     const { data, loading, error } = useQuery(GET_RIDES);
 
     useEffect(() => {
         if (data) {
-            let rides = data.rideMany.filter(ride => {
-                let ownerTrue = false
-                let riderTrue = false
-                if (ride.owner) {
-                    ownerTrue = ride.owner.netid === netid
-                }
-                ride.riders.forEach(rider => riderTrue = rider.netid === netid)
-                return ownerTrue || riderTrue
-            })
+            let rides = data.rideByUser
 
             let previousrides = rides.filter(ride => moment(ride.departureDate) < new Date())
             previousrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
             let upcomingrides = rides.filter(ride => moment(ride.departureDate) >= new Date())
-            upcomingrides.sort((a, b) => moment(b.departureDate) - moment(a.departureDate))
+            upcomingrides.sort((a, b) => moment(a.departureDate) - moment(b.departureDate))
 
-            console.log("previousRides", previousrides)
-            console.log("upcomingRides", upcomingrides)
-
+  
             setPrevRides(previousrides)
             setFutureRides(upcomingrides)
         }
@@ -95,6 +86,7 @@ const YourRides = (paid) => {
                                 origin={ride.departureLocation.title} 
                                 destination={ride.arrivalLocation.title}
                                 datetime={ride.departureDate}
+                                num_riders={ride.riders.length}
                             />
                         )
                     })}

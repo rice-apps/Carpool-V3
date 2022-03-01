@@ -1,174 +1,175 @@
-import styled from 'styled-components';
-import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import styled from "styled-components";
+import { withStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+import MailIcon from "@material-ui/icons/Mail";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-const ButtonBox = withStyles({
-	label: {
-	  textTransform: 'capitalize',
-	}
-  })(Button);
-  
-const BackArrow = withStyles({
-root: {
-	display: 'flex',
-	color: '#2075D8',
-	justifyContent: 'center',
-	alignItems: 'center'
-}
-})(ChevronLeftIcon);
-
-const TextBox = withStyles({
-root: {
-	display: 'flex',
-	justifyContent: 'center',
-	alignItems: 'center',
-	marginTop: '4vh',
-	width: '75vw',
-	height: '10vh',
-	borderRadius: '9px',
-	background: 'rgba(187, 218, 255, 0.22)'
-}, 
-label: {
-	textTransform: 'none',
-}
+export const ButtonBox = withStyles({
+  label: {
+    textTransform: "capitalize",
+  },
 })(Button);
 
-const MailBox = withStyles({
-root: {
-	color: '#2075D8'
-}
+export const BackArrow = withStyles({
+  root: {
+    display: "flex",
+    color: "#2075D8",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+})(ChevronLeftIcon);
+
+export const TextBox = withStyles({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "4vh",
+    width: "75vw",
+    height: "6vh",
+    borderRadius: "9px",
+    background: "rgba(187, 218, 255, 0.22)",
+  },
+  label: {
+    textTransform: "none",
+  },
+})(Button);
+
+export const MailBox = withStyles({
+  root: {
+    color: "#2075D8",
+  },
 })(MailIcon);
 
-const EditProfileButton = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: Josefin Sans;
-	font-weight: 600;
-	font-size: 30px;
-	line-height: 30px;
-	text-align: center;
+
+export const AllDiv = styled.div`
+  background: #f4f6f9;
+  height: calc(100vh - 64px);
 `
 
-const ProfileCard = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+export const EditProfileButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: center;
 `;
 
-const ReturnHeader = styled.div`
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	padding: 0 10px 10px 0;
+export const ProfileCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+	padding-bottom: 10vh;
 `;
 
-const UserPic = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 1vh;
-
-	width: 25vh;
-	height: 25vh;
-	background-image: url("https://www.kindpng.com/picc/m/229-2295555_not-my-art-pikachu-is-eating-pocky-kawaii.png");
-	border-radius: 50%;
-	background-size: cover;
+export const TopHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
 `;
 
-const UserName = styled.p`
-	display: flex; 
-	justify-content: center;
-	align-items: center;
-	padding: 4vh 0px 0px 0px;
+export const ProfileIcon = styled(AccountCircleIcon)({
+  display: "flex",
+  justifyContent: "center",
+  marginTop: "1vh",
+  width: "25vh",
+  height: "25vh",
+  fontSize: "30vh",
+  color: "#002140",
+  position: "relative",
+  top: "6%",
+});
 
-	font-family: Josefin Sans;
-	font-weight: 600;
-	font-size: 30px;
-	line-height: 30px;
-	text-align: center;
+export const College = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1vh 0px 25px 0px;
 
-	color: #002140;
+  font-family: Josefin Sans;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+
+  color: #002140;
 `;
 
-const PhoneNumber = styled.p`
-	display: flex; 
-	justify-content: center;
-	align-items: center;
-	padding: 1vh 0px 25px 0px;
+export const UserName = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4vh 0px 0px 0px;
 
-	font-family: Josefin Sans;
-	font-weight: 300;
-	font-size: 18px;
-	line-height: 18px;
-	text-align: center;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 2.2em;
+  text-align: center;
 
-	color: #002140;
+  color: #002140;
 `;
 
-const StyledText = styled.p`
-	display: flex; 
-	padding: 0px 0px 0px 1vh;
+export const StyledText = styled.p`
+  display: flex;
+  padding: 0px 0px 0px 1vh;
 
-	font-family: Josefin Sans;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 18px;
-	line-height: 18px;
-	text-align: center;
-	color: #2075D8;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5em;
+  text-align: center;
+  color: #002140;
 `;
 
-const StyledText2 = styled.p`
-	display: flex; 
-	justify-content: center;
-	align-items: center;
-	padding: 0px 0px 0px 0px;
+export const StyledText2 = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 0px 0px 0px;
 
-	font-family: Josefin Sans;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 13px;
-	line-height: 13px;
-	text-align: center;
-	letter-spacing: 0.07em;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 13px;
+  text-align: center;
 
-	color: #2075D8;
+  color: #002140;
 `;
 
-const StyledText3 = styled.p`
-	display: flex; 
-	justify-content: center;
-	align-items: center;
-	margin-left: 10px;
-	margin-top: 3px;
+export const StyledText3 = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 3px;
 
-	font-family: Josefin Sans;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 18px;
-	line-height: 18px;
-	text-align: center;
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
 
-	color: #2075D8;
+  color: #2075d8;
 `;
 
-export {
-	ButtonBox,
-	BackArrow,
-	TextBox,
-	MailBox,
-	EditProfileButton,
-	ProfileCard,
-	ReturnHeader,
-	UserName,
-	UserPic,
-	PhoneNumber,
-	StyledText,
-	StyledText2,
-	StyledText3
-};
+export const StyledTextVenmo = styled.p`
+  display: flex;
+  padding: 0px 0px 0px 1vh;
+
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5em;
+  text-align: center;
+  color: rgba(32, 117, 216, 1);
+`;
+
