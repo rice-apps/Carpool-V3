@@ -10,8 +10,8 @@ import {FunctionTextTop,
 const Home = () => {
 
     return (
-        <div>
-            <HomePage>
+        
+        <HomePage>
             <ImageBox
                 component="img"
                 alt="Carpool Logo"
@@ -26,7 +26,7 @@ const Home = () => {
             </FunctionTextBot>
             <Link to="/search" style={{ textDecoration:"none" }}><SearchButton>Start Riding</SearchButton></Link>
         </HomePage>
-        </div>
+        
         
     )
 }
