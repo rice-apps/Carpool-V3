@@ -45,9 +45,9 @@ const Onboarding = () => {
 
   // Edge Case: Pressing Back Button from Onboarding into Profile Form
   if (previous.includes("profile") && (localStorage.getItem("skipOnboarding") === "true")){
-    // localStorage.removeItem("fromOnboardng");
     console.log("Attempt to go back to UserAuth");
-    history.goBack();
+    localStorage.removeItem("skipOnboarding");
+    history.go(-1);
   }
 
   const updateUserInfo = async (formData) => {

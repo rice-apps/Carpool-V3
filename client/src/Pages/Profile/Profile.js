@@ -68,13 +68,7 @@ const Profile = () => {
       localStorage.setItem("skipOnboarding", "true");
     }
     localStorage.setItem('lastPage', 'profile/' + user.netid);
-    if (localStorage.getItem("skipOnboarding") === "true"){ 
-      history.go(-4);
-      localStorage.removeItem("skipOnboarding");
-    } else {
-      history.goBack();
-    }
-
+    window.history.back();
   }
 
   return (
