@@ -128,7 +128,7 @@ export const Routes = () => {
         <Navbar/>
         <Switch>
           <CheckTokenRoute path={'/alert'} component={withRouter(Alert)} />
-          <CheckTokenRoute path={'/userAuth'} component={withRouter(UserAuth)} />
+          <PrivateRoute path={'/userAuth'} component={withRouter(UserAuth)} />
           <CheckTokenRoute path={'/login'} component={withRouter(Login)} />
           <CheckTokenRoute path={'/onboarding'} component={withRouter(Onboarding)} />
           <PrivateRoute path={'/profile/:id'} component={withRouter(Profile)} />
