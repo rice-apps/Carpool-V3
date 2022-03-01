@@ -41,6 +41,9 @@ UserTC.addResolver({
       // Get the netid of the authenticated user
       let { netid } = authenticationResponse;
 
+      // force netid to be lowercase to prevent duplicate user bug
+      netid = netid.toLowerCase();
+
       // Check if user exists based on netid
       let exists = await User.exists({ netid: netid });
       if (!exists) {
