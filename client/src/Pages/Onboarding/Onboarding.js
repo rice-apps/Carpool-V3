@@ -59,7 +59,6 @@ const Onboarding = () => {
 
   const cancelOnboarding = () => {
     localStorage.clear();
-    console.log("previous", previous)
     if (previous && previous !== "onboarding") {
       window.open(previous, "_self");
     }
@@ -88,7 +87,6 @@ const Onboarding = () => {
       localStorage.setItem("lastPage", "onboarding");
       // Edge Case: Pressing Back Button from Onboarding into Profile Form
       if (previous.includes("profile") && (localStorage.getItem("skipOnboarding") === "true")){
-        console.log("Attempt to go back to UserAuth");
         localStorage.removeItem("skipOnboarding");
         history.push(localStorage.getItem("lastRide"));
       } else {
@@ -102,7 +100,6 @@ const Onboarding = () => {
         );
       }
       if (!(previous.includes("profile"))){
-        console.log("EVENT LISTENER");
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener("popstate", onBackButtonEvent);
         return () => {

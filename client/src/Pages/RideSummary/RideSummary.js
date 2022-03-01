@@ -254,7 +254,6 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
     });
     // If numUsers == 1, show delete ride
-    console.log(returned);
     // console.log(result);
     // window.location.reload();
     // console.log(result);
