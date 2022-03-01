@@ -9,6 +9,7 @@ import {
   RequiredTextField,
   CollegeSelect,
   ProfileStyles,
+  ButtonContainer,
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
 import { MenuItem } from "@material-ui/core";
@@ -110,19 +111,21 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             <MenuItem value="Duncan">Duncan</MenuItem>
           </CollegeSelect>
         </InputBox>
-        <SubmitButton
-          variant="contained"
-          onClick={() => { handleSubmit()}}>
-          Submit
-        </SubmitButton>
-        <CancelButton
-          variant="contained"
-          onClick={() => {
-            onCancel();
-          }}
-        >
-          Cancel
-        </CancelButton>
+        <ButtonContainer>
+          <SubmitButton
+            variant="contained"
+            onClick={() => { handleSubmit()}}>
+            Submit
+          </SubmitButton>
+          <CancelButton
+            variant="contained"
+            onClick={() => {
+              onCancel();
+            }}
+          >
+            Cancel
+          </CancelButton>
+        </ButtonContainer>
       </ProfileFormContainer>
     </form>
   );
