@@ -232,7 +232,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
   const leave = () => {
     let currentUser = localStorage.getItem('netid');
-    const returned = leaveRide().then(async (result) => {
+    leaveRide().then(async (result) => {
       if (ride.riders.length === 1) {
         // DELETE ride - use result (MongoID) to delete
         deleteRide().then(() => {
@@ -452,7 +452,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                     </IconButton>
                 </Grid>
                 <Grid item xs = {10} justifyContent = "center">
-                  <ConfirmationText>{"Log in to view this user's profile?"}</ConfirmationText>
+                  <ConfirmationText>{"Log in to view this user's profile."}</ConfirmationText>
                     <LoginDialogActions>
                         <LoginButton onClick={handleLoginForUser} autoFocus>Rice SSO Login</LoginButton>
                     </LoginDialogActions>
