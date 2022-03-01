@@ -40,8 +40,9 @@ const AboutUs = () => {
                     window.open("https://tinyurl.com/carpool-feedback")
                 }}>
                 <FeedbackText>
-                    <FeedbackIcon />
-                    Feedback? 
+                    Feedback? &nbsp;
+                    <FeedbackIcon fontSize = "small" />
+                    
                     </FeedbackText>
             </FeedbackButton>
             
