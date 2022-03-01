@@ -29,6 +29,8 @@ steps:
     - 'SERVICE_URL=${_SERVICE_URL}'
     - 'SECRET=${_SECRET}'
     - 'PORT=${_PORT}'
+    - 'SENDER_EMAIL=${_SENDER_EMAIL}'
+    - 'SENDER_EMAIL_PASSWORD=${_SENDER_EMAIL_PASSWORD}'
   dir: 'api'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
