@@ -273,7 +273,14 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   }
 
   // console.log(data, loading, error);
-  if (localStorage.getItem('joinFromLogin') === "true") join();
+  if (localStorage.getItem('joinFromLogin') === "true") {
+    if (localStorage.getItem('token')){
+      join();
+    } else {
+      localStorage.setItem('joinFromLogin', 'false');
+    }
+  }
+  
   if (error) return <p>Error.</p>
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
