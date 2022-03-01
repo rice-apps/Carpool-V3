@@ -286,7 +286,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image="/membersPictures/henry.JPG"/>
+                    <Picture image="/membersPictures/henry.jpg"/>
                     
                     <Info>
                         <Name>Henry Qin</Name>
@@ -295,7 +295,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image="/membersPictures/audrey.JPeG"/>
+                    <Picture image="/membersPictures/audrey.jpeg"/>
                     <Info>
                         <Name>Audrey Kim</Name>
                         <Title>Developer | Wiess College</Title>
@@ -311,7 +311,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image="/membersPictures/anya.JPG"/>
+                    <Picture image="/membersPictures/anya.jpg"/>
                     <Info>
                         <Name>Anya Gu</Name>
                         <Title>Developer | Brown College</Title>
@@ -327,7 +327,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image="/membersPictures/mitchell.JPeG"/>
+                    <Picture image="/membersPictures/mitchell.jpeg"/>
                     <Info>
                         <Name>Mitchell Osborn</Name>
                         <Title>Developer | Brown College</Title>
@@ -335,7 +335,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image="/membersPictures/shreyas.JPG"/>
+                    <Picture image="/membersPictures/shreyas.jpg"/>
                     <Info>
                         <Name>Shreyas Minocha</Name>
                         <Title>Developer | Will Rice College</Title>
@@ -343,7 +343,7 @@ const AboutUs = () => {
                 </Member>
 
                 <Member>
-                    <Picture image="/membersPictures/katherine.JPG"/>
+                    <Picture image="/membersPictures/katherine.jpg"/>
                     <Info>
                         <Name>Katherine Chui</Name>
                         <Title>Designer | Jones College</Title>
@@ -351,7 +351,7 @@ const AboutUs = () => {
                 </Member>
                 
                 <Member>
-                    <Picture image="/membersPictures/jessica.JPG"/>
+                    <Picture image="/membersPictures/jessica.jpg"/>
                     <Info>
                         <Name>Jessica Huang</Name>
                         <Title>Designer | Wiess College</Title>
