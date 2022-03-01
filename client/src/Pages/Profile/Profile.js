@@ -63,11 +63,29 @@ const Profile = () => {
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
-    if (localStorage.getItem("lastPage") === "onboarding"){
-      localStorage.setItem("skipOnboarding", "true");
+    // Check for LastPage and that there is NO record of profile -> profile loop
+    if (localStorage.getItem("lastPage") && !(localStorage.getItem("repeatProfiles"))){
+      const previous = localStorage.getItem("lastPage"); 
+      if (previous === "onboarding"){
+        localStorage.setItem("skipOnboarding", "true");
+      }
+      localStorage.setItem('lastPage', 'profile/' + user.netid);
+      // Stuck on the same profile page...
+      if (previous === 'profile/' + user.netid){
+        window.open("/search", "_self");
+      }
+      // If the last page and current page are BOTH profile pages
+      if (previous.includes("profile")){
+        localStorage.setItem("repeatProfiles", "true"); 
+      }
+      window.open("/" + previous, '_self');
+    } else {
+      if (localStorage.getItem("repeatProfiles")){
+        localStorage.removeItem("repeatProfiles");
+      }
+      window.open("/search", "_self");
     }
-    localStorage.setItem('lastPage', 'profile/' + user.netid);
-    window.history.back();
+    
   }
 
   return (

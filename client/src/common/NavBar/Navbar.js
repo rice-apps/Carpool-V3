@@ -173,12 +173,18 @@ export default function ButtonAppBar (props) {
     window.open(redirectURL, '_self');
   }
 
+  const routeToProfile = () => {
+    localStorage.setItem("lastPage", window.location.pathname.substring(1));
+    window.open("/profile/" + localStorage.getItem('netid'), "_self");
+    toggleDrawer();
+  }
+
   const openFeedback = () => {
     window.open(feedbackURL, '_blank');
   }
 
   const showUsername = (toggleDrawer) => (
-    <ListItem button component = {Link} to = {"/profile/" + localStorage.getItem('netid')}  className={classes.usernameContainer} onClick = {toggleDrawer}>
+    <ListItem button className={classes.usernameContainer} onClick = {routeToProfile}>
       <Avatar className = {classes.avatarIcon}/>
       <ListItemText className = {classes.text} primary = {user.firstName + " " + user.lastName}/>
     </ListItem>
