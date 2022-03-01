@@ -46,9 +46,10 @@ const FeedbackButton = styled(Button)`
 
 const FeedbackText = styled.div`
   font-family: Josefin Sans;
+  text-transform: none;
   font-style: normal;
   font-weight: normal;
-  font-size: 1em;
+  font-size: 1.1em;
   justify-content: space-between;
   filter: drop-shadow(2px 2px 2px 0px #002140);
   writing-mode: vertical-rl;
