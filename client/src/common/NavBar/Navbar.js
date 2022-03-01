@@ -4,7 +4,7 @@ import MenuIcon from '@material-ui/icons/MenuRounded';
 import HomeIcon from '@material-ui/icons/HomeRounded';
 import CarIcon from '@material-ui/icons/DirectionsCarRounded';
 import InfoIcon from '@material-ui/icons/PeopleRounded';
-import MailIcon from '@material-ui/icons/MailRounded';
+import FeedbackIcon from '@material-ui/icons/ChatRounded';
 import OpenInNewIcon from '@material-ui/icons/OpenInNewRounded';
 import { List, ListItem, ListItemIcon, ListItemText, 
   Drawer, IconButton, AppBar, Toolbar, Avatar, Button, Divider } from '@material-ui/core';
@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
-const feedbackURL = 'https://forms.gle/WFqf77FxSy8FVHgb9'
+const feedbackURL = 'https://tinyurl.com/carpool-feedback'
 
 
 const GET_USER = gql`
@@ -218,7 +218,7 @@ export default function ButtonAppBar (props) {
           <ListItemText  className = {classes.text} primary = "About Us"/>
         </ListItem>
         <ListItem button className = {classes.item} onClick = {openFeedback}>
-          <ListItemIcon className= {classes.icon}> <MailIcon/> </ListItemIcon>
+          <ListItemIcon className= {classes.icon}> <FeedbackIcon/> </ListItemIcon>
           <ListItemText classses = {classes.text} primary = "Give us feedback!"/> 
           <OpenInNewIcon className= {classes.secondaryIcon}/> 
         </ListItem>
