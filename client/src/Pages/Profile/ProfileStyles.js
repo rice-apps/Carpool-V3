@@ -45,7 +45,7 @@ export const MailBox = withStyles({
 
 export const AllDiv = styled.div`
   background: #f4f6f9;
-  height: calc(100vh - 64px);
+  height: calc(100% - 64px);
 `
 
 export const EditProfileButton = styled.div`

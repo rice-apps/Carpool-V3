@@ -15,22 +15,25 @@ export const Header = styled.div`
   font-weight: normal;
   font-size: 2.5vh;
   line-height: 2vh;
-  color: #2075d8; 
-  padding-bottom: 3vh;
+  color: #2075d8;
+  margin-bottom: 4vh;
+  margin-top: 5vh;
 `;
 
 export const Label = styled(InputLabel)({
   fontFamily: "Josefin Sans",
   color: "#2075d8",
-  paddingBottom: "1vh",
+  paddingBottom: "3px",
 });
 
 export const InputBox = styled(Box)({
-  height: "16%",
+  minHeight: "100px",
+  height: "14%",
   width: "76%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
+  marginBottom: "18px",
 });
 
 export const CollegeSelect = styled(Select)({
@@ -45,14 +48,24 @@ export const ProfileFormContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-top: 8vh;
+  
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 10px;
+  height: 15vh;
+  flex-direction: column;
+  justify-content: space-around;
+`
 
 export const ProfileStyles = makeStyles(() => ({
   inputContent: {
     background: "rgb(187,218,255,0.22)",
     color: "#2075D8",
     height: "5vh",
+    minHeight: "20px",
+    marginBottom: "10px"
   },
   inputLabel: {
     fontSize: 15,
@@ -113,6 +126,7 @@ export function VenmoTextField(props) {
           background: "rgb(187,218,255,0.22)",
           color: "#2075D8",
           height: "6vh",
+          minHeight: "50px"
         },
         startAdornment: (
           <InputAdornment position="start" >
@@ -148,6 +162,7 @@ export function RequiredTextField(props) {
           background: "rgb(187,218,255,0.22)",
           color: "#2075D8",
           height: "6vh",
+          minHeight: "50px"
         },
         endAdornment: <InputAdornment position="end"></InputAdornment>,
       }}
@@ -162,7 +177,7 @@ export const SubmitButton = withStyles({
     borderRadius: 8,
     border: 0,
     color: "white",
-    height: 48,
+    height: "6vh",
   },
   label: {
     textTransform: "capitalize",
@@ -177,7 +192,7 @@ export const CancelButton = withStyles({
     borderRadius: 8,
     border: 0,
     color: "white",
-    height: 48,
+    height: "6vh",
   },
   label: {
     textTransform: "capitalize",
