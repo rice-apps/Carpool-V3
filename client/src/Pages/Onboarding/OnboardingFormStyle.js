@@ -45,7 +45,7 @@ export const ProfileFormContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-top: 8vh;
+  
 `;
 
 export const ProfileStyles = makeStyles(() => ({
@@ -113,6 +113,7 @@ export function VenmoTextField(props) {
           background: "rgb(187,218,255,0.22)",
           color: "#2075D8",
           height: "6vh",
+          minHeight: "50px"
         },
         startAdornment: (
           <InputAdornment position="start" >
@@ -148,6 +149,7 @@ export function RequiredTextField(props) {
           background: "rgb(187,218,255,0.22)",
           color: "#2075D8",
           height: "6vh",
+          minHeight: "50px"
         },
         endAdornment: <InputAdornment position="end"></InputAdornment>,
       }}
@@ -162,7 +164,7 @@ export const SubmitButton = withStyles({
     borderRadius: 8,
     border: 0,
     color: "white",
-    height: 48,
+    height: "6vh",
   },
   label: {
     textTransform: "capitalize",
@@ -177,7 +179,7 @@ export const CancelButton = withStyles({
     borderRadius: 8,
     border: 0,
     color: "white",
-    height: 48,
+    height: "6vh",
   },
   label: {
     textTransform: "capitalize",

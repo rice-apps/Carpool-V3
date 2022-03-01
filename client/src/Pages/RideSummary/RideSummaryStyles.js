@@ -240,7 +240,6 @@ const ButtonDiv = styled.button`
   width: 100%;
   height: 48px;
   cursor: ${({ disabled }) => !disabled ? 'pointer' : 'inherit'};
-  onclick='joinRide()';
   
 `
 const AllDiv = styled.div`
