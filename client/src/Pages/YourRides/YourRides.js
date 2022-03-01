@@ -49,6 +49,7 @@ const YourRides = (paid) => {
     document.title = "Your Rides";
 
     let netid = localStorage.getItem("netid")
+    localStorage.setItem("lastPage", "your-rides");
 
     // const [allRides, setAllRides] = useEffect([])
     const [prevRides, setPrevRides] = useState([])

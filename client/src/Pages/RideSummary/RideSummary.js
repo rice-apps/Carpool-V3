@@ -295,6 +295,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   const accessUserProfile = (user_id) => {
     if (localStorage.getItem("token") != null){
       // Allow user to direct to profile page 
+      localStorage.setItem("lastPage", window.location.pathname.substring(1))
       history.push("/profile/" + user_id);
     } else {
       // Warn the user that they must log in to checkout other user's profiles

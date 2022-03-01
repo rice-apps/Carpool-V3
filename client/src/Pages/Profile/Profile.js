@@ -62,12 +62,22 @@ const Profile = () => {
 
   if (!user) return <div>Invalid User ID</div>;
 
+  if (localStorage.getItem("lastPage") && localStorage.getItem("lastPage") === "profile/" + user.netid){
+    window.open("/search", "_self");
+  }
+
   function goBack() {
-    if (localStorage.getItem("lastPage") === "onboarding"){
-      localStorage.setItem("skipOnboarding", "true");
+    if (localStorage.getItem("lastPage")){
+      const previous = localStorage.getItem("lastPage"); 
+      if (previous === "onboarding"){
+        localStorage.setItem("skipOnboarding", "true");
+      }
+      localStorage.setItem('lastPage', 'profile/' + user.netid);
+      window.open("/" + previous, '_self');
+    } else {
+      window.open("/search", "_self");
     }
-    localStorage.setItem('lastPage', 'profile/' + user.netid);
-    window.history.back();
+    
   }
 
   return (
