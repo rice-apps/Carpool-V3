@@ -21,32 +21,33 @@ export const StyledDialogContent = styled(DialogContent)({
 
 export const ProfileDialogContainer = styled.div`
   display: flex;
-  height: 80vh;
+  height: 84vh;
   width: 100%;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 `;
 
 export const IconBox = styled.div`
-  height: 15%;
+  height: 10%;
   width: 100%;
+  margin-bottom: 50px;
   justify-content: center;
   align-items: center;
   display: flex;
-  padding-left: 20em;
 `;
 
 export const InputBox = styled.div`
+  min-height: 380px;
   height: 16%;
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 export const ButtonBox = styled.div`
-  height: 9%;
+  height: 9vh;
   width: 90%;
   display: flex;
   justify-content: center;
@@ -64,9 +65,8 @@ export const ProfileEditIcon = styled(EditIcon)({
 export const ProfileIcon = styled(AccountCircleIcon)({
   fontSize: "15vh",
   color: "#002140",
-  position: "absolute",
-  top: "6%",
-  left: "30%",
+  // top: "6%",
+  // left: "30%",
 });
 
 export const CloseProfileIcon = styled(CloseIcon)({
@@ -94,8 +94,10 @@ export const SaveButton = styled(Button)({
   color: "white",
   borderRadius: "2vw",
   width: "50vw",
-  height: "100%",
+  height: "8%",
+  marginTop: "15px",
   textTransform: "none",
+  // position: "block",
 });
 
 export const ProfileStyles = makeStyles((theme) => ({
@@ -103,6 +105,8 @@ export const ProfileStyles = makeStyles((theme) => ({
     background: "rgb(187,218,255,0.22)",
     color: "#2075D8",
     height: "5vh",
+    minHeight: "50px",
+    marginBottom: "8px"
   },
   inputLabel: {
     background: "rgb(187,218,255,0.22)",

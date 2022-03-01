@@ -15,7 +15,7 @@ export const Header = styled.div`
   font-weight: normal;
   font-size: 2.5vh;
   line-height: 2vh;
-  color: #2075d8; 
+  color: #2075d8;
   margin-bottom: 4vh;
   margin-top: 5vh;
 `;
@@ -28,12 +28,12 @@ export const Label = styled(InputLabel)({
 
 export const InputBox = styled(Box)({
   minHeight: "100px",
-  height: "16%",
+  height: "14%",
   width: "76%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
-  marginBottom: "20px",
+  marginBottom: "18px",
 });
 
 export const CollegeSelect = styled(Select)({

@@ -4,7 +4,6 @@ import { useToasts } from "react-toast-notifications";
 import {
   ProfileDialogContainer,
   IconBox,
-  ButtonBox,
   ProfileIcon,
 //  ProfileEditIcon,
   CloseProfileIcon,
@@ -108,7 +107,7 @@ export default function ProfileDialog(props) {
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
-      <Paper style={{ maxHeight: 600, overflow: "auto" }}>
+      <Paper style={{ maxHeight: 700, overflow: "auto" }}>
         <List>
           <StyledDialogContent>
             <ProfileDialogContainer>
@@ -202,7 +201,6 @@ export default function ProfileDialog(props) {
                   }}
                 ></VenmoTextField>
               </InputBox>
-              <ButtonBox>
                 <SaveButton
                   variant="contained"
                   onClick={() => {
@@ -227,7 +225,6 @@ export default function ProfileDialog(props) {
                 >
                   Save
                 </SaveButton>
-              </ButtonBox>
             </ProfileDialogContainer>
           </StyledDialogContent>
         </List>
