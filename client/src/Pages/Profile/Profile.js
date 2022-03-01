@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useHistory } from "react-router";
+import { useParams } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
@@ -34,7 +34,6 @@ const Profile = () => {
   const { id } = useParams();
 
   const { addToast } = useToasts();
-  const history = useHistory();
 
   const GET_USER = gql`
     query GetUserInfo($netID: String) {

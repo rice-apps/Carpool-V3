@@ -59,7 +59,8 @@ const Onboarding = () => {
 
   const cancelOnboarding = () => {
     localStorage.clear();
-    if (previous) {
+    console.log("previous", previous)
+    if (previous && previous !== "onboarding") {
       window.open(previous, "_self");
     }
     // default behavior is to route to home page
