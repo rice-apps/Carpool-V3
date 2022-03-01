@@ -43,13 +43,6 @@ const Onboarding = () => {
 
   const [updateUser] = useMutation(UPDATE_USER);
 
-  // Edge Case: Pressing Back Button from Onboarding into Profile Form
-  if (previous.includes("profile") && (localStorage.getItem("skipOnboarding") === "true")){
-    console.log("Attempt to go back to UserAuth");
-    localStorage.removeItem("skipOnboarding");
-    history.go(-1);
-  }
-
   const updateUserInfo = async (formData) => {
  
     await updateUser({ variables: formData });
@@ -91,14 +84,22 @@ const Onboarding = () => {
   };
 
   useEffect(() => {
-      addToast(
-        'If you would not like to onboard, please use the "Cancel" button below.',
-        {
-          appearance: "warning",
-          autoDismiss: true,
-          autoDismissTimeout: 12000,
-        }
-      );
+      localStorage.setItem("lastPage", "onboarding");
+      // Edge Case: Pressing Back Button from Onboarding into Profile Form
+      if (previous.includes("profile") && (localStorage.getItem("skipOnboarding") === "true")){
+        console.log("Attempt to go back to UserAuth");
+        localStorage.removeItem("skipOnboarding");
+        history.push(localStorage.getItem("lastRide"));
+      } else {
+        addToast(
+          'If you would not like to onboard, please use the "Cancel" button below.',
+          {
+            appearance: "warning",
+            autoDismiss: true,
+            autoDismissTimeout: 12000,
+          }
+        );
+      }
       if (!(previous.includes("profile"))){
         console.log("EVENT LISTENER");
         window.history.pushState(null, null, window.location.pathname);

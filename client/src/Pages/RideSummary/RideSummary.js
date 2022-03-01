@@ -199,6 +199,11 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       setRide(ride)
      }
   }, [data])
+
+  useEffect(() => {
+    localStorage.setItem('lastRide', `ridesummary/${id}`);
+  }, [id])
+
    if (error) return <p>Error.</p>
   if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
