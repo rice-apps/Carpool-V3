@@ -245,7 +245,7 @@ const ButtonDiv = styled.button`
 `
 const AllDiv = styled.div`
   background: #f4f6f9;
-  height: calc(100vh - 64px);
+  height: calc(100% - 64px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: min-content;
