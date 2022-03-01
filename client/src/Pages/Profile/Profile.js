@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
@@ -34,6 +34,7 @@ const Profile = () => {
   const { id } = useParams();
 
   const { addToast } = useToasts();
+  const history = useHistory();
 
   const GET_USER = gql`
     query GetUserInfo($netID: String) {
@@ -63,8 +64,17 @@ const Profile = () => {
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
+    if (localStorage.getItem("lastPage") === "onboarding"){
+      localStorage.setItem("skipOnboarding", "true");
+    }
     localStorage.setItem('lastPage', 'profile/' + user.netid);
-    window.history.back();
+    if (localStorage.getItem("skipOnboarding") === "true"){ 
+      history.go(-4);
+      localStorage.removeItem("skipOnboarding");
+    } else {
+      history.goBack();
+    }
+
   }
 
   return (

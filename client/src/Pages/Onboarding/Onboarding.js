@@ -44,14 +44,16 @@ const Onboarding = () => {
   const [updateUser] = useMutation(UPDATE_USER);
 
   // Edge Case: Pressing Back Button from Onboarding into Profile Form
-  if (previous.includes("profile") && (localStorage.getItem("fromOnboarding") === true)){
+  if (previous.includes("profile") && (localStorage.getItem("skipOnboarding") === "true")){
+    // localStorage.removeItem("fromOnboardng");
+    console.log("Attempt to go back to UserAuth");
     history.goBack();
   }
 
   const updateUserInfo = async (formData) => {
  
     await updateUser({ variables: formData });
-    localStorage.setItem("fromOnboarding", true);
+    // localStorage.setItem("fromOnboarding", true);
     const nextPage = localStorage.getItem("nextPage");
     if (nextPage) {
       localStorage.removeItem("nextPage");
