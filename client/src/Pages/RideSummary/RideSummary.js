@@ -102,6 +102,8 @@ const RideSummary = () => {
   const { addToast } = useToasts();
   // States to control for Dialog
   const [openLogin, setOpenLogin] = useState(false);
+  const [openUserProfile, setOpenUserProfile] = useState(false);
+  const [nextUserID, setNextUserID] = useState("");
   const [openConfirmation, setOpenConfirmation] = useState(false);
 
   const { data, loading, error } = useQuery(GET_RIDE, {
@@ -174,6 +176,19 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     
   }, [newOwner, updateRide]) 
 
+  // Determine the behavior of button, verify if user is in Rice SSO
+  const handleClickOpen = () => {
+    // User is logged in already via Rice Verification
+    if (localStorage.getItem('token') != null) {
+      // Show the confirmation pop-up for joining ride
+      setOpenConfirmation(true); 
+    } 
+    // User is not logged in, prompt them to log in
+    else {
+      setOpenLogin(true);
+    }
+  };
+
   // Close the  box
   const handleCloseLogin= () => {
       setOpenLogin(false);
@@ -196,6 +211,11 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       setRide(ride)
      }
   }, [data])
+
+  useEffect(() => {
+    localStorage.setItem('lastRide', `ridesummary/${id}`);
+  }, [id])
+
    if (error) return <p>Error.</p>
   if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
@@ -224,7 +244,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
   const leave = () => {
     let currentUser = localStorage.getItem('netid');
-    const returned = leaveRide().then(async (result) => {
+    leaveRide().then(async (result) => {
       if (ride.riders.length === 1) {
         // DELETE ride - use result (MongoID) to delete
         deleteRide().then(() => {
@@ -246,7 +266,6 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
     });
     // If numUsers == 1, show delete ride
-    console.log(returned);
     // console.log(result);
     // window.location.reload();
     // console.log(result);
@@ -270,6 +289,32 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       history.push("/search");
     }
   }
+
+  // ==================================== Attempts to Access User Profile ==================================
+  const accessUserProfile = (user_id) => {
+    if (localStorage.getItem("token") != null){
+      // Allow user to direct to profile page 
+      history.push("/profile/" + user_id);
+    } else {
+      // Warn the user that they must log in to checkout other user's profiles
+      setNextUserID(user_id); 
+      setOpenUserProfile(true); 
+      // addToast("You must log in to view user profiles.", { appearance: 'warning'});
+      // return 
+    }
+  }
+
+  const handleCloseLoginForUser = () => {
+    setOpenUserProfile(false); 
+    setNextUserID("");
+  }
+
+  const handleLoginForUser = () => {
+        localStorage.setItem('nextPage', 'profile/' + nextUserID);
+        let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
+        window.open(redirectURL, '_self');
+  }
+  // =======================================================================================================
 
   const time = moment(ride.departureDate)
   const mon = time.format('MMM').toString()
@@ -324,7 +369,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       <RidersDiv>
         <HostDiv>Host</HostDiv>
         <RidersComponents>
-          <div onClick={e => history.push("/profile/" + ride.owner.netid)}>
+          <div onClick={e => accessUserProfile(ride.owner.netid)}>
             <OneRiderContainer>
                 <div key={ride.owner.netid}>
                   <IoPersonCircleSharpDiv>
@@ -340,7 +385,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
             <hr></hr>
           </LineDiv>
           {ride.riders.filter((x) => x.netid !== ride.owner.netid).map((person) => (
-            <div onClick={e => history.push("/profile/" + person.netid)}>
+            <div onClick={e => accessUserProfile(person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
                   <IoPersonCircleSharpDiv>
@@ -359,15 +404,13 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
         {ride.notes || 'No ride notes'}
         </NotesDiv>
       </RidersDiv>
-
-      
             
       <ButtonContainer>
         {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
         <ButtonDiv onClick={leave} leaveRide = {true}>
           Leave Ride
         </ButtonDiv>: 
-        <ButtonDiv onClick={join} disabled={ride.spots === ride.riders.length}>
+        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
           Join Ride
         </ButtonDiv>}
       </ButtonContainer>
@@ -405,6 +448,25 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                   <ConfirmationText>{confirmationText}</ConfirmationText>
                     <LoginDialogActions>
                         <LoginButton onClick={join} autoFocus>Got it! Join Ride</LoginButton>
+                    </LoginDialogActions>
+                  </Grid>
+            </Grid>
+      </JoinRideDialog>
+      <JoinRideDialog
+                open={openUserProfile}
+                onClose={handleCloseLoginForUser}
+            >
+            <Grid container spacing = {12} justifyContent = "center">
+                <Grid item sm = {11} xs = {10}/>
+                <Grid item sm = {1} xs = {2}>
+                    <IconButton onClick = {handleCloseLoginForUser} size = "medium">
+                        <CloseIcon />
+                    </IconButton>
+                </Grid>
+                <Grid item xs = {10} justifyContent = "center">
+                  <ConfirmationText>{"Log in to view this user's profile."}</ConfirmationText>
+                    <LoginDialogActions>
+                        <LoginButton onClick={handleLoginForUser} autoFocus>Rice SSO Login</LoginButton>
                     </LoginDialogActions>
                   </Grid>
             </Grid>
