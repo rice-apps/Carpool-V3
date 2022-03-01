@@ -276,7 +276,6 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
   // ==================================== Attempts to Access User Profile ==================================
   const accessUserProfile = (user_id) => {
-    console.log("Triggered access user profile", user_id);
     if (localStorage.getItem("token") != null){
       // Allow user to direct to profile page 
       history.push("/profile/" + user_id);
@@ -449,7 +448,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                     </IconButton>
                 </Grid>
                 <Grid item xs = {10} justifyContent = "center">
-                  <ConfirmationText>{"You must be logged in to view user profiles."}</ConfirmationText>
+                  <ConfirmationText>{"Log in to view this user's profile?"}</ConfirmationText>
                     <LoginDialogActions>
                         <LoginButton onClick={handleLoginForUser} autoFocus>Rice SSO Login</LoginButton>
                     </LoginDialogActions>

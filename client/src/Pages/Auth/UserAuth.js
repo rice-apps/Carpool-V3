@@ -45,7 +45,7 @@ const UserAuth = () => {
   } 
 
   // If the user returned to UserAuth from profile page, let them go further back
-  if (previous === "profile"){
+  if (previous.includes("profile")){
     history.goBack();
   }
 

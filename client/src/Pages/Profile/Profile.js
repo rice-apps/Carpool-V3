@@ -63,7 +63,7 @@ const Profile = () => {
   if (!user) return <div>Invalid User ID</div>;
 
   function goBack() {
-    localStorage.setItem('lastPage', 'profile');
+    localStorage.setItem('lastPage', 'profile/' + user.netid);
     window.history.back();
   }
 
