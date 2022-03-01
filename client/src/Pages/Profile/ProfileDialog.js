@@ -216,6 +216,11 @@ export default function ProfileDialog(props) {
                         return
                     } 
 
+                    if (/^[0-9]+$/.test(user.phone) === false) {
+                      addToast("Phone number must only contain digits.", { appearance: 'error' });
+                      return
+                    }
+
                     if (changesMade) {
                       updateUserInfo();
                     }
