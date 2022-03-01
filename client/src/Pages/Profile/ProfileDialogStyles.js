@@ -89,7 +89,7 @@ export const CollegeSelect = styled(Select)({
 
 export const SaveButton = styled(Button)({
   fontFamily: "Josefin Sans",
-  fontSize: "2vh",
+  fontSize: "max(2vh, 13px)",
   background: "#2075D8",
   color: "white",
   borderRadius: "2vw",
