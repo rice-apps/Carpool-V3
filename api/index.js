@@ -41,7 +41,6 @@ app.use(cors({
 
 app.use(function(req, res, next) {
   if (req.headers.origin) {
-      console.log(req.headers.origin)
       res.header('Access-Control-Allow-Credentials', true)
       res.header('Access-Control-Allow-Headers', '*')
       res.header('Access-Control-Allow-Methods', '*')
