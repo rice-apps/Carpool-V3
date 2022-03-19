@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import MomentUtils from "@date-io/moment";
 import moment from "moment";
 // import LoadingDiv from "../../common/LoadingDiv";
 
@@ -187,7 +187,7 @@ const FormOnly = (props) => {
             >
               <Grid item xs={12}>
                 <InputBox id="Date">Date</InputBox>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
                   <DatePicker
                     clearable
                     value={filterDate}
@@ -196,7 +196,7 @@ const FormOnly = (props) => {
                       // closeLoaderIn2Seconds();
                     }}
                     minDate={minDate}
-                    format="MMM dd, yyyy"
+                    format="MMM DD, YYYY"
                   />
                 </MuiPickersUtilsProvider>
                 {/* {showLoader && <LoadingDiv height={"15vh"} />} */}
