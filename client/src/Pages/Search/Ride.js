@@ -8,14 +8,6 @@ import { BoxRide } from './DisplayRides.styles';
 import { Link } from '@material-ui/core';
 import moment from 'moment';
 
-function renderDate(date) {
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-function renderTime(date) {
-    return date.toLocaleTimeString('en-US', { timeStyle: 'short', hour12: true });
-}
-
 const useStyles = makeStyles((theme) => ({
    text: {
     fontSize: '1.3em',

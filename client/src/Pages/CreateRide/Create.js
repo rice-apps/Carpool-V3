@@ -3,7 +3,7 @@ import { gql, useQuery } from "@apollo/client";
 import Header from "../../common/Header/Header.js";
 import { useToasts } from "react-toast-notifications";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import MomentUtils from "@date-io/moment";
 import { Grid, MuiThemeProvider } from "@material-ui/core";
 import {
   customTheme,
@@ -20,6 +20,7 @@ import {
   ConfirmationText,
 } from "./Create.styles";
 import LoadingDiv from "../../common/LoadingDiv.js";
+import moment from "moment";
 
 const Create = ({ onCreate }) => {
   document.title = "Create Ride";
@@ -48,7 +49,7 @@ const Create = ({ onCreate }) => {
   const [startLoc, setStartLoc] = useState("");
   const [notes, setNotes] = useState("");
   const [endLoc, setEndLoc] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(moment());
   const [passengers, setPassengers] = useState(3);
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
@@ -77,7 +78,7 @@ const Create = ({ onCreate }) => {
     setStartLoc("");
     setEndLoc("");
     setNotes("");
-    setDate(new Date());
+    setDate(moment());
     setPassengers(4);
   };
 
@@ -219,13 +220,13 @@ const Create = ({ onCreate }) => {
         <Grid item xs={12}>
           <InputBox id="Date and Time">Date and Time</InputBox>
           <MuiThemeProvider theme={customTheme}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
               <DateBox
                 labelid="Date and Time"
                 inputVariant="outlined"
-                format="MM/dd/yyyy  hh:mm aa"
+                format="MM/DD/YYYY hh:mm a"
                 disablePast={true}
-                value={date}
+                value={moment(date)}
                 onChange={setDate}
               />
             </MuiPickersUtilsProvider>

@@ -87,7 +87,6 @@ const FormOnly = (props) => {
         // filters by only start date and only by year, month, day
         if (filterDate != null) {
           resultDestArr = resultDestArr.filter((ele) => {
-            // return isSameDay(moment(ele.departureDate), moment(filterDate));
             return moment(ele.departureDate).isSame(moment(filterDate), 'day')
           });
         }
@@ -97,48 +96,6 @@ const FormOnly = (props) => {
        });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startLoc, endLoc, filterDate]);
-
-  // returns true of date1 and date2 are on the same day, returns false otherwise
-  const isSameDay = (date1, date2) => {
-    return (
-      date1.getFullYear() === date2.getFullYear() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getDate() === date2.getDate()
-    );
-  };
-
-  // checks that date1 < date2 (still need for the initial filter)
-  const compareDates = (date1, date2, equals) => {
-    const d1 = [
-      date1.getFullYear(),
-      date1.getMonth(),
-      date1.getDate(),
-      date1.getHours(),
-      date1.getMinutes(),
-    ];
-    const d2 = [
-      date2.getFullYear(),
-      date2.getMonth(),
-      date2.getDate(),
-      date2.getHours(),
-      date2.getMinutes(),
-    ];
-
-    if (d1[0] === d2[0]) {
-      if (d1[1] === d2[1]) {
-        if (d1[2] === d2[2]) {
-          if (d1[3] === d2[3]) {
-            return d1[4] > d2[4] || (equals && d1[4] === d2[4]);
-          }
-          return d1[3] > d2[3] || (equals && d1[3] === d2[3]);
-        }
-        return d1[2] > d2[2] || (equals && d1[2] === d2[2]);
-      }
-      return d1[1] > d2[1] || (equals && d1[1] === d2[1]);
-    }
-
-    return d1[0] > d2[0] || (equals && d1[0] === d2[0]);
-  };
 
   const handleClickStartLoc = (locInd) => {
     setStartLoc(locInd);

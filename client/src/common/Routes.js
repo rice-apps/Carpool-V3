@@ -124,7 +124,7 @@ const PrivateRoute = ({ children, ...rest }) => {
  * @param {*} param0
  */
 export const Routes = () => {
-  moment.tz.setDefault('America/Los_Angeles')
+  moment.tz.setDefault('America/Chicago')
   return (
     <div>
       <Router>
