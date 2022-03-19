@@ -6,6 +6,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { BoxRide } from './DisplayRides.styles';
 import { Link } from '@material-ui/core';
+import moment from 'moment';
 
 function renderDate(date) {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Ride = ({ride}) => {
     const classes = useStyles();
-    const date = new Date(ride.departureDate);
+    const date = moment(ride.departureDate);
 
     return (
         <Link href={`/ridesummary/${ride._id}`} style={{textDecoration: 'none', color:'#002140' }}>
@@ -69,8 +70,8 @@ const Ride = ({ride}) => {
                     <Box width={"100%"} height={"100%"} style={{ display: 'flex', alignItems: 'center', justifyContent:"center", gap: "1vh"}}>
                         <span>
                             <CalendarTodayIcon className = {classes.midtext}/>
-                            <div className = {classes.midtext}> {renderDate(date)}</div>
-                            <div className = {classes.subtext}>{renderTime(date)}</div>
+                            <div className = {classes.midtext}> {date.format('MMM DD')}</div>
+                            <div className = {classes.subtext}>{date.format('hh:mm a')}</div>
                         </span>
                     </Box>
                 </Grid>

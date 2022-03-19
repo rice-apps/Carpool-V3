@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import moment from "moment";
 // import LoadingDiv from "../../common/LoadingDiv";
 
 import { Grid } from "@material-ui/core";
@@ -12,7 +13,7 @@ import { Form, SelectBox, MenuBox, InputBox } from "./FormOnly.styles";
 const FormOnly = (props) => {
   const PossibleLocations = props.testLocations;
 
-  const currentDate = new Date();
+  const currentDate = moment();
 
   const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
 
@@ -31,11 +32,12 @@ const FormOnly = (props) => {
       .getRidesRefetch()
       .then((res) => {
         var ridesPossibleNotBefore = res.data.rideMany.filter((ride) => {
-          const rideDateAfterCurrentDate = compareDates(
-            new Date(ride.departureDate),
-            currentDate,
-            true
-          );
+          // const rideDateAfterCurrentDate = compareDates(
+          //   new Date(ride.departureDate),
+          //   currentDate,
+          //   true
+          // );
+          const rideDateAfterCurrentDate = currentDate.isBefore(moment(ride.departureDate))
           return rideDateAfterCurrentDate;
         });
 
@@ -47,11 +49,13 @@ const FormOnly = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const minDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate()
-  );
+  // const minDate = new Date(
+  //   new Date().getFullYear(),
+  //   new Date().getMonth(),
+  //   new Date().getDate()
+  // );
+
+  const minDate = moment()
 
   const [startLoc, setStartLoc] = useState("");
   const [endLoc, setEndLoc] = useState("");
@@ -83,7 +87,8 @@ const FormOnly = (props) => {
         // filters by only start date and only by year, month, day
         if (filterDate != null) {
           resultDestArr = resultDestArr.filter((ele) => {
-            return isSameDay(new Date(ele.departureDate), new Date(filterDate));
+            // return isSameDay(moment(ele.departureDate), moment(filterDate));
+            return moment(ele.departureDate).isSame(moment(filterDate), 'day')
           });
         }
         props.setRides(resultDestArr);
