@@ -115,6 +115,9 @@ const DisplayRides = (props) => {
             <Box style={{fontSize: "4vh", paddingTop: '4vh', fontFamily: "Josefin Sans"}}>
                 Matching Rides: 
             </Box>
+            <Box style={{fontSize: "2.5vh", paddingTop: '.5vh', fontFamily: "Josefin Sans"}}>
+                *All times are in CST
+            </Box>
             {
                 (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride} />))
             }
