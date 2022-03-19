@@ -18,6 +18,8 @@ import jwt_decode from "jwt-decode";
 import YourRides from '../Pages/YourRides/YourRides.js'
 import LoadingDiv from './LoadingDiv.js'
 import AboutUs from '../Pages/AboutUs/AboutUs.js'
+import moment from 'moment'
+import 'moment-timezone';
 
 
 /**
@@ -122,6 +124,7 @@ const PrivateRoute = ({ children, ...rest }) => {
  * @param {*} param0
  */
 export const Routes = () => {
+  moment.tz.setDefault('America/Chicago')
   return (
     <div>
       <Router>
