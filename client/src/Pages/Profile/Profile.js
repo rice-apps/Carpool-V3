@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
+import Link from '@material-ui/core/Link';
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
@@ -149,16 +150,19 @@ const Profile = () => {
         <TextBox
           onClick={async () => {
             if (user.venmo) {
-              navigator.clipboard.writeText(user.venmo).then(
-                addToast("Venmo ID Copied to Clipboard!", {
-                  appearance: "success",
-                })
-              );
-            } else {
-              addToast("Venmo ID Not Specified", {
-                appearance: "error",
-              });
-            }
+              window.open("https://account.venmo.com/u/" + user.venmo);
+
+              // navigator.clipboard.writeText(user.venmo).then(
+              //   addToast("Venmo ID Copied to Clipboard!", {
+              //     appearance: "success",
+              //   })
+              // );
+            } 
+            // else {
+            //   addToast("Venmo ID Not Specified", {
+            //     appearance: "error",
+            //   });
+            // }
           }}
         >
           <StyledText2>Venmo</StyledText2>
