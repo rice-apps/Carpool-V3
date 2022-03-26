@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
@@ -28,9 +30,16 @@ import{
 } from "./AboutUsstyles";
 
 
+
 const AboutUs = () => {
 
     document.title = "About Us";
+
+    // Reset to top of the page
+    const {pathname} = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, [pathname]);
 
     return (
         <AllDiv>
