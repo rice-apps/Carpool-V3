@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
 import Header from "../../common/Header/Header.js";
 import { useToasts } from "react-toast-notifications";
@@ -44,15 +44,36 @@ const Create = ({ onCreate }) => {
       value: 6,
     },
   ];
+    // Helper method to fetch searched location + date 
+    const fetchSearchedLoc = (locIdx, locations) => {
+      if (locIdx) {
+        return locations[locIdx]["_id"];
+      } else {
+        return "";
+      }
+    }
+
+
+  const getSavedDate = () => {
+    let date = localStorage.getItem("searchedDate");
+    if (date){
+      localStorage.setItem("searchedDate", "");
+      return date;
+    }
+    else {
+      return moment();
+    }
+  }
 
   // Variables for Tracking Attributes of the Form
   const [startLoc, setStartLoc] = useState("");
   const [notes, setNotes] = useState("");
   const [endLoc, setEndLoc] = useState("");
-  const [date, setDate] = useState(moment());
+  const [date, setDate] = useState(getSavedDate());
   const [passengers, setPassengers] = useState(3);
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
+
 
   // Function after Submit Button is Pressed
   const onSubmit = (e) => {
@@ -83,9 +104,9 @@ const Create = ({ onCreate }) => {
   };
 
   // OnChange Functions: Triggers for User Changing Fields
-
   const onStartLocChange = (e) => {
     e.preventDefault();
+    console.log("onStartLocChange: " + e.target.value);
     setStartLoc(e.target.value);
   };
 
@@ -138,12 +159,22 @@ const Create = ({ onCreate }) => {
       netID: localStorage.getItem("netid"),
     },
   });
+  
+  useEffect(() => {
+    if (locationData){
+      setStartLoc(fetchSearchedLoc(localStorage.getItem("startLocation"), locationData["locationMany"]));
+      setEndLoc(fetchSearchedLoc(localStorage.getItem("endLocation"), locationData["locationMany"]));
+      localStorage.setItem("startLocation", "");
+      localStorage.setItem("endLocation", "");
+    }
+  },[locationData]);
 
   if (locationLoading || userLoading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
-
   const { locationMany: locations } = locationData;
   const { userOne: user } = userData;
+ 
+  
 
   if (!user) return <div>Invalid User ID</div>;
 
