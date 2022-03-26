@@ -62,16 +62,15 @@ const LocationDivContainer = styled.div`
   grid-column: 1/5;
   grid-row: 2;
   margin:auto;
-  padding-bottom:20px;
+  margin-bottom:20px;
   width:90%;
   // border: 3px solid green;
   margin-top: 5vh;
 
-
 `
-
 const LocationDiv = styled.div`
-  background: #FFFFFF;
+  display: flex; 
+  background: red;
   border-radius: 17px;
   align-items: center; 
   flex-direction: column;

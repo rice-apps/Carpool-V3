@@ -43,7 +43,7 @@ import {
   TimeText, 
   ConfirmationText
 } from './RideSummaryStyles.js'
-import { Grid, IconButton } from '@material-ui/core';
+import { Card, CardContent, Container, Grid, IconButton, Typography } from '@material-ui/core';
 import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
 import CloseIcon from '@material-ui/icons/Close';
 // SSO imports
@@ -62,9 +62,11 @@ const GET_RIDE = gql`
       spots
       departureLocation {
         title
+        address
       }
       arrivalLocation {
         title
+        address
       }
       notes
       owner {
@@ -92,8 +94,8 @@ const RideSummary = () => {
   let { id } = useParams()
   const [newOwner, setNewOwner] = useState({"owner":{_id:""}});
   const [ride, setRide] = useState({
-    departureLocation: {title: "Loading"},
-    arrivalLocation: {title: "Loading"},
+    departureLocation: {title: "Loading", address: "dummy"},
+    arrivalLocation: {title: "Loading", address: "dummy"},
     owner: {netid: "Loading"},
     riders: [],
     notes: "",
@@ -343,9 +345,39 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
           <SeatsLeftText>seat(s) left</SeatsLeftText>
         </SeatsLeftDiv>
       </RideSummaryDiv>
+      
       <LocationDivContainer>
-        <LocationDiv>
-          <InnerLocationDiv>
+          <Grid container justifyContent="flex-end" style={{background: "white"}}>
+            <Grid item xs={4} style={{background:"rgba(187, 218, 255, 0.22)", borderRadius: "10px"}}>              
+              <Typography>
+                {mon} {day} {hour}
+              </Typography>
+            </Grid> 
+            <Grid item xs = {12} style={{background:"green"}}>
+              <Typography variant="h4">
+               {ride.departureLocation.title}
+              </Typography>
+            </Grid>
+            <Grid item xs = {12}>
+              <Typography>
+                {ride.departureLocation.address}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant = "h4">
+                {ride.arrivalLocation.title}
+              </Typography>
+            </Grid>
+            <Grid item xs = {12}>
+              <Typography>
+                {ride.arrivalLocation.address}
+              </Typography>
+            </Grid>
+          </Grid>
+      </LocationDivContainer>
+
+
+      {/* <InnerLocationDiv>
             <LocationText>
               <DepartureIconDiv style={{ fontSize: '7vw' }}></DepartureIconDiv>
               <DepartureDiv>
@@ -372,9 +404,8 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                 {hour}
               </TimeText>
             </DateDiv>
-          </InnerLocationDiv>
-        </LocationDiv>
-      </LocationDivContainer>
+          </InnerLocationDiv> */}
+      
       <RidersDiv>
         <HostDiv>Host</HostDiv>
         <RidersComponents>
