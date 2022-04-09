@@ -20,6 +20,7 @@ import { ApolloProvider } from '@apollo/client'
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+import { register } from './serviceWorker';
 
 const theme = createTheme({
     typography: {
@@ -47,3 +48,5 @@ render(
     </ThemeProvider>, 
     document.querySelector('#app')
 );
+
+register();
