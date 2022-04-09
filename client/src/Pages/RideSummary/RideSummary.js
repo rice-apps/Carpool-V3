@@ -41,6 +41,7 @@ import {
   DepartureIconDiv,
   CalendarText,
   TimeText, 
+  TimeTextDetail, 
   ConfirmationText
 } from './RideSummaryStyles.js'
 import { Grid, IconButton } from '@material-ui/core';
@@ -371,6 +372,9 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
               <TimeText>
                 {hour}
               </TimeText>
+              <TimeTextDetail>
+                (Ride Departure Time)
+              </TimeTextDetail>
             </DateDiv>
           </InnerLocationDiv>
         </LocationDiv>
