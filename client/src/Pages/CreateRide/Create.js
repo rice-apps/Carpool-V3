@@ -46,7 +46,7 @@ const Create = ({ onCreate }) => {
   ];
     // Helper method to fetch searched location + date 
     const fetchSearchedLoc = (locIdx, locations) => {
-      if (locIdx) {
+      if (locIdx && locIdx >= 0 && locIdx < locations.length) { // Verify that location exists
         return locations[locIdx]["_id"];
       } else {
         return "";
@@ -56,7 +56,8 @@ const Create = ({ onCreate }) => {
 
   const getSavedDate = () => {
     let date = localStorage.getItem("searchedDate");
-    if (date){
+    if (date && moment().diff(date, 'minutes') <= 0){ // Verify date is legit
+      console.log(moment().diff(date, 'minutes'))
       localStorage.setItem("searchedDate", "");
       return date;
     }
