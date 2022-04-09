@@ -45,7 +45,7 @@ const UserAuth = () => {
   } 
 
   // If the user returned to UserAuth from profile page, let them go further back
-  if (previous.includes("profile")){
+  if (previous && previous.includes("profile")){
     history.goBack();
   }
 
@@ -63,7 +63,8 @@ const UserAuth = () => {
             // Route to next page since user is verified
             window.open(destination, '_self'); 
           } else {
-            window.alert('Unexpected Behavior');
+            // No specified destination after userAuth? To homepage. 
+            window.open("/search", "_self");
           }
           
         }

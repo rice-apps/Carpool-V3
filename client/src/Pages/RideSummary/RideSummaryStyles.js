@@ -221,7 +221,6 @@ const NotesDiv = styled.div`
   color: rgba(128, 128, 128, 1);
   
   font-family: Josefin Sans;
-  background: #ffffff;
   border-radius: 5px;
 `
 const TextContainer = styled.div`
