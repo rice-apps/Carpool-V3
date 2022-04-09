@@ -149,16 +149,20 @@ const Profile = () => {
         <TextBox
           onClick={async () => {
             if (user.venmo) {
-              navigator.clipboard.writeText(user.venmo).then(
-                addToast("Venmo ID Copied to Clipboard!", {
-                  appearance: "success",
-                })
-              );
-            } else {
-              addToast("Venmo ID Not Specified", {
-                appearance: "error",
-              });
-            }
+
+              window.open("https://venmo.com/" + user.venmo + "?txn=pay&note=for%carpool!");
+
+              // navigator.clipboard.writeText(user.venmo).then(
+              //   addToast("Venmo ID Copied to Clipboard!", {
+              //     appearance: "success",
+              //   })
+              // );
+            } 
+            // else {
+            //   addToast("Venmo ID Not Specified", {
+            //     appearance: "error",
+            //   });
+            // }
           }}
         >
           <StyledText2>Venmo</StyledText2>
