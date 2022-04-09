@@ -1,12 +1,21 @@
-import LocationOn from '@material-ui/icons/LocationOn'
 import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 
+const AllDiv = styled.div`
+  background: #f4f6f9;
+  height: calc(100% - 64px);
+  display: flex;
+  flex-direction: column;
+`
+
+const HeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 const SeatsLeftDiv = styled.div`
-  grid-column: 4;
-  grid-row: 1;
   background: rgba(187, 218, 255, 0.22);
   border-radius: 5px 0px 0px 5px;
   text-align: left;
@@ -26,114 +35,128 @@ const SeatsLeftNum = styled.div`
   text-align: center;
   padding: 4px;
   margin-right:2px;
-  padding-top: 7px;
 `
 const SeatsLeftText = styled.div`
   font-family: Josefin Sans;
-  grid-column: 4;
-  grid-row: 1;
   font-weight: 300;
   font-size: 1em;
   line-height: 11px;
   padding-top: 6px;
   padding-right: 6px;
 `
-const SocialIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 5px;
-  font-size: 25px;
-  cursor: pointer;
 
-`
 const RideSummaryDiv = styled.div`
-  grid-column: 4;
-  grid-row: 1;
   color: #2075d8;
   background: #f4f6f9;
   display: flex;
   align-items: center;
   text-align: center;
-  margin-top: 20px;
 `
 
 const LocationDivContainer = styled.div`
-  grid-column: 1/5;
-  grid-row: 2;
   margin:auto;
-  margin-bottom:20px;
   width:90%;
-  // border: 3px solid green;
+  height: 100%;
   margin-top: 5vh;
-
 `
 const LocationDiv = styled.div`
-  display: flex; 
-  background: red;
-  border-radius: 17px;
-  align-items: center; 
+  display: grid;
+  background: white;
+  border-radius: 10px;
+  grid-template-columns: 15% auto;
+  grid-template-rows: auto;
   flex-direction: column;
-  // border: 3px solid red;
-
+  height:100%;
 `
-const LocationText = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 5fr 1fr 5fr .5fr;
-  gap: 15px;
-  grid-auto-rows: minmax(25px, auto);
-  padding-top: 2.5vh;
-  font-size: 6.8vw;
-  font-family: Josefin Sans;
-  font-style: normal;
-  font-weight: normal;
-  text-align: left;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 30px;
+
+const LocationDateTime = styled.div`
+  grid-column-start: 2;
+  grid-row-start: 1;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-
-`// Wrap everything in another div and use padding to make border
-const DateDiv = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 2fr;
-  font-family: Josefin Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 5vw;
-  text-align: left;
-  padding-bottom: 20px;  
+  margin-right: .5em;
+  margin-top: .5em;
 `
-const CalendarIcon = styled.div`
-  grid-column: 1;
-  grid-row: 1;
-  font-family: Josefin Sans;
-  text-align: center;
+
+const LocationDepartureTitle = styled.div`
+  display: flex;
+  grid-column-start: 2;
+  grid-row-start: 2;
+  align-items:flex-end;
+`
+
+const LocationDepartureAddress = styled.div`
+  grid-column-start: 2;
+  grid-row-start: 3;
+`
+
+const LocationDepartureIcon = styled.div`
+  grid-column:1/2;
+  grid-row:2/3;
   
-
+  display:flex;
+  justify-content: center;
+  align-items:center;
 `
-const CalendarText = styled.div`
-  grid-column: 2;
+
+const LocationDestinationTitle = styled.div`
+  display: flex;
+  grid-column-start: 2;
+  grid-row-start: 4;
+  align-items:flex-end;
+`
+const LocationDestinationAddress = styled.div`
+  grid-column-start: 2;
+  grid-row-start: 5;
+  margin-bottom: 2.5em;
+`
+
+const LocationDestinationIcon = styled.div`
+  grid-column:1/2;
+  grid-row:4/5;
+
+  display:flex;
+  justify-content: center;
+  align-items:center;
+`
+
+const LocationConnect = styled.div`
+  grid-column: 1/2;
+  grid-row:3/4;
+
+  display: flex;
+  align-items:center;
+
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+`
+
+const LocationTitleStyling = styled.span`
   font-family: Josefin Sans;
-  grid-row: 1;
+  weight: 500;
+  font-size: 1.8em;
 `
 
-
-const ClockIcon = styled.div`
-  grid-column: 4;
-  grid-row: 1;
+const LocationAddressStyling = styled.span`
+  background: #BBDAFF38;
   font-family: Josefin Sans;
-  text-align: center;
-
-
+  color: rgba(0, 33, 64, 0.6);
+  font-size: .9em;
+  border-radius: 5px;
+  padding: .5%;
 `
 
-const TimeText = styled.div`
-  grid-column: 5;
+const LocationDateStyling = styled.span`
+  background: rgba(187, 218, 255, 0.22);
   font-family: Josefin Sans;
-  grid-row: 1;
+  font-size: 1.1em;
+
+  color: black;
+  border-radius: 10px;
+  padding: 1.75%;
 `
+
 
 const HostDiv = styled.div`
   font-family: Josefin Sans;
@@ -144,7 +167,7 @@ const HostDiv = styled.div`
   color: rgba(187, 199, 221, 0.91);
 `
 const RidersDiv = styled.div`
-  grid-column: 1/ 5;
+  grid-column: 1/5;
   grid-row: 3;
   margin: auto;
   width: 85%;
@@ -223,9 +246,6 @@ const NotesDiv = styled.div`
   background: #ffffff;
   border-radius: 5px;
 `
-const TextContainer = styled.div`
-  
-`
 const ButtonDiv = styled.button`
   color: #ffffff;
   background: ${({ disabled, leaveRide }) => leaveRide ? 'rgba(235, 82, 72, 1)' : !disabled ? '#2075d8' : '#9e9e9e'};
@@ -241,13 +261,6 @@ const ButtonDiv = styled.button`
   cursor: ${({ disabled }) => !disabled ? 'pointer' : 'inherit'};
   
 `
-const AllDiv = styled.div`
-  background: #f4f6f9;
-  height: calc(100% - 64px);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: min-content;
-  `
 
 const ButtonContainer = styled.div`
   grid-column: 1/5;
@@ -257,50 +270,18 @@ const ButtonContainer = styled.div`
   padding: 20px;
 `
 
-const DepartureDiv = styled.div`
-  grid-column: 2;
-  grid-row: 1;
-  font-family: Josefin Sans;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
-const DepartureIconDiv = styled(LocationOn)`
-  grid-column: 1;
-  grid-row: 1;
-  fontSize: large;
-`
-
-const ArrivalDiv = styled.div`
-grid-column: 4;
-grid-row: 1;
-font-family: Josefin Sans;
-text-overflow: ellipsis;
-`
-const LocationArrowDiv = styled.div`
-grid-column: 3;
-grid-row: 1;
-display: flex;
-justify-content: center;
-align-items: center;
-`
 
 const BackArrowDiv = styled.div`
 display: flex;
 justify-content: flex-start;
 align-items: center;
 
-// width: 40vw;
-// height: 30px;
-
 color: #2075d8;
 background: #f4f6f9;
-margin-top: 30px;
 margin-left: 20px;
 font-family: Josefin Sans;
 font-style: normal;
-// line-height: 11px;
 cursor: pointer;
-
 `
 
 const BackArrow = withStyles({
@@ -350,16 +331,23 @@ padding: 0px 10px 10px 10px;
 `;
 
 export {
+  HeaderDiv,
   SeatsLeftDiv,
   SeatsLeftNum,
   SeatsLeftText,
-  SocialIcon,
   RideSummaryDiv,
   LocationDiv,
-  LocationText,
-  DateDiv,
-  CalendarIcon,
-  ClockIcon,
+  LocationDateTime,
+  LocationDepartureAddress,
+  LocationDepartureTitle,
+  LocationDepartureIcon,
+  LocationDestinationAddress,
+  LocationDestinationTitle,
+  LocationDestinationIcon,
+  LocationConnect,
+  LocationTitleStyling,
+  LocationAddressStyling,
+  LocationDateStyling,
   HostDiv,
   RidersDiv,
   OwnerDiv,
@@ -370,20 +358,13 @@ export {
   RiderText,
   RideNotesHeader,
   NotesDiv,
-  TextContainer,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
   ButtonContainer,
-  DepartureDiv,
-  ArrivalDiv,
-  LocationArrowDiv,
   BackArrow,
   BackText,
   BackArrowDiv,
   InnerLocationDiv,
-  DepartureIconDiv,
-  CalendarText,
-  TimeText, 
   ConfirmationText
 }

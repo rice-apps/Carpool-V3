@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
-import { BsArrowRight } from 'react-icons/bs'
 import {
   IoPersonCircleSharp,
 } from 'react-icons/io5'
-import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 import moment from 'moment'
 import { useHistory } from 'react-router'
 import {
+  HeaderDiv,
   SeatsLeftDiv,
   SeatsLeftNum,
   SeatsLeftText,
   RideSummaryDiv,
   LocationDiv,
-  LocationText,
-  DateDiv,
-  CalendarIcon,
-  ClockIcon,
+  LocationDateTime,
   HostDiv,
   RidersDiv,
   LineDiv,
@@ -31,19 +29,22 @@ import {
   AllDiv,
   LocationDivContainer,
   ButtonContainer,
-  DepartureDiv,
-  ArrivalDiv,
-  LocationArrowDiv,
   BackArrowDiv,
   BackArrow,
   BackText,
-  InnerLocationDiv,
-  DepartureIconDiv,
-  CalendarText,
-  TimeText, 
-  ConfirmationText
+  ConfirmationText,
+  LocationDepartureTitle,
+  LocationDepartureAddress,
+  LocationDestinationAddress,
+  LocationDestinationTitle,
+  LocationAddressStyling,
+  LocationDateStyling,
+  LocationTitleStyling,
+  LocationDepartureIcon,
+  LocationDestinationIcon,
+  LocationConnect
 } from './RideSummaryStyles.js'
-import { Card, CardContent, Container, Grid, IconButton, Typography } from '@material-ui/core';
+import {Grid, IconButton} from '@material-ui/core';
 import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
 import CloseIcon from '@material-ui/icons/Close';
 // SSO imports
@@ -334,77 +335,66 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
   return (
     <AllDiv>
-      <BackArrowDiv onClick={() => goBack()}>
-        <BackArrow></BackArrow>
-        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
-      </BackArrowDiv>
+      <HeaderDiv>
+        <BackArrowDiv onClick={() => goBack()}>
+          <BackArrow></BackArrow>
+          <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
+        </BackArrowDiv>
 
-      <RideSummaryDiv>
-        <SeatsLeftDiv>
-          <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
-          <SeatsLeftText>seat(s) left</SeatsLeftText>
-        </SeatsLeftDiv>
-      </RideSummaryDiv>
+        <RideSummaryDiv>
+          <SeatsLeftDiv>
+            <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
+            <SeatsLeftText>seat(s) left</SeatsLeftText>
+          </SeatsLeftDiv>
+        </RideSummaryDiv>
+      </HeaderDiv>
       
       <LocationDivContainer>
-          <Grid container justifyContent="flex-end" style={{background: "white"}}>
-            <Grid item xs={4} style={{background:"rgba(187, 218, 255, 0.22)", borderRadius: "10px"}}>              
-              <Typography>
+          <LocationDiv>
+
+            <LocationDateTime>              
+              <LocationDateStyling>
                 {mon} {day} {hour}
-              </Typography>
-            </Grid> 
-            <Grid item xs = {12} style={{background:"green"}}>
-              <Typography variant="h4">
+              </LocationDateStyling>
+            </LocationDateTime>
+
+            <LocationDepartureIcon>
+              <FiberManualRecordOutlinedIcon style={{fontSize:"1em"}}/>
+            </LocationDepartureIcon> 
+
+            <LocationDepartureTitle>
+                <LocationTitleStyling>
                {ride.departureLocation.title}
-              </Typography>
-            </Grid>
-            <Grid item xs = {12}>
-              <Typography>
-                {ride.departureLocation.address}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant = "h4">
+               </LocationTitleStyling>
+            </LocationDepartureTitle>
+
+            <LocationDestinationIcon>
+              <LocationOnOutlinedIcon style={{fontSize:"1.2em"}}/>
+            </LocationDestinationIcon>
+
+            <LocationConnect>
+              ....
+            </LocationConnect>
+
+            <LocationDepartureAddress>
+              <LocationAddressStyling>
+                  {ride.departureLocation.address}
+              </LocationAddressStyling>
+            </LocationDepartureAddress>
+            
+            <LocationDestinationTitle>
+              <LocationTitleStyling>
                 {ride.arrivalLocation.title}
-              </Typography>
-            </Grid>
-            <Grid item xs = {12}>
-              <Typography>
-                {ride.arrivalLocation.address}
-              </Typography>
-            </Grid>
-          </Grid>
+                </LocationTitleStyling>
+            </LocationDestinationTitle>
+
+            <LocationDestinationAddress>
+              <LocationAddressStyling>
+                  {ride.arrivalLocation.address}
+              </LocationAddressStyling>
+            </LocationDestinationAddress>
+          </LocationDiv>
       </LocationDivContainer>
-
-
-      {/* <InnerLocationDiv>
-            <LocationText>
-              <DepartureIconDiv style={{ fontSize: '7vw' }}></DepartureIconDiv>
-              <DepartureDiv>
-                {ride.departureLocation.title}
-              </DepartureDiv>
-              <LocationArrowDiv>
-                <BsArrowRight></BsArrowRight>
-              </LocationArrowDiv>
-              <ArrivalDiv>
-                {ride.arrivalLocation.title}
-              </ArrivalDiv>
-            </LocationText>
-            <DateDiv>
-              <CalendarIcon>
-                <AiTwotoneCalendar></AiTwotoneCalendar> 
-              </CalendarIcon>
-              <CalendarText>
-                {mon}-{day}
-              </CalendarText>
-              <ClockIcon>
-                <AiFillClockCircle></AiFillClockCircle>
-              </ClockIcon>
-              <TimeText>
-                {hour}
-              </TimeText>
-            </DateDiv>
-          </InnerLocationDiv> */}
       
       <RidersDiv>
         <HostDiv>Host</HostDiv>
@@ -454,6 +444,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
           Join Ride
         </ButtonDiv>}
       </ButtonContainer>
+
       <JoinRideDialog
                 open={openLogin}
                 onClose={handleCloseLogin}
@@ -473,6 +464,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                   </Grid>
             </Grid>
       </JoinRideDialog>
+      
       <JoinRideDialog
                 open={openConfirmation}
                 onClose={handleCloseConfirmation}
