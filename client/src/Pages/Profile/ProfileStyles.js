@@ -42,6 +42,11 @@ export const MailBox = withStyles({
   },
 })(MailIcon);
 
+const ImageStyle = {
+  borderRadius: "50%",
+  width: "52vw",
+  height: "24vh",
+};
 
 export const AllDiv = styled.div`
   background: #f4f6f9;
@@ -53,6 +58,7 @@ export const EditProfileButton = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 20px;
   font-family: Josefin Sans;
   font-weight: 600;
   font-size: 30px;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
@@ -26,6 +26,7 @@ import {
 } from "./ProfileStyles.js";
 import { useState } from "react";
 import LoadingDiv from "../../common/LoadingDiv.js";
+import { ProfileImage } from "./ProfileImage.js";
 
 const Profile = () => {
 
@@ -48,8 +49,9 @@ const Profile = () => {
       }
     }
   `;
-
+  const location = useLocation();
   const [openDialog, setOpenDialog] = useState(false);
+  const [imageVersion, setImageVersion] = useState("");
 
   let { data, loading, error } = useQuery(GET_USER, {
     variables: { netID: id },
@@ -59,6 +61,7 @@ const Profile = () => {
   if (error) return `Error! ${error.message}`;
 
   let { userOne: user } = JSON.parse(JSON.stringify(data));
+  const hasImage = user.imageVersion !== null && user.imageVersion != ""
 
   if (!user) return <div>Invalid User ID</div>;
 
@@ -88,6 +91,14 @@ const Profile = () => {
     
   }
 
+
+
+  const ImageStyle = {
+    borderRadius: "50%",
+    width: "25vw",
+    height: "11vh",
+  };
+
   return (
     <AllDiv>
       <TopHeader>
@@ -112,10 +123,20 @@ const Profile = () => {
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         profileUser={user}
+        setImageVersion={setImageVersion}
       ></ProfileDialog>
       <ProfileCard>
-        <ProfileIcon />
-        <UserName>{user.firstName + " " + user.lastName}</UserName>
+        {hasImage ? (
+          <ProfileImage
+            imageStyle={ImageStyle}
+            netid={location.pathname.substring(9)}
+            imageVersion={user.imageVersion}
+          ></ProfileImage>
+        ): (
+          <ProfileIcon/>
+        )}
+        {/* <ProfileIcon />
+        <UserName>{user.firstName + " " + user.lastName}</UserName> */}
         <College>{user.college}</College>
         <TextBox
           onClick={async () => {

@@ -37,6 +37,13 @@ export const IconBox = styled.div`
   display: flex;
 `;
 
+export const StyledImage = styled.img`
+  border-radius: 50%;
+  width: 20vw;
+  height: 14vh;
+`;
+
+
 export const InputBox = styled.div`
   min-height: 380px;
   height: 16%;

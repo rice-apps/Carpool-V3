@@ -11,8 +11,17 @@ import { List, ListItem, ListItemIcon, ListItemText,
 import { Link, useLocation } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
+// import {ProfileImage} from "../../Pages/Profile/ProfileImage";
+// import { ImageStyle } from "../../Pages/Profile/ProfileDialog";
+import { ProfileIcon } from '../../Pages/Profile/ProfileImage';
+import styled from "styled-components";
+import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
+import { AdvancedImage } from "@cloudinary/react";
+
+
 // SSO imports
 import { SERVICE_URL } from '../../config'; 
+import { imageExists } from '../../Pages/Utils/ApiUtil';
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const feedbackURL = 'https://tinyurl.com/carpool-feedback'
 
@@ -23,8 +32,10 @@ query GetUserInfo ($netID: String)
   userOne (filter:{netid : $netID}) {
     firstName
     lastName
+    imageVersion
   }
 }`
+
 
 export default function ButtonAppBar (props) {
 
@@ -109,6 +120,27 @@ export default function ButtonAppBar (props) {
     },
   })(Button);
 
+  //profile image
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
+    },
+  })
+
+  const profileImage = cld.image(localStorage.getItem("netid"));
+  profileImage.format("jpg");
+
+  // const StyledAvatar = styled(AccountCircleIcon)({
+  //   fontSize: "50vw",
+  //   color: "#002140",
+  // });
+
+  const ImageStyle = {
+    borderRadius: "50%",
+    width: "25vw",
+    height: "11vh",
+  };
+
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const loggedIn = localStorage.getItem('token') != null;
@@ -185,7 +217,20 @@ export default function ButtonAppBar (props) {
 
   const showUsername = (toggleDrawer) => (
     <ListItem button className={classes.usernameContainer} onClick = {routeToProfile}>
-      <Avatar className = {classes.avatarIcon}/>
+      {imageExists(localStorage.getItem("netid")) ? (
+        <AdvancedImage
+          // imageStyle={ImageStyle}
+          // netid={localStorage.getItem("netid")}
+          // imageVersion={user.imageVersion}
+          className={classes.imageStyle}
+          cldImage={profileImage}
+          />
+      ): (
+        <Avatar className={classes.avatarIcon}/>
+        // <ProfileIcon>
+        //   <Avatar/>
+        // </ProfileIcon>
+      )}
       <ListItemText className = {classes.text} primary = {user.firstName + " " + user.lastName}/>
     </ListItem>
   )

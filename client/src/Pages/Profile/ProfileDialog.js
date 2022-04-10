@@ -5,7 +5,7 @@ import {
   ProfileDialogContainer,
   IconBox,
   ProfileIcon,
-//  ProfileEditIcon,
+ ProfileEditIcon,
   CloseProfileIcon,
   Label,
   VenmoTextField,
@@ -15,9 +15,25 @@ import {
   StyledDialogContent,
   CollegeSelect,
   ProfileStyles,
+  StyledImage,
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv";
+import {Avatar, Tooltip} from "@material-ui/core";
+import {
+  UPDATE_USER,
+  GET_SIGNATURE,
+  toCloudinary,
+  imageExists,
+} from "../Utils/ApiUtil.js"
+import { useRef } from "react";
+import {useLazyQuery} from "@apollo/client";
+
+import { ProfileImage } from "./ProfileImage.js";
+import { useLocation } from "react-router";
+
+import { Image } from "cloudinary-react";
+import Axios from "axios";
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -50,7 +66,7 @@ export default function ProfileDialog(props) {
   `;
 
   const { addToast } = useToasts();
-  const { openDialog, setOpenDialog, profileUser } = props;
+  const { openDialog, setOpenDialog, profileUser, setImageVersion } = props;
   const [changesMade, setChangesMade] = useState(false);
 
   const [user, setUser] = useState({
@@ -60,6 +76,7 @@ export default function ProfileDialog(props) {
     phone: profileUser.phone,
     email: profileUser.netid + "@rice.edu",
     venmo: profileUser.venmo,
+    imageVersion: profileUser.imageVersion,
   });
 
   const closeDialog = () => {
@@ -102,8 +119,109 @@ export default function ProfileDialog(props) {
     },
   });
 
+  //for image
+  // const ImageStyle = {
+  //   borderRadius: "50%",
+  //   width: "25vw",
+  //   height: "11vh",
+  // };
+
+  const [imageSelected, setImageSelected] = useState("");
+  // const [previewSource, setPreviewSource] = useState("");
+  const [id, setid] = useState("");
+
+  // const uploadPic = useRef(null);
+  // const onUploadPic = () => {
+  //   uploadPic.current.click();
+  // };
+
+  const uploadImage = () => {
+    //constructing the form data we are uploading to cloudinary
+    const formData = new FormData();
+    formData.append("file", imageSelected);
+    //upload preset
+    formData.append("upload_preset", "gx855d5s");
+    //send information
+    //endpoint where data is sent
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/dnsw4xdiz/image/upload",
+      formData
+    ).then((response) => {
+      console.log("RESPONSE", response);
+      console.log(response["data"]["public_id"]);
+      setid(response["data"]["public_id"]);
+    });
+  }
+
+  // function selectImage(e) {
+  //   const file = e.target.files[0];
+  //   setImageSelected(file);
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onloadend = () => {
+  //     setPreviewSource(reader.result);
+  //   };
+  // }
+
+  //this function is used in saveUserWithImage, which is used in saveUser
+  // const [uploadImage] = useLazyQuery(GET_SIGNATURE, {
+  //   onCompleted: (sigData) => {
+  //     //uploads image to cloudinary with the image version
+  //     toCloudinary(imageSelected, profileUser.netid, sigData.signature)
+  //       .then((imageVersion) => {
+  //         setImageVersion(imageVersion); //update imageVersion
+  //         setUserProps("imageVersion", imageVersion); //update imageVersion for user
+  //         updateUser({ variables: user }); //update the rest of the user
+  //       })
+  //       .catch((e) => {
+  //         console.log("error in uploading to cloudinary", e);
+  //       });
+  //   },
+  //   onError: (e) => {
+  //     console.log("error: ", e);
+  //   },
+  // });
+  
+  //this function is used in saveUser
+  // function saveUserWithImage() {
+  //   const timestamp = Math.round(new Date().getTime() / 1000);
+  //   const folder = process.env.REACT_APP_CLOUDINARY_FOLDER;
+  //   uploadImage({
+  //     variables: {
+  //       publicId: profileUser.netid,
+  //       timestamp: timestamp,
+  //       folder: folder,
+  //     },
+  //   });
+  // }
+
+  //uses all helper functions to save user
+  // function saveUser() {
+  //   if (imageSelected) {
+  //     //save image and update user if there is image
+  //     saveUserWithImage();
+  //   } else {
+  //     updateUser({ variables: user }); //else update all other variables
+  //   }
+  //   const reader = new FileReader(); //set new preview source
+  //   reader.onloadend = () => {
+  //     setPreviewSource(imageSelected);
+  //   };
+  // }
+  const location = useLocation();
+  // const hasImage = imageExists(
+  //   location.pathname.substring(9), //netid
+  //   user.imageVersion
+  // );
+
+  // const showAvatar = !hasImage;
+  // const showOriginal = hasImage && !previewSource;
+
+  
+
   if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
+  console.log("ID", id);
 
   return (
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
@@ -113,9 +231,43 @@ export default function ProfileDialog(props) {
             <ProfileDialogContainer>
               <IconBox>
                 <ProfileIcon />
-                {/* <ProfileEditIcon /> */}
+                <ProfileEditIcon />
+                {/* {showOriginal ? ( //original version, no preview
+                  <ProfileImage
+                    netid={localStorage.getItem("netid")}
+                    imageStyle={ImageStyle}
+                    imageVersion={profileUser.imageVersion}
+                  />
+                ) :
+                  <StyledImage src={previewSource}></StyledImage> //show preview source
+                }
+                <Tooltip title="Upload profile picture">
+                  <ProfileEditIcon onClick={onUploadPic}>
+                    <ProfileEditIcon/>
+                  </ProfileEditIcon>
+                </Tooltip>
+                <input
+                  type="file"
+                  ref={uploadPic}
+                  style={{display: "none"}}
+                  onChange={selectImage}
+                /> */}
                 <CloseProfileIcon onClick={closeDialog} />
+                <input
+                  type="file"
+                  onChange={(e) => {
+                  setImageSelected(e.target.files[0]);
+                  setid(e.target.getAttribute("public-id"));
+              }}
+            />
+            <button onClick={() => uploadImage()}>Upload Image</button>
               </IconBox>
+              
+              <Image
+                style={{ width: 200 }}
+                cloudName="dnsw4xdiz"
+                publicId={"https://res.cloudinary.com/dnsw4xdiz/image/upload/" + id}
+              />
 
               <InputBox>
                 <Label>Name:</Label>
@@ -221,7 +373,10 @@ export default function ProfileDialog(props) {
 
                     if (changesMade) {
                       updateUserInfo();
+                      // saveUser();
+                      // uploadImage();
                     }
+                    updateUserInfo();
                     setOpenDialog(false);
                     addToast("User Information Updated", {
                       appearance: "success",
