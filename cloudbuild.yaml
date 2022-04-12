@@ -31,6 +31,10 @@ steps:
     - 'PORT=${_PORT}'
     - 'SENDER_EMAIL=${_SENDER_EMAIL}'
     - 'SENDER_EMAIL_PASSWORD=${_SENDER_EMAIL_PASSWORD}'
+    - 'REDIS_PORT=${_REDIS_PORT}'
+    - 'REDIS_HOST=${_REDIS_HOST}'
+    - 'REDIS_USERNAME=${_REDIS_USERNAME}'
+    - 'REDIS_PASSWORD=${_REDIS_PASSWORD}'
   dir: 'api'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
