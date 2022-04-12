@@ -1,10 +1,11 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Rice Carpool",
+  "name": "Rice Carpool",
+  "description": "A platform for the Rice community to coordinate ride-sharing",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "48x48",
       "type": "image/x-icon"
     },
     {
@@ -18,8 +19,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/search",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#002140",
   "background_color": "#ffffff"
 }
