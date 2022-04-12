@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/npm'
-  args: [ 'install' ]
+  args: [ 'install', '--legacy-peer-deps' ]
   dir: 'client'
 - name: 'gcr.io/cloud-builders/npm'
   args: ["run", "create-env"]
