@@ -218,7 +218,7 @@ const Create = ({ onCreate }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <InputBox id="Date and Time">Date and Time (CST)</InputBox>
+          <InputBox id="Date and Time">Ride Date and Time (CST)</InputBox>
           <MuiThemeProvider theme={customTheme}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <DateBox
