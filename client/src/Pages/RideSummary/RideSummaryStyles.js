@@ -99,6 +99,7 @@ const LocationText = styled.div`
 const DateDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 2fr;
+  //grid-template-rows: 1fr 1fr;
   font-family: Josefin Sans;
   font-style: normal;
   font-weight: normal;
@@ -134,6 +135,13 @@ const TimeText = styled.div`
   grid-column: 5;
   font-family: Josefin Sans;
   grid-row: 1;
+`
+
+const TimeTextDetail = styled.div`
+  grid-column: 4 / span 2;
+  grid-row: 2;
+  font-family: Josefin Sans;
+  font-size: 1.5vh;
 `
 
 const HostDiv = styled.div`
@@ -386,5 +394,6 @@ export {
   DepartureIconDiv,
   CalendarText,
   TimeText, 
+  TimeTextDetail,
   ConfirmationText
 }
