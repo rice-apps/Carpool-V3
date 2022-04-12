@@ -32,6 +32,7 @@ const CreateRide = () => {
     );
 
     const addRide = (ride) => {
+        console.log("Vars for createRide: " + ride);
         createRide({
             variables: ride
         })
