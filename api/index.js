@@ -5,10 +5,12 @@ var exjwt = require('express-jwt');
 var cors = require('cors')
 
 // Import hidden values from .env
-import { PORT, SECRET } from './config';
+import { PORT, SECRET, REDIS_PORT, REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD } from './config';
 
 // Apollo Imports
 import Schema from './schema';
+import bodyParser from 'body-parser'
+import graphqlWhitelist, { QueryRepository, MemoryStore, RedisStore } from 'graphql-query-whitelist'
 
 /**
  * Import a custom route (non-GraphQL) like so:
@@ -33,11 +35,30 @@ const server = new ApolloServer({
 
 // Initiate express
 var app = express();
+const store = new RedisStore({
+  port: REDIS_PORT, // Redis port
+  host: REDIS_HOST, // Redis host
+  username: REDIS_USERNAME, // needs Redis >= 6
+  password: REDIS_PASSWORD,
+  db: 0, // Defaults to 0
+});
+const repository = new QueryRepository(store)
+const validationErrorFn = (req) => {
+  console.log(`Query '${req.operationName} (${req.queryId})' is not in the whitelist`)
+  console.log(`Unauthorized query: ${req.body.query}`)
+
+  // Uncomment these to add new queries to whitelist
+  // repository.put(req.body.query)
+  // console.log(store.entries().then(res => console.log(res)))
+}
 
 // Apply cors for dev purposes
 app.use(cors({
     // Set CORS options here
 }))
+app.use(bodyParser.json())
+// Set dryRun to try for adding queries to whitelist
+app.post('/graphql', graphqlWhitelist({ store, validationErrorFn, dryRun: false }))
 
 app.use(function(req, res, next) {
   if (req.headers.origin) {
