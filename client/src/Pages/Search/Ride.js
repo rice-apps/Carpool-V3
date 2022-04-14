@@ -40,7 +40,7 @@ const Ride = ({ride}) => {
 
     return (
         <Link href={`/ridesummary/${ride._id}`} style={{textDecoration: 'none', color:'#002140' }}>
-        <Grid container key={ride._id} style={{height: '100%', width: "90vw", maxWidth: '600px', display: 'flex', borderRadius: '10px', backgroundColor: "white", boxShadow: '0px 3px 10px #bbdaff'}}>
+        <Grid container key={ride._id} style={{height: '100%', width: "90vw", maxWidth: '500px', display: 'flex', borderRadius: '10px', backgroundColor: "white", boxShadow: '0px 3px 10px #bbdaff'}}>
             <Grid item xs = {12} align='center' justify='space-between' style = {{display: 'flex', placeItems:'center'}}>
                 <Box style = {{ display: 'flex', alignItems: 'center', borderRadius: '5px', border: '2px solid rgba(32, 117, 216, 0.42)',  backgroundColor: '#BBDAFF38', padding: '.3em', margin: '1em'}}>
                     <span>
@@ -55,14 +55,14 @@ const Ride = ({ride}) => {
 
             <Grid item xs={12}>
                 <Box className = {classes.location}>
-                        <span className={classes.fromtotext}>from: &nbsp;</span>
+                        <span className={classes.fromtotext}>from &nbsp;</span>
                         <span className={classes.midtext}>{ride.departureLocation.title} </span>  
                 </Box>
             </Grid>
 
             <Grid item xs={12}>
                 <Box className = {classes.location}>
-                        <span className={classes.fromtotext}>&nbsp;&nbsp;&nbsp;&nbsp;to: &nbsp;</span>
+                        <span className={classes.fromtotext}>&nbsp;&nbsp;&nbsp;&nbsp;to &nbsp;</span>
                         <span className={classes.midtext}>{ride.arrivalLocation.title} </span>  
                 </Box>
             </Grid>
