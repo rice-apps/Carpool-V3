@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
-import { BsArrowRight } from 'react-icons/bs'
 import {
   IoPersonCircleSharp,
 } from 'react-icons/io5'
-import { AiTwotoneCalendar, AiFillClockCircle } from 'react-icons/ai'
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 import moment from 'moment'
 import { useHistory } from 'react-router'
 import {
+  HeaderDiv,
   SeatsLeftDiv,
   SeatsLeftNum,
   SeatsLeftText,
   RideSummaryDiv,
   LocationDiv,
-  LocationText,
-  DateDiv,
-  CalendarIcon,
-  ClockIcon,
+  LocationDateTime,
   HostDiv,
   RidersDiv,
   LineDiv,
@@ -31,20 +29,22 @@ import {
   AllDiv,
   LocationDivContainer,
   ButtonContainer,
-  DepartureDiv,
-  ArrivalDiv,
-  LocationArrowDiv,
   BackArrowDiv,
   BackArrow,
   BackText,
-  InnerLocationDiv,
-  DepartureIconDiv,
-  CalendarText,
-  TimeText, 
-  TimeTextDetail, 
-  ConfirmationText
+  ConfirmationText,
+  LocationDepartureTitle,
+  LocationDepartureAddress,
+  LocationDestinationAddress,
+  LocationDestinationTitle,
+  LocationAddressStyling,
+  LocationDateStyling,
+  LocationTitleStyling,
+  LocationDepartureIcon,
+  LocationDestinationIcon,
+  LocationConnect
 } from './RideSummaryStyles.js'
-import { Grid, IconButton } from '@material-ui/core';
+import {Grid, IconButton} from '@material-ui/core';
 import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
 import CloseIcon from '@material-ui/icons/Close';
 // SSO imports
@@ -63,9 +63,11 @@ const GET_RIDE = gql`
       spots
       departureLocation {
         title
+        address
       }
       arrivalLocation {
         title
+        address
       }
       notes
       owner {
@@ -93,8 +95,8 @@ const RideSummary = () => {
   let { id } = useParams()
   const [newOwner, setNewOwner] = useState({"owner":{_id:""}});
   const [ride, setRide] = useState({
-    departureLocation: {title: "Loading"},
-    arrivalLocation: {title: "Loading"},
+    departureLocation: {title: "Loading", address: "dummy"},
+    arrivalLocation: {title: "Loading", address: "dummy"},
     owner: {netid: "Loading"},
     riders: [],
     notes: "",
@@ -333,52 +335,68 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
   return (
     <AllDiv>
-      <BackArrowDiv onClick={() => goBack()}>
-        <BackArrow></BackArrow>
-        <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
-      </BackArrowDiv>
+      <HeaderDiv>
+        <BackArrowDiv onClick={() => goBack()}>
+          <BackArrow></BackArrow>
+          <BackText>{localStorage.getItem("lastPage") === "your-rides" ? "Your Rides" : "Find Rides"}</BackText>
+        </BackArrowDiv>
 
-      <RideSummaryDiv>
-        <SeatsLeftDiv>
-          <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
-          <SeatsLeftText>seat(s) left</SeatsLeftText>
-        </SeatsLeftDiv>
-      </RideSummaryDiv>
+        <RideSummaryDiv>
+          <SeatsLeftDiv>
+            <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
+            <SeatsLeftText>seat(s) left</SeatsLeftText>
+          </SeatsLeftDiv>
+        </RideSummaryDiv>
+      </HeaderDiv>
+      
       <LocationDivContainer>
-        <LocationDiv>
-          <InnerLocationDiv>
-            <LocationText>
-              <DepartureIconDiv style={{ fontSize: '7vw' }}></DepartureIconDiv>
-              <DepartureDiv>
-                {ride.departureLocation.title}
-              </DepartureDiv>
-              <LocationArrowDiv>
-                <BsArrowRight></BsArrowRight>
-              </LocationArrowDiv>
-              <ArrivalDiv>
+          <LocationDiv>
+
+            <LocationDateTime>              
+              <LocationDateStyling>
+                {mon} {day} {hour}
+              </LocationDateStyling>
+            </LocationDateTime>
+
+            <LocationDepartureIcon>
+              <FiberManualRecordOutlinedIcon style={{fontSize:"1em"}}/>
+            </LocationDepartureIcon> 
+
+            <LocationDepartureTitle>
+                <LocationTitleStyling>
+               {ride.departureLocation.title}
+               </LocationTitleStyling>
+            </LocationDepartureTitle>
+
+            <LocationDestinationIcon>
+              <LocationOnOutlinedIcon style={{fontSize:"1.2em"}}/>
+            </LocationDestinationIcon>
+
+            <LocationConnect>
+              ....
+            </LocationConnect>
+
+            <LocationDepartureAddress>
+              <LocationAddressStyling>
+                  {ride.departureLocation.address}
+              </LocationAddressStyling>
+            </LocationDepartureAddress>
+            
+            <LocationDestinationTitle>
+              <LocationTitleStyling>
                 {ride.arrivalLocation.title}
-              </ArrivalDiv>
-            </LocationText>
-            <DateDiv>
-              <CalendarIcon>
-                <AiTwotoneCalendar></AiTwotoneCalendar> 
-              </CalendarIcon>
-              <CalendarText>
-                {mon}-{day}
-              </CalendarText>
-              <ClockIcon>
-                <AiFillClockCircle></AiFillClockCircle>
-              </ClockIcon>
-              <TimeText>
-                {hour}
-              </TimeText>
-              <TimeTextDetail>
-                (Ride Departure Time)
-              </TimeTextDetail>
-            </DateDiv>
-          </InnerLocationDiv>
-        </LocationDiv>
+                </LocationTitleStyling>
+            </LocationDestinationTitle>
+
+            <LocationDestinationAddress>
+              <LocationAddressStyling>
+                  {ride.arrivalLocation.address}
+              </LocationAddressStyling>
+            </LocationDestinationAddress>
+          </LocationDiv>
+
       </LocationDivContainer>
+      
       <RidersDiv>
         <HostDiv>Host</HostDiv>
         <RidersComponents>
@@ -427,6 +445,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
           Join Ride
         </ButtonDiv>}
       </ButtonContainer>
+
       <JoinRideDialog
                 open={openLogin}
                 onClose={handleCloseLogin}
@@ -446,6 +465,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                   </Grid>
             </Grid>
       </JoinRideDialog>
+      
       <JoinRideDialog
                 open={openConfirmation}
                 onClose={handleCloseConfirmation}
