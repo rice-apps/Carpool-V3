@@ -7,30 +7,14 @@ const Form = (props) => {
 
   const resultRides = props.resultRides;
   const displayRef = props.displayRef;
+  const locations = props.locationsAll;
 
- 
-// TODO: Get this from the API!!
-let PossibleLocations = [
-  {
-      _id: "60dd1f608211a44ac40b33ef",
-      title: "Rice",
-      address: "6100 Main St, Houston, TX 77005, USA"
-  },
-  {
-    _id: "60dd1f608211a44ac40b33f0",
-    title: "HOU",
-    address: "Hobby Airport Loop, Houston, TX 77061, USA"
-  },
-  {
-    _id: "60dd1fff8211a44ac40b33f2",
-    title: "IAH",
-    address: "2800 N Terminal Rd, Houston, TX 77032, USA"
-  }];
+  const {locationMany : locationsArr} = locations
 
   // May cause 401 error if a request is made to the database before it's ready
   return (
     <React.Fragment>
-    <FormOnly setRides={props.setRides} setRidesPossible={props.setRidesPossible} resultRides={resultRides} displayRef={displayRef} getRidesRefetch={props.getRidesRefetch} getLocsRefetch={props.getLocsRefetch} testLocations={PossibleLocations}/>
+    <FormOnly setRides={props.setRides} setRidesPossible={props.setRidesPossible} resultRides={resultRides} displayRef={displayRef} getRidesRefetch={props.getRidesRefetch} getLocsRefetch={props.getLocsRefetch} testLocations={locationsArr}/>
     </React.Fragment>
   )
 }
