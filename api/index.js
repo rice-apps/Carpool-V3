@@ -48,7 +48,7 @@ const validationErrorFn = (req) => {
   console.log(`Unauthorized query: ${req.body.query}`)
 
   // Uncomment these to add new queries to whitelist
-  repository.put(req.body.query)
+  // repository.put(req.body.query)
   // console.log(store.entries().then(res => console.log(res)))
 }
 
@@ -58,7 +58,7 @@ app.use(cors({
 }))
 app.use(bodyParser.json())
 // Set dryRun to try for adding queries to whitelist
-app.post('/graphql', graphqlWhitelist({ store, validationErrorFn, dryRun: true }))
+app.post('/graphql', graphqlWhitelist({ store, validationErrorFn, dryRun: false }))
 
 app.use(function(req, res, next) {
   if (req.headers.origin) {

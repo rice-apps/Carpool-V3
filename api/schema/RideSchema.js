@@ -153,7 +153,7 @@ const RideQuery = {
 // TODO: Add [authMiddleware] back to all getResolver calls once login is implemented!
 const RideMutation = {
   rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]), // only a registered user can create a ride
-  rideUpdateOne: RideTC.getResolver('updateOne', [authMiddleware]), // only a registered user can edit the ride completely
+  rideUpdateOne: RideTC.getResolver('updateOne'), // only a registered user can edit the ride completely
   rideDeleteOne: RideTC.getResolver('removeById', [authMiddleware]), // only the user who OWNS the ride can delete it
   addRider: RideTC.getResolver('updateRiders', [authMiddleware]).wrapResolve((next) => (rp) => {
     rp.args.push = true // we want to add a rider
