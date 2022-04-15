@@ -1,7 +1,5 @@
 import React from 'react'
-import { gql, useQuery } from "@apollo/client";
 import FormOnly from './FormOnly.js'
-import LoadingDiv from "../../common/LoadingDiv.js";
 
 export const ridesPossible = [];
 
