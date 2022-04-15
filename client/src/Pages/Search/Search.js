@@ -66,7 +66,7 @@ const Search = () => {
     }
   `;
 
-  const { refetch: refetchLoc } = useQuery(GET_LOCATIONS);
+  const { data: locations, loading: locsLoading, refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
   const today = new Date().toLocaleDateString("en-US", {timeZone: "America/Chicago"});
   const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES, {
@@ -77,11 +77,13 @@ const Search = () => {
   return (
     <React.Fragment>
       <div><Header subtitle = "Find Rides"/></div>
-      <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} getLocsRefetch={() => refetchLoc()} />
-        {rideLoading ? 
-          <LoadingDiv height={'15vh'} /> : 
-          <DisplayRides ref={displayRef} ridesT={rides} ridesPossible={ridesPossible} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
-        }
+      {locsLoading ? <div/> : 
+        <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} locationsAll = {locations} getLocsRefetch={() => refetchLoc()} />
+      }
+      {rideLoading ? 
+        <LoadingDiv height={'15vh'} /> : 
+        <DisplayRides ref={displayRef} ridesT={rides} ridesPossible={ridesPossible} rides={resultDestArr} rideLoading={rideLoading} testVar={3}/>
+      }
     </React.Fragment>
   );
 };
