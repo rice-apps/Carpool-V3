@@ -99,10 +99,15 @@ const FormOnly = (props) => {
 
   const handleClickStartLoc = (locInd) => {
     setStartLoc(locInd);
+    localStorage.setItem("startLocation", locInd);
+    console.log("handleClickStartLoc");
+
   };
 
   const handleClickEndLoc = (locInd) => {
     setEndLoc(locInd);
+    localStorage.setItem("endLocation", locInd);
+    console.log("handleClickEndLoc");
   };
 
   return (
@@ -193,6 +198,7 @@ const FormOnly = (props) => {
                     value={filterDate}
                     onChange={(date) => {
                       setfilterDate(date);
+                      localStorage.setItem("searchedDate", date);
                       // closeLoaderIn2Seconds();
                     }}
                     minDate={minDate}

@@ -157,7 +157,6 @@ const LocationDateStyling = styled.span`
   padding: 1.75%;
 `
 
-
 const HostDiv = styled.div`
   font-family: Josefin Sans;
   font-style: normal;
@@ -241,9 +240,9 @@ const NotesDiv = styled.div`
   width: 97%;
   padding: 10px;  
   color: rgba(128, 128, 128, 1);
+  background: #ffffff;
   
   font-family: Josefin Sans;
-  background: #ffffff;
   border-radius: 5px;
 `
 const ButtonDiv = styled.button`

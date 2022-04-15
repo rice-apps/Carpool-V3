@@ -204,6 +204,9 @@ export default function ProfileDialog(props) {
                 <SaveButton
                   variant="contained"
                   onClick={() => {
+                    // trim out "-" from number
+                    setUserProps("phone", user.phone.replace(/[ +-]/g, '')); 
+
                     if (user.firstName === "" || user.lastName === "") { 
                       addToast("Please fill in your full name.", { appearance: 'error' });
                       return

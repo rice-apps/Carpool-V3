@@ -24,9 +24,8 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
   const [venmo, setVenmo] = useState("");
   const { addToast } = useToasts();
 
-    const handleSubmit = () => {
+  const handleSubmit = () => {
 
- 
         if (firstName === "" || lastName === "") { 
             addToast("Please fill in your full name.", { appearance: 'error' });
             return
@@ -41,6 +40,8 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             addToast("Phone number must only contain digits.", { appearance: 'error' });
             return
         }
+        
+        
 
     return onSubmit({
       firstName,
@@ -81,7 +82,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             defaultValue={phone}
             name="phone"
             required
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value.replace(/[ +-]/g, ''))}
           ></RequiredTextField>
         </InputBox>
         <InputBox>

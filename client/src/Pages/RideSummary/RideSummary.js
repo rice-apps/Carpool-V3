@@ -394,6 +394,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
               </LocationAddressStyling>
             </LocationDestinationAddress>
           </LocationDiv>
+
       </LocationDivContainer>
       
       <RidersDiv>
