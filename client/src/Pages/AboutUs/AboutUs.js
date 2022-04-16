@@ -339,7 +339,7 @@ const AboutUs = () => {
                     <Picture image="/membersPictures/mitchell.jpeg"/>
                     <Info>
                         <Name>Mitchell Osborn</Name>
-                        <Title>Developer | Brown College</Title>
+                        <Title>Developer | Lovett College</Title>
                     </Info>
                 </Member>
 
