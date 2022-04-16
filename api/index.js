@@ -3,6 +3,7 @@ var express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 var exjwt = require('express-jwt');
 var cors = require('cors')
+var Ddos = require('ddos')
 
 // Import hidden values from .env
 import { PORT, SECRET, REDIS_PORT, REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD } from './config';
@@ -59,6 +60,10 @@ app.use(cors({
 app.use(bodyParser.json())
 // Set dryRun to try for adding queries to whitelist
 app.post('/graphql', graphqlWhitelist({ store, validationErrorFn, dryRun: false }))
+
+// ddos protection
+var ddos = new Ddos({burst:10, limit:15});
+app.use(ddos.express);
 
 app.use(function(req, res, next) {
   if (req.headers.origin) {
