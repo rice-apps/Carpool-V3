@@ -10,6 +10,7 @@ import Search from '../Pages/Search/Search.js'
 import UserAuth from '../Pages/Auth/UserAuth.js'
 import Profile from '../Pages/Profile/Profile.js'
 import CreateRide from '../Pages/CreateRide/CreateRide.js'
+import NotFound from '../Pages/NotFound/NotFound.js'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from '../common/NavBar/Navbar'
 import { withRouter } from 'react-router'
@@ -148,7 +149,8 @@ export const Routes = () => {
           <CheckTokenRoute path={"/search"} component={withRouter(Search)} />
           <CheckTokenRoute path={"/your-rides"} component={withRouter(YourRides)} />
           <CheckTokenRoute path={"/about"} component={withRouter(AboutUs)} />
-
+          <CheckTokenRoute path="/404" component={NotFound} />
+          <Redirect to="/404" />
         </Switch>
       </Router>
     </div>

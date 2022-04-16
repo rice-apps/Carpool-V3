@@ -7,7 +7,7 @@ import {
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 import moment from 'moment'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import {
   HeaderDiv,
   SeatsLeftDiv,
@@ -205,7 +205,9 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   useEffect(() => {
     if (data) {
       let ride;
-      if(!data.rideOne.owner){
+      if (!data.rideOne) {
+        history.push('/404')
+      } else if(!data.rideOne.owner){
         ride = {...data.rideOne,owner:{netid:"err",lastName:"owner",firstName:"No"}}
       }
       else {
@@ -213,13 +215,13 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       }
       setRide(ride)
      }
-  }, [data])
+  }, [data, history])
 
   useEffect(() => {
     localStorage.setItem('lastRide', `ridesummary/${id}`);
   }, [id])
 
-   if (error) return <p>Error.</p>
+   if (error) return <Redirect to="../404" />
   if (loading) return <LoadingDiv />
   if (!data) return <p>No data...</p>
 
@@ -283,7 +285,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     }
   }
   
-  if (error) return <p>Error.</p>
+  if (error) return <Redirect to="../404" />
   if (loading) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
 
