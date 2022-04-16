@@ -126,7 +126,7 @@ export default function ButtonAppBar (props) {
   );
   const location = useLocation();
   useEffect(() => {
-    if (["/", "/home", "/userAuth", "/onboarding"].includes(location.pathname)){
+    if (["/", "/home", "/userAuth", "/onboarding", "/404"].includes(location.pathname)){
       setShowBar(false)
     }
     else { 
