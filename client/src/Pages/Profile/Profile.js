@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import { gql, useQuery } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
@@ -56,11 +56,11 @@ const Profile = () => {
   });
 
   if (loading) return <LoadingDiv />;
-  if (error) return `Error! ${error.message}`;
+  if (error) return <Redirect to="../404" />;
 
   let { userOne: user } = JSON.parse(JSON.stringify(data));
 
-  if (!user) return <div>Invalid User ID</div>;
+  if (!user) return <Redirect to="../404" />;
 
   function goBack() {
     // Check for LastPage and that there is NO record of profile -> profile loop
