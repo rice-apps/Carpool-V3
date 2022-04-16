@@ -34,8 +34,6 @@ border-radius: 9px;
 `;
 
 const UpcomingRideTitle = styled.div`
-margin-top: 2vh;
-margin-bottom: 2vh;
 font-family: Josefin Sans;
 font-style: normal;
 font-weight: normal;
@@ -45,11 +43,10 @@ font-size: 2.5vh;
 
 const PastRidesSection = styled.div`
 display: flex;
-width: 100vw;
-justify-content: space-between;
-font-family: Josefin Sans;
 flex-direction: column;
-padding: 3%;
+width: 90vw;
+font-family: Josefin Sans;
+padding: 5%;
 border-radius: 9px;
 margin-top: 3vh;
 `;
