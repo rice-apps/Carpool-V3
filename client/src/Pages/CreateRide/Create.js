@@ -21,6 +21,7 @@ import {
 } from "./Create.styles";
 import LoadingDiv from "../../common/LoadingDiv.js";
 import moment from "moment";
+import jwt from 'jwt-decode';
 
 const Create = ({ onCreate }) => {
   document.title = "Create Ride";
@@ -72,6 +73,7 @@ const Create = ({ onCreate }) => {
   const [endLoc, setEndLoc] = useState("");
   const [date, setDate] = useState(getSavedDate());
   const [passengers, setPassengers] = useState(3);
+  const [user, setUser] = useState()
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
 
@@ -79,8 +81,9 @@ const Create = ({ onCreate }) => {
   // Function after Submit Button is Pressed
   const onSubmit = (e) => {
     e.preventDefault();
-    const users = [user._id];
-    const owner = user._id;
+    const users = [user.id];
+    const owner = user.id;
+    console.log("user", user)
 
     if (!startLoc || !endLoc) {
       addToast("Please fill in all fields.", { appearance: "error" });
@@ -140,26 +143,18 @@ const Create = ({ onCreate }) => {
 
   // Access Current User's MongoID with GraphQL Query
 
-  const GET_USER = gql`
-    query GetUserInfo($netID: String) {
-      userOne(filter: { netid: $netID }) {
-        _id
-      }
-    }
-  `;
+  // 
 
   const { data: locationData, loading: locationLoading } =
     useQuery(GET_LOCATIONS);
 
-  const {
-    data: userData,
-    loading: userLoading,
-    error,
-  } = useQuery(GET_USER, {
-    variables: {
-      netID: localStorage.getItem("netid"),
-    },
-  });
+  useEffect(() => {
+    if (!user) {
+      var token = localStorage.getItem("token")
+      setUser(jwt(token));
+      localStorage.setItem('token', token);
+    }
+  }, [user])
   
   useEffect(() => {
     if (locationData){
@@ -170,14 +165,8 @@ const Create = ({ onCreate }) => {
     }
   },[locationData]);
 
-  if (locationLoading || userLoading) return <LoadingDiv />;
-  if (error) return `Error! ${error.message}`;
+  if (locationLoading) return <LoadingDiv />;
   const { locationMany: locations } = locationData;
-  const { userOne: user } = userData;
- 
-  
-
-  if (!user) return <div>Invalid User ID</div>;
 
   // Form Construction
 
