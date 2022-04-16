@@ -1,63 +1,44 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-// import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-// import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
 import { useHistory } from 'react-router';
-import { Grid } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Box } from "@material-ui/core";
 
-import { 
-    RideCard, 
-    RideTimeInfo, 
-    RideDate, 
-    RideTime, 
-    LocationText, 
-    Locations,
-    RiderText, 
-    // Notifications 
-} 
-    from './UpcomingRideCard.styles.js';
 
-const CalendarIcon = withStyles({
-    root: {
-      display: 'flex',
-      color: '#002140',
-      justifyContent: 'center',
-      alignItems: 'center'
+const useStyles = makeStyles((theme) => ({
+    text: {
+     fontSize: '1.3em',
+     fontWeight: '500',
+     fontFamily: 'Josefin Sans'
+    },
+    midtext: {
+     fontSize: '1.1em',
+     fontFamily: 'Josefin Sans'
+    },
+    subtext: {
+     fontSize: '.9em',
+     fontFamily: 'Josefin Sans'
+    }, 
+    fromtotext: {
+     fontSize: '.9em',
+     fontFamily: 'Josefin Sans',
+     color: '#808080',
+    }, 
+    location: {
+     display: 'flex',
+     flexDirection: 'row', 
+     alignItems: 'center',
+     marginLeft: '1em',
+     marginBottom: '.75em'
     }
-  })(CalendarTodayIcon);
-
-  const ArrowForward = withStyles({
-  })(ArrowForwardIcon);
-
-//   const NotificationsOn = withStyles({
-//     root: {
-//         display: 'flex',
-//         color: '#2075D8',
-//         justifyContent: 'center',
-//         alignItems: 'center'
-//       }
- 
-//   })(NotificationsActiveIcon);
-  
-//   const NotificationsOff = withStyles({
-//     root: {
-//         display: 'flex',
-//         color: 'rgba(32, 117, 216, 0.42)',
-//         justifyContent: 'center',
-//         alignItems: 'center'
-//       }
-//   })(NotificationsOffIcon);
+ }));
 
 
 
 const UpcomingRideCard = ({id, origin, destination, datetime, num_riders, notification}) => {
+    const classes = useStyles();
 
     const time = moment(datetime)
-    const dateString = time.format('MMM DD')
-    const timeString = time.format('h:mm a')
 
     const history = useHistory();
     const summaryURL = "/ridesummary/" + id;
@@ -69,40 +50,42 @@ const UpcomingRideCard = ({id, origin, destination, datetime, num_riders, notifi
 
     return (
         <div onClick={(e) => toRide(summaryURL)}>
-            <RideCard>
-                <RideTimeInfo>
-                    <CalendarIcon />
-                    <RideDate>
-                        { dateString }
-                    </RideDate>
-                    <RideTime>
-                        { timeString }
-                    </RideTime>
-                </RideTimeInfo>
-                
-                <Locations>
-                    <Grid container justifyContent='space-around'>
-                            <LocationText>{ origin }</LocationText>
-                            <ArrowForward />
-                            <LocationText>{ destination }</LocationText>
-                        <Grid sm = {9} xs = {11} justifyContent='center'>
-                            <RiderText>{num_riders > 1 ? num_riders + " riders" : num_riders + " rider"}</RiderText>
-                        </Grid>
-                    </Grid>
-                </Locations>
+        <Grid container style={{height: '100%', width: "100%", display: 'flex', borderRadius: '10px', backgroundColor: "white", boxShadow: '0px 3px 10px #bbdaff', marginTop: '2vh', marginBottom: '2vh'}}>
+            <Grid item xs = {12} align='center' justify='space-between' style = {{display: 'flex', placeItems:'center'}}>
+                <Box style = {{ display: 'flex', alignItems: 'center', borderRadius: '5px', border: '2px solid rgba(32, 117, 216, 0.42)',  backgroundColor: '#BBDAFF38', padding: '.3em', margin: '1em'}}>
+                    <span>
+                        <div className = {classes.text}> {time.format('MMM DD h:mm A')}</div>
+                    </span>
+                </Box>
+                <Box style={{display: 'flex', flexDirection: 'column', margin: '1em'}}>
+                    <span className={classes.midtext}>{num_riders}</span>
+                    <span className={classes.subtext}>riders</span>  
+                </Box>
+            </Grid>
 
-                {/* <Notifications>
-                    { notification ? <NotificationsOn /> : <NotificationsOff /> }
-                </Notifications> */}
-            </RideCard>
+            <Grid item xs={12}>
+                <Box className = {classes.location}>
+                        <span className={classes.fromtotext}>from &nbsp;</span>
+                        <span className={classes.midtext}>{origin} </span>  
+                </Box>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Box className = {classes.location}>
+                        <span className={classes.fromtotext}>&nbsp;&nbsp;&nbsp;&nbsp;to &nbsp;</span>
+                        <span className={classes.midtext}>{destination} </span>  
+                </Box>
+            </Grid>
+
+        </Grid>
         </div>
     )
 }
 
 
 UpcomingRideCard.defaultProps = {
-    origin: 'RMC',
-    destination: 'IAH',
+    origin: 'Rice',
+    destination: 'Rice',
     datetime: Date.now(),
     notification: true
 }
