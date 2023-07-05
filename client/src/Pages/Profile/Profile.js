@@ -26,6 +26,7 @@ import {
 } from "./ProfileStyles.js";
 import { useState } from "react";
 import LoadingDiv from "../../common/LoadingDiv.js";
+import { Checkbox } from "@material-ui/core";
 
 const Profile = () => {
 
@@ -116,7 +117,7 @@ const Profile = () => {
       <ProfileCard>
         <ProfileIcon />
         <UserName>{user.firstName + " " + user.lastName}</UserName>
-        <College>{user.college}</College>
+        <College>LMAO</College>
         <TextBox
           onClick={async () => {
             if (user.phone) {
@@ -157,6 +158,11 @@ const Profile = () => {
           <StyledTextVenmo>
             {user.venmo ? `@${user.venmo}` : "Not Specified"}
           </StyledTextVenmo>
+        </TextBox>
+        <TextBox>
+          <StyledText>I would like to receive SMS messages</StyledText>
+          <Checkbox/>
+          
         </TextBox>
       </ProfileCard>
     </AllDiv>

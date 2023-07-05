@@ -44,7 +44,7 @@
     "use-axios-client": "^2.0.0"
   },
   "scripts": {
-    "start": "cross-env PORT=3001 react-scripts start",
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && cross-env PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
