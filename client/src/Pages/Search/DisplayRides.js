@@ -30,17 +30,7 @@ const DisplayRides = (props) => {
     
         let token = localStorage.getItem('token');
 
-        if (token != null) { 
-            // Route to UserAuth if user is logged in
-            localStorage.setItem('nextPage', 'create-ride');
-            window.open('/userAuth', '_self');
-        } else {
-            // Open Login Dialog if not
-            setOpenAlert(true);
-        }
-        
-    }
-    
+
     // Close the dialog box
     const handleClose = () => {
         setOpenAlert(false);
