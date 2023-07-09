@@ -15,6 +15,7 @@ var RideSchema = new Schema({
     riders: [ { type: Schema.Types.ObjectId, ref: User } ],
     notes: String, // notes section for personal message from ride creator
     spots: { type: Number, default: 3 },
+    rideType: {type: String, enum: ["Uber", "Lyft", "Personal Vehicle"]}
     //cost: { type: Number },
     //ownerDriving: { type: Boolean, default: false },
 });
