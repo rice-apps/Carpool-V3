@@ -9,6 +9,7 @@ import {
   customTheme,
   Form,
   SelectBox,
+  SelectBox2,
   TextFieldBox,
   MenuBox,
   ColorButton,
@@ -21,7 +22,7 @@ import {
 } from "./Create.styles";
 import LoadingDiv from "../../common/LoadingDiv.js";
 import moment from "moment";
-import jwt from 'jwt-decode';
+import jwt from "jwt-decode";
 
 const Create = ({ onCreate }) => {
   document.title = "Create Ride";
@@ -45,27 +46,35 @@ const Create = ({ onCreate }) => {
       value: 6,
     },
   ];
-    // Helper method to fetch searched location + date 
-    const fetchSearchedLoc = (locIdx, locations) => {
-      if (locIdx && locIdx >= 0 && locIdx < locations.length) { // Verify that location exists
-        return locations[locIdx]["_id"];
-      } else {
-        return "";
-      }
-    }
+  const rideTypes = [
+    { value: "Uber" },
+    { value: "Lyft" },
+    { value: "Personal Vehicle" },
+    { value: "Undecided" },
+    
+  ];
 
+  // Helper method to fetch searched location + date
+  const fetchSearchedLoc = (locIdx, locations) => {
+    if (locIdx && locIdx >= 0 && locIdx < locations.length) {
+      // Verify that location exists
+      return locations[locIdx]["_id"];
+    } else {
+      return "";
+    }
+  };
 
   const getSavedDate = () => {
     let date = localStorage.getItem("searchedDate");
-    if (date && moment().diff(date, 'minutes') <= 0){ // Verify date is legit
-      console.log(moment().diff(date, 'minutes'))
+    if (date && moment().diff(date, "minutes") <= 0) {
+      // Verify date is legit
+      console.log(moment().diff(date, "minutes"));
       localStorage.setItem("searchedDate", "");
       return date;
-    }
-    else {
+    } else {
       return moment();
     }
-  }
+  };
 
   // Variables for Tracking Attributes of the Form
   const [startLoc, setStartLoc] = useState("");
@@ -73,19 +82,19 @@ const Create = ({ onCreate }) => {
   const [endLoc, setEndLoc] = useState("");
   const [date, setDate] = useState(getSavedDate());
   const [passengers, setPassengers] = useState(3);
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
+  const [rideType, setRideType] = useState("");
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
-
 
   // Function after Submit Button is Pressed
   const onSubmit = (e) => {
     e.preventDefault();
     const users = [user.id];
     const owner = user.id;
-    console.log("user", user)
+    console.log("user", user);
 
-    if (!startLoc || !endLoc) {
+    if (!startLoc || !endLoc || !rideType) {
       addToast("Please fill in all fields.", { appearance: "error" });
       return;
     }
@@ -98,13 +107,14 @@ const Create = ({ onCreate }) => {
     }
 
     // Pass arguments back to the top mutation queue
-    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner });
+    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, rideType });
 
     setStartLoc("");
     setEndLoc("");
     setNotes("");
     setDate(moment());
     setPassengers(4);
+    setRideType("");
   };
 
   // OnChange Functions: Triggers for User Changing Fields
@@ -130,6 +140,12 @@ const Create = ({ onCreate }) => {
     setPassengers(e.target.value);
   };
 
+  const onRideTypeChange = (e) => {
+    e.preventDefault();
+
+    setRideType(e.target.value);
+  };
+
   // Access Locations List with GraphQL Query
 
   const GET_LOCATIONS = gql`
@@ -143,27 +159,37 @@ const Create = ({ onCreate }) => {
 
   // Access Current User's MongoID with GraphQL Query
 
-  // 
+  //
 
   const { data: locationData, loading: locationLoading } =
     useQuery(GET_LOCATIONS);
 
   useEffect(() => {
     if (!user) {
-      var token = localStorage.getItem("token")
+      var token = localStorage.getItem("token");
       setUser(jwt(token));
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
     }
-  }, [user])
-  
+  }, [user]);
+
   useEffect(() => {
-    if (locationData){
-      setStartLoc(fetchSearchedLoc(localStorage.getItem("startLocation"), locationData["locationMany"]));
-      setEndLoc(fetchSearchedLoc(localStorage.getItem("endLocation"), locationData["locationMany"]));
+    if (locationData) {
+      setStartLoc(
+        fetchSearchedLoc(
+          localStorage.getItem("startLocation"),
+          locationData["locationMany"]
+        )
+      );
+      setEndLoc(
+        fetchSearchedLoc(
+          localStorage.getItem("endLocation"),
+          locationData["locationMany"]
+        )
+      );
       localStorage.setItem("startLocation", "");
       localStorage.setItem("endLocation", "");
     }
-  },[locationData]);
+  }, [locationData]);
 
   if (locationLoading) return <LoadingDiv />;
   const { locationMany: locations } = locationData;
@@ -236,6 +262,35 @@ const Create = ({ onCreate }) => {
               </MenuBox>
             ))}
           </SelectBox>
+        </Grid>
+
+        {/*RIDETYPES */}
+        <Grid item xs={12}>
+          <InputBox id="EndLoc">Ride Type</InputBox>
+          <SelectBox2
+            MenuProps={{
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "left",
+              },
+              transformOrigin: {
+                vertical: "top",
+                horizontal: "left",
+              },
+              getContentAnchorEl: null,
+            }}
+            id="Type of ride"
+            value={rideType}
+            onChange={onRideTypeChange}
+            variant="outlined"
+            size="small"
+          >
+            {rideTypes.map((option) => (
+              <MenuBox key={option.value} value={option.value}>
+                {option.value}
+              </MenuBox>
+            ))}
+          </SelectBox2>
         </Grid>
 
         <Grid item xs={12}>
