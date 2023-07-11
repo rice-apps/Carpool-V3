@@ -45,6 +45,9 @@ const Create = ({ onCreate }) => {
       value: 6,
     },
   ];
+  const types = [
+    {value: "uber",}, {value:"lyft",}, {value:"sadfs",},
+  ];
     // Helper method to fetch searched location + date 
     const fetchSearchedLoc = (locIdx, locations) => {
       if (locIdx && locIdx >= 0 && locIdx < locations.length) { // Verify that location exists
@@ -73,7 +76,8 @@ const Create = ({ onCreate }) => {
   const [endLoc, setEndLoc] = useState("");
   const [date, setDate] = useState(getSavedDate());
   const [passengers, setPassengers] = useState(3);
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
+  const [type, setType] = useState("");
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
 
@@ -98,11 +102,12 @@ const Create = ({ onCreate }) => {
     }
 
     // Pass arguments back to the top mutation queue
-    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner });
+    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, type });
 
     setStartLoc("");
     setEndLoc("");
     setNotes("");
+    setType("");
     setDate(moment());
     setPassengers(4);
   };
@@ -128,6 +133,14 @@ const Create = ({ onCreate }) => {
     e.preventDefault();
 
     setPassengers(e.target.value);
+    console.log(passengers);
+  };
+
+  const onTypeChange = (e) => {
+    e.preventDefault();
+
+    setType(e.target.value);
+    console.log(type);
   };
 
   // Access Locations List with GraphQL Query
@@ -266,6 +279,43 @@ const Create = ({ onCreate }) => {
             value={notes}
             onChange={onNotesChange}
           ></TextFieldBox>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+        >
+          <Grid item>
+            <SelectSquare
+              MenuProps={{
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left",
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left",
+                },
+                getContentAnchorEl: null,
+              }}
+              id="Number of Passengers Occupied"
+              value={type}
+              onChange={onTypeChange}
+              variant="outlined"
+              size="small"
+            >
+              {types.map((option) => (
+                <MenuSquare key={option.value} value={option.value}>
+                  {option.value}
+                </MenuSquare>
+              ))}
+            </SelectSquare>
+          </Grid>
+          <Grid item>
+            <BodyText>{"Ride Type"}</BodyText>
+          </Grid>
         </Grid>
 
         <Grid
