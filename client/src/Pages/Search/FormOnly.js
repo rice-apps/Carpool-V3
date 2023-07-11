@@ -62,6 +62,7 @@ const FormOnly = (props) => {
 
   // state for filter date
   const [filterDate, setfilterDate] = useState(null);
+  const [filterRideType, setfilterRideType] = useState(null);
 
   // does actual filtering, produces resultDestArr
   useEffect(() => {
@@ -90,12 +91,20 @@ const FormOnly = (props) => {
             return moment(ele.departureDate).isSame(moment(filterDate), 'day')
           });
         }
+        // filter by ride type
+        if (filterRideType != null) {
+          resultDestArr = resultDestArr.filter((ele) => {
+            return moment(ele.rideType).isSame(moment(rideType))
+            // above (ele.rideType) I assume is going to come from the query
+          });
+        }
+
         props.setRides(resultDestArr);
       })
       .catch((err) => {
        });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startLoc, endLoc, filterDate]);
+  }, [startLoc, endLoc, filterDate, filterRideType]);
 
   const handleClickStartLoc = (locInd) => {
     setStartLoc(locInd);
@@ -204,6 +213,16 @@ const FormOnly = (props) => {
                     minDate={minDate}
                     format="MMM DD, YYYY"
                   />
+                  <RideTypePicker 
+                    clearable
+                    value={filterRideType}
+                    onChange={(rideType) => {
+                      setfilterRideType(rideType);
+                      localStorage.setItem("searchedRideType", rideType);
+                    }}
+                    // closeLoaderIn2Seconds();
+                  /> 
+                  {/* temp component above until frontend finished  */}
                 </MuiPickersUtilsProvider>
                 {/* {showLoader && <LoadingDiv height={"15vh"} />} */}
               </Grid>
