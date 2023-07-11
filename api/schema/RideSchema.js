@@ -1,6 +1,13 @@
+require('dotenv').config()
 import nodemailer from 'nodemailer'
 import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID
+const authToken = process.env.TWILIO_AUTH_TOKEN
+const phoneNum = process.env.TWILIO_PHONE_NUMBER
+const client = require('twilio')(accountSid, authToken)
+
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -138,6 +145,15 @@ RideTC.addResolver({
       text: plaintextBody,
       html: htmlBody,
     })
+
+    client.messages
+    .create({
+        body: `${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'. Visit the ride page for details: https://carpool.riceapps.org/ridesummary/${updatedRide.id}`,
+        from: phoneNum,
+        to: `${owner.phone}`,
+
+    })
+    .then(message => console.log(message.sid))
 
     return updatedRide
   },
