@@ -94,7 +94,7 @@ const Create = ({ onCreate }) => {
     const owner = user.id;
     console.log("user", user);
 
-    if (!startLoc || !endLoc || !rideType) {
+    if (!startLoc || !endLoc ) {
       addToast("Please fill in all fields.", { appearance: "error" });
       return;
     }
@@ -264,10 +264,10 @@ const Create = ({ onCreate }) => {
           </SelectBox>
         </Grid>
 
-        {/*RIDETYPES */}
+        {/* RIDETYPES
         <Grid item xs={12}>
           <InputBox id="EndLoc">Ride Type</InputBox>
-          <SelectBox2
+          <SelectBox
             MenuProps={{
               anchorOrigin: {
                 vertical: "bottom",
@@ -290,8 +290,8 @@ const Create = ({ onCreate }) => {
                 {option.value}
               </MenuBox>
             ))}
-          </SelectBox2>
-        </Grid>
+          </SelectBox>
+        </Grid> */}
 
         <Grid item xs={12}>
           <InputBox id="Date and Time">Ride Date and Time (CST)</InputBox>
