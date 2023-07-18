@@ -213,7 +213,9 @@ const FormOnly = (props) => {
                     minDate={minDate}
                     format="MMM DD, YYYY"
                   />
-                  <RideTypePicker 
+                  
+                </MuiPickersUtilsProvider>
+                {/* <RideTypePicker 
                     clearable
                     value={filterRideType}
                     onChange={(rideType) => {
@@ -221,9 +223,8 @@ const FormOnly = (props) => {
                       localStorage.setItem("searchedRideType", rideType);
                     }}
                     // closeLoaderIn2Seconds();
-                  /> 
+                  />  */}
                   {/* temp component above until frontend finished  */}
-                </MuiPickersUtilsProvider>
                 {/* {showLoader && <LoadingDiv height={"15vh"} />} */}
               </Grid>
             </Grid>
