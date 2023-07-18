@@ -46,7 +46,7 @@ const Create = ({ onCreate }) => {
     },
   ];
   const types = [
-    {value: "uber",}, {value:"lyft",}, {value:"sadfs",},
+    {value: "Uber",}, {value:"Lyft",},
   ];
     // Helper method to fetch searched location + date 
     const fetchSearchedLoc = (locIdx, locations) => {

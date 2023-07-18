@@ -67,6 +67,13 @@ const Ride = ({ride}) => {
                 </Box>
             </Grid>
 
+            <Grid item xs={12}>
+                <Box className = {classes.location}>
+                        <span className={classes.fromtotext}>&nbsp;type&nbsp;</span>
+                        <span className={classes.midtext}>{ride.typeofcar} </span>  
+                </Box>
+            </Grid>
+
         </Grid>
         </Link>
     );
