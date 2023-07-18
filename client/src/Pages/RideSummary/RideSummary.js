@@ -60,6 +60,7 @@ const GET_RIDE = gql`
     rideOne(filter: { _id: $id }) {
       _id
       departureDate
+      typeofcar
       spots
       departureLocation {
         title
