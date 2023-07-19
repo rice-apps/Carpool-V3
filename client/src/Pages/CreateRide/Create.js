@@ -23,6 +23,7 @@ import LoadingDiv from "../../common/LoadingDiv.js";
 import moment from "moment";
 import jwt from 'jwt-decode';
 
+
 const Create = ({ onCreate }) => {
   document.title = "Create Ride";
 

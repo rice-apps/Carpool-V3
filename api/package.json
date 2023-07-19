@@ -28,6 +28,7 @@
     "dotenv": "^8.6.0",
     "express": "~4.16.1",
     "express-jwt": "^5.3.1",
+    "express-pino-logger": "^7.0.0",
     "graphql": "^15.0.0",
     "graphql-compose": "^7.25.1",
     "graphql-compose-mongoose": "^7.3.8",
@@ -37,8 +38,9 @@
     "mongoose": "^5.8.11",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.3",
+    "pino": "^8.14.1",
     "subscriptions-transport-ws": "^0.9.16",
-    "twilio": "^4.13.0",
+    "twilio": "^4.14.0",
     "xml2js": "^0.4.23"
   },
   "author": "",

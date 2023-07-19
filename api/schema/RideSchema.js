@@ -120,7 +120,7 @@ RideTC.addResolver({
     const plaintextBody = `
       ${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.\n\nSee <https://carpool.riceapps.org/ridesummary/${updatedRide.id}> for details.
     `.trim()
-
+    console.log('asofjdsfijdnfijsdnfisdjnfsidnfisjdnf lolololo')
     const htmlBody = `
       <p>
         <a href="https://carpool.riceapps.org/profile/${user.netid}">${user.firstName} ${user.lastName}</a> ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.
@@ -145,7 +145,7 @@ RideTC.addResolver({
       text: plaintextBody,
       html: htmlBody,
     })
-
+    console.log('testing')
     client.messages
     .create({
         body: `${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'. Visit the ride page for details: https://carpool.riceapps.org/ridesummary/${updatedRide.id}`,

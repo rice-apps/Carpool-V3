@@ -92,6 +92,7 @@ const UserQuery = {
 
 const UserMutation = {
   userUpdateOne: UserTC.getResolver("updateOne", [authMiddleware]),
+  
 };
 
 async function authMiddleware(resolve, source, args, context, info) {
