@@ -117,7 +117,7 @@ const Profile = () => {
       <ProfileCard>
         <ProfileIcon />
         <UserName>{user.firstName + " " + user.lastName}</UserName>
-        <College>LMAO</College>
+        <College>{user.college}</College>
         <TextBox
           onClick={async () => {
             if (user.phone) {
