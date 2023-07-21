@@ -13,9 +13,9 @@ var RideSchema = new Schema({
     arrivalLocation: { type: Schema.Types.ObjectId, ref: Location, required: true },
     owner: { type: Schema.Types.ObjectId, ref: User, required: true },
     riders: [ { type: Schema.Types.ObjectId, ref: User } ],
-    notes: String, // notes section for personal message from ride creator
+    notes: String, // notes section for personal messages from ride creator
     spots: { type: Number, default: 3 },
-    rideType: {type: String, enum: ["Uber", "Lyft", "Personal Vehicle"]}
+    rideType: {type: String, default: ""}
     //cost: { type: Number },
     //ownerDriving: { type: Boolean, default: false },
 });

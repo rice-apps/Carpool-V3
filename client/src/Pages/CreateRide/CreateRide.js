@@ -19,7 +19,7 @@ const CreateRide = () => {
             riders: $users,
             spots: $passengers,
             notes: $notes,
-            rideType:$rideType,
+            rideType: $rideType
             }) {
             record {
                 _id

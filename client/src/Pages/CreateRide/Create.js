@@ -46,6 +46,8 @@ const Create = ({ onCreate }) => {
       value: 6,
     },
   ];
+
+  //ride type options
   const rideTypes = [
     { value: "Uber" },
     { value: "Lyft" },
@@ -264,7 +266,7 @@ const Create = ({ onCreate }) => {
           </SelectBox>
         </Grid>
 
-        {/* RIDETYPES
+        {/* RIDE TYPES*/}
         <Grid item xs={12}>
           <InputBox id="EndLoc">Ride Type</InputBox>
           <SelectBox
@@ -291,7 +293,7 @@ const Create = ({ onCreate }) => {
               </MenuBox>
             ))}
           </SelectBox>
-        </Grid> */}
+        </Grid> 
 
         <Grid item xs={12}>
           <InputBox id="Date and Time">Ride Date and Time (CST)</InputBox>

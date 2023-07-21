@@ -84,6 +84,7 @@ const GET_RIDE = gql`
         lastName
         phone
       }
+      rideType
     }
   }
 `
@@ -100,7 +101,8 @@ const RideSummary = () => {
     owner: {netid: "Loading"},
     riders: [],
     notes: "",
-    spots: -1
+    spots: -1, 
+    rideType: ""
   })
   const history = useHistory()
   const { addToast } = useToasts();
