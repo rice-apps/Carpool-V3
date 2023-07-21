@@ -2,18 +2,18 @@ import nodemailer from 'nodemailer'
 import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
 
-if (process.env.SENDER_EMAI && process.env.SENDER_EMAIL_PASSWORD) {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      // TODO: Use OAuth instead 😳
-      user: process.env.SENDER_EMAIL,
-      pass: process.env.SENDER_EMAIL_PASSWORD,
-    },
-  })
-}
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    // TODO: Use OAuth instead 😳
+    user: process.env.SENDER_EMAIL,
+    pass: process.env.SENDER_EMAIL_PASSWORD,
+  },
+})
+
 
 
 
@@ -135,15 +135,15 @@ RideTC.addResolver({
         </a>
       </p>
     `
-    if (process.env.SENDER_EMAI && process.env.SENDER_EMAIL_PASSWORD) {
 
-      transporter.sendMail({
-        to: `${owner.netid}@rice.edu`,
-        subject: subject,
-        text: plaintextBody,
-        html: htmlBody,
-      })
-    }
+
+    transporter.sendMail({
+      to: `${owner.netid}@rice.edu`,
+      subject: subject,
+      text: plaintextBody,
+      html: htmlBody,
+    })
+
 
     return updatedRide
   },
