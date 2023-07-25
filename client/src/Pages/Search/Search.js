@@ -43,6 +43,7 @@ const Search = () => {
       rideMany(filter: { _operators: { departureDate: { gte: $after } } }) {
         _id
         departureDate
+        typeofcar
         riders {
           netid
         }
