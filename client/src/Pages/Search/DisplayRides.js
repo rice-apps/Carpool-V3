@@ -73,31 +73,31 @@ const DisplayRides = (props) => {
     // New component for the filter
     // This will render a dropdown with options for Uber, Lyft, and Own Car
     // The current filter state is used as the value, and when it changes, it updates the filter state
-    const Filter = () => {
-        return (
-            <Select
-                value={filter} // current filter state
-                onChange={(event) => setFilter(event.target.value)} // function to update the filter state when the value changes
-            >
-                <MenuItem value=''>All</MenuItem> // Option for all rides
-                <MenuItem value='Uber'>Uber</MenuItem> // Option for Uber rides
-                <MenuItem value='Lyft'>Lyft</MenuItem> // Option for Lyft rides
-                <MenuItem value='Own Car'>Own Car</MenuItem> // Option for own car rides
-            </Select>
-        );
-    }
+    // const Filter = () => {
+    //     return (
+    //         <Select
+    //             value={filter} // current filter state
+    //             onChange={(event) => setFilter(event.target.value)} // function to update the filter state when the value changes
+    //         >
+    //             <MenuItem value=''>All</MenuItem> // Option for all rides
+    //             <MenuItem value='Uber'>Uber</MenuItem> // Option for Uber rides
+    //             <MenuItem value='Lyft'>Lyft</MenuItem> // Option for Lyft rides
+    //             <MenuItem value='Own Car'>Own Car</MenuItem> // Option for own car rides
+    //         </Select>
+    //     );
+    // }
 
-    // Define AppBar with Filter
-    const AppBarWithFilter = () => (
-        <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h6" style={{ flexGrow: 1 }}>
-                    Ride App
-                </Typography>
-                <Filter />
-            </Toolbar>
-        </AppBar>
-    );
+    // // Define AppBar with Filter
+    // const AppBarWithFilter = () => (
+    //     <AppBar position="static">
+    //         <Toolbar>
+    //             <Typography variant="h6" style={{ flexGrow: 1 }}>
+    //                 Ride App
+    //             </Typography>
+    //             <Filter />
+    //         </Toolbar>
+    //     </AppBar>
+    // );
 
     const displayRideBottomOfPage = () => {
     
@@ -149,12 +149,12 @@ const DisplayRides = (props) => {
     
         const isValidRidesT = (ridesT!==null && ridesT!==undefined && ridesT.length>0);
     
-        // New: Filter rides based on the selected filter before mapping to Ride components
-        // If no filter is selected (filter === ''), display all rides
-        let filteredRides = ridesT;
-        if (filter) {
-            filteredRides = ridesT.filter(ride => ride.type === filter);
-        }
+        // // New: Filter rides based on the selected filter before mapping to Ride components
+        // // If no filter is selected (filter === ''), display all rides
+        // let filteredRides = ridesT;
+        // if (filter) {
+        //     filteredRides = ridesT.filter(ride => ride.type === filter);
+        // }
     
         return (
             <GridT container style={{gap: "2vh"}} direction="column" alignItems="center">
@@ -165,7 +165,7 @@ const DisplayRides = (props) => {
                     *All times are in CST
                 </Box>
                 {
-                    (isValidRidesT) && filteredRides.map((ride, ind) => (<Ride ride={ride} />))
+                    (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride} />))
                 }
                 {
                     (!isValidRidesT) && 
@@ -199,7 +199,7 @@ const DisplayRides = (props) => {
     return (
         <div>
             {/* Add the Filter component to the return statement */}
-            <AppBarWithFilter />
+            {/* <AppBarWithFilter /> */}
             <div>
                 {
                     rideBox(props.ridesT)

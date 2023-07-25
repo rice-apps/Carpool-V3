@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Select, MenuItem, Box, IconButton, AppBar, Toolbar, Typography } from '@material-ui/core';
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
 // import LoadingDiv from "../../common/LoadingDiv";
@@ -62,7 +63,8 @@ const FormOnly = (props) => {
 
   // state for filter date
   const [filterDate, setfilterDate] = useState(null);
-  const [filterRideType, setfilterRideType] = useState(null);
+  const [filterRideType, setfilterRideType] = useState('');
+  const testRide = 'Uber'
 
   // does actual filtering, produces resultDestArr
   useEffect(() => {
@@ -92,9 +94,9 @@ const FormOnly = (props) => {
           });
         }
         // filter by ride type
-        if (filterRideType != null) {
+        if (filterRideType != '') {
           resultDestArr = resultDestArr.filter((ele) => {
-            return moment(ele.rideType).isSame(moment(rideType))
+            return moment(ele.rideType).isSame(moment(filterRideType))
             // above (ele.rideType) I assume is going to come from the query
           });
         }
@@ -118,6 +120,35 @@ const FormOnly = (props) => {
     localStorage.setItem("endLocation", locInd);
     console.log("handleClickEndLoc");
   };
+
+     // New component for the filter
+    // This will render a dropdown with options for Uber, Lyft, and Own Car
+    // The current filter state is used as the value, and when it changes, it updates the filter state
+  const Filter = () => {
+      return (
+          <Select
+              value={filterRideType} // current filter state
+              onChange={(event) => setfilterRideType(event.target.value)} // function to update the filter state when the value changes
+          >
+              <MenuItem value=''>All</MenuItem> // Option for all rides
+              <MenuItem value='Uber'>Uber</MenuItem> // Option for Uber rides
+              <MenuItem value='Lyft'>Lyft</MenuItem> // Option for Lyft rides
+              <MenuItem value='Own Car'>Own Car</MenuItem> // Option for own car rides
+          </Select>
+      );
+  }
+
+  // Define AppBar with Filter
+  const AppBarWithFilter = () => (
+      <AppBar position="static">
+          <Toolbar>
+              <Typography variant="h6" style={{ flexGrow: 1 }}>
+                  Ride Type
+              </Typography>
+              <Filter />
+          </Toolbar>
+      </AppBar>
+  );
 
   return (
     <React.Fragment>
@@ -215,18 +246,9 @@ const FormOnly = (props) => {
                   />
                   
                 </MuiPickersUtilsProvider>
-                {/* <RideTypePicker 
-                    clearable
-                    value={filterRideType}
-                    onChange={(rideType) => {
-                      setfilterRideType(rideType);
-                      localStorage.setItem("searchedRideType", rideType);
-                    }}
-                    // closeLoaderIn2Seconds();
-                  />  */}
-                  {/* temp component above until frontend finished  */}
-                {/* {showLoader && <LoadingDiv height={"15vh"} />} */}
+                
               </Grid>
+              <AppBarWithFilter />
             </Grid>
           </Grid>
         </Grid>

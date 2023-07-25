@@ -53,7 +53,6 @@ const Search = () => {
         arrivalLocation {
           title
         }
-        // added ride type to the query below
         rideType      
       }
     }
