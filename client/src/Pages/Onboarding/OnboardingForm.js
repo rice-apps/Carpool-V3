@@ -39,7 +39,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         if (/^[0-9]+$/.test(phone) === false) {
             addToast("Phone number must only contain digits.", { appearance: 'error' });
             return
-        }
+        } 
         
         
 
