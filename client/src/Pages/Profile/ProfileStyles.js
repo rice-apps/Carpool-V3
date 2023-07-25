@@ -161,6 +161,21 @@ export const StyledText3 = styled.p`
   color: #2075d8;
 `;
 
+export const StyledText4 = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 5px 10px;
+
+  font-family: Josefin Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 13px;
+  text-align: center;
+
+  color: #002140;
+`;
 export const StyledTextVenmo = styled.p`
   display: flex;
   padding: 0px 0px 0px 1vh;

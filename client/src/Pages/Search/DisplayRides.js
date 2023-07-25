@@ -119,7 +119,7 @@ const DisplayRides = (props) => {
                 *All times are in CST
             </Box>
             {
-                (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride} />))
+                (isValidRidesT) && ridesT.map((ride, ind) => (<Ride ride={ride}/>))
             }
             {
                 (!isValidRidesT) && 

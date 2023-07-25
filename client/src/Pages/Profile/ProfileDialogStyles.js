@@ -21,7 +21,7 @@ export const StyledDialogContent = styled(DialogContent)({
 
 export const ProfileDialogContainer = styled.div`
   display: flex;
-  height: 84vh;
+  height: 110vh;
   width: 100%;
   flex-direction: column;
   justify-content: space-around;
@@ -31,7 +31,7 @@ export const ProfileDialogContainer = styled.div`
 export const IconBox = styled.div`
   height: 10%;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 150px;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -95,7 +95,7 @@ export const SaveButton = styled(Button)({
   borderRadius: "2vw",
   width: "50vw",
   height: "8%",
-  marginTop: "15px",
+  marginTop: "180px",
   textTransform: "none",
   // position: "block",
 });
@@ -196,6 +196,35 @@ export function RequiredTextField(props) {
   return (
     <TextField
       required
+      name={name}
+      style={{ paddingBottom: "1vh" }}
+      variant="filled"
+      label={label}
+      defaultValue={defaultValue}
+      fullWidth={true}
+      onChange={onChange}
+      value={value}
+      InputLabelProps={{
+        className: [classes.inputLabel],
+      }}
+      InputProps={{
+        className: classes.inputContent,
+        style: {
+          background: "rgb(187,218,255,0.22)",
+          color: "#2075D8",
+          height: "6vh",
+        },
+        endAdornment: <InputAdornment position="end"></InputAdornment>,
+      }}
+    ></TextField>
+  );
+}
+
+export function CarBrandTextField(props) {
+  const classes = ProfileStyles();
+  const { label, name, defaultValue, onChange, value } = props;
+  return (
+    <TextField
       name={name}
       style={{ paddingBottom: "1vh" }}
       variant="filled"

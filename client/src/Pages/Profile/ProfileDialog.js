@@ -15,6 +15,7 @@ import {
   StyledDialogContent,
   CollegeSelect,
   ProfileStyles,
+  CarBrandTextField
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv";
@@ -60,6 +61,10 @@ export default function ProfileDialog(props) {
     phone: profileUser.phone,
     email: profileUser.netid + "@rice.edu",
     venmo: profileUser.venmo,
+    carColor: profileUser.carColor,
+    carBrand: profileUser.carBrand,
+    carType: profileUser.carType,
+    carLicense: profileUser.carLicense,
   });
 
   const closeDialog = () => {
@@ -79,6 +84,34 @@ export default function ProfileDialog(props) {
       return {
         ...prestate,
         college: newCollege,
+      };
+    });
+   }
+   //new functions for car types
+   function selectCarColor(e) {
+    const newCarColor = e.target.value;
+    setUserProps("car color", newCarColor);
+   }
+   function setCarColor(e){
+    const newCarColor = e.target.value;
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        carColor: newCarColor,
+      };
+    });
+   }
+
+   function selectCarType(e) {
+    const newCarType = e.target.value;
+    setUserProps("car type", newCarType);
+   }
+   function setCarType (e){
+    const newCarType = e.target.value;
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        carType: newCarType,
       };
     });
    }
@@ -147,6 +180,7 @@ export default function ProfileDialog(props) {
                     setChangesMade(true);
                   }}
                 ></RequiredTextField>
+
                 <Label>College:</Label>
                 <CollegeSelect
                   variant="outlined"
@@ -171,6 +205,7 @@ export default function ProfileDialog(props) {
                   <MenuItem value="McMurtry">McMurtry</MenuItem>
                   <MenuItem value="Duncan">Duncan</MenuItem>
                 </CollegeSelect>
+
                 <Label>Contact:</Label>
                 <RequiredTextField
                   label="Phone #"
@@ -186,6 +221,7 @@ export default function ProfileDialog(props) {
                     setChangesMade(true);
                   }}
                 ></RequiredTextField>
+
                 <Label>Venmo:</Label>
                 <VenmoTextField
                   label="Account ID"
@@ -200,7 +236,78 @@ export default function ProfileDialog(props) {
                     setChangesMade(true);
                   }}
                 ></VenmoTextField>
+
+               <Label>Car Color:</Label>
+                <CollegeSelect
+                  variant="outlined"
+                  margin="dense"
+                  defaultValue={user.carColor}
+                  classes={{ root: classes.inputLabelProps }}
+                  onChange={(e) => {
+                    selectCarColor(e);
+                    setCarColor(e);
+                    setChangesMade(true);
+                  }}
+                >
+                  <MenuItem value="White">White</MenuItem>
+                  <MenuItem value="Black">Black</MenuItem>
+                  <MenuItem value="Gray">Gray</MenuItem>
+                  <MenuItem value="Silver">Silver</MenuItem>
+                  <MenuItem value="Blue">Blue</MenuItem>
+                  <MenuItem value="Red">Red</MenuItem>
+                  <MenuItem value="Brown">Brown</MenuItem>
+                  <MenuItem value="Green">Green</MenuItem>
+                  <MenuItem value="Gold">Gold</MenuItem>
+                </CollegeSelect>
+                
+                <Label>Car Brand:</Label>
+                <CarBrandTextField
+                  label="e.g. Toyota, Honda, KIA"
+                  defaultValue={user.carBrand}
+                  name="car brand"
+                  onChange={(e) => {
+                    setUserProps("car brand", e.target.value);
+                    setChangesMade(true);
+                  }}
+                  clearTextField={() => {
+                    clearTextField("car license");
+                    setChangesMade(true);
+                  }}
+                ></CarBrandTextField>
+
+                <Label>Car Type:</Label>
+                <CollegeSelect
+                  variant="outlined"
+                  margin="dense"
+                  defaultValue={user.carType}
+                  classes={{ root: classes.inputLabelProps }}
+                  onChange={(e) => {
+                    selectCarType(e);
+                    setCarType(e);
+                    setChangesMade(true);
+                  }}
+                >
+                  <MenuItem value="Sedan">Sedan</MenuItem>
+                  <MenuItem value="SUV">SUV</MenuItem>
+                  <MenuItem value="Minivan">Minivan</MenuItem>
+                  <MenuItem value="Truck">Truck</MenuItem>
+                </CollegeSelect>
+
+                <Label>Car Lisence Plate Number:</Label>
+                <CarBrandTextField
+                  defaultValue={user.carLicense}
+                  name="car license"
+                  onChange={(e) => {
+                    setUserProps("car license", e.target.value);
+                    setChangesMade(true);
+                  }}
+                  clearTextField={() => {
+                    clearTextField("car license");
+                    setChangesMade(true);
+                  }}
+                ></CarBrandTextField>
               </InputBox>
+
                 <SaveButton
                   variant="contained"
                   onClick={() => {

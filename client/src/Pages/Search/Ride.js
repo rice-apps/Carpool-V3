@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
   
-
+//single ride card
 const Ride = ({ride}) => {
     const classes = useStyles();
     const date = moment(ride.departureDate);
@@ -66,7 +66,6 @@ const Ride = ({ride}) => {
                         <span className={classes.midtext}>{ride.arrivalLocation.title} </span>  
                 </Box>
             </Grid>
-
         </Grid>
         </Link>
     );
