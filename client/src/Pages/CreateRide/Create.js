@@ -49,7 +49,8 @@ const Create = ({ onCreate }) => {
     // Helper method to fetch searched location + date 
     const fetchSearchedLoc = (locIdx, locations) => {
       if (locIdx && locIdx >= 0 && locIdx < locations.length) { // Verify that location exists
-        return locations[locIdx]["_id"];
+        console.log(locations[locIdx]["title"])
+        return [locations[locIdx]["_id"],locations[locIdx]["title"]];
       } else {
         return "";
       }
@@ -84,7 +85,8 @@ const Create = ({ onCreate }) => {
     e.preventDefault();
     const users = [user.id];
     const owner = user.id;
-    console.log("user", user)
+    console.log("user", user.phone)
+    console.log("notif",user.notif_pref)
 
     if (!startLoc || !endLoc) {
       addToast("Please fill in all fields.", { appearance: "error" });
@@ -97,9 +99,14 @@ const Create = ({ onCreate }) => {
       });
       return;
     }
-
+    let item = 1
     // Pass arguments back to the top mutation queue
-    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner });
+    console.log("locations",locations)
+    //getting the string representations of the locations in order to message
+
+    let { title: startTitle } = locations.find(location=> location._id == startLoc)
+    let {title: endTitle } = locations.find(location=>location._id == endLoc)
+    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner },startTitle,endTitle);
 
     setStartLoc("");
     setEndLoc("");
@@ -111,6 +118,7 @@ const Create = ({ onCreate }) => {
   // OnChange Functions: Triggers for User Changing Fields
   const onStartLocChange = (e) => {
     e.preventDefault();
+    console.log("sss",e.target.key)
     console.log("onStartLocChange: " + e.target.value);
     setStartLoc(e.target.value);
   };
@@ -159,8 +167,8 @@ const Create = ({ onCreate }) => {
   
   useEffect(() => {
     if (locationData){
-      setStartLoc(fetchSearchedLoc(localStorage.getItem("startLocation"), locationData["locationMany"]));
-      setEndLoc(fetchSearchedLoc(localStorage.getItem("endLocation"), locationData["locationMany"]));
+      setStartLoc(fetchSearchedLoc(localStorage.getItem("startLocation"), locationData["locationMany"])[0]);
+      setEndLoc(fetchSearchedLoc(localStorage.getItem("endLocation"), locationData["locationMany"])[0]);
       localStorage.setItem("startLocation", "");
       localStorage.setItem("endLocation", "");
     }
@@ -170,7 +178,7 @@ const Create = ({ onCreate }) => {
   const { locationMany: locations } = locationData;
 
   // Form Construction
-
+  
   return (
     <Form onSubmit={onSubmit}>
       <Grid

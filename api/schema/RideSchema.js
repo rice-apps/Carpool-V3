@@ -145,7 +145,7 @@ RideTC.addResolver({
       text: plaintextBody,
       html: htmlBody,
     })
-    console.log('testing')
+    /**console.log('testing')
     client.messages
     .create({
         body: `${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'. Visit the ride page for details: https://carpool.riceapps.org/ridesummary/${updatedRide.id}`,
@@ -153,7 +153,7 @@ RideTC.addResolver({
         to: `${owner.phone}`,
 
     })
-    .then(message => console.log(message.sid))
+    .then(message => console.log(message.sid)) **/
 
     return updatedRide
   },

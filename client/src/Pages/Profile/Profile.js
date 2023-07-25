@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, useParams } from "react-router";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
 import ProfileDialog from "./ProfileDialog.js";
 import IconButton from "@material-ui/core/IconButton";
@@ -46,12 +46,31 @@ const Profile = () => {
         phone
         college
         venmo
+        notif_preference
       }
     }
   `;
 
-  const [openDialog, setOpenDialog] = useState(false);
+const UPDATE_USER = gql`
+mutation UpdateMutation(
+  
+  $notif_preference: Boolean!
+) {
+  userUpdateOne(
+    record: {
+      
+      notif_preference: $notif_pref
+    }
+  ) {
+    record {
+      notif_preference
+    }
+  }
+}
+`;
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [updateUser] = useMutation(UPDATE_USER);
   let { data, loading, error } = useQuery(GET_USER, {
     variables: { netID: id },
   });
@@ -62,6 +81,13 @@ const Profile = () => {
   let { userOne: user } = JSON.parse(JSON.stringify(data));
 
   if (!user) return <Redirect to="../404" />;
+
+  const updateUserNotifs = async (newPref) => {
+ 
+    await updateUser({ variables: {} });
+    
+    
+  };
 
   function goBack() {
     // Check for LastPage and that there is NO record of profile -> profile loop
@@ -161,7 +187,12 @@ const Profile = () => {
         </TextBox>
         <TextBox>
           <StyledText>I would like to receive SMS messages</StyledText>
-          <Checkbox/>
+          <Checkbox
+            checked = {user.notif_preferences}
+            onChange={updateUserNotifs(!(user.notif_preferences))}
+            
+          
+          />
           
         </TextBox>
       </ProfileCard>

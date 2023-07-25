@@ -88,6 +88,7 @@ UserTC.addResolver({
 const UserQuery = {
   // userOne: UserTC.getResolver('findOne', [authMiddleware]),
   userOne: UserTC.getResolver("findOne"), // later we'll customize authMiddleware so that a user can view SOME fields of another user, but not others (like phone #s)
+  
 };
 
 const UserMutation = {
