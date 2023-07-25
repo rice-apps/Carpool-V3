@@ -43,20 +43,21 @@ export const CollegeSelect = styled(Select)({
 
 export const ProfileFormContainer = styled.div`
   display: flex;
-  height: 90vh;
+  height: 130vh;
   width: 100%;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   margin-top: 10px;
+  margin-bottom: 10px;
   height: 15vh;
   flex-direction: column;
   justify-content: space-around;
+  gap: 20px;
 `
 
 export const ProfileStyles = makeStyles(() => ({
@@ -170,6 +171,37 @@ export function RequiredTextField(props) {
   );
 }
 
+//carBrand
+export function CarBrandField(props) {
+  const classes = ProfileStyles();
+  const { label, name, defaultValue, onChange, value } = props;
+  return (
+    <TextField
+      name={name}
+      style={{ paddingBottom: "1vh" }}
+      variant="filled"
+      label={label}
+      defaultValue={defaultValue}
+      fullWidth={true}
+      onChange={onChange}
+      value={value}
+      InputLabelProps={{
+        className: [classes.inputLabel],
+      }}
+      InputProps={{
+        className: classes.inputContent,
+        style: {
+          background: "rgb(187,218,255,0.22)",
+          color: "#2075D8",
+          height: "6vh",
+          minHeight: "50px"
+        },
+        endAdornment: <InputAdornment position="end"></InputAdornment>,
+      }}
+    ></TextField>
+  );
+}
+
 export const SubmitButton = withStyles({
   root: {
     background: "#2075D8",
@@ -193,6 +225,7 @@ export const CancelButton = withStyles({
     border: 0,
     color: "white",
     height: "6vh",
+    marginBottom: "20px",
   },
   label: {
     textTransform: "capitalize",

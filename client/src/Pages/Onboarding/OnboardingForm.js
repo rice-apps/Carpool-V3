@@ -10,6 +10,7 @@ import {
   CollegeSelect,
   ProfileStyles,
   ButtonContainer,
+  CarBrandField,
 } from "./OnboardingFormStyle.js";
 import React, { useState } from "react";
 import { MenuItem } from "@material-ui/core";
@@ -22,6 +23,10 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
   const [college, setCollege] = useState("");
   const [phone, setPhone] = useState("");
   const [venmo, setVenmo] = useState("");
+  const [carColor, setCarColor] = useState("");
+  const [carBrand, setCarBrand] = useState("");
+  const [carType, setCarType] = useState("");
+  const [carLicense, setCarLicense] = useState("");
   const { addToast } = useToasts();
 
   const handleSubmit = () => {
@@ -42,6 +47,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         }
         
         
+        
 
     return onSubmit({
       firstName,
@@ -49,6 +55,10 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
       college,
       phone,
       venmo,
+      carColor,
+      carBrand,
+      carType,
+      carLicense
     });
   };
 
@@ -94,6 +104,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             value={venmo}
             onChange={(e) => setVenmo(e.target.value)}
           ></VenmoTextField>
+          
           <Label>College:</Label>
           <CollegeSelect
             variant="outlined"
@@ -117,6 +128,67 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             <MenuItem value="Duncan">Duncan</MenuItem>
           </CollegeSelect>
         </InputBox>
+
+        <InputBox>
+        <Label>Car Color:</Label>
+        <CollegeSelect
+          variant="outlined"
+          margin="dense"
+          defaultValue={carColor}
+          classes={{ root: classes.inputLabel }}
+          onChange={(e) => {
+            setCarColor(e.target.value);
+          }}
+        >
+          <MenuItem value="White">White</MenuItem>
+          <MenuItem value="Black">Black</MenuItem>
+          <MenuItem value="Gray">Gray</MenuItem>
+          <MenuItem value="Silver">Silver</MenuItem>
+          <MenuItem value="Blue">Blue</MenuItem>
+          <MenuItem value="Red">Red</MenuItem>
+          <MenuItem value="Brown">Brown</MenuItem>
+          <MenuItem value="Green">Green</MenuItem>
+          <MenuItem value="Gold">Gold</MenuItem>
+        </CollegeSelect>
+        </InputBox>
+        
+        <InputBox>
+        <Label>Car Brand</Label>
+        <CarBrandField
+          label="e.g. Toyota, Honda, KIA"
+          defaultValue={carBrand}
+          name="car brand"
+          onChange={(e) => setCarBrand(e.target.value.replace(/[ +-]/g, ''))}
+        ></CarBrandField>
+        </InputBox>
+
+        <InputBox>
+        <Label>Car Type:</Label>
+        <CollegeSelect
+          variant="outlined"
+          margin="dense"
+          defaultValue={carType}
+          classes={{ root: classes.inputLabel }}
+          onChange={(e) => {
+            setCarType(e.target.value);
+          }}
+        >
+          <MenuItem value="Sedan">Sedan</MenuItem>
+          <MenuItem value="SUV">SUV</MenuItem>
+          <MenuItem value="Minivan">Minivan</MenuItem>
+          <MenuItem value="Truck">Truck</MenuItem>
+        </CollegeSelect>
+        </InputBox>
+
+        <InputBox>
+        <Label>Car Lisence Plate Number</Label>
+        <CarBrandField
+          defaultValue={carLicense}
+          name="car license"
+          onChange={(e) => setCarLicense(e.target.value.replace(/[ +-]/g, ''))}
+        ></CarBrandField>
+        </InputBox>
+
         <ButtonContainer>
           <SubmitButton
             variant="contained"

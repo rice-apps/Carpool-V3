@@ -18,6 +18,7 @@ import {
   MenuSquare,
   BodyText,
   ConfirmationText,
+  TextBrandBox
 } from "./Create.styles";
 import LoadingDiv from "../../common/LoadingDiv.js";
 import moment from "moment";
@@ -74,6 +75,11 @@ const Create = ({ onCreate }) => {
   const [date, setDate] = useState(getSavedDate());
   const [passengers, setPassengers] = useState(3);
   const [user, setUser] = useState()
+  const [color, setColor] = useState("");
+  const [brand, setBrand] = useState("");
+  const [type, setType] = useState("");
+  const [license, setLicense] = useState("");
+  const [isTypeVisible, setTypeVisible] = useState(true);
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
 
@@ -98,13 +104,18 @@ const Create = ({ onCreate }) => {
     }
 
     // Pass arguments back to the top mutation queue
-    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner });
+    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, color, brand, type });
 
     setStartLoc("");
     setEndLoc("");
     setNotes("");
     setDate(moment());
-    setPassengers(4);
+    setPassengers(4) ;
+    setColor("");
+    setBrand("");
+    setType("");
+    setLicense("");
+    setTypeVisible(false);
   };
 
   // OnChange Functions: Triggers for User Changing Fields
@@ -130,8 +141,29 @@ const Create = ({ onCreate }) => {
     setPassengers(e.target.value);
   };
 
-  // Access Locations List with GraphQL Query
+  const onColorChange = (e) => {
+    e.preventDefault();
+    setColor(e.target.value);
+  }
+  const onBrandChange = (e) => {
+    e.preventDefault();
+    setBrand(e.target.value);
+  }
+  const onTypeChange = (e) => {
+    e.preventDefault();
+    setType(e.target.value);
+  }
+  const onLicenseChange = (e) => {
+    e.preventDefault();
+    setLicense(e.target.value);
+  }
 
+  // const toggleVisibility = (e) => {
+  //   e.preventDefault();
+  //   setTypeVisible(!isTypeVisible);
+  // }
+
+  // Access Locations List with GraphQL Query
   const GET_LOCATIONS = gql`
     query GetLocations {
       locationMany {
@@ -167,6 +199,11 @@ const Create = ({ onCreate }) => {
 
   if (locationLoading) return <LoadingDiv />;
   const { locationMany: locations } = locationData;
+
+
+  //Arrays for car type dropdowns
+  const dropdownCarColors = ["White","Black","Gray","Silver","Blue","Red","Brown","Green", "Gold"];
+  const dropdownCarTypes = ["Sedan","SUV","Minivan","Truck"];
 
   // Form Construction
 
@@ -237,6 +274,99 @@ const Create = ({ onCreate }) => {
             ))}
           </SelectBox>
         </Grid>
+        
+        
+        {isTypeVisible && (
+          <Grid item xs={12}>
+          <InputBox id="Color">Color</InputBox>
+          <SelectBox
+              MenuProps={{
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "left",
+              },
+              transformOrigin: {
+                vertical: "top",
+                horizontal: "left",
+              },
+              getContentAnchorEl: null,
+            }}
+            id="Color Bar"
+            labelId="Color"
+            value={color}
+            onChange={onColorChange}
+            variant="outlined"
+            size="small">
+            {dropdownCarColors.map((color) => (
+              <MenuBox 
+                key={color} 
+                value={color}>
+                {color}
+               </MenuBox>))}
+            </SelectBox>
+
+        </Grid>
+        )}
+          
+        {isTypeVisible && (
+          <Grid item xs={12}>
+            <InputBox id="Brand">Brand</InputBox>
+            <TextBrandBox
+              id="outlined-basic"
+              multiline
+              labelId="Brand"
+              variant="outlined"
+              placeholder="e.g. Toyota, Honda, KIA, etc."
+              value={brand}
+              onChange={onBrandChange}>
+            </TextBrandBox>
+          </Grid>
+        )} 
+          
+        {isTypeVisible &&(
+          <Grid item xs={12}>
+          <InputBox id="Type">Type</InputBox>
+          <SelectBox
+              MenuProps={{
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "left",
+              },
+              transformOrigin: {
+                vertical: "top",
+                horizontal: "left",
+              },
+              getContentAnchorEl: null,
+            }}
+            id="Type Bar"
+            labelId="Type"
+            value={type}
+            onChange={onTypeChange}
+            variant="outlined"
+            size="small">
+            {dropdownCarTypes.map((cartype) => (
+              <MenuBox 
+                key={cartype} 
+                value={cartype}>
+                {cartype}
+               </MenuBox>))}
+            </SelectBox>
+        </Grid>
+        )}
+        
+        {isTypeVisible && (
+          <Grid item xs={12}>
+            <InputBox id="License">License Plate Number</InputBox>
+            <TextBrandBox
+              id="outlined-basic"
+              multiline
+              labelId="License"
+              variant="outlined"
+              value={license}
+              onChange={onLicenseChange}>
+            </TextBrandBox>
+          </Grid>
+        )} 
 
         <Grid item xs={12}>
           <InputBox id="Date and Time">Ride Date and Time (CST)</InputBox>

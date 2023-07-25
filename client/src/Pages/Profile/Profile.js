@@ -19,6 +19,7 @@ import {
   StyledText,
   StyledText2,
   StyledText3,
+  StyledText4,
   EditProfileButton,
   College,
   ProfileIcon,
@@ -35,6 +36,7 @@ const Profile = () => {
 
   const { addToast } = useToasts();
 
+  //query car color, brand, type
   const GET_USER = gql`
     query GetUserInfo($netID: String) {
       userOne(filter: { netid: $netID }) {
@@ -158,6 +160,11 @@ const Profile = () => {
             {user.venmo ? `@${user.venmo}` : "Not Specified"}
           </StyledTextVenmo>
         </TextBox>
+
+        <TextBox>
+          <StyledText>Personal Car: </StyledText><StyledText4> Gray Toyota SUV SGR 7747</StyledText4>
+        </TextBox>
+
       </ProfileCard>
     </AllDiv>
   );

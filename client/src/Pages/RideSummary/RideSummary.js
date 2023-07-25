@@ -42,7 +42,7 @@ import {
   LocationTitleStyling,
   LocationDepartureIcon,
   LocationDestinationIcon,
-  LocationConnect
+  LocationConnect,
 } from './RideSummaryStyles.js'
 import {Grid, IconButton} from '@material-ui/core';
 import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
@@ -398,7 +398,6 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
           </LocationDiv>
 
       </LocationDivContainer>
-      
       <RidersDiv>
         <HostDiv>Host</HostDiv>
         <RidersComponents>

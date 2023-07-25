@@ -365,5 +365,5 @@ export {
   BackText,
   BackArrowDiv,
   InnerLocationDiv,
-  ConfirmationText
+  ConfirmationText,
 }

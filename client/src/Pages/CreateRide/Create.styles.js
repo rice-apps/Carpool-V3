@@ -7,7 +7,7 @@ import {
     Select, 
     TextField,
     InputLabel,
-    createTheme
+    createTheme,
 } from '@material-ui/core';
 
 export const customTheme = createTheme({
@@ -95,6 +95,24 @@ export const ColorButton = withStyles({
     }
   })(InputLabel);
 
+
+  //New style for text input for car brand
+  export const TextBrandBox = withStyles({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: 'white',
+      borderRadius: 8,
+      border: 0,
+      borderColor: '#0B3669',
+      color: '#0B3669',
+      fontFamily: 'Josefin Sans',
+      fontSize: '13px',
+      // height: '30px',
+      // width: '1000px',
+    }
+  })(TextField);
 
   // NEW!
   export const TextFieldBox = withStyles({
