@@ -9,7 +9,7 @@ const CreateRide = () => {
 
     const CREATE_RIDE = gql`
         mutation CreateRide (
-            $startLoc: MongoID!, $endLoc: MongoID!, $date: Date, $passengers: Float, $users: [MongoID!], $owner: MongoID!, $notes: String) 
+            $startLoc: MongoID!, $endLoc: MongoID!, $date: Date, $passengers: Float, $users: [MongoID!], $owner: MongoID!, $notes: String, $type: String) 
         {
             rideCreateOne(record: {
             owner: $owner,
@@ -19,6 +19,7 @@ const CreateRide = () => {
             riders: $users,
             spots: $passengers,
             notes: $notes,
+            typeofcar: $type
             }) {
             record {
                 _id
@@ -32,6 +33,7 @@ const CreateRide = () => {
     );
 
     const addRide = (ride) => {
+        console.log(ride);
         console.log("Vars for createRide: " + ride);
         createRide({
             variables: ride
@@ -42,6 +44,7 @@ const CreateRide = () => {
              window.open('/ridesummary/' + rideID, '_self');
         })
         .catch((error) => {
+            console.log(error);
             addToast("Sorry, an error occurred processing your new ride. Please try again later.", { appearance: 'error' });
         });
     }
