@@ -350,6 +350,18 @@ color: #0B3669;
 padding: 0px 10px 10px 10px;
 `;
 
+export const EditRideNotesButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: Josefin Sans;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: center;
+`;
+
 export {
   SeatsLeftDiv,
   SeatsLeftNum,

@@ -20,7 +20,8 @@ import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv";
 
 export default function ProfileDialog(props) {
-  const UPDATE_USER = gql`
+  // ASK: what does this mean
+  const UPDATE_USER = gql` 
     mutation UpdateUser(
       $firstName: String!
       $lastName: String!
@@ -85,8 +86,9 @@ export default function ProfileDialog(props) {
 
   const [updateUser] = useMutation(UPDATE_USER);
   const updateUserInfo = () => {
-     updateUser({ variables: user });
+     updateUser({ variables: user }); // ASK: what does this mean
   };
+  
   function setUserProps(key, value) {
     user[key] = value;
   }

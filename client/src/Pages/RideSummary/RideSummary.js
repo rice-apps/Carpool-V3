@@ -40,6 +40,7 @@ import {
   InnerLocationDiv,
   DepartureIconDiv,
   CalendarText,
+  EditRideNotesButton,
   TimeText, 
   ConfirmationText
 } from './RideSummaryStyles.js'
@@ -50,6 +51,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import { SERVICE_URL } from '../../config'; 
 import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
+import EditIcon from "@material-ui/icons/Edit";
+import EditRideNotesDialog from './EditRideNotesDialog.js'
 
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const confirmationText = "You will still need to contact your fellow riders and order an Uber or Lyft on the day of."
@@ -106,6 +109,7 @@ const RideSummary = () => {
   const [openUserProfile, setOpenUserProfile] = useState(false);
   const [nextUserID, setNextUserID] = useState("");
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -408,8 +412,23 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
             </div>
           ))}
         </RidersComponents>
-        <RideNotesHeader>Ride Notes</RideNotesHeader> 
+        <RideNotesHeader>Ride Notes
+        <EditRideNotesButton>
+            <IconButton
+              aria-label="edit"
+              onClick={() => setOpenDialog(true)}
+              variant="outlined">
+                <EditIcon style={{color: "rgba(32, 117, 216, 1)"}}/>
+            </IconButton>
+          </EditRideNotesButton>
+          </RideNotesHeader> 
         <NotesDiv>
+          
+          <EditRideNotesDialog
+            openDialog={openDialog}
+            setOpenDialog={setOpenDialog}
+            rideSummary={ride}
+          ></EditRideNotesDialog>
         {ride.notes || 'No ride notes'}
         </NotesDiv>
       </RidersDiv>

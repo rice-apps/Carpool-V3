@@ -143,6 +143,42 @@ RideTC.addResolver({
   },
 })
 
+
+
+
+
+
+/**
+ * Edit the ride notes.
+ */
+
+RideTC.addResolver({
+  name: 'updateNotes',
+  type: RideTC,
+  args: { rideID: 'ID!' },
+  resolve: async ({ source, args, context, info }) => {
+    // Update the notes in the ride.
+    let update = {}
+    update[operation] = { riders: id }
+
+    let updatedRide = await Ride.findByIdAndUpdate(
+      args.rideID,
+      update,
+      { new: true } // we want to return the updated ride
+    )
+    
+    const notes = await Ride.findById(updatedRide.notes)
+
+    // TODO: add sending email when ride notes updated.
+    return updatedRide
+  },
+})
+
+
+
+
+
+
 // Using auth middleware for sensitive info: https://github.com/graphql-compose/graphql-compose-mongoose/issues/158
 const RideQuery = {
   rideOne: RideTC.getResolver('findOne'),
@@ -165,6 +201,7 @@ const RideMutation = {
       return next(rp)
     }
   ),
+  rideUpdateNote: RideTC.getResolver("updateNotes", [authMiddleware]),
 }
 
 async function authMiddleware(resolve, source, args, context, info) {
