@@ -1,4 +1,4 @@
-import { Dialog, Paper, List, MenuItem } from "@material-ui/core";
+import { Dialog, Paper, List, MenuItem, Checkbox } from "@material-ui/core";
 import React, { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import {
@@ -60,6 +60,7 @@ export default function ProfileDialog(props) {
     phone: profileUser.phone,
     email: profileUser.netid + "@rice.edu",
     venmo: profileUser.venmo,
+    notif_preference: profileUser.notif_preference
   });
 
   const closeDialog = () => {
@@ -200,6 +201,7 @@ export default function ProfileDialog(props) {
                     setChangesMade(true);
                   }}
                 ></VenmoTextField>
+                
               </InputBox>
                 <SaveButton
                   variant="contained"

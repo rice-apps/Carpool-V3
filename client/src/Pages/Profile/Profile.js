@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import { Redirect, useParams } from "react-router";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { useToasts } from "react-toast-notifications";
@@ -31,11 +32,12 @@ import { Checkbox } from "@material-ui/core";
 const Profile = () => {
 
   document.title = "Profile";
-
+  
   const { id } = useParams();
 
   const { addToast } = useToasts();
-
+  let [notif_pref,update_pref] = useState(false)
+  
   const GET_USER = gql`
     query GetUserInfo($netID: String) {
       userOne(filter: { netid: $netID }) {
@@ -50,27 +52,19 @@ const Profile = () => {
       }
     }
   `;
-
-const UPDATE_USER = gql`
-mutation UpdateMutation(
+  const UPDATE_PREF = gql`
+    mutation updatePref($_id: ID!) {
+      updatePref(_id: $_id){
+        Users: _id
+      }
+    }
   
-  $notif_preference: Boolean!
-) {
-  userUpdateOne(
-    record: {
-      
-      notif_preference: $notif_pref
-    }
-  ) {
-    record {
-      notif_preference
-    }
-  }
-}
-`;
+  
+  `
+
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [updateUser] = useMutation(UPDATE_USER);
+  const [updateUser] = useMutation(UPDATE_PREF);
   let { data, loading, error } = useQuery(GET_USER, {
     variables: { netID: id },
   });
@@ -79,16 +73,20 @@ mutation UpdateMutation(
   if (error) return <Redirect to="../404" />;
 
   let { userOne: user } = JSON.parse(JSON.stringify(data));
+  console.log("data",data)
 
   if (!user) return <Redirect to="../404" />;
-
-  const updateUserNotifs = async (newPref) => {
- 
-    await updateUser({ variables: {} });
+  
+  console.log(notif_pref)
+  const updateUserNotifs = async () => {
+    console.log("before mutating",user.notif_preference)
+    console.log(user._id)
+    await updateUser({ variables:  {_id: user._id}});
+    console.log("after mutating", user.notif_preference)
+    update_pref(!(notif_pref))
     
-    
-  };
-
+  }; 
+  
   function goBack() {
     // Check for LastPage and that there is NO record of profile -> profile loop
     if (localStorage.getItem("lastPage") && !(localStorage.getItem("repeatProfiles"))){
@@ -188,8 +186,11 @@ mutation UpdateMutation(
         <TextBox>
           <StyledText>I would like to receive SMS messages</StyledText>
           <Checkbox
-            checked = {user.notif_preferences}
-            onChange={updateUserNotifs(!(user.notif_preferences))}
+            onChange = {updateUserNotifs}
+            defaultChecked = {user.notif_preference}
+            
+            
+            
             
           
           />
