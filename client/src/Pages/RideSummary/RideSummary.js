@@ -272,7 +272,7 @@ const [updateRideReceipt] = useMutation(UPDATE_RIDE,{
       var reader = new FileReader();
       reader.onloadend=function(){
         var dataURL=reader.result
-        console.log("data",dataURL)
+        console.log("data", dataURL)
         setImage(dataURL)
       }
       reader.readAsDataURL(file)
@@ -477,7 +477,7 @@ const [updateRideReceipt] = useMutation(UPDATE_RIDE,{
           type="file"
           onChange={onImageChange}
           />
-          <img src={image}/>
+          <img src={ride.image}/>
         </div>
 
 
