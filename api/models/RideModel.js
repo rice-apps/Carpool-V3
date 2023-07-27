@@ -15,7 +15,8 @@ var RideSchema = new Schema({
     riders: [ { type: Schema.Types.ObjectId, ref: User } ],
     notes: String, // notes section for personal messages from ride creator
     spots: { type: Number, default: 3 },
-    rideType: {type: String, default: ""}
+    rideType: {type: String, default: ""},
+    image:{ type: String, default: ""}
     //cost: { type: Number },
     //ownerDriving: { type: Boolean, default: false },
 });

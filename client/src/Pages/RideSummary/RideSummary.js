@@ -85,6 +85,7 @@ const GET_RIDE = gql`
         phone
       }
       rideType
+      image
     }
   }
 `
@@ -95,6 +96,7 @@ const RideSummary = () => {
 
   let { id } = useParams()
   const [newOwner, setNewOwner] = useState({"owner":{_id:""}});
+  const [image, setImage]=useState("");
   const [ride, setRide] = useState({
     departureLocation: {title: "Loading", address: "dummy"},
     arrivalLocation: {title: "Loading", address: "dummy"},
@@ -158,18 +160,22 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   variables: { id: ride._id }
 })
 
-  const [joinRide] = useMutation(JOIN_RIDE, {
-    variables: { rideID: id }
-  })
+const [joinRide] = useMutation(JOIN_RIDE, {
+  variables: { rideID: id }
+})
 
-  const [leaveRide] = useMutation(REMOVE_RIDER, {
-    variables: { rideID: id }
-  })
+const [leaveRide] = useMutation(REMOVE_RIDER, {
+  variables: { rideID: id }
+})
 
-  // console.log("Before mutation:",ride.owner._id);
-  const [updateRide] = useMutation(UPDATE_RIDE, {
-    variables: {id: ride._id, record: {owner: newOwner.owner._id}}
-  })
+// console.log("Before mutation:",ride.owner._id);
+const [updateRide] = useMutation(UPDATE_RIDE, {
+  variables: {id: ride._id, record: {owner: newOwner.owner._id}}
+})
+
+const [updateRideReceipt] = useMutation(UPDATE_RIDE,{
+  variables: {id: ride._id, record: {image: image}}
+})
 
   useEffect(() => {
     if(newOwner.owner._id !== "") {
@@ -181,6 +187,17 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     }
     
   }, [newOwner, updateRide]) 
+
+  useEffect(() => {
+    if(image !== "") {
+      updateRideReceipt(
+
+      ).catch((err) => {
+        console.log(err)
+      })
+    }
+    
+  }, [image, updateRideReceipt]) 
 
   // Determine the behavior of button, verify if user is in Rice SSO
   const handleClickOpen = () => {
@@ -231,7 +248,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   const join = () => {
     if (localStorage.getItem('token') == null) {
       localStorage.setItem('joinFromLogin', "true");
-      localStorage.setItem('nextPage', `ridesummary/${id}`);
+      localStorage.setItem('nextPage', `ridesummary/${id}`);    
       localStorage.setItem('lastPage', `ridesummary/${id}`);
       let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
       window.open(redirectURL, '_self');
@@ -249,6 +266,18 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     });
   }
 
+  const onImageChange = (inputElement) => { 
+    if (inputElement.target.files && inputElement.target.files[0]) {
+      var file = inputElement.target.files[0];
+      var reader = new FileReader();
+      reader.onloadend=function(){
+        var dataURL=reader.result
+        console.log("data",dataURL)
+        setImage(dataURL)
+      }
+      reader.readAsDataURL(file)
+    }
+   }
 
   const leave = () => {
     let currentUser = localStorage.getItem('netid');
@@ -441,6 +470,17 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       </RidersDiv>
             
       <ButtonContainer>
+        {/* Receipt */}
+        <div>
+          <p>Upload Receipt</p>
+          <input
+          type="file"
+          onChange={onImageChange}
+          />
+          <img src={image}/>
+        </div>
+
+
         {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
         <ButtonDiv onClick={leave} leaveRide = {true}>
           Leave Ride
