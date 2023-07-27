@@ -141,7 +141,7 @@ const DELETE_RIDE = gql`
   }
 `
 const UPDATE_RECEIPT = gql`
-mutation AddReceipt($base64: String!, $rideID: ID!){
+mutation AddReceipt($base64: Buffer!, $rideID: ID!){
     addReceipt(base64: $base64, rideID: $rideID){
       rideID
     }
