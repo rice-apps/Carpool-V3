@@ -110,6 +110,7 @@ const RideSummary = () => {
   const [openUserProfile, setOpenUserProfile] = useState(false);
   const [nextUserID, setNextUserID] = useState("");
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [receipt, setReceipt] = useState("")
 
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
@@ -139,6 +140,13 @@ const DELETE_RIDE = gql`
       }
   }
 `
+const UPDATE_RECEIPT = gql`
+mutation AddReceipt($base64: String!, $rideID: ID!){
+    addReceipt(base64: $base64, rideID: $rideID){
+      rideID
+    }
+}
+`
 // Query ride
 
 // Get ride
@@ -153,6 +161,16 @@ mutation UpdateRideOwner($id: MongoID!, $record: UpdateOneridesInput!){
   }
 }
 `
+
+// const UPDATE_RECEIPT = gql`
+// mutation UpdateRideReceipt($id: MongoID!, $record: UpdateOneridesReceipt!){
+//     rideUpdateOne(filter: { _id: $id }, record: $record){
+//     recordreceipt 
+//   }
+// }
+// `
+// may cause a bug, come back and check
+
 const [deleteRide] = useMutation(DELETE_RIDE, {
   variables: { id: ride._id }
 })
@@ -170,6 +188,10 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     variables: {id: ride._id, record: {owner: newOwner.owner._id}}
   })
 
+  const [addReceipt] = useMutation(UPDATE_RECEIPT, {
+    variables: {rideID: ride._id, record: {base64: receipt}}
+  })
+
   useEffect(() => {
     if(newOwner.owner._id !== "") {
       updateRide().then(result => {
@@ -180,6 +202,16 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     }
     
   }, [newOwner, updateRide]) 
+
+  useEffect(() =>{
+    if(receipt !== ""){
+      addReceipt().then(result => {
+        window.location.reload();
+      }).catch((err) => {
+        console.log("error in receipt useEffect")
+      })
+    }
+  }, [receipt, addReceipt])
 
   // Determine the behavior of button, verify if user is in Rice SSO
   const handleClickOpen = () => {
@@ -303,7 +335,32 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       history.push("/search");
     }
   }
+  const handleReceiptChange = async (event) => {
+    const receiptImage = event.target.files[0]
+    if (receiptImage){
+      const reader = new FileReader()
+      reader.onloadend = (e) =>{
+        setReceipt(reader.result); 
+        console.log(reader.result)
+      };
+      reader.onerror = function (error) {
+        console.log('Error: ', error);
+      };
+    reader.readAsDataURL(receiptImage)
+    }
 
+    // const receiptImage = event.target.files[0]
+    // if (receiptImage){
+    //   const reader = new FileReader()
+    //   await reader.readAsDataURL(receiptImage)
+    //   .then((result)=>{
+    //     // setReceipt(result)
+    //     console.log(result)
+    //   }).catch((error)=>{console.log("Error: ", error.message)})
+      
+    // }
+
+  }
   // ==================================== Attempts to Access User Profile ==================================
   const accessUserProfile = (user_id) => {
     if (localStorage.getItem("token") != null){
@@ -441,13 +498,18 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
             
       <ButtonContainer>
         {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
-        <ButtonDiv onClick={leave} leaveRide = {true}>
+        <div><ButtonDiv onClick={leave} leaveRide = {true}>
           Leave Ride
-        </ButtonDiv>: 
+        </ButtonDiv>
+        <input type="file" id="imageInput" accept="image/*,.png,.jpeg" onChange = {(event)=> handleReceiptChange(event)}/></div>
+        : 
         <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
           Join Ride
         </ButtonDiv>}
+        
       </ButtonContainer>
+
+
 
       <JoinRideDialog
                 open={openLogin}

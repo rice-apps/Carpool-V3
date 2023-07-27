@@ -66,7 +66,31 @@ RideTC.addResolver({
     })
   },
 })
-
+RideTC.addResolver({
+  name: 'updateReceipt',
+  type: RideTC,
+  args: { base64: 'String!', rideID: 'ID!' },
+  resolve: async ({ source, args, context, info }) => {
+    const decode = new Promise((resolve, reject) => {
+      const decoded = atob(args.base64);
+      if (decoded) {
+        resolve(decoded);
+      } else {
+        reject(new Error("Decoding went wrong"));
+      }
+    });
+    decode
+      .then(async (decoded) => {
+        let updatedRide = await Ride.findByIdAndUpdate(args.rideID, {
+          receipt: decoded,
+        });
+        return updatedRide;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+});
 /**
  * Used to update the draft sessions for a schedule
  * Can either add or remove a session from their draft sessions
@@ -165,6 +189,7 @@ const RideMutation = {
       return next(rp)
     }
   ),
+  addReceipt: RideTC.getResolver('updateReceipt')
 }
 
 async function authMiddleware(resolve, source, args, context, info) {

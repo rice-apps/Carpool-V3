@@ -44,6 +44,7 @@ const CreateRide = () => {
              window.open('/ridesummary/' + rideID, '_self');
         })
         .catch((error) => {
+            console.log(error);
             addToast("Sorry, an error occurred processing your new ride. Please try again later.", { appearance: 'error' });
         });
     }

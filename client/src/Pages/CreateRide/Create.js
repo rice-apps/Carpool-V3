@@ -46,7 +46,7 @@ const Create = ({ onCreate }) => {
     },
   ];
   const types = [
-    {value: "Uber",}, {value:"Lyft",}, {value: "Personal Car"},
+    {value: "uber",}, {value:"lyft",}, {value:"own-car",},
   ];
     // Helper method to fetch searched location + date 
     const fetchSearchedLoc = (locIdx, locations) => {
@@ -221,7 +221,7 @@ const Create = ({ onCreate }) => {
             ))}
           </SelectBox>
         </Grid>
-
+            
         <Grid item xs={12}>
           <InputBox id="EndLoc">Destination</InputBox>
           <SelectBox
