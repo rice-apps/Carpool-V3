@@ -1,12 +1,11 @@
 import React from 'react'
 import FormOnly from './FormOnly.js'
-
 export const ridesPossible = [];
-
 const Form = (props) => {
 
   const resultRides = props.resultRides;
   const displayRef = props.displayRef;
+
   if (props.locationsAll) {
     var locations = props.locationsAll
     var {locationMany : locationsArr} = locations 
@@ -23,7 +22,6 @@ const Form = (props) => {
     {title:'San Antonio',address:'[specify San Antonio address in notes]'}];
   }
 
-
   // May cause 401 error if a request is made to the database before it's ready
   return (
     <React.Fragment>
@@ -31,5 +29,4 @@ const Form = (props) => {
     </React.Fragment>
   )
 }
-
 export default Form;
