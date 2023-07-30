@@ -31,38 +31,7 @@ const CreateRide = () => {
     `;
     
     
-    const GET_RIDE = gql`
-  query getRide($id: MongoID) {
-    rideOne(filter: { _id: $id }) {
-      _id
-      departureDate
-      spots
-      departureLocation {
-        title
-        address
-      }
-      arrivalLocation {
-        title
-        address
-      }
-      notes
-      owner {
-        _id
-        netid
-        firstName
-        lastName
-        phone
-      }
-      riders {
-        _id
-        netid
-        firstName
-        lastName
-        phone
-      }
-    }
-  }
-`
+    
     
     
     //console.log('sdsss',data)
@@ -145,16 +114,19 @@ const CreateRide = () => {
                 let { userOne: user } = JSON.parse(JSON.stringify(data));
                 let { userOne: notif_preference } = JSON.parse(JSON.stringify(data))
 
-                console.log(user.phone,'da phone is lol')
-                sendSMS({
-                    variables:{
-                        message: "Wart",
-                        phoneTo: user.phone
-                    }
-                });
+                
+                
+                if(user.notif_preference){
+                    sendSMS({
+                        variables:{
+                            message: msg,
+                            phoneTo: user.phone
+                        }
+                    });
+                }
             }
 
-            //window.open('/ridesummary/' + rideID, '_self');
+            window.open('/ridesummary/' + rideID, '_self');
 
             
         
