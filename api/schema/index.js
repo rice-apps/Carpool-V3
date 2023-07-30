@@ -1,4 +1,6 @@
 import { SchemaComposer } from 'graphql-compose';
+import { schema as CloudinarySchema } from "./CloudinarySchema";
+import { stitchSchemas } from "@graphql-tools/schema-stitching";
 
 require('../db'); 
 
@@ -27,4 +29,7 @@ schemaComposer.Subscription.addFields({
     // If we have any subscriptions, we just import them in the same way
 })
 
-export default schemaComposer.buildSchema();
+// export default schemaComposer.buildSchema();
+
+const DbSchema = schemaComposer.buildSchema();
+export default stitchSchemas({ subschemas: [DbSchema, CloudinarySchema] });
