@@ -18,16 +18,25 @@ import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv.js";
 
 export default function EditRideNotesDialog(props) {
+    // const UPDATE_RIDE_NOTES = gql`
+    //     mutation UpdateRideNotes($notes: String) {
+    //         rideUpdateNote(record: {notes: $notes}) {
+    //             record {
+    //                 _id
+    //                 notes
+    //             }
+    //         }
+    //     }
+    // `;
+    
+
     const UPDATE_RIDE_NOTES = gql`
-        mutation UpdateRideNotes($notes: String) {
-            rideUpdateNote(record: {notes: $notes}) {
-                record {
-                    _id
-                    notes
-                }
-            }
+        mutation UpdateRideNote($id: MongoID!, $record: UpdateOneridesInput!){
+            rideUpdateOne(filter: { _id: $id }, record: $record){
+            recordId
         }
-    `;
+    }
+    `
 
     const { addToast } = useToasts();
     const { openDialog, setOpenDialog, rideSummary } = props;
@@ -41,7 +50,23 @@ export default function EditRideNotesDialog(props) {
         setOpenDialog(false);
     };
 
-    const [updateRideNotes] = useMutation(UPDATE_RIDE_NOTES);
+    // const [updateRideNotes] = useMutation(UPDATE_RIDE_NOTES);
+
+    const [updateRideNotes] = useMutation(UPDATE_RIDE_NOTES, {
+        variables: {id: ride._id, record: {notes: ride.notes}}
+      })
+    
+    //   useEffect(() => {
+    //     if(newOwner.owner._id !== "") {
+    //       updateRide().then(result => {
+    //         window.location.reload();
+    //       }).catch((err) => {
+    //         console.log(err)
+    //       })
+    //     }
+        
+    //   }, [newOwner, updateRide]) 
+
     const updateRide = () => {
         updateRideNotes({ variables: ride });
     };
@@ -83,13 +108,9 @@ export default function EditRideNotesDialog(props) {
                                 defaultValue={ride.notes}   // UNSURE!!!
                                 name="ridenote"             // UNSURE!!!
                                 onChange={(e) => {
-                                    try {
-                                        updateNote(e.target.value);
-                                        setChangesMade(true);
-                                        // getNote();
-                                    } catch(error) {
-                                        console.log("error here");
-                                    }
+                                    updateNote(e.target.value);
+                                    setChangesMade(true);
+                                    // getNote();
                                 }}
                                 clearTextField={() => {
                                     clearTextField("ridenote");

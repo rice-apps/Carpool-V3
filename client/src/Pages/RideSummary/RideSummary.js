@@ -27,6 +27,7 @@ import {
   RiderText,
   NotesDiv,
   RideNotesHeader,
+  RideNotesBody,
   ButtonDiv,
   AllDiv,
   LocationDivContainer,
@@ -413,7 +414,25 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
           ))}
         </RidersComponents>
         <RideNotesHeader>Ride Notes
-        <EditRideNotesButton>
+        {/* <EditRideNotesButton>
+            <IconButton
+              aria-label="edit"
+              onClick={() => setOpenDialog(true)}
+              variant="outlined">
+                <EditIcon style={{color: "rgba(32, 117, 216, 1)"}}/>
+            </IconButton>
+          </EditRideNotesButton> */}
+          </RideNotesHeader> 
+        <RideNotesBody>
+          <NotesDiv>
+            <EditRideNotesDialog
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              rideSummary={ride}
+            ></EditRideNotesDialog>
+            {ride.notes || 'No ride notes'}
+          </NotesDiv>
+          <EditRideNotesButton>
             <IconButton
               aria-label="edit"
               onClick={() => setOpenDialog(true)}
@@ -421,16 +440,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
                 <EditIcon style={{color: "rgba(32, 117, 216, 1)"}}/>
             </IconButton>
           </EditRideNotesButton>
-          </RideNotesHeader> 
-        <NotesDiv>
-          
-          <EditRideNotesDialog
-            openDialog={openDialog}
-            setOpenDialog={setOpenDialog}
-            rideSummary={ride}
-          ></EditRideNotesDialog>
-        {ride.notes || 'No ride notes'}
-        </NotesDiv>
+        </RideNotesBody>
       </RidersDiv>
             
       <ButtonContainer>

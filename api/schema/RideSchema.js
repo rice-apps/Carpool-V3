@@ -147,7 +147,6 @@ RideTC.addResolver({
 
 
 
-
 /**
  * Edit the ride notes.
  */
@@ -155,11 +154,12 @@ RideTC.addResolver({
 RideTC.addResolver({
   name: 'updateNotes',
   type: RideTC,
-  args: { rideID: 'ID!' },
+  args: { rideID: 'ID!' , push: 'String'},
   resolve: async ({ source, args, context, info }) => {
     // Update the notes in the ride.
     let update = {}
-    update[operation] = { riders: id }
+    let operation = '$set'
+    update[operation] = { ride: notes }
 
     let updatedRide = await Ride.findByIdAndUpdate(
       args.rideID,
@@ -168,7 +168,8 @@ RideTC.addResolver({
     )
     
     const notes = await Ride.findById(updatedRide.notes)
-
+    console.log("updateNotes resolver:")
+    console.log(notes)
     // TODO: add sending email when ride notes updated.
     return updatedRide
   },
@@ -201,7 +202,8 @@ const RideMutation = {
       return next(rp)
     }
   ),
-  rideUpdateNote: RideTC.getResolver("updateNotes", [authMiddleware]),
+  rideUpdateNote: RideTC.getResolver("updateOne")
+  // rideUpdateNote: RideTC.getResolver("updateNotes")
 }
 
 async function authMiddleware(resolve, source, args, context, info) {

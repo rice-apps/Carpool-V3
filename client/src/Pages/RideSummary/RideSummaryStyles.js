@@ -193,6 +193,13 @@ const RideNotesHeader = styled.div`
   color: rgba(187, 199, 221, 0.91);
 `
 
+const RideNotesBody = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+`
+
 const IoPersonCircleSharpDiv = styled.span`
   font-size: 43px;
 `
@@ -216,7 +223,7 @@ const NotesDiv = styled.div`
   grid-row: 4;
   overflow-wrap: break-word;
   margin: 15px;
-  width: 97%;
+  width: 95%;
   padding: 10px;  
   color: rgba(128, 128, 128, 1);
   background: #ffffff;
@@ -352,14 +359,14 @@ padding: 0px 10px 10px 10px;
 
 export const EditRideNotesButton = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   flex-direction: column;
   font-family: Josefin Sans;
   font-weight: 600;
   font-size: 30px;
   line-height: 30px;
-  text-align: center;
+  text-align: right;
 `;
 
 export {
@@ -382,6 +389,7 @@ export {
   OneRiderContainer,
   RiderText,
   RideNotesHeader,
+  RideNotesBody,
   NotesDiv,
   TextContainer,
   ButtonDiv,
