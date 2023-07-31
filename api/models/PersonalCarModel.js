@@ -7,8 +7,8 @@ require("../db");
 
 var PersonalCarSchema = new Schema({
     carBrand: String,
-    color: String,
-    type: String, // Sedan, SUV, convertible, etc.
+    carColor: String,
+    carType: String, // Sedan, SUV, convertible, etc.
     licensePlate: String,
 });
 
