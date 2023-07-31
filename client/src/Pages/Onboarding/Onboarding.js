@@ -19,7 +19,7 @@ const Onboarding = () => {
             $college: String!
             $phone: String!
             $venmo: String!
-            $personalCar: MongoId!
+            $carId: MongoID!
         ) {
             userUpdateOne(
                 record: {
@@ -28,6 +28,7 @@ const Onboarding = () => {
                     college: $college
                     phone: $phone
                     venmo: $venmo
+                    personalCar: $carId
                 }
             ) {
                 record {
@@ -45,18 +46,18 @@ const Onboarding = () => {
     const CREATE_CAR = gql`
         mutation CreateCar(
             $carBrand: String!
-            $color: String!
-            $type: String!
-            licensePlate: String!
-        ) { 
-            carCreateOne (
+            $carColor: String!
+            $carType: String!
+            $licensePlate: String!
+        ) {
+            carCreateOne(
                 record: {
                     carBrand: $carBrand
-                    color: $color
-                    type: $type
+                    carColor: $carColor
+                    carType: $carType
                     licensePlate: $licensePlate
                 }
-            )   { 
+            ) {
                 record {
                     _id
                 }
@@ -68,10 +69,18 @@ const Onboarding = () => {
     const [createCar] = useMutation(CREATE_CAR);
 
     const updateUserInfo = async (formData) => {
-        await createCar({ variables: formData }).then((obj) => {
-            const carId = obj.data.carCreateOne.record._id;
-        });
-        formData.personalCar = carId;
+        let carId;
+        await createCar({ variables: formData })
+            .then((obj) => {
+                carId = obj.data.carCreateOne.record._id;
+                console.log(carId);
+            })
+            .catch((error) => {
+                addToast("Couldn't create car");
+            });
+
+        formData.carId = carId;
+
         await updateUser({ variables: formData });
         // localStorage.setItem("fromOnboarding", true);
         const nextPage = localStorage.getItem("nextPage");
