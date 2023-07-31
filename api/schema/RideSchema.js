@@ -147,33 +147,33 @@ RideTC.addResolver({
 
 
 
-/**
- * Edit the ride notes.
- */
+// /**
+//  * Edit the ride notes.
+//  */
 
-RideTC.addResolver({
-  name: 'updateNotes',
-  type: RideTC,
-  args: { rideID: 'ID!' , push: 'String'},
-  resolve: async ({ source, args, context, info }) => {
-    // Update the notes in the ride.
-    let update = {}
-    let operation = '$set'
-    update[operation] = { ride: notes }
+// RideTC.addResolver({
+//   name: 'updateNotes',
+//   type: RideTC,
+//   args: { rideID: 'ID!' , push: 'String'},
+//   resolve: async ({ source, args, context, info }) => {
+//     // Update the notes in the ride.
+//     let update = {}
+//     let operation = '$set'
+//     update[operation] = { ride: notes }
 
-    let updatedRide = await Ride.findByIdAndUpdate(
-      args.rideID,
-      update,
-      { new: true } // we want to return the updated ride
-    )
+//     let updatedRide = await Ride.findByIdAndUpdate(
+//       args.rideID,
+//       update,
+//       { new: true } // we want to return the updated ride
+//     )
     
-    const notes = await Ride.findById(updatedRide.notes)
-    console.log("updateNotes resolver:")
-    console.log(notes)
-    // TODO: add sending email when ride notes updated.
-    return updatedRide
-  },
-})
+//     const notes = await Ride.findById(updatedRide.notes)
+//     console.log("updateNotes resolver:")
+//     console.log(notes)
+//     // TODO: add sending email when ride notes updated.
+//     return updatedRide
+//   },
+// })
 
 
 
@@ -202,7 +202,7 @@ const RideMutation = {
       return next(rp)
     }
   ),
-  rideUpdateNote: RideTC.getResolver("updateOne")
+  // rideUpdateNote: RideTC.getResolver("updateOne")
   // rideUpdateNote: RideTC.getResolver("updateNotes")
 }
 

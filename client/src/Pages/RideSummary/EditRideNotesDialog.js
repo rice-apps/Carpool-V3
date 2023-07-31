@@ -28,11 +28,10 @@ export default function EditRideNotesDialog(props) {
     //         }
     //     }
     // `;
-    
 
     const UPDATE_RIDE_NOTES = gql`
-        mutation UpdateRideNote($id: MongoID!, $record: UpdateOneridesInput!){
-            rideUpdateOne(filter: { _id: $id }, record: $record){
+        mutation UpdateRideNote($id: MongoID!, $notes: String!){
+            rideUpdateOne(filter: { _id: $id }, record: {notes: $notes}){
             recordId
         }
     }
@@ -43,7 +42,7 @@ export default function EditRideNotesDialog(props) {
     const [changesMade, setChangesMade] = useState(false);
 
     const [ride, setRide] = useState({
-        notes: rideSummary.notes
+        "notes": rideSummary.notes
     });
 
     const closeDialog = () => {
@@ -52,9 +51,9 @@ export default function EditRideNotesDialog(props) {
 
     // const [updateRideNotes] = useMutation(UPDATE_RIDE_NOTES);
 
-    const [updateRideNotes] = useMutation(UPDATE_RIDE_NOTES, {
-        variables: {id: ride._id, record: {notes: ride.notes}}
-      })
+    const [updateRideNotes, {data, loading, error}] = useMutation(UPDATE_RIDE_NOTES, {
+        variables: {id: ride._id, notes: ride["notes"]}
+    })
     
     //   useEffect(() => {
     //     if(newOwner.owner._id !== "") {
@@ -83,11 +82,11 @@ export default function EditRideNotesDialog(props) {
         ride["notes"] = "";
     };
 
-    let {loading, error} = useMutation(UPDATE_RIDE_NOTES, {
-        variables: {
-            ride,
-        },
-    });
+    // let {loading, error} = useMutation(UPDATE_RIDE_NOTES, {
+    //     variables: {
+    //         ride,
+    //     },
+    // });
 
     if (loading) return <LoadingDiv />;
     if (error) return `Error! ${error.message}`;
@@ -105,7 +104,7 @@ export default function EditRideNotesDialog(props) {
                             <Label>Ride Note:</Label>
                             <InputTextField
                                 label="Ride Note"
-                                defaultValue={ride.notes}   // UNSURE!!!
+                                defaultValue={ride["notes"]}   // UNSURE!!!
                                 name="ridenote"             // UNSURE!!!
                                 onChange={(e) => {
                                     updateNote(e.target.value);
