@@ -154,23 +154,26 @@ export default function ProfileDialog(props) {
     const [updateUser] = useMutation(UPDATE_USER);
     const [createCar] = useMutation(CREATE_CAR);
 
-    const updateUserInfo = () => {
-        updateCarInfo();
-        updateUser({ variables: user });
+    const updateUserInfo = async () => {
+        const carId = await updateCarInfo();
+        setUserProps("carId", carId);
+        updateUser({ variables: user }).catch((error) => {
+            addToast("Error updating user!");
+        });
     };
 
-    const updateCarInfo = () => {
+    const updateCarInfo = async () => {
         let carId;
-        createCar({ variables: user })
+        await createCar({ variables: user })
             .then((obj) => {
                 carId = obj.data.carCreateOne.record._id;
-                setCarId(carId);
             })
             .catch((error) => {
                 addToast(
-                    "Sorry, an error occurred processing your profile update."
+                    "Sorry, an error occurred updating your personal car information."
                 );
             });
+        return carId;
     };
 
     function setUserProps(key, value) {
