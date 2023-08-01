@@ -96,7 +96,6 @@ const FormOnly = (props) => {
         // filter by ride type
         if (filterRideType != '') {
           resultDestArr = resultDestArr.filter((ele) => {
-            console.log(ele.typeofcar, filterRideType)
             return (ele.typeofcar) === (filterRideType)
             // above (ele.rideType) I assume is going to come from the query
           });
@@ -134,7 +133,7 @@ const FormOnly = (props) => {
               <MenuItem value=''>All</MenuItem> // Option for all rides
               <MenuItem value='Uber'>Uber</MenuItem> // Option for Uber rides
               <MenuItem value='Lyft'>Lyft</MenuItem> // Option for Lyft rides
-              <MenuItem value='Own-Car'>Personal Car</MenuItem> // Option for own car rides
+              <MenuItem value='own-car'>Personal Car</MenuItem> // Option for own car rides
           </Select>
       );
   }
