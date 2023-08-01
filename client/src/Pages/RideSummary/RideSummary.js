@@ -42,7 +42,9 @@ import {
   LocationTitleStyling,
   LocationDepartureIcon,
   LocationDestinationIcon,
-  LocationConnect
+  LocationConnect,
+  RideType,
+  RideTypeStyling
 } from './RideSummaryStyles.js'
 import {Grid, IconButton} from '@material-ui/core';
 import { LoginButton, JoinRideDialog, LoginDialogActions} from '../Onboarding/Alert.styles.js';
@@ -70,6 +72,7 @@ const GET_RIDE = gql`
         address
       }
       notes
+      typeofcar
       owner {
         _id
         netid
@@ -358,11 +361,21 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
               <LocationDateStyling>
                 {mon} {day} {hour}
               </LocationDateStyling>
+
+
             </LocationDateTime>
+
+            <RideType>
+            <RideTypeStyling>
+                {ride.typeofcar}
+              </RideTypeStyling>
+            </RideType>
 
             <LocationDepartureIcon>
               <FiberManualRecordOutlinedIcon style={{fontSize:"1em"}}/>
             </LocationDepartureIcon> 
+
+            
 
             <LocationDepartureTitle>
                 <LocationTitleStyling>

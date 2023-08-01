@@ -71,12 +71,23 @@ const LocationDiv = styled.div`
 
 const LocationDateTime = styled.div`
   grid-column-start: 2;
-  grid-row-start: 1;
+  grid-row-start: 2;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-right: .5em;
   margin-top: .5em;
+  flex:1
+`
+const RideType = styled.div`
+  grid-column-start: 2;
+  grid-row-start: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: .5em;
+  margin-top: .5em;
+  flex:1
 `
 
 const LocationDepartureTitle = styled.div`
@@ -157,6 +168,16 @@ const LocationDateStyling = styled.span`
   padding: 1.75%;
 `
 
+//
+const RideTypeStyling = styled.span`
+  background: rgba(189, 252, 202, 0.22);
+  font-family: Josefin Sans;
+  font-size: 1.1em;
+
+  color: black;
+  border-radius: 10px;
+  padding: 1.75%;
+`
 const HostDiv = styled.div`
   font-family: Josefin Sans;
   font-style: normal;
@@ -365,5 +386,7 @@ export {
   BackText,
   BackArrowDiv,
   InnerLocationDiv,
-  ConfirmationText
+  ConfirmationText,
+  RideType,
+  RideTypeStyling
 }
