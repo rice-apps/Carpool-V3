@@ -32,7 +32,9 @@ export default function EditRideNotesDialog(props) {
     const UPDATE_RIDE_NOTES = gql`
         mutation UpdateRideNote($id: MongoID!, $notes: String!){
             rideUpdateOne(filter: { _id: $id }, record: {notes: $notes}){
-            recordId
+            record {
+                notes
+            }
         }
     }
     `
@@ -51,9 +53,16 @@ export default function EditRideNotesDialog(props) {
 
     // const [updateRideNotes] = useMutation(UPDATE_RIDE_NOTES);
 
-    const [updateRideNotes, {data, loading, error}] = useMutation(UPDATE_RIDE_NOTES, {
-        variables: {id: ride._id, notes: ride["notes"]}
-    })
+    const [updateRideNotes, {data, loading, error}] = useMutation(UPDATE_RIDE_NOTES); 
+
+    function updateRide () {
+        return updateRideNotes({
+            variables: {
+                id: rideSummary._id,
+                notes: ride["notes"],
+            }
+        })
+    }
     
     //   useEffect(() => {
     //     if(newOwner.owner._id !== "") {
@@ -65,10 +74,6 @@ export default function EditRideNotesDialog(props) {
     //     }
         
     //   }, [newOwner, updateRide]) 
-
-    const updateRide = () => {
-        updateRideNotes({ variables: ride });
-    };
 
     function updateNote(value) {
         ride["notes"] = value;
