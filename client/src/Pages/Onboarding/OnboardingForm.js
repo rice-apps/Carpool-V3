@@ -26,7 +26,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
   const [carColor, setCarColor] = useState("");
   const [carBrand, setCarBrand] = useState("");
   const [carType, setCarType] = useState("");
-  const [carLicense, setCarLicense] = useState("");
+  const [licensePlate, setLicensePlate] = useState("");
   const { addToast } = useToasts();
 
   const handleSubmit = () => {
@@ -45,7 +45,10 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             addToast("Phone number must only contain digits.", { appearance: 'error' });
             return
         }
-        
+        if ((carColor==="" || carBrand==="" || carType==="" || licensePlate==="") && (carColor!=="" || carBrand!=="" || carType!=="" || licensePlate!=="")){
+          addToast("Please make sure all of the car fields are filled.", { appearance: "error"});
+          return;
+        }
         
         
 
@@ -58,7 +61,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
       carColor,
       carBrand,
       carType,
-      carLicense
+      licensePlate,
     });
   };
 
@@ -157,7 +160,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         <CarBrandField
           label="e.g. Toyota, Honda, KIA"
           defaultValue={carBrand}
-          name="car brand"
+          name="carBrand"
           onChange={(e) => setCarBrand(e.target.value.replace(/[ +-]/g, ''))}
         ></CarBrandField>
         </InputBox>
@@ -184,8 +187,8 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
         <Label>Car Lisence Plate Number</Label>
         <CarBrandField
           defaultValue={carLicense}
-          name="car license"
-          onChange={(e) => setCarLicense(e.target.value.replace(/[ +-]/g, ''))}
+          name="licensePlate"
+          onChange={(e) => setLicensePlate(e.target.value.replace(/[ +-]/g, ''))}
         ></CarBrandField>
         </InputBox>
 

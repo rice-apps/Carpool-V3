@@ -64,7 +64,7 @@ export default function ProfileDialog(props) {
     carColor: profileUser.carColor,
     carBrand: profileUser.carBrand,
     carType: profileUser.carType,
-    carLicense: profileUser.carLicense,
+    licensePlate: profileUser.licensePlate,
   });
 
   const closeDialog = () => {
@@ -90,7 +90,7 @@ export default function ProfileDialog(props) {
    //new functions for car types
    function selectCarColor(e) {
     const newCarColor = e.target.value;
-    setUserProps("car color", newCarColor);
+    setUserProps("carColor", newCarColor);
    }
    function setCarColor(e){
     const newCarColor = e.target.value;
@@ -104,7 +104,7 @@ export default function ProfileDialog(props) {
 
    function selectCarType(e) {
     const newCarType = e.target.value;
-    setUserProps("car type", newCarType);
+    setUserProps("carType", newCarType);
    }
    function setCarType (e){
     const newCarType = e.target.value;
@@ -264,13 +264,13 @@ export default function ProfileDialog(props) {
                 <CarBrandTextField
                   label="e.g. Toyota, Honda, KIA"
                   defaultValue={user.carBrand}
-                  name="car brand"
+                  name="carBrand"
                   onChange={(e) => {
-                    setUserProps("car brand", e.target.value);
+                    setUserProps("carBrand", e.target.value);
                     setChangesMade(true);
                   }}
                   clearTextField={() => {
-                    clearTextField("car license");
+                    clearTextField("carBrand");
                     setChangesMade(true);
                   }}
                 ></CarBrandTextField>
@@ -296,13 +296,13 @@ export default function ProfileDialog(props) {
                 <Label>Car Lisence Plate Number:</Label>
                 <CarBrandTextField
                   defaultValue={user.carLicense}
-                  name="car license"
+                  name="licensePlate"
                   onChange={(e) => {
-                    setUserProps("car license", e.target.value);
+                    setUserProps("licensePlate", e.target.value);
                     setChangesMade(true);
                   }}
                   clearTextField={() => {
-                    clearTextField("car license");
+                    clearTextField("licensePlate");
                     setChangesMade(true);
                   }}
                 ></CarBrandTextField>
@@ -326,6 +326,11 @@ export default function ProfileDialog(props) {
 
                     if (/^[0-9]+$/.test(user.phone) === false) {
                       addToast("Phone number must only contain digits.", { appearance: 'error' });
+                      return
+                    }
+
+                    if ((user.carColor==="" || user.carBrand==="" || user.carType==="" || user.licensePlate==="") && (user.carColor!=="" || user.carBrand!=="" || user.carType!=="" || user.licensePlate!=="")){
+                      addToast("Please make sure all of the fields are filled.", { appearance: "error"});
                       return
                     }
 
