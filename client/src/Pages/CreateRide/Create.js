@@ -46,6 +46,9 @@ const Create = ({ onCreate }) => {
       value: 6,
     },
   ];
+  const types = [
+    {value: "uber",}, {value:"lyft",}, {value:"own-car",},
+  ];
     // Helper method to fetch searched location + date 
     const fetchSearchedLoc = (locIdx, locations) => {
       if (locIdx && locIdx >= 0 && locIdx < locations.length) { // Verify that location exists
@@ -74,7 +77,7 @@ const Create = ({ onCreate }) => {
   const [endLoc, setEndLoc] = useState("");
   const [date, setDate] = useState(getSavedDate());
   const [passengers, setPassengers] = useState(3);
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
   const [color, setColor] = useState("");
   const [brand, setBrand] = useState("");
   const [type, setType] = useState("");
@@ -109,6 +112,7 @@ const Create = ({ onCreate }) => {
     setStartLoc("");
     setEndLoc("");
     setNotes("");
+    setType("");
     setDate(moment());
     setPassengers(4) ;
     setColor("");
@@ -139,6 +143,14 @@ const Create = ({ onCreate }) => {
     e.preventDefault();
 
     setPassengers(e.target.value);
+    console.log(passengers);
+  };
+
+  const onTypeChange = (e) => {
+    e.preventDefault();
+
+    setType(e.target.value);
+    console.log(type);
   };
 
   const onColorChange = (e) => {
@@ -245,7 +257,7 @@ const Create = ({ onCreate }) => {
             ))}
           </SelectBox>
         </Grid>
-
+            
         <Grid item xs={12}>
           <InputBox id="EndLoc">Destination</InputBox>
           <SelectBox
@@ -396,6 +408,43 @@ const Create = ({ onCreate }) => {
             value={notes}
             onChange={onNotesChange}
           ></TextFieldBox>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+        >
+          <Grid item>
+            <SelectSquare
+              MenuProps={{
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left",
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left",
+                },
+                getContentAnchorEl: null,
+              }}
+              id="Number of Passengers Occupied"
+              value={type}
+              onChange={onTypeChange}
+              variant="outlined"
+              size="small"
+            >
+              {types.map((option) => (
+                <MenuSquare key={option.value} value={option.value}>
+                  {option.value}
+                </MenuSquare>
+              ))}
+            </SelectSquare>
+          </Grid>
+          <Grid item>
+            <BodyText>{"Ride Type"}</BodyText>
+          </Grid>
         </Grid>
 
         <Grid
