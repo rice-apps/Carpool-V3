@@ -46,6 +46,7 @@ const Create = ({ onCreate }) => {
       value: 6,
     },
   ];
+  
     // Helper method to fetch searched location + date 
     const fetchSearchedLoc = (locIdx, locations) => {
       if (locIdx && locIdx >= 0 && locIdx < locations.length) { // Verify that location exists
@@ -74,12 +75,13 @@ const Create = ({ onCreate }) => {
   const [endLoc, setEndLoc] = useState("");
   const [date, setDate] = useState(getSavedDate());
   const [passengers, setPassengers] = useState(3);
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
+  const [rideType, setRideType] = useState("");
   const [color, setColor] = useState("");
   const [brand, setBrand] = useState("");
   const [type, setType] = useState("");
   const [license, setLicense] = useState("");
-  const [isTypeVisible, setTypeVisible] = useState(true);
+
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
 
@@ -102,20 +104,24 @@ const Create = ({ onCreate }) => {
       });
       return;
     }
+    if ((color==="" || brand==="" || type==="" || license==="") && (color!=="" || brand!=="" || type!=="" || license!=="")){
+      addToast("Please make sure all of the fields are filled.", { appearance: "error"});
+      return;
+    }
 
     // Pass arguments back to the top mutation queue
-    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, color, brand, type });
-
+    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, rideType, color, brand, type });
     setStartLoc("");
     setEndLoc("");
     setNotes("");
+    setType("");
     setDate(moment());
     setPassengers(4) ;
+    setRideType("");
     setColor("");
     setBrand("");
     setType("");
     setLicense("");
-    setTypeVisible(false);
   };
 
   // OnChange Functions: Triggers for User Changing Fields
@@ -139,8 +145,14 @@ const Create = ({ onCreate }) => {
     e.preventDefault();
 
     setPassengers(e.target.value);
+    console.log(passengers);
   };
 
+  const onRideTypeChange = (e) => {
+    e.preventDefault();
+    setRideType(e.target.value);
+    
+  }
   const onColorChange = (e) => {
     e.preventDefault();
     setColor(e.target.value);
@@ -204,6 +216,9 @@ const Create = ({ onCreate }) => {
   //Arrays for car type dropdowns
   const dropdownCarColors = ["White","Black","Gray","Silver","Blue","Red","Brown","Green", "Gold"];
   const dropdownCarTypes = ["Sedan","SUV","Minivan","Truck"];
+  const rideTypes = [
+    {value: "Uber",}, {value:"Lyft",}, {value:"Own-car",},
+  ];
 
   // Form Construction
 
@@ -245,7 +260,7 @@ const Create = ({ onCreate }) => {
             ))}
           </SelectBox>
         </Grid>
-
+            
         <Grid item xs={12}>
           <InputBox id="EndLoc">Destination</InputBox>
           <SelectBox
@@ -275,8 +290,36 @@ const Create = ({ onCreate }) => {
           </SelectBox>
         </Grid>
         
-        
-        {isTypeVisible && (
+        <Grid item xs = {12}>
+          <InputBox id="RideType">Ride Type</InputBox>
+            <SelectBox
+              MenuProps={{
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left",
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left",
+                },
+                getContentAnchorEl: null,
+              }}
+              id="Number of Passengers Occupied"
+              value={rideType}
+              onChange={onRideTypeChange}
+              variant="outlined"
+              size="small"
+            >
+              {rideTypes.map((option) => (
+                <MenuSquare key={option.value} value={option.value}>
+                  {option.value}
+                </MenuSquare>
+              ))}
+            </SelectBox>
+          </Grid>
+          
+          {rideType === "Own-car" && (
+          <>
           <Grid item xs={12}>
           <InputBox id="Color">Color</InputBox>
           <SelectBox
@@ -302,13 +345,13 @@ const Create = ({ onCreate }) => {
                 key={color} 
                 value={color}>
                 {color}
-               </MenuBox>))}
+                </MenuBox>))}
             </SelectBox>
 
         </Grid>
-        )}
+  
           
-        {isTypeVisible && (
+
           <Grid item xs={12}>
             <InputBox id="Brand">Brand</InputBox>
             <TextBrandBox
@@ -321,9 +364,8 @@ const Create = ({ onCreate }) => {
               onChange={onBrandChange}>
             </TextBrandBox>
           </Grid>
-        )} 
+
           
-        {isTypeVisible &&(
           <Grid item xs={12}>
           <InputBox id="Type">Type</InputBox>
           <SelectBox
@@ -349,12 +391,10 @@ const Create = ({ onCreate }) => {
                 key={cartype} 
                 value={cartype}>
                 {cartype}
-               </MenuBox>))}
+                </MenuBox>))}
             </SelectBox>
         </Grid>
-        )}
         
-        {isTypeVisible && (
           <Grid item xs={12}>
             <InputBox id="License">License Plate Number</InputBox>
             <TextBrandBox
@@ -366,7 +406,10 @@ const Create = ({ onCreate }) => {
               onChange={onLicenseChange}>
             </TextBrandBox>
           </Grid>
-        )} 
+          </>
+          )}
+          
+
 
         <Grid item xs={12}>
           <InputBox id="Date and Time">Ride Date and Time (CST)</InputBox>
@@ -396,6 +439,15 @@ const Create = ({ onCreate }) => {
             value={notes}
             onChange={onNotesChange}
           ></TextFieldBox>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+        >
+          
         </Grid>
 
         <Grid

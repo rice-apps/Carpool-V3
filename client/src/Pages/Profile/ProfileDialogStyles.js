@@ -31,7 +31,7 @@ export const ProfileDialogContainer = styled.div`
 export const IconBox = styled.div`
   height: 10%;
   width: 100%;
-  margin-bottom: 150px;
+  margin-bottom: 190px;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -95,7 +95,7 @@ export const SaveButton = styled(Button)({
   borderRadius: "2vw",
   width: "50vw",
   height: "8%",
-  marginTop: "180px",
+  marginTop: "210px",
   textTransform: "none",
   // position: "block",
 });

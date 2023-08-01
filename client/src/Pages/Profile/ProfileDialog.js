@@ -418,6 +418,23 @@ export default function ProfileDialog(props) {
                                         return;
                                     }
 
+                                    if (
+                                        (user.carColor === "" ||
+                                            user.carBrand === "" ||
+                                            user.carType === "" ||
+                                            user.licensePlate === "") &&
+                                        (user.carColor !== "" ||
+                                            user.carBrand !== "" ||
+                                            user.carType !== "" ||
+                                            user.licensePlate !== "")
+                                    ) {
+                                        addToast(
+                                            "Please make sure all of the fields are filled.",
+                                            { appearance: "error" }
+                                        );
+                                        return;
+                                    }
+
                                     if (changesMade) {
                                         updateUserInfo();
                                     }

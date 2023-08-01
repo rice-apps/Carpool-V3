@@ -41,8 +41,30 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
             return;
         }
 
+        if (phone === "") {
+            addToast("Please fill in your phone number.", {
+                appearance: "error",
+            });
+            return;
+        }
+
         if (/^[0-9]+$/.test(phone) === false) {
             addToast("Phone number must only contain digits.", {
+                appearance: "error",
+            });
+            return;
+        }
+        if (
+            (carColor === "" ||
+                carBrand === "" ||
+                carType === "" ||
+                licensePlate === "") &&
+            (carColor !== "" ||
+                carBrand !== "" ||
+                carType !== "" ||
+                licensePlate !== "")
+        ) {
+            addToast("Please make sure all of the car fields are filled.", {
                 appearance: "error",
             });
             return;
@@ -105,31 +127,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
                         value={venmo}
                         onChange={(e) => setVenmo(e.target.value)}
                     ></VenmoTextField>
-
-                    <Label>College:</Label>
-                    <CollegeSelect
-                        variant="outlined"
-                        margin="dense"
-                        defaultValue={college}
-                        classes={{ root: classes.inputLabel }}
-                        onChange={(e) => {
-                            setCollege(e.target.value);
-                        }}
-                    >
-                        <MenuItem value="Baker">Baker</MenuItem>
-                        <MenuItem value="Will Rice">Will Rice</MenuItem>
-                        <MenuItem value="Hanszen">Hanszen</MenuItem>
-                        <MenuItem value="Wiess">Wiess</MenuItem>
-                        <MenuItem value="Jones">Jones</MenuItem>
-                        <MenuItem value="Brown">Brown</MenuItem>
-                        <MenuItem value="Lovett">Lovett</MenuItem>
-                        <MenuItem value="Sid Rich">Sid Rich</MenuItem>
-                        <MenuItem value="Martel">Martel</MenuItem>
-                        <MenuItem value="McMurtry">McMurtry</MenuItem>
-                        <MenuItem value="Duncan">Duncan</MenuItem>
-                    </CollegeSelect>
                 </InputBox>
-
                 <InputBox>
                     <Label>Car Color:</Label>
                     <CollegeSelect
@@ -158,7 +156,7 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
                     <CarBrandField
                         label="e.g. Toyota, Honda, KIA"
                         defaultValue={carBrand}
-                        name="car brand"
+                        name="carBrand"
                         onChange={(e) =>
                             setCarBrand(e.target.value.replace(/[ +-]/g, ""))
                         }
@@ -184,10 +182,10 @@ const OnboardingForm = ({ onSubmit, onCancel }) => {
                 </InputBox>
 
                 <InputBox>
-                    <Label>Car Lisence Plate Number</Label>
+                    <Label>License Plate Number</Label>
                     <CarBrandField
                         defaultValue={licensePlate}
-                        name="car license"
+                        name="licensePlate"
                         onChange={(e) =>
                             setLicensePlate(
                                 e.target.value.replace(/[ +-]/g, "")
