@@ -138,123 +138,55 @@ const FormOnly = (props) => {
       );
   }
 
-  // Define AppBar with Filter
-  const AppBarWithFilter = () => (
-      <AppBar position="static">
-          <Toolbar>
-              <Typography variant="h6" style={{ flexGrow: 1 }}>
-                  Ride Type
-              </Typography>
-              <Filter />
-          </Toolbar>
-      </AppBar>
-  );
+  // // Define AppBar with Filter
+  // const AppBarWithFilter = () => (
+  //     <AppBar position="static">
+  //         <Toolbar>
+  //             <Typography variant="h6" style={{ flexGrow: 1 }}>
+  //                 Ride Type
+  //             </Typography>
+  //             <Filter />
+  //         </Toolbar>
+  //     </AppBar>
+  // );
 
   return (
     <React.Fragment>
       <Form className="search-form">
-        <Grid
-          container
-          direction="column"
-          justifyContent="space-evenly"
-          alignItems="center"
-          spacing="4"
-        >
-          <Grid item xs={12}>
-            <InputBox id="StartLoc">Departure Location</InputBox>
-            <SelectBox
-              MenuProps={{
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left",
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
-                },
-                getContentAnchorEl: null,
-              }}
-              id="Start Location Search Bar"
-              labelId="StartLoc"
-              value={startLoc}
-              onChange={(ev) => {
-                handleClickStartLoc(ev.target.value);
-              }}
-              variant="outlined"
-              size="small"
-            >
-              <MenuBox value="">None</MenuBox>
-              {PossibleLocations.map((option, locInd) => (
-                <MenuBox key={option._id} value={locInd}>
-                  {option.title}
-                </MenuBox>
-              ))}
-            </SelectBox>
-          </Grid>
-
-          <Grid item xs={12}>
-            <InputBox id="EndLoc">Destination</InputBox>
-            <SelectBox
-              MenuProps={{
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left",
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
-                },
-                getContentAnchorEl: null,
-              }}
-              id="End Location Search Bar"
-              labelId="EndLoc"
-              value={endLoc}
-              onChange={(ev) => {
-                handleClickEndLoc(ev.target.value);
-              }}
-              variant="outlined"
-              size="small"
-            >
-              <MenuBox value="">None</MenuBox>
-              {PossibleLocations.map((option, locInd) => (
-                <MenuBox key={option._id} value={locInd}>
-                  {option.title}
-                </MenuBox>
-              ))}
-            </SelectBox>
-          </Grid>
-          <Grid item xs={10}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-around"
-              alignItems="center"
-            >
-              <Grid item xs={12}>
-                <InputBox id="Date">Date</InputBox>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                  <DatePicker
-                    clearable
-                    value={filterDate}
-                    onChange={(date) => {
-                      setfilterDate(date);
-                      localStorage.setItem("searchedDate", date);
-                      // closeLoaderIn2Seconds();
-                    }}
-                    minDate={minDate}
-                    format="MMM DD, YYYY"
-                  />
-                  
-                </MuiPickersUtilsProvider>
-                
-              </Grid>
-              <AppBarWithFilter />
+        <Grid>
+          <Grid
+            container
+            direction="column"
+            justifyContent="space-around"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
+              <InputBox id="Date">Date</InputBox>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <DatePicker
+                  clearable
+                  value={filterDate}
+                  onChange={(date) => {
+                    setfilterDate(date);
+                    localStorage.setItem("searchedDate", date);
+                    // closeLoaderIn2Seconds();
+                  }}
+                  minDate={minDate}
+                  format="MMM DD, YYYY"
+                />
+              </MuiPickersUtilsProvider>
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: '20px' }}>
+              <InputBox id="Ride Type">Ride Type</InputBox>
+              <Filter />
             </Grid>
           </Grid>
         </Grid>
       </Form>
     </React.Fragment>
   );
+  
+  
 };
 
 export default FormOnly;
