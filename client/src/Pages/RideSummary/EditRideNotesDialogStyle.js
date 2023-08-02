@@ -98,13 +98,6 @@ export function InputTextField(props) {
   const classes = EditRideNotesStyles();
   const { label, name, defaultValue, onChange, value, clearTextField } = props;
   return (
-   
-    // <TextField
-    //   placeholder="hello world"
-    //   multiline 
-    //   rows = {2}
-    //   maxRows={4}
-    // />
     <TextField
       multiline 
       rows = {1}

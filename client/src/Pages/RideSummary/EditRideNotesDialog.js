@@ -18,16 +18,6 @@ import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv.js";
 
 export default function EditRideNotesDialog(props) {
-    // const UPDATE_RIDE_NOTES = gql`
-    //     mutation UpdateRideNotes($notes: String) {
-    //         rideUpdateNote(record: {notes: $notes}) {
-    //             record {
-    //                 _id
-    //                 notes
-    //             }
-    //         }
-    //     }
-    // `;
 
     const UPDATE_RIDE_NOTES = gql`
         mutation UpdateRideNote($id: MongoID!, $notes: String!){
@@ -51,9 +41,11 @@ export default function EditRideNotesDialog(props) {
         setOpenDialog(false);
     };
 
-    // const [updateRideNotes] = useMutation(UPDATE_RIDE_NOTES);
-
     const [updateRideNotes, {data, loading, error}] = useMutation(UPDATE_RIDE_NOTES); 
+
+    // const updateRideInfo = () => {
+    //     updateRideNotes({variables: ride});
+    // };
 
     function updateRide () {
         return updateRideNotes({
@@ -63,35 +55,14 @@ export default function EditRideNotesDialog(props) {
             }
         })
     }
-    
-    //   useEffect(() => {
-    //     if(newOwner.owner._id !== "") {
-    //       updateRide().then(result => {
-    //         window.location.reload();
-    //       }).catch((err) => {
-    //         console.log(err)
-    //       })
-    //     }
-        
-    //   }, [newOwner, updateRide]) 
 
     function updateNote(value) {
         ride["notes"] = value;
     }
 
-    function getNote() {
-        console.log(ride["notes"]);
-    }
-
     const clearTextField = () => {
         ride["notes"] = "";
     };
-
-    // let {loading, error} = useMutation(UPDATE_RIDE_NOTES, {
-    //     variables: {
-    //         ride,
-    //     },
-    // });
 
     if (loading) return <LoadingDiv />;
     if (error) return `Error! ${error.message}`;
@@ -109,12 +80,11 @@ export default function EditRideNotesDialog(props) {
                             <Label>Ride Note:</Label>
                             <InputTextField
                                 label="Ride Note"
-                                defaultValue={ride["notes"]}   // UNSURE!!!
-                                name="ridenote"             // UNSURE!!!
+                                defaultValue={rideSummary.notes}
+                                name="ridenote"
                                 onChange={(e) => {
                                     updateNote(e.target.value);
                                     setChangesMade(true);
-                                    // getNote();
                                 }}
                                 clearTextField={() => {
                                     clearTextField("ridenote");
@@ -127,25 +97,14 @@ export default function EditRideNotesDialog(props) {
                         <SaveButton
                             variant="contained"
                             onClick={() => {
-                                // try{
-                                    if (changesMade) {
-                                        console.log("changes made");
-                                        updateRide();
-                                    }
-                                // } catch(error) {
-                                //     console.log("error here");
-                                // }
-                                
-                                // try{
-                                    setOpenDialog(false);
-                                    addToast("Notes Updated", {
-                                        appearance: "success",
-                                    });
-                                    console.log("Printing note: ");
-                                    getNote();
-                                // } catch(error) {
-                                //     console.log("error here");
-                                // }
+                                if (changesMade) {
+                                    updateRide();
+                                    window.location.reload();
+                                }
+                                setOpenDialog(false);
+                                addToast("Notes Updated", {
+                                    appearance: "success",
+                                });
                             }}
                             >
                             Save

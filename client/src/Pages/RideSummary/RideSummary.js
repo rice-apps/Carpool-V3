@@ -413,16 +413,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
             </div>
           ))}
         </RidersComponents>
-        <RideNotesHeader>Ride Notes
-        {/* <EditRideNotesButton>
-            <IconButton
-              aria-label="edit"
-              onClick={() => setOpenDialog(true)}
-              variant="outlined">
-                <EditIcon style={{color: "rgba(32, 117, 216, 1)"}}/>
-            </IconButton>
-          </EditRideNotesButton> */}
-          </RideNotesHeader> 
+        <RideNotesHeader>Ride Notes</RideNotesHeader> 
         <RideNotesBody>
           <NotesDiv>
             <EditRideNotesDialog
@@ -430,7 +421,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
               setOpenDialog={setOpenDialog}
               rideSummary={ride}
             ></EditRideNotesDialog>
-            {ride.notes || 'No ride notes'}
+            {ride.notes ? `${ride.notes}` : 'No ride notes'}
           </NotesDiv>
           <EditRideNotesButton>
             <IconButton
