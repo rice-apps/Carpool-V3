@@ -73,7 +73,6 @@ const Onboarding = () => {
         await createCar({ variables: formData })
             .then((obj) => {
                 carId = obj.data.carCreateOne.record._id;
-                console.log(carId);
             })
             .catch((error) => {
                 addToast("Couldn't create car");

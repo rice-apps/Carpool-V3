@@ -6,393 +6,461 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import { Grid, MuiThemeProvider } from "@material-ui/core";
 import {
-  customTheme,
-  Form,
-  SelectBox,
-  TextFieldBox,
-  MenuBox,
-  ColorButton,
-  InputBox,
-  DateBox,
-  SelectSquare,
-  MenuSquare,
-  BodyText,
-  ConfirmationText,
+    customTheme,
+    Form,
+    SelectBox,
+    TextFieldBox,
+    MenuBox,
+    ColorButton,
+    InputBox,
+    DateBox,
+    SelectSquare,
+    MenuSquare,
+    BodyText,
+    ConfirmationText,
 } from "./Create.styles";
 import LoadingDiv from "../../common/LoadingDiv.js";
 import moment from "moment";
-import jwt from 'jwt-decode';
+import jwt from "jwt-decode";
+import PersonalCarBox from "./PersonalCarBox.js";
 
 const Create = ({ onCreate }) => {
-  document.title = "Create Ride";
+    document.title = "Create Ride";
 
-  const { addToast } = useToasts();
+    const { addToast } = useToasts();
 
-  const seats = [
-    {
-      value: 2,
-    },
-    {
-      value: 3,
-    },
-    {
-      value: 4,
-    },
-    {
-      value: 5,
-    },
-    {
-      value: 6,
-    },
-  ];
-  
-    // Helper method to fetch searched location + date 
+    const seats = [
+        {
+            value: 2,
+        },
+        {
+            value: 3,
+        },
+        {
+            value: 4,
+        },
+        {
+            value: 5,
+        },
+        {
+            value: 6,
+        },
+    ];
+
+    // Helper method to fetch searched location + date
     const fetchSearchedLoc = (locIdx, locations) => {
-      if (locIdx && locIdx >= 0 && locIdx < locations.length) { // Verify that location exists
-        return locations[locIdx]["_id"];
-      } else {
-        return "";
-      }
+        if (locIdx && locIdx >= 0 && locIdx < locations.length) {
+            // Verify that location exists
+            return locations[locIdx]["_id"];
+        } else {
+            return "";
+        }
+    };
+
+    const getSavedDate = () => {
+        let date = localStorage.getItem("searchedDate");
+        if (date && moment().diff(date, "minutes") <= 0) {
+            // Verify date is legit
+            console.log(moment().diff(date, "minutes"));
+            localStorage.setItem("searchedDate", "");
+            return date;
+        } else {
+            return moment();
+        }
+    };
+
+    // Variables for Tracking Attributes of the Form
+    const [startLoc, setStartLoc] = useState("");
+    const [notes, setNotes] = useState("");
+    const [endLoc, setEndLoc] = useState("");
+    const [date, setDate] = useState(getSavedDate());
+    const [passengers, setPassengers] = useState(3);
+    const [user, setUser] = useState();
+    const [rideType, setRideType] = useState("");
+    const [personalCarId, setPersonalCarId] = useState("");
+    const [carDetails, setCarDetails] = useState(""); //parameter should be function that gets the car details.
+    const confirmationText =
+        "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
+
+    const GET_USER = gql`
+        query GetUserInfo($netID: String) {
+            userOne(filter: { netid: $netID }) {
+                _id
+                firstName
+                lastName
+                netid
+                phone
+                college
+                venmo
+                personalCar
+            }
+        }
+    `;
+
+    const GET_CAR = gql`
+        query GetCarInfo($carId: MongoID!) {
+            carOne(filter: { _id: $carId }) {
+                _id
+                carBrand
+                carColor
+                carType
+                licensePlate
+            }
+        }
+    `;
+
+    const {
+        data: userData,
+        loading,
+        error,
+    } = useQuery(GET_USER, {
+        variables: {
+            netID: localStorage.getItem("netid"),
+        },
+    });
+    let foundUser;
+
+    if (!(loading || error || !userData)) {
+        foundUser = userData.userOne;
     }
 
+    useEffect(() => {
+        if (foundUser) {
+            setPersonalCarId(foundUser.personalCar);
+        }
+    }, [foundUser]);
 
-  const getSavedDate = () => {
-    let date = localStorage.getItem("searchedDate");
-    if (date && moment().diff(date, 'minutes') <= 0){ // Verify date is legit
-      console.log(moment().diff(date, 'minutes'))
-      localStorage.setItem("searchedDate", "");
-      return date;
-    }
-    else {
-      return moment();
-    }
-  }
+    // Function after Submit Button is Pressed
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const users = [user.id];
+        const owner = user.id;
 
-  // Variables for Tracking Attributes of the Form
-  const [startLoc, setStartLoc] = useState("");
-  const [notes, setNotes] = useState("");
-  const [endLoc, setEndLoc] = useState("");
-  const [date, setDate] = useState(getSavedDate());
-  const [passengers, setPassengers] = useState(3);
-  const [user, setUser] = useState();
-  const [rideType, setRideType] = useState("");
-  const [carDetails, setCarDetails] = useState("Gray Toyota SUV SGR 77445"); //parameter should be function that gets the car details.
-  const confirmationText =
-    "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
+        console.log("user", user);
 
+        if (!startLoc || !endLoc) {
+            addToast("Please fill in all fields.", { appearance: "error" });
+            return;
+        }
 
-  // Function after Submit Button is Pressed
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const users = [user.id];
-    const owner = user.id;
-    console.log("user", user)
+        if (startLoc === endLoc) {
+            addToast(
+                "Ride departure and destination locations must be different.",
+                {
+                    appearance: "error",
+                }
+            );
+            return;
+        }
+        if (carDetails === "") {
+            addToast(
+                "Please fill in your personal car details in your profile.",
+                { appearance: "error" }
+            );
+            return;
+        }
 
-    if (!startLoc || !endLoc) {
-      addToast("Please fill in all fields.", { appearance: "error" });
-      return;
-    }
+        // Pass arguments back to the top mutation queue
+        onCreate({
+            startLoc,
+            endLoc,
+            date,
+            passengers,
+            notes,
+            users,
+            owner,
+            rideType,
+        });
+        setStartLoc("");
+        setEndLoc("");
+        setNotes("");
+        setDate(moment());
+        setPassengers(4);
+        setRideType("");
+        setCarDetails(""); //query car details
+    };
 
-    if (startLoc === endLoc) {
-      addToast("Ride departure and destination locations must be different.", {
-        appearance: "error",
-      });
-      return;
-    }
-    if (carDetails === ""){
-      addToast("Please fill in your personal car details in your profile.", { appearance: "error"});
-       return;
-    }
+    // OnChange Functions: Triggers for User Changing Fields
+    const onStartLocChange = (e) => {
+        e.preventDefault();
+        console.log("onStartLocChange: " + e.target.value);
+        setStartLoc(e.target.value);
+    };
 
-    // Pass arguments back to the top mutation queue
-    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, rideType});
-    setStartLoc("");
-    setEndLoc("");
-    setNotes("");
-    setDate(moment());
-    setPassengers(4) ;
-    setRideType("");
-    setCarDetails(""); //query car details
-  };
+    const onNotesChange = (e) => {
+        e.preventDefault();
+        setNotes(e.target.value);
+    };
 
-  // OnChange Functions: Triggers for User Changing Fields
-  const onStartLocChange = (e) => {
-    e.preventDefault();
-    console.log("onStartLocChange: " + e.target.value);
-    setStartLoc(e.target.value);
-  };
+    const onEndLocChange = (e) => {
+        e.preventDefault();
+        setEndLoc(e.target.value);
+    };
 
-  const onNotesChange = (e) => {
-    e.preventDefault();
-    setNotes(e.target.value);
-  };
+    const onPassengerChange = (e) => {
+        e.preventDefault();
 
-  const onEndLocChange = (e) => {
-    e.preventDefault();
-    setEndLoc(e.target.value);
-  };
+        setPassengers(e.target.value);
+        console.log(passengers);
+    };
 
-  const onPassengerChange = (e) => {
-    e.preventDefault();
+    const onRideTypeChange = (e) => {
+        e.preventDefault();
+        setRideType(e.target.value);
+    };
+    // Access Locations List with GraphQL Query
+    const GET_LOCATIONS = gql`
+        query GetLocations {
+            locationMany {
+                _id
+                title
+            }
+        }
+    `;
 
-    setPassengers(e.target.value);
-    console.log(passengers);
-  };
+    // Access Current User's MongoID with GraphQL Query
 
-  const onRideTypeChange = (e) => {
-    e.preventDefault();
-    setRideType(e.target.value);
-    
-  }
-  // Access Locations List with GraphQL Query
-  const GET_LOCATIONS = gql`
-    query GetLocations {
-      locationMany {
-        _id
-        title
-      }
-    }
-  `;
+    const { data: locationData, loading: locationLoading } =
+        useQuery(GET_LOCATIONS);
 
-  // Access Current User's MongoID with GraphQL Query
+    useEffect(() => {
+        if (!user) {
+            var token = localStorage.getItem("token");
+            setUser(jwt(token));
+            localStorage.setItem("token", token);
+        }
+    }, [user]);
 
-  // 
+    useEffect(() => {
+        if (locationData) {
+            setStartLoc(
+                fetchSearchedLoc(
+                    localStorage.getItem("startLocation"),
+                    locationData["locationMany"]
+                )
+            );
+            setEndLoc(
+                fetchSearchedLoc(
+                    localStorage.getItem("endLocation"),
+                    locationData["locationMany"]
+                )
+            );
+            localStorage.setItem("startLocation", "");
+            localStorage.setItem("endLocation", "");
+        }
+    }, [locationData]);
 
-  const { data: locationData, loading: locationLoading } =
-    useQuery(GET_LOCATIONS);
+    if (locationLoading) return <LoadingDiv />;
+    const { locationMany: locations } = locationData;
 
-  useEffect(() => {
-    if (!user) {
-      var token = localStorage.getItem("token")
-      setUser(jwt(token));
-      localStorage.setItem('token', token);
-    }
-  }, [user])
-  
-  useEffect(() => {
-    if (locationData){
-      setStartLoc(fetchSearchedLoc(localStorage.getItem("startLocation"), locationData["locationMany"]));
-      setEndLoc(fetchSearchedLoc(localStorage.getItem("endLocation"), locationData["locationMany"]));
-      localStorage.setItem("startLocation", "");
-      localStorage.setItem("endLocation", "");
-    }
-  },[locationData]);
+    const rideTypes = [
+        { value: "Uber" },
+        { value: "Lyft" },
+        { value: "Own-car" },
+    ];
 
-  if (locationLoading) return <LoadingDiv />;
-  const { locationMany: locations } = locationData;
+    // Form Construction
 
-  const rideTypes = [
-    {value: "Uber",}, {value:"Lyft",}, {value:"Own-car",},
-  ];
-
-  // Form Construction
-
-  return (
-    <Form onSubmit={onSubmit}>
-      <Grid
-        container
-        direction="column"
-        justifyContent="space-evenly"
-        alignItems="center"
-        spacing={4}
-      >
-        <Header subtitle={"Create Ride"} />
-        <Grid item xs={12}>
-          <InputBox id="StartLoc">Departure Location</InputBox>
-          <SelectBox
-            MenuProps={{
-              anchorOrigin: {
-                vertical: "bottom",
-                horizontal: "left",
-              },
-              transformOrigin: {
-                vertical: "top",
-                horizontal: "left",
-              },
-              getContentAnchorEl: null,
-            }}
-            id="Start Location Search Bar"
-            labelId="StartLoc"
-            value={startLoc}
-            onChange={onStartLocChange}
-            variant="outlined"
-            size="small"
-          >
-            {locations.map((option) => (
-              <MenuBox key={option.title} value={option._id}>
-                {option.title}
-              </MenuBox>
-            ))}
-          </SelectBox>
-        </Grid>
-            
-        <Grid item xs={12}>
-          <InputBox id="EndLoc">Destination</InputBox>
-          <SelectBox
-            MenuProps={{
-              anchorOrigin: {
-                vertical: "bottom",
-                horizontal: "left",
-              },
-              transformOrigin: {
-                vertical: "top",
-                horizontal: "left",
-              },
-              getContentAnchorEl: null,
-            }}
-            id="End Location Search Bar"
-            labelId="Endloc"
-            value={endLoc}
-            onChange={onEndLocChange}
-            variant="outlined"
-            size="small"
-          >
-            {locations.map((option) => (
-              <MenuBox key={option.title} value={option._id}>
-                {option.title}
-              </MenuBox>
-            ))}
-          </SelectBox>
-        </Grid>
-        
-        <Grid item xs = {12}>
-          <InputBox id="RideType">Ride Type</InputBox>
-            <SelectBox
-              MenuProps={{
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left",
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
-                },
-                getContentAnchorEl: null,
-              }}
-              id="Number of Passengers Occupied"
-              value={rideType}
-              onChange={onRideTypeChange}
-              variant="outlined"
-              size="small"
+    return (
+        <Form onSubmit={onSubmit}>
+            <Grid
+                container
+                direction="column"
+                justifyContent="space-evenly"
+                alignItems="center"
+                spacing={4}
             >
-              {rideTypes.map((option) => (
-                <MenuSquare key={option.value} value={option.value}>
-                  {option.value}
-                </MenuSquare>
-              ))}
-            </SelectBox>
-          </Grid>
-          
-          {rideType === "Own-car" && carDetails !== ""  &&(
-          <>
-          
-          <Grid item xs={12}>
-            <BodyText>Car Details: {carDetails}</BodyText>
-          </Grid>
+                <Header subtitle={"Create Ride"} />
+                <Grid item xs={12}>
+                    <InputBox id="StartLoc">Departure Location</InputBox>
+                    <SelectBox
+                        MenuProps={{
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left",
+                            },
+                            transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left",
+                            },
+                            getContentAnchorEl: null,
+                        }}
+                        id="Start Location Search Bar"
+                        labelId="StartLoc"
+                        value={startLoc}
+                        onChange={onStartLocChange}
+                        variant="outlined"
+                        size="small"
+                    >
+                        {locations.map((option) => (
+                            <MenuBox key={option.title} value={option._id}>
+                                {option.title}
+                            </MenuBox>
+                        ))}
+                    </SelectBox>
+                </Grid>
 
-          </>
-          )}
+                <Grid item xs={12}>
+                    <InputBox id="EndLoc">Destination</InputBox>
+                    <SelectBox
+                        MenuProps={{
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left",
+                            },
+                            transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left",
+                            },
+                            getContentAnchorEl: null,
+                        }}
+                        id="End Location Search Bar"
+                        labelId="Endloc"
+                        value={endLoc}
+                        onChange={onEndLocChange}
+                        variant="outlined"
+                        size="small"
+                    >
+                        {locations.map((option) => (
+                            <MenuBox key={option.title} value={option._id}>
+                                {option.title}
+                            </MenuBox>
+                        ))}
+                    </SelectBox>
+                </Grid>
 
-          {rideType === "Own-car" && carDetails === "" && (
-          <>
-          <Grid item xs={12}>
-            <BodyText>Please fill in your personal car details in your profile.</BodyText>
-          </Grid>
-          </>
+                <Grid item xs={12}>
+                    <InputBox id="RideType">Ride Type</InputBox>
+                    <SelectBox
+                        MenuProps={{
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left",
+                            },
+                            transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left",
+                            },
+                            getContentAnchorEl: null,
+                        }}
+                        id="Number of Passengers Occupied"
+                        value={rideType}
+                        onChange={onRideTypeChange}
+                        variant="outlined"
+                        size="small"
+                    >
+                        {rideTypes.map((option) => (
+                            <MenuSquare key={option.value} value={option.value}>
+                                {option.value}
+                            </MenuSquare>
+                        ))}
+                    </SelectBox>
+                </Grid>
 
-          )}
-          
+                {rideType === "Own-car" && (
+                    <>
+                        <Grid item xs={12}>
+                            <PersonalCarBox personalCarId={personalCarId} />
+                        </Grid>
+                    </>
+                )}
 
+                <Grid item xs={12}>
+                    <InputBox id="Date and Time">
+                        Ride Date and Time (CST)
+                    </InputBox>
+                    <MuiThemeProvider theme={customTheme}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <DateBox
+                                labelid="Date and Time"
+                                inputVariant="outlined"
+                                format="MM/DD/YYYY hh:mm a"
+                                disablePast={true}
+                                value={moment(date)}
+                                onChange={setDate}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </MuiThemeProvider>
+                </Grid>
 
-        <Grid item xs={12}>
-          <InputBox id="Date and Time">Ride Date and Time (CST)</InputBox>
-          <MuiThemeProvider theme={customTheme}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <DateBox
-                labelid="Date and Time"
-                inputVariant="outlined"
-                format="MM/DD/YYYY hh:mm a"
-                disablePast={true}
-                value={moment(date)}
-                onChange={setDate}
-              />
-            </MuiPickersUtilsProvider>
-          </MuiThemeProvider>
-        </Grid>
+                <Grid item xs={12}>
+                    <InputBox id="Notes">Notes</InputBox>
 
-        <Grid item xs={12}>
-          <InputBox id="Notes">Notes</InputBox>
+                    <TextFieldBox
+                        id="outlined-basic"
+                        multiline
+                        placeholder="e.g. flight time, Rice meetup location, etc."
+                        labelId="Notes"
+                        variant="outlined"
+                        value={notes}
+                        onChange={onNotesChange}
+                    ></TextFieldBox>
+                </Grid>
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={1}
+                ></Grid>
 
-          <TextFieldBox
-            id="outlined-basic"
-            multiline
-            placeholder="e.g. flight time, Rice meetup location, etc."
-            labelId="Notes"
-            variant="outlined"
-            value={notes}
-            onChange={onNotesChange}
-          ></TextFieldBox>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={1}
-        >
-          
-        </Grid>
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={1}
+                >
+                    <Grid item>
+                        <SelectSquare
+                            MenuProps={{
+                                anchorOrigin: {
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                },
+                                transformOrigin: {
+                                    vertical: "top",
+                                    horizontal: "left",
+                                },
+                                getContentAnchorEl: null,
+                            }}
+                            id="Number of Passengers Occupied"
+                            value={passengers}
+                            onChange={onPassengerChange}
+                            variant="outlined"
+                            size="small"
+                        >
+                            {seats.map((option) => (
+                                <MenuSquare
+                                    key={option.value}
+                                    value={option.value}
+                                >
+                                    {option.value}
+                                </MenuSquare>
+                            ))}
+                        </SelectSquare>
+                    </Grid>
+                    <Grid item>
+                        <BodyText>{"# of seats (include yourself)"}</BodyText>
+                    </Grid>
+                </Grid>
 
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={1}
-        >
-          <Grid item>
-            <SelectSquare
-              MenuProps={{
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left",
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
-                },
-                getContentAnchorEl: null,
-              }}
-              id="Number of Passengers Occupied"
-              value={passengers}
-              onChange={onPassengerChange}
-              variant="outlined"
-              size="small"
-            >
-              {seats.map((option) => (
-                <MenuSquare key={option.value} value={option.value}>
-                  {option.value}
-                </MenuSquare>
-              ))}
-            </SelectSquare>
-          </Grid>
-          <Grid item>
-            <BodyText>{"# of seats (include yourself)"}</BodyText>
-          </Grid>
-        </Grid>
+                <Grid item xs={11}>
+                    <ConfirmationText>{confirmationText}</ConfirmationText>
+                </Grid>
 
-        <Grid item xs={11}>
-          <ConfirmationText>{confirmationText}</ConfirmationText>
-        </Grid>
-
-        <Grid item xs={12}>
-          <ColorButton type="submit" variant="contained" size="medium">
-            Create New Ride
-          </ColorButton>
-        </Grid>
-      </Grid>
-    </Form>
-  );
+                <Grid item xs={12}>
+                    <ColorButton
+                        type="submit"
+                        variant="contained"
+                        size="medium"
+                    >
+                        Create New Ride
+                    </ColorButton>
+                </Grid>
+            </Grid>
+        </Form>
+    );
 };
 
 export default Create;

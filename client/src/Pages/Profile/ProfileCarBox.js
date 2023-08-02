@@ -17,7 +17,6 @@ const ProfileCarBox = (props) => {
     `;
 
     const personalCarId = props.user.personalCar;
-    console.log(personalCarId);
     let {
         data: carData,
         loading: carLoading,

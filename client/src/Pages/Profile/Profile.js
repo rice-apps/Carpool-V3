@@ -54,7 +54,6 @@ const Profile = () => {
     `;
 
     const [openDialog, setOpenDialog] = useState(false);
-    
 
     let {
         data: userData,
@@ -65,16 +64,8 @@ const Profile = () => {
     });
     if (userLoading) return <LoadingDiv />;
     if (userError) return <Redirect to="../404" />;
-    console.log(JSON.parse(JSON.stringify(userData)));
     let { userOne: user } = JSON.parse(JSON.stringify(userData));
-    console.log(user);
     if (!user) return <Redirect to="../404" />;
-
-    // let {
-    //     data: carData,
-    //     loading: carLoading,
-    //     error: carError,
-    // } = useQuery(GET_CAR, { variables: { carId: user.personalCar } });
 
     function goBack() {
         // Check for LastPage and that there is NO record of profile -> profile loop
@@ -186,7 +177,7 @@ const Profile = () => {
                     </StyledTextVenmo>
                 </TextBox>
 
-                <ProfileCarBox user={user}/>
+                <ProfileCarBox user={user} />
             </ProfileCard>
         </AllDiv>
     );
