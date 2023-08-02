@@ -1,10 +1,10 @@
-import { composeWithMongoose } from 'graphql-compose-mongoose';
-import { User } from '.';
+import { composeWithMongoose } from "graphql-compose-mongoose";
+import { User } from ".";
 
-var mongoose = require('mongoose')
-    , Schema = mongoose.Schema
+var mongoose = require("mongoose"),
+    Schema = mongoose.Schema;
 
-require('../db')
+require("../db");
 
 var LocationSchema = new Schema({
     title: String,
@@ -13,42 +13,3 @@ var LocationSchema = new Schema({
 
 export const Location = mongoose.model("locations", LocationSchema);
 export const LocationTC = composeWithMongoose(Location);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

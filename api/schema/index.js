@@ -8,13 +8,14 @@ import { UserQuery, UserMutation } from "./UserSchema";
 import { RideQuery, RideMutation } from "./RideSchema";
 import { LocationQuery, LocationMutation } from "./LocationSchema";
 import { AuthQuery, AuthMutation } from "./AuthSchema";
-import { PersonalCarMutation } from "./PersonalCarSchema";
+import { PersonalCarQuery, PersonalCarMutation } from "./PersonalCarSchema";
 
 schemaComposer.Query.addFields({
     ...UserQuery,
     ...RideQuery,
     ...LocationQuery,
     ...AuthQuery,
+    ...PersonalCarQuery,
 });
 
 schemaComposer.Mutation.addFields({
