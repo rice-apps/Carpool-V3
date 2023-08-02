@@ -18,7 +18,6 @@ import {
   MenuSquare,
   BodyText,
   ConfirmationText,
-  TextBrandBox
 } from "./Create.styles";
 import LoadingDiv from "../../common/LoadingDiv.js";
 import moment from "moment";
@@ -77,11 +76,7 @@ const Create = ({ onCreate }) => {
   const [passengers, setPassengers] = useState(3);
   const [user, setUser] = useState();
   const [rideType, setRideType] = useState("");
-  const [color, setColor] = useState("");
-  const [brand, setBrand] = useState("");
-  const [type, setType] = useState("");
-  const [license, setLicense] = useState("");
-
+  const [carDetails, setCarDetails] = useState("Gray Toyota SUV SGR 77445"); //parameter should be function that gets the car details.
   const confirmationText =
     "You will still need to contact your fellow riders and order an Uber or Lyft on the day of.";
 
@@ -104,24 +99,20 @@ const Create = ({ onCreate }) => {
       });
       return;
     }
-    if ((color==="" || brand==="" || type==="" || license==="") && (color!=="" || brand!=="" || type!=="" || license!=="")){
-      addToast("Please make sure all of the fields are filled.", { appearance: "error"});
-      return;
+    if (carDetails === ""){
+      addToast("Please fill in your personal car details in your profile.", { appearance: "error"});
+       return;
     }
 
     // Pass arguments back to the top mutation queue
-    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, rideType, color, brand, type });
+    onCreate({ startLoc, endLoc, date, passengers, notes, users, owner, rideType});
     setStartLoc("");
     setEndLoc("");
     setNotes("");
-    setType("");
     setDate(moment());
     setPassengers(4) ;
     setRideType("");
-    setColor("");
-    setBrand("");
-    setType("");
-    setLicense("");
+    setCarDetails(""); //query car details
   };
 
   // OnChange Functions: Triggers for User Changing Fields
@@ -153,28 +144,6 @@ const Create = ({ onCreate }) => {
     setRideType(e.target.value);
     
   }
-  const onColorChange = (e) => {
-    e.preventDefault();
-    setColor(e.target.value);
-  }
-  const onBrandChange = (e) => {
-    e.preventDefault();
-    setBrand(e.target.value);
-  }
-  const onTypeChange = (e) => {
-    e.preventDefault();
-    setType(e.target.value);
-  }
-  const onLicenseChange = (e) => {
-    e.preventDefault();
-    setLicense(e.target.value);
-  }
-
-  // const toggleVisibility = (e) => {
-  //   e.preventDefault();
-  //   setTypeVisible(!isTypeVisible);
-  // }
-
   // Access Locations List with GraphQL Query
   const GET_LOCATIONS = gql`
     query GetLocations {
@@ -212,10 +181,6 @@ const Create = ({ onCreate }) => {
   if (locationLoading) return <LoadingDiv />;
   const { locationMany: locations } = locationData;
 
-
-  //Arrays for car type dropdowns
-  const dropdownCarColors = ["White","Black","Gray","Silver","Blue","Red","Brown","Green", "Gold"];
-  const dropdownCarTypes = ["Sedan","SUV","Minivan","Truck"];
   const rideTypes = [
     {value: "Uber",}, {value:"Lyft",}, {value:"Own-car",},
   ];
@@ -318,95 +283,23 @@ const Create = ({ onCreate }) => {
             </SelectBox>
           </Grid>
           
-          {rideType === "Own-car" && (
+          {rideType === "Own-car" && carDetails !== ""  &&(
+          <>
+          
+          <Grid item xs={12}>
+            <BodyText>Car Details: {carDetails}</BodyText>
+          </Grid>
+
+          </>
+          )}
+
+          {rideType === "Own-car" && carDetails === "" && (
           <>
           <Grid item xs={12}>
-          <InputBox id="Color">Color</InputBox>
-          <SelectBox
-              MenuProps={{
-              anchorOrigin: {
-                vertical: "bottom",
-                horizontal: "left",
-              },
-              transformOrigin: {
-                vertical: "top",
-                horizontal: "left",
-              },
-              getContentAnchorEl: null,
-            }}
-            id="Color Bar"
-            labelId="Color"
-            value={color}
-            onChange={onColorChange}
-            variant="outlined"
-            size="small">
-            {dropdownCarColors.map((color) => (
-              <MenuBox 
-                key={color} 
-                value={color}>
-                {color}
-                </MenuBox>))}
-            </SelectBox>
-
-        </Grid>
-  
-          
-
-          <Grid item xs={12}>
-            <InputBox id="Brand">Brand</InputBox>
-            <TextBrandBox
-              id="outlined-basic"
-              multiline
-              labelId="Brand"
-              variant="outlined"
-              placeholder="e.g. Toyota, Honda, KIA, etc."
-              value={brand}
-              onChange={onBrandChange}>
-            </TextBrandBox>
-          </Grid>
-
-          
-          <Grid item xs={12}>
-          <InputBox id="Type">Type</InputBox>
-          <SelectBox
-              MenuProps={{
-              anchorOrigin: {
-                vertical: "bottom",
-                horizontal: "left",
-              },
-              transformOrigin: {
-                vertical: "top",
-                horizontal: "left",
-              },
-              getContentAnchorEl: null,
-            }}
-            id="Type Bar"
-            labelId="Type"
-            value={type}
-            onChange={onTypeChange}
-            variant="outlined"
-            size="small">
-            {dropdownCarTypes.map((cartype) => (
-              <MenuBox 
-                key={cartype} 
-                value={cartype}>
-                {cartype}
-                </MenuBox>))}
-            </SelectBox>
-        </Grid>
-        
-          <Grid item xs={12}>
-            <InputBox id="License">License Plate Number</InputBox>
-            <TextBrandBox
-              id="outlined-basic"
-              multiline
-              labelId="License"
-              variant="outlined"
-              value={license}
-              onChange={onLicenseChange}>
-            </TextBrandBox>
+            <BodyText>Please fill in your personal car details in your profile.</BodyText>
           </Grid>
           </>
+
           )}
           
 
