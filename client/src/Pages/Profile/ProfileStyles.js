@@ -172,4 +172,3 @@ export const StyledTextVenmo = styled.p`
   text-align: center;
   color: rgba(32, 117, 216, 1);
 `;
-

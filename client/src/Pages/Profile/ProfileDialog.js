@@ -1,11 +1,13 @@
 import { Dialog, Paper, List, MenuItem } from "@material-ui/core";
-import React, { useState } from "react";
+import AvatarUpload from "../../imageUpload";
+import React, { useState} from 'react';
+import Axios from 'axios';
 import { useToasts } from "react-toast-notifications";
 import {
   ProfileDialogContainer,
   IconBox,
-  ProfileIcon,
-//  ProfileEditIcon,
+  // ProfileIcon,
+  // ProfileEditIcon,
   CloseProfileIcon,
   Label,
   VenmoTextField,
@@ -18,6 +20,7 @@ import {
 } from "./ProfileDialogStyles";
 import { gql, useMutation } from "@apollo/client";
 import LoadingDiv from "../../common/LoadingDiv";
+
 
 export default function ProfileDialog(props) {
   const UPDATE_USER = gql`
@@ -96,6 +99,41 @@ export default function ProfileDialog(props) {
     document.getElementsByName(key)[0].value = "";
   };
 
+  
+
+  const [logo, setLogo] = useState('')
+  const [imageUpload,] = useState({});
+  const [, setImg] = useState({});
+  
+  const handleImg = (e) => {
+    if (e.target.files[0]) {
+        setImg({
+          src: URL.createObjectURL(e.target.files[0]),
+          alt: e.target.files[0].name
+        }); 
+        setLogo(e.target.files[0]);
+    }
+  }
+  const profileUpload = async (file) => {
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("upload_preset", "vcnzmcrh")
+    let data = "";
+    await Axios.post(
+      "https://api.cloudinary.com/v1_1/vcnzmcrh/image/upload",
+      formData).then((response) => {
+        data = response.data["secure_url"];
+      });
+    return data;
+  }
+   const handleSubmit = async (e) => {
+    imageUpload.image = logo;
+    await profileUpload(logo);
+  }
+
+
+
+
   let { loading, error } = useMutation(UPDATE_USER, {
     variables: {
       user,
@@ -112,8 +150,13 @@ export default function ProfileDialog(props) {
           <StyledDialogContent>
             <ProfileDialogContainer>
               <IconBox>
-                <ProfileIcon />
-                {/* <ProfileEditIcon /> */}
+                <>
+                <div>
+                    <div style = {{ marginLeft: "50px", marginTop: "50px"}}>
+                      <AvatarUpload imageUpload={handleImg} image={imageUpload.image} />
+                    </div>
+                </div>
+              </>
                 <CloseProfileIcon onClick={closeDialog} />
               </IconBox>
 
@@ -203,7 +246,7 @@ export default function ProfileDialog(props) {
               </InputBox>
                 <SaveButton
                   variant="contained"
-                  onClick={() => {
+                  onClick={(e) => {
                     // trim out "-" from number
                     setUserProps("phone", user.phone.replace(/[ +-]/g, '')); 
 
@@ -228,7 +271,11 @@ export default function ProfileDialog(props) {
                     setOpenDialog(false);
                     addToast("User Information Updated", {
                       appearance: "success",
-                    });
+                    }
+                  
+
+                    );
+                    handleSubmit(e)
                   }}
                 >
                   Save
