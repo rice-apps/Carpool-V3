@@ -76,6 +76,7 @@ const GET_RIDE = gql`
         firstName
         lastName
         phone
+        notif_preference
       }
       riders {
         _id
@@ -83,10 +84,15 @@ const GET_RIDE = gql`
         firstName
         lastName
         phone
+        notif_preference
       }
     }
   }
 `
+
+const user_id = localStorage.getItem('netid')
+
+
 
 const RideSummary = () => {
 
@@ -113,6 +119,33 @@ const RideSummary = () => {
   const { data, loading, error } = useQuery(GET_RIDE, {
     variables: {id: id},
   })
+  const GET_USER = gql`
+    query GetUserInfo($netID: String) {
+        userOne(filter: { netid: $netID }) {
+         _id
+        firstName
+        lastName
+        netid
+        phone
+        college
+        venmo
+        notif_preference
+            
+    }
+    }
+`;
+  console.log(user_id)
+  const user_q = useQuery(GET_USER, {
+    variables: { netID: user_id }
+  })
+  
+  let user_info;
+  if(user_q.data){
+    let a = user_q.data
+    user_info = a.userOne
+    
+  }
+  
 
   
   const JOIN_RIDE = gql`
@@ -163,6 +196,26 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   const [leaveRide] = useMutation(REMOVE_RIDER, {
     variables: { rideID: id }
   })
+
+const CREATE_SMS = gql`
+      mutation sendSMS (
+          $message: String!, $phoneTo: String!
+
+      )
+      {
+          sendSMS(
+              message: $message
+              phoneTo: $phoneTo
+          ){
+              message
+          }
+      }
+    
+  `
+    
+const [sendSMS] = useMutation(
+    CREATE_SMS
+)
 
   // console.log("Before mutation:",ride.owner._id);
   const [updateRide] = useMutation(UPDATE_RIDE, {
@@ -222,8 +275,11 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     localStorage.setItem('lastRide', `ridesummary/${id}`);
   }, [id])
 
-   if (error) return <Redirect to="../404" />
+   if (error ) return <Redirect to="../404" />
   if (loading) return <LoadingDiv />
+  if(data){
+    console.log(data)
+  }
   if (!data) return <p>No data...</p>
 
   const join = () => {
@@ -240,7 +296,22 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     }
 
     joinRide().then((result) => {
-      window.location.reload();
+      console.log(ride.owner.phone)
+      if(ride.owner.notif_preference && user_info){
+        let msg = user_info.firstName + " has joined your ride from "+ ride.departureLocation.address + " to "+ ride.arrivalLocation.address + ". visit the app for more info."
+        sendSMS({
+          variables:{
+            message: msg,
+            phoneTo: ride.owner.phone
+          }
+        }).then((result) =>{
+          window.location.reload();
+        })
+       
+      }
+      else{
+        window.location.reload();
+      }
 
     }).catch((err) => {
       addToast("Sorry! This ride is full.", { appearance: 'error'});
@@ -250,6 +321,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
   const leave = () => {
     let currentUser = localStorage.getItem('netid');
+    console.log("tetststst",ride.owner.netid,)
     leaveRide().then(async (result) => {
       if (ride.riders.length === 1) {
         // DELETE ride - use result (MongoID) to delete
@@ -259,8 +331,24 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       }
       else if (ride.owner.netid === currentUser) {
         // Update owner of ride 
+        console.log(ride.owner.phone)
         let newRiders = ride.riders.filter((key) => key.netid !== currentUser);
         setNewOwner({owner:newRiders[0]});
+
+        if(ride.owner.notif_preference && user_info){
+          let msg = user_info.firstName + " has joined your ride from "+ ride.departureLocation.address + " to "+ ride.arrivalLocation.address + "."
+          sendSMS({
+            variables:{
+              phoneTo: ride.owner.phone,
+              message: msg
+            }
+              
+
+          })
+
+        }
+
+
       }
       else {
         window.location.reload();
@@ -287,8 +375,11 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   }
   
   if (error) return <Redirect to="../404" />
-  if (loading) return <p>Loading...</p>
+  if (loading ) return <p>Loading...</p>
   if (!data) return <p>No data...</p>
+  if(data){
+    console.log(data)
+  }
 
  
   const goBack = () => {
