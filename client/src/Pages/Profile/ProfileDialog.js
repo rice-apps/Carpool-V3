@@ -1,4 +1,4 @@
-import { Dialog, Paper, List, MenuItem, Checkbox } from "@material-ui/core";
+import { Dialog, Paper, List, MenuItem } from "@material-ui/core";
 import React, { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import {

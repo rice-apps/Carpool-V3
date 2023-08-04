@@ -34,7 +34,7 @@ const CreateRide = () => {
     
     
     
-    //console.log('sdsss',data)
+    
     const CREATE_RIDE = gql`
         mutation CreateRide (
             $startLoc: MongoID!, $endLoc: MongoID!, $date: Date, $passengers: Float, $users: [MongoID!], $owner: MongoID!, $notes: String) 
@@ -100,19 +100,18 @@ const CreateRide = () => {
             console.log(ride,"ride is")
             
             
-            //console.log(user.phone,'insidesss')
+            
             console.log(ride)
             console.log(end_loc)
             console.log(start_loc)
             let msg = "Your ride from " + start_loc + " to " + end_loc + " is now live! \n Notes:"
-             + ride.notes + "\n" + "Riders: " + ride.passengers + " \n Updates for this ride will be sent via this number"
-            console.log(msg)
-            //console.log('sasasasasasa')
+             + ride.notes + "\n Riders: " + ride.passengers + " \n Updates for this ride will be sent via this number"
+            
             
             if(data){
                 console.log(data)
                 let { userOne: user } = JSON.parse(JSON.stringify(data));
-                let { userOne: notif_preference } = JSON.parse(JSON.stringify(data))
+                
 
                 
                 

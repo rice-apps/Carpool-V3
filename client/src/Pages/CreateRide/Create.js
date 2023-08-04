@@ -99,7 +99,7 @@ const Create = ({ onCreate }) => {
       });
       return;
     }
-    let item = 1
+    
     // Pass arguments back to the top mutation queue
     console.log("locations",locations)
     //getting the string representations of the locations in order to message

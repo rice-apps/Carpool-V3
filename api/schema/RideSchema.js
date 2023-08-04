@@ -8,7 +8,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN
 const phoneNum = process.env.TWILIO_PHONE_NUMBER
 const client = require('twilio')(accountSid, authToken)
 
-
+/** 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
@@ -19,6 +19,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SENDER_EMAIL_PASSWORD,
   },
 })
+
+*/
 
 /**
  * Add relations since the Ride model has ObjectIds (references) for some fields
@@ -138,14 +140,16 @@ RideTC.addResolver({
         </a>
       </p>
     `
-
+    /** 
     transporter.sendMail({
       to: `${owner.netid}@rice.edu`,
       subject: subject,
       text: plaintextBody,
       html: htmlBody,
     })
+    */
     console.log('testing')
+    /** 
     if(owner.notif_preference){
 
     
@@ -158,9 +162,12 @@ RideTC.addResolver({
       })
       .then(message => console.log(message.sid))
     }
+    */
 
     return updatedRide
-  },
+  }
+  
+  
 })
 
 // Using auth middleware for sensitive info: https://github.com/graphql-compose/graphql-compose-mongoose/issues/158

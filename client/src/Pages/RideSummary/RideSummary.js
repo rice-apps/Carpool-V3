@@ -91,22 +91,8 @@ const GET_RIDE = gql`
 `
 
 const user_id = localStorage.getItem('netid')
-console.log('netid is',user_id)
-const GET_USER = gql`
-    query GetUserInfo($netID: String) {
-        userOne(filter: { netid: $netID }) {
-         _id
-        firstName
-        lastName
-        netid
-        phone
-        college
-        venmo
-        notif_preference
-            
-    }
-    }
-`;
+
+
 
 const RideSummary = () => {
 
@@ -310,8 +296,9 @@ const [sendSMS] = useMutation(
     }
 
     joinRide().then((result) => {
+      console.log(ride.owner.phone)
       if(ride.owner.notif_preference && user_info){
-        let msg = user_info.firstName + " has joined your ride from "+ ride.departureLocation.address + " to "+ ride.arrivalLocation.address + "."
+        let msg = user_info.firstName + " has joined your ride from "+ ride.departureLocation.address + " to "+ ride.arrivalLocation.address + ". visit the app for more info."
         sendSMS({
           variables:{
             message: msg,
@@ -344,6 +331,7 @@ const [sendSMS] = useMutation(
       }
       else if (ride.owner.netid === currentUser) {
         // Update owner of ride 
+        console.log(ride.owner.phone)
         let newRiders = ride.riders.filter((key) => key.netid !== currentUser);
         setNewOwner({owner:newRiders[0]});
 
