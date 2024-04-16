@@ -37,6 +37,7 @@ steps:
     - 'REDIS_HOST=${_REDIS_HOST}'
     - 'REDIS_USERNAME=${_REDIS_USERNAME}'
     - 'REDIS_PASSWORD=${_REDIS_PASSWORD}'
+    - 'NODE_OPTIONS=${_NODE_OPTIONS}'
   dir: 'api'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
