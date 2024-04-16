@@ -13,6 +13,8 @@ steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: [ 'run', 'build' ]
   dir: 'client'
+  env:
+      - 'NODE_OPTIONS=${_NODE_OPTIONS}'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
   dir: 'client'
