@@ -19,7 +19,7 @@ steps:
   args: ['app', 'deploy', '--version=1']
   dir: 'client'
 - name: 'gcr.io/cloud-builders/npm'
-  args: [ 'install' ]
+  args: [ 'install', '--force' ]
   dir: 'api'
 - name: 'gcr.io/cloud-builders/npm'
   args: ["run", "create-env"]
