@@ -18,6 +18,8 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
   dir: 'client'
+  env:
+    - 'NODE_OPTIONS=${_NODE_OPTIONS}'
 - name: 'gcr.io/cloud-builders/npm'
   args: [ 'install', '--force' ]
   dir: 'api'
@@ -42,3 +44,5 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
   dir: 'api'
+  env:
+    - 'NODE_OPTIONS=${_NODE_OPTIONS}'
