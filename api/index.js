@@ -59,7 +59,7 @@ app.use(cors({
 }))
 app.use(bodyParser.json())
 // Set dryRun to try for adding queries to whitelist
-app.post('/graphql', graphqlWhitelist({ store, validationErrorFn, dryRun: false }))
+app.post('/graphql', graphqlWhitelist({ store, validationErrorFn, dryRun: true }))
 
 // ddos protection
 var ddos = new Ddos({burst:10, limit:15});
