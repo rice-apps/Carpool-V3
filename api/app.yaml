@@ -1,5 +1,8 @@
 runtime: nodejs18
 service: api
+
+basic_scaling:
+  instances: 1
 automatic_scaling:
   min_idle_instances: 1 # Keep a minimum number of instances warm to reduce latency
   max_idle_instances: 2 # Limit resources used during low traffic
