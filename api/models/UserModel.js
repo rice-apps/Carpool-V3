@@ -14,6 +14,7 @@ var UserSchema = new Schema({
   venmo: { type: String, default: "" },
   token: { type: String, default: "" }, // We will use this to store the user's JWT token
   recentUpdate: { type: Boolean, default: false }, // this field used for displaying banners/modals on version updates of our app
+  pfp: { type: String, default: "" }, // this field will store the URL of the user's profile picture
 });
 
 export const User = mongoose.model("users", UserSchema);

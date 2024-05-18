@@ -1,11 +1,14 @@
 import { Dialog, Paper, List, MenuItem } from "@material-ui/core";
 import React, { useState } from "react";
 import { useToasts } from "react-toast-notifications";
+import AvatarEditor from 'react-avatar-editor';
+import { useDropzone } from 'react-dropzone';
+
 import {
   ProfileDialogContainer,
   IconBox,
   ProfileIcon,
-//  ProfileEditIcon,
+  ProfileEditIcon,
   CloseProfileIcon,
   Label,
   VenmoTextField,
@@ -27,6 +30,7 @@ export default function ProfileDialog(props) {
       $college: String!
       $phone: String!
       $venmo: String!
+      $pfp: String!
     ) {
       userUpdateOne(
         record: {
@@ -35,6 +39,7 @@ export default function ProfileDialog(props) {
           college: $college
           phone: $phone
           venmo: $venmo
+          pfp: $pfp
         }
       ) {
         record {
@@ -44,6 +49,7 @@ export default function ProfileDialog(props) {
           college
           phone
           venmo
+          pfp
         }
       }
     }
@@ -60,6 +66,7 @@ export default function ProfileDialog(props) {
     phone: profileUser.phone,
     email: profileUser.netid + "@rice.edu",
     venmo: profileUser.venmo,
+    pfp: profileUser.pfp,
   });
 
   const closeDialog = () => {
@@ -83,6 +90,15 @@ export default function ProfileDialog(props) {
     });
    }
 
+  function setPfp(pfp) {
+    setUser((prestate) => {
+      return {
+        ...prestate,
+        pfp: pfp,
+      };
+    });
+  }
+
   const [updateUser] = useMutation(UPDATE_USER);
   const updateUserInfo = () => {
      updateUser({ variables: user });
@@ -102,10 +118,14 @@ export default function ProfileDialog(props) {
     },
   });
 
+  const {acceptedFiles, getRootProps, getInputProps} = useDropzone()
+  const [openPfpEditor, setOpenPfpEditor] = useState(false);
+
   if (loading) return <LoadingDiv />;
   if (error) return `Error! ${error.message}`;
 
   return (
+    <>
     <Dialog open={openDialog} fullWidth={true} maxWidth="xl">
       <Paper style={{ maxHeight: 700, overflow: "auto" }}>
         <List>
@@ -113,7 +133,7 @@ export default function ProfileDialog(props) {
             <ProfileDialogContainer>
               <IconBox>
                 <ProfileIcon />
-                {/* <ProfileEditIcon /> */}
+                <ProfileEditIcon onClick={()=>setOpenPfpEditor(true)}/>
                 <CloseProfileIcon onClick={closeDialog} />
               </IconBox>
 
@@ -238,5 +258,48 @@ export default function ProfileDialog(props) {
         </List>
       </Paper>
     </Dialog>
+    {/* Nested dialog for profile picture upload */}
+    <Dialog open={openPfpEditor} maxWidth="xl">
+      <Paper>
+        <List>
+          <StyledDialogContent>
+            <ProfileDialogContainer>
+              <InputBox>
+                <Label>Upload Profile Picture:</Label>
+                <div {...getRootProps({className: 'dropzone'})}>
+                  <input {...getInputProps()} />
+                  <p>Drag 'n' drop some files here, or click to select files</p>
+                </div>
+                <aside>
+                  <AvatarEditor
+                      image={acceptedFiles[0]}
+                      width={250}
+                      height={250}
+                      borderRadius={1028}
+                      color={[0, 0, 0, 0.6]} // RGBA
+                      scale={1.2}
+                      rotate={0}
+                  />
+                </aside>
+                <SaveButton
+                  variant="contained"
+                  onClick={() => {
+                    // Upload profile picture
+                    addToast("Profile Picture Updated", {
+                      appearance: "success",
+                    });
+                    
+                    setOpenPfpEditor(false);
+                  }}
+                >
+                  Save
+                </SaveButton>
+              </InputBox>
+            </ProfileDialogContainer>
+          </StyledDialogContent>
+        </List>
+      </Paper>
+    </Dialog>
+    </>
   );
 }

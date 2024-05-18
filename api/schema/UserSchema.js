@@ -4,6 +4,9 @@ import {
   verifyToken,
   createToken,
 } from "../utils/authenticationUtils";
+import {
+  generateUploadURL
+} from "../utils/pfpUtils";
 
 /**
  * Custom fields and relations
@@ -24,6 +27,19 @@ UserTC.addRelation("rides", {
 /**
  * Custom Resolvers
  */
+UserTC.addResolver({
+  name: "upload",
+  type: UserTC,
+  args: { token: UserTC.getFieldTC("token") },
+  resolve: async ({ source, args, context, info }) => {
+    let verificationResponse = await verifyToken(args.token);
+    if (verificationResponse.success) {
+      return await generateUploadURL();
+    } else {
+       throw Error("Bad Verification.");
+    }
+  },
+});
 
 /**
  * Authentication-related resolvers
