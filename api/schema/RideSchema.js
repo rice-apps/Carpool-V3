@@ -2,18 +2,20 @@ import nodemailer from 'nodemailer'
 import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
 
-/*
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
   secure: true,
   auth: {
-    // TODO: Use OAuth instead 😳
+    type: 'OAuth2',
     user: process.env.SENDER_EMAIL,
-    pass: process.env.SENDER_EMAIL_PASSWORD,
-  },
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: process.env.ACCESS_TOKEN,
+  }
 })
-*/
 
 /**
  * Add relations since the Ride model has ObjectIds (references) for some fields
@@ -133,13 +135,13 @@ RideTC.addResolver({
         </a>
       </p>
     `
-    /*
+
     transporter.sendMail({
       to: `${owner.netid}@rice.edu`,
       subject: subject,
       text: plaintextBody,
       html: htmlBody,
-    })*/
+    })
 
     return updatedRide
   },
