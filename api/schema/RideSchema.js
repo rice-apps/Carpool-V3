@@ -153,7 +153,7 @@ const RideMutation = {
 }
 
 async function sendMail(updatedRide, args) {
-  console.log(JSON.stringify(updatedRide))
+  console.log(updatedRide)
   const owner = await User.findById(updatedRide.owner)
   const user = await User.findById(args.actorID)
 
@@ -186,7 +186,7 @@ async function sendMail(updatedRide, args) {
         "address": arrival.address
       },
       "notes": updatedRide.notes,
-      "riders": updatedRide.riders.filter(rider=>rider.netid != owner.netid).map(rider => {
+      "riders": updatedRide.riders.filter(rider=>rider != owner).map(rider => {
         return {
           "firstName": rider.firstName,
           "lastName": rider.lastName,
