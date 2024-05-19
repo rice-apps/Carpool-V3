@@ -12,6 +12,8 @@ const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING
 
 agenda.define('send reminder', async (job) => {
   const ride = await Ride.findById(job.attrs.data.rideID)
+  console.log(job.attrs.data.rideID)
+  console.log(JSON.stringify(ride))
   if (!ride || !ride.owner) {
     console.log("Ride not found")
     return
@@ -148,6 +150,7 @@ const RideMutation = {
 }
 
 async function sendMail(updatedRide, args) {
+  console.log(JSON.stringify(updatedRide))
   const owner = await User.findById(updatedRide.owner)
   const user = await User.findById(args.actorID)
 
@@ -201,7 +204,6 @@ async function sendMail(updatedRide, args) {
       "netID": user.netid
     }
   }
-  console.log(JSON.stringify(updatedRide))
 
   if (args.sendAll) {
     for (const rider of updatedRide.riders) {
