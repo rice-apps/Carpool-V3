@@ -98,7 +98,16 @@ RideTC.addResolver({
 
     const departure = await Location.findById(updatedRide.departureLocation)
     const arrival = await Location.findById(updatedRide.arrivalLocation)
-
+    // We want a date in the format of "Day, Month Date, Time" (e.g. "Monday, January 1, 12:00 PM")
+    const date = new Date(updatedRide.departureDate)
+    const dateFormatted = date.toLocaleString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    })
     const templateData = {
       "ride": {
         "owner": {
