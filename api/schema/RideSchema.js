@@ -128,7 +128,7 @@ const RideQuery = {
 const RideMutation = {
   rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]).wrapResolve((next)=> async (rp) => {
     const result = await next(rp)
-    Ride.findById(rp.args.rideID).then((rp) => {
+    Ride.findById(rp.args.rideID).then((ride) => {
       // Schedule using agenda
       const date = (new Date(result.record.departureDate))
       date.setHours(date.getHours() - 1)
