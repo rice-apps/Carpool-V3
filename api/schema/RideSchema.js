@@ -128,11 +128,11 @@ const RideQuery = {
 const RideMutation = {
   rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]).wrapResolve((next)=> async (rp) => {
     const result = await next(rp)
-    Ride.findById(rp.args.rideID).then((ride) => {
+    Ride.findById(result.recordId).then((ride) => {
       // Schedule using agenda
       const date = (new Date(result.record.departureDate))
       date.setHours(date.getHours() - 1)
-      agenda.schedule(date, 'send reminder', {rideID: rp.args.rideID})
+      agenda.schedule(date, 'send reminder', {rideID: result.recordId})
     })
     return result;
   }), // only a registered user can create a ride
