@@ -1,8 +1,16 @@
-import nodemailer from 'nodemailer'
 import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
 import sgMail from '@sendgrid/mail'
+import { Agenda } from 'agenda'
 
+const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING } })
+agenda.define('send reminder', async (job) => {
+  const ride = await Ride.findById(job.attrs.data.rideID)
+  if (!ride || !ride.owner) {
+    return
+  }
+  await sendMail(ride, { actorID: ride.owner, push: true, templateId: process.env.REMINDER_MAIL_ID})
+})
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
@@ -93,73 +101,7 @@ RideTC.addResolver({
       { new: true } // we want to return the updated ride
     )
 
-    const owner = await User.findById(updatedRide.owner)
-    const user = await User.findById(id)
-
-    const departure = await Location.findById(updatedRide.departureLocation)
-    const arrival = await Location.findById(updatedRide.arrivalLocation)
-    // We want a date in the format of "Day, Month Date, Time" (e.g. "Monday, January 1, 12:00 PM")
-    const date = new Date(updatedRide.departureDate)
-    const dateFormatted = date.toLocaleString('en-US', {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    })
-    const templateData = {
-      "ride": {
-        "owner": {
-          "firstName": owner.firstName,
-          "lastName": owner.lastName,
-          "netID": owner.netid
-        },
-        "departureLocation": {
-          "title": departure.title,
-          "address": departure.address
-        },
-        "arrivalLocation": {
-          "title": arrival.title,
-          "address": arrival.address
-        },
-        "notes": updatedRide.notes,
-        "riders": updatedRide.riders.map(rider => {
-          return {
-            "firstName": rider.firstName,
-            "lastName": rider.lastName,
-            "netID": rider.netid
-          }
-        }),
-        "time": dateFormatted
-      },
-      "recipient": {
-        "firstName": owner.firstName,
-        "lastName": owner.lastName,
-        "netID": owner.netid
-      },
-      "join": args.push,
-      "actor": {
-        "firstName": user.firstName,
-        "lastName": user.lastName,
-        "netID": user.netid
-      }
-    }
-    
-    const msg = {
-      to: `${owner.netid}@rice.edu`,
-      from: 'carpool@riceapps.org',
-      templateId: process.env.UPDATE_MAIL_ID,
-      dynamicTemplateData: templateData
-    };
-
-    sgMail.send(msg).then(() => {}, error => {
-      console.error("Issue with sending email", error);
-  
-      if (error.response) {
-        console.error(error.response.body)
-      }
-    });
+    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID})
 
     return updatedRide
   },
@@ -174,7 +116,18 @@ const RideQuery = {
 
 // TODO: Add [authMiddleware] back to all getResolver calls once login is implemented!
 const RideMutation = {
-  rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]), // only a registered user can create a ride
+  rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]).wrapResolve((next)=> (rp) => {
+    Ride.findById(rp.args.rideID).then((ride) => {
+      // Schedule using agenda
+      const agenda = rp.context.agenda
+      const date = Date.now()//(new Date(ride.departureDate))
+      // Go back one hour
+      //date.setHours(date.getHours() - 1)
+      date.setSeconds(date.getSeconds() + 15);
+      agenda.schedule(date, 'send reminder', { rideID: rp.args.rideID})
+    })
+    return next(rp)
+  }), // only a registered user can create a ride
   rideUpdateOne: RideTC.getResolver('updateOne'), // only a registered user can edit the ride completely
   rideDeleteOne: RideTC.getResolver('removeById', [authMiddleware]), // only the user who OWNS the ride can delete it
   addRider: RideTC.getResolver('updateRiders', [authMiddleware]).wrapResolve((next) => (rp) => {
@@ -187,6 +140,76 @@ const RideMutation = {
       return next(rp)
     }
   ),
+}
+
+async function sendMail(updatedRide, args) {
+  const owner = await User.findById(updatedRide.owner)
+  const user = await User.findById(args.actorID)
+
+  const departure = await Location.findById(updatedRide.departureLocation)
+  const arrival = await Location.findById(updatedRide.arrivalLocation)
+  // We want a date in the format of "Day, Month Date, Time" (e.g. "Monday, January 1, 12:00 PM")
+  const date = new Date(updatedRide.departureDate)
+  const dateFormatted = date.toLocaleString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  })
+  const templateData = {
+    "ride": {
+      "owner": {
+        "firstName": owner.firstName,
+        "lastName": owner.lastName,
+        "netID": owner.netid
+      },
+      "departureLocation": {
+        "title": departure.title,
+        "address": departure.address
+      },
+      "arrivalLocation": {
+        "title": arrival.title,
+        "address": arrival.address
+      },
+      "notes": updatedRide.notes,
+      "riders": updatedRide.riders.map(rider => {
+        return {
+          "firstName": rider.firstName,
+          "lastName": rider.lastName,
+          "netID": rider.netid
+        }
+      }),
+      "time": dateFormatted
+    },
+    "recipient": {
+      "firstName": owner.firstName,
+      "lastName": owner.lastName,
+      "netID": owner.netid
+    },
+    "join": args.push,
+    "actor": {
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "netID": user.netid
+    }
+  }
+
+  const msg = {
+    to: `${owner.netid}@rice.edu`,
+    from: 'carpool@riceapps.org',
+    templateId: args.templateId,
+    dynamicTemplateData: templateData
+  }
+
+  sgMail.send(msg).then(() => { }, error => {
+    console.error("Issue with sending email", error)
+
+    if (error.response) {
+      console.error(error.response.body)
+    }
+  })
 }
 
 async function authMiddleware(resolve, source, args, context, info) {
