@@ -16,7 +16,7 @@ agenda.define('send reminder', async (job) => {
     console.log("Ride not found")
     return
   }
-  await sendMail(ride, { actorID: ride.owner, push: true, templateId: process.env.REMINDER_MAIL_ID})
+  await sendMail(ride, { actorID: ride.owner, push: true, templateId: process.env.REMINDER_MAIL_ID, sendAll: true})
 });
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
@@ -108,7 +108,7 @@ RideTC.addResolver({
       { new: true } // we want to return the updated ride
     )
 
-    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID})
+    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID, sendAll: true})
 
     return updatedRide
   },
@@ -201,20 +201,30 @@ async function sendMail(updatedRide, args) {
       "netID": user.netid
     }
   }
-
-  const msg = {
-    to: `${owner.netid}@rice.edu`,
-    from: 'carpool@riceapps.org',
-    templateId: args.templateId,
-    dynamicTemplateData: templateData
+  console.log(JSON.stringify(templateData))
+  if (args.sendAll) {
+    for (const rider of updatedRide.riders) {
+      sendToNetId(rider.netid, args.templateId, templateData);
+    }
+  } else {
+    sendToNetId(owner.netid, args.templateId, templateData);
   }
-  sgMail.send(msg).then(() => { console.log("Sent mail") }, error => {
-    console.error("Issue with sending email", error)
+}
+
+function sendToNetId(netId, templateId, templateData) {
+  const msg = {
+    to: `${netId}@rice.edu`,
+    from: 'carpool@riceapps.org',
+    templateId: templateId,
+    dynamicTemplateData: templateData
+  };
+  sgMail.send(msg).then(() => { console.log("Sent mail"); }, error => {
+    console.error("Issue with sending email", error);
 
     if (error.response) {
-      console.error(error.response.body)
+      console.error(error.response.body);
     }
-  })
+  });
 }
 
 async function authMiddleware(resolve, source, args, context, info) {
