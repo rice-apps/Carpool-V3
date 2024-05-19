@@ -112,7 +112,7 @@ RideTC.addResolver({
       update,
       { new: true } // we want to return the updated ride
     )
-
+    console.log("Updated ride: ", updatedRide)
     await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID, sendAll: true})
 
     return updatedRide
@@ -186,7 +186,7 @@ async function sendMail(updatedRide, args) {
         "address": arrival.address
       },
       "notes": updatedRide.notes,
-      "riders": updatedRide.riders.filter(rider=>rider.neid != owner.netid).map(rider => {
+      "riders": updatedRide.riders.filter(rider=>rider.netid != owner.netid).map(rider => {
         return {
           "firstName": rider.firstName,
           "lastName": rider.lastName,
@@ -210,10 +210,12 @@ async function sendMail(updatedRide, args) {
 
   if (args.sendAll) {
     for (const rider of updatedRide.riders) {
-      sendToNetId(rider.netid, args.templateId, templateData);
+      const user = await User.findById(rider)
+      sendToNetId(user.netid, args.templateId, templateData);
     }
   } else {
-    sendToNetId(owner.netid, args.templateId, templateData);
+    const user = await User.findById(updatedRide.owner)
+    sendToNetId(user.netid, args.templateId, templateData);
   }
 }
 
