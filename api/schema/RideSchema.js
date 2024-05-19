@@ -218,7 +218,7 @@ function sendToNetId(netId, templateId, templateData) {
     templateId: templateId,
     dynamicTemplateData: templateData
   };
-  sgMail.send(msg).then(() => { console.log("Sent mail"); }, error => {
+  sgMail.send(msg).then(() => { console.log("Sent mail to ", msg.to); }, error => {
     console.error("Issue with sending email", error);
 
     if (error.response) {
