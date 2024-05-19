@@ -120,7 +120,7 @@ const RideMutation = {
     Ride.findById(rp.args.rideID).then((ride) => {
       // Schedule using agenda
       const agenda = rp.context.agenda
-      const date = Date.now()//(new Date(ride.departureDate))
+      const date = new Date(Date.now())//(new Date(ride.departureDate))
       // Go back one hour
       //date.setHours(date.getHours() - 1)
       date.setSeconds(date.getSeconds() + 15);
