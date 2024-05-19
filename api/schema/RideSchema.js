@@ -14,6 +14,7 @@ agenda.define('send reminder', async (job) => {
   const ride = await Ride.findById(job.attrs.data.rideID)
   console.log(job.attrs.data.rideID)
   console.log(JSON.stringify(ride))
+  console.log(ride == null)
   if (!ride || !ride.owner) {
     console.log("Ride not found")
     return
@@ -131,7 +132,7 @@ const RideMutation = {
       // Schedule using agenda
       const date = (new Date(result.record.departureDate))
       date.setHours(date.getHours() - 1)
-      agenda.schedule(date, 'send reminder', {rideID: result.record._id})
+      agenda.schedule(date, 'send reminder', {rideID: rp.args.rideID})
     })
     return result;
   }), // only a registered user can create a ride
