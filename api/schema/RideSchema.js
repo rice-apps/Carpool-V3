@@ -5,8 +5,11 @@ import { Agenda } from 'agenda'
 
 const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING } })
 agenda.define('send reminder', async (job) => {
+  console.log("Sending reminder email")
   const ride = await Ride.findById(job.attrs.data.rideID)
+  console.log(ride)
   if (!ride || !ride.owner) {
+    console.log("Ride not found")
     return
   }
   await sendMail(ride, { actorID: ride.owner, push: true, templateId: process.env.REMINDER_MAIL_ID})
@@ -201,8 +204,8 @@ async function sendMail(updatedRide, args) {
     templateId: args.templateId,
     dynamicTemplateData: templateData
   }
-
-  sgMail.send(msg).then(() => { }, error => {
+  console.log("Preparing for sending mail")
+  sgMail.send(msg).then(() => { console.log("Sent mail") }, error => {
     console.error("Issue with sending email", error)
 
     if (error.response) {
