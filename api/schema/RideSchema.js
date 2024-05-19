@@ -201,7 +201,8 @@ async function sendMail(updatedRide, args) {
       "netID": user.netid
     }
   }
-  console.log(JSON.stringify(templateData))
+  console.log(JSON.stringify(updatedRide))
+
   if (args.sendAll) {
     for (const rider of updatedRide.riders) {
       sendToNetId(rider.netid, args.templateId, templateData);
