@@ -126,8 +126,8 @@ const RideQuery = {
 
 // TODO: Add [authMiddleware] back to all getResolver calls once login is implemented!
 const RideMutation = {
-  rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]).wrapResolve((next)=> (rp) => {
-    const result = next(rp)
+  rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]).wrapResolve((next)=> async (rp) => {
+    const result = await next(rp)
     Ride.findById(rp.args.rideID).then((rp) => {
       console.log(JSON.stringify(result));
       // Schedule using agenda
@@ -135,7 +135,7 @@ const RideMutation = {
       // Go back one hour
       //date.setHours(date.getHours() - 1)
       date.setMinutes(date.getMinutes() + 2);
-      agenda.schedule(date, 'send reminder', { rideID: result._id})
+      agenda.schedule(date, 'send reminder', result)
     })
     return result;
   }), // only a registered user can create a ride
