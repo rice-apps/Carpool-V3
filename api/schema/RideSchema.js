@@ -14,6 +14,8 @@ agenda.define('send reminder', async (job) => {
   const ride = await Ride.findById(job.attrs.data.rideID)
   console.log(job.attrs.data.rideID)
   console.log(JSON.stringify(ride))
+  console.log(ride)
+  console.log(ride.riders)
   console.log(ride == null)
   if (!ride || !ride.owner) {
     console.log("Ride not found")
