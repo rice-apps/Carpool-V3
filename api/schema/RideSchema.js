@@ -144,7 +144,13 @@ RideTC.addResolver({
       dynamicTemplateData: templateData
     };
 
-    sgMail.sendMail(msg);
+    sgMail.send(msg).then(() => {}, error => {
+      console.error("Issue with sending email", error);
+  
+      if (error.response) {
+        console.error(error.response.body)
+      }
+    });
 
     return updatedRide
   },
