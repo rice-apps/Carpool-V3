@@ -3,7 +3,13 @@ import { isRideFull } from '../utils/rideUtils'
 import sgMail from '@sendgrid/mail'
 import { Agenda } from 'agenda'
 
-const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING } })
+const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING } });
+
+(async function () {
+	// IIFE to give access to async/await
+	await agenda.start();
+})();
+
 agenda.define('send reminder', async (job) => {
   console.log("Sending reminder email")
   const ride = await Ride.findById(job.attrs.data.rideID)
@@ -13,12 +19,7 @@ agenda.define('send reminder', async (job) => {
     return
   }
   await sendMail(ride, { actorID: ride.owner, push: true, templateId: process.env.REMINDER_MAIL_ID})
-})
-
-(async function () {
-	// IIFE to give access to async/await
-	await agenda.start();
-})();
+});
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
