@@ -11,10 +11,7 @@ const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING
 })();
 
 agenda.define('send reminder', async (job) => {
-  console.log("Sending reminder email")
-  console.log(JSON.stringify(job))
   const ride = await Ride.findById(job.attrs.data.rideID)
-  console.log(ride)
   if (!ride || !ride.owner) {
     console.log("Ride not found")
     return
@@ -129,12 +126,9 @@ const RideMutation = {
   rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]).wrapResolve((next)=> async (rp) => {
     const result = await next(rp)
     Ride.findById(rp.args.rideID).then((rp) => {
-      console.log(JSON.stringify(result));
       // Schedule using agenda
-      const date = new Date(Date.now())//(new Date(ride.departureDate))
-      // Go back one hour
-      //date.setHours(date.getHours() - 1)
-      date.setMinutes(date.getMinutes() + 2);
+      const date = (new Date(ride.departureDate))
+      date.setHours(date.getHours() - 1)
       agenda.schedule(date, 'send reminder', {rideID: result.record._id})
     })
     return result;
@@ -162,13 +156,14 @@ async function sendMail(updatedRide, args) {
   // We want a date in the format of "Day, Month Date, Time" (e.g. "Monday, January 1, 12:00 PM")
   const date = new Date(updatedRide.departureDate)
   const dateFormatted = date.toLocaleString('en-US', {
+    timeZone: 'America/Chicago',
     weekday: 'long',
     month: 'long',
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
     hour12: true,
-  })
+  }) + " CST"
   const templateData = {
     "ride": {
       "owner": {
@@ -213,7 +208,6 @@ async function sendMail(updatedRide, args) {
     templateId: args.templateId,
     dynamicTemplateData: templateData
   }
-  console.log("Preparing for sending mail")
   sgMail.send(msg).then(() => { console.log("Sent mail") }, error => {
     console.error("Issue with sending email", error)
 
