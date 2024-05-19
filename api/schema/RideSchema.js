@@ -1,21 +1,10 @@
 import nodemailer from 'nodemailer'
 import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
+import sgMail from '@sendgrid/mail'
 
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    type: 'OAuth2',
-    user: process.env.SENDER_EMAIL,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-    accessToken: process.env.ACCESS_TOKEN,
-  }
-})
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 /**
  * Add relations since the Ride model has ObjectIds (references) for some fields
@@ -110,38 +99,52 @@ RideTC.addResolver({
     const departure = await Location.findById(updatedRide.departureLocation)
     const arrival = await Location.findById(updatedRide.arrivalLocation)
 
-    const joinedOrLeft = args.push ? 'joined' : 'left'
-    const dateFormatted = updatedRide.departureDate.toDateString()
-
-    const subject = `Rice Carpool: ${user.firstName} ${joinedOrLeft} your ride`
-    const plaintextBody = `
-      ${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.\n\nSee <https://carpool.riceapps.org/ridesummary/${updatedRide.id}> for details.
-    `.trim()
-
-    const htmlBody = `
-      <p>
-        <a href="https://carpool.riceapps.org/profile/${user.netid}">${user.firstName} ${user.lastName}</a> ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.
-      </p>
-
-      <p>
-        See <a href="https://carpool.riceapps.org/ridesummary/${updatedRide.id}">the ride page</a> for details.
-      </p>
-
-      <br /><br />
-
-      <p>
-        <a href="https://carpool.riceapps.org/">
-          <img src="https://carpool.riceapps.org/logo-with-wordmark.png" width="250" alt="Rice Carpool logo" />
-        </a>
-      </p>
-    `
-
-    transporter.sendMail({
+    const templateData = {
+      "ride": {
+        "owner": {
+          "firstName": owner.firstName,
+          "lastName": owner.lastName,
+          "netID": owner.netid
+        },
+        "departureLocation": {
+          "title": departure.title,
+          "address": departure.address
+        },
+        "arrivalLocation": {
+          "title": arrival.title,
+          "address": arrival.address
+        },
+        "notes": updatedRide.notes,
+        "riders": updatedRide.riders.map(rider => {
+          return {
+            "firstName": rider.firstName,
+            "lastName": rider.lastName,
+            "netID": rider.netid
+          }
+        }),
+        "time": dateFormatted
+      },
+      "recipient": {
+        "firstName": owner.firstName,
+        "lastName": owner.lastName,
+        "netID": owner.netid
+      },
+      "join": args.push,
+      "actor": {
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "netID": user.netid
+      }
+    }
+    
+    const msg = {
       to: `${owner.netid}@rice.edu`,
-      subject: subject,
-      text: plaintextBody,
-      html: htmlBody,
-    })
+      from: 'carpool@riceapps.org',
+      templateId: process.env.UPDATE_MAIL_ID,
+      dynamicTemplateData: templateData
+    };
+
+    sgMail.sendMail(msg);
 
     return updatedRide
   },
