@@ -135,7 +135,7 @@ const RideMutation = {
       // Go back one hour
       //date.setHours(date.getHours() - 1)
       date.setMinutes(date.getMinutes() + 2);
-      agenda.schedule(date, 'send reminder', result)
+      agenda.schedule(date, 'send reminder', {rideID: result.record._id})
     })
     return result;
   }), // only a registered user can create a ride
