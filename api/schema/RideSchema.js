@@ -15,6 +15,11 @@ agenda.define('send reminder', async (job) => {
   await sendMail(ride, { actorID: ride.owner, push: true, templateId: process.env.REMINDER_MAIL_ID})
 })
 
+(async function () {
+	// IIFE to give access to async/await
+	await agenda.start();
+})();
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 /**
@@ -125,7 +130,7 @@ const RideMutation = {
       const date = new Date(Date.now())//(new Date(ride.departureDate))
       // Go back one hour
       //date.setHours(date.getHours() - 1)
-      date.setSeconds(date.getSeconds() + 15);
+      date.setMinutes(date.getMinutes() + 2);
       agenda.schedule(date, 'send reminder', { rideID: rp.args.rideID})
     })
     return next(rp)
