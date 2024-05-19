@@ -127,7 +127,7 @@ const RideMutation = {
     const result = await next(rp)
     Ride.findById(rp.args.rideID).then((rp) => {
       // Schedule using agenda
-      const date = (new Date(ride.departureDate))
+      const date = (new Date(result.record.departureDate))
       date.setHours(date.getHours() - 1)
       agenda.schedule(date, 'send reminder', {rideID: result.record._id})
     })
@@ -180,7 +180,7 @@ async function sendMail(updatedRide, args) {
         "address": arrival.address
       },
       "notes": updatedRide.notes,
-      "riders": updatedRide.riders.map(rider => {
+      "riders": updatedRide.riders.filter(rider=>rider.neid != owner.netid).map(rider => {
         return {
           "firstName": rider.firstName,
           "lastName": rider.lastName,
