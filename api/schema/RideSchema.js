@@ -12,6 +12,7 @@ const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING
 
 agenda.define('send reminder', async (job) => {
   console.log("Sending reminder email")
+  console.log(JSON.stringify(job.attrs.data))
   const ride = await Ride.findById(job.attrs.data.rideID)
   console.log(ride)
   if (!ride || !ride.owner) {
