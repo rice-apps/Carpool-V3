@@ -187,11 +187,8 @@ async function sendMail(updatedRide, args) {
           "address": arrival.address
         },
         "notes": updatedRide.notes,
-        "riders": updatedRide.riders.filter(rider=>rider != owner._id).map(async rider => {
-          console.log(typeof rider)
-          console.log(JSON.stringify(Object.entries(rider)))
-          console.log(typeof owner._id)
-          console.log(JSON.stringify(Object.entries(owner._id)))
+        "riders": updatedRide.riders.filter(rider=>rider.id != owner._id.id).map(async rider => {
+          console.log(rider.id != owner._id.id)
           const user = await User.findById(rider)
           return {
             "firstName": user.firstName,
