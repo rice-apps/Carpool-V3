@@ -187,13 +187,12 @@ async function sendMail(updatedRide, args) {
           "address": arrival.address
         },
         "notes": updatedRide.notes,
-        "riders": updatedRide.riders.map(rider => {
-          console.log(rider)
-          console.log(owner)
+        "riders": updatedRide.riders.filter(rider=>rider != owner._id).map(async rider => {
+          const user = await User.findById(rider)
           return {
-            "firstName": rider.firstName,
-            "lastName": rider.lastName,
-            "netID": rider.netid
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "netID": user.netid
           }
         }),
         "time": dateFormatted
