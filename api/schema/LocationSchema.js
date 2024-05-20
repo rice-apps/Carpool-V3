@@ -12,8 +12,8 @@ const LocationQuery = {
 };
 
 const LocationMutation = {
-    locationCreateOne: LocationTC.getResolver('createOne', [authMiddleware]),
-    locationDeleteOne: LocationTC.getResolver('removeById', [authMiddleware]),
+    locationCreateOne: LocationTC.getResolver('createOne'),
+    locationDeleteOne: LocationTC.getResolver('removeById'),
     // locationUpdateOne: LocationTC.getResolver('updateOne')
     
 };

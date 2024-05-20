@@ -1,17 +1,18 @@
 var createError = require('http-errors');
 var express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+import http from 'http';
+
+// var path = require('path');
+// var cookieParser = require('cookie-parser');
 var exjwt = require('express-jwt');
 var cors = require('cors')
-var Ddos = require('ddos')
 
 // Import hidden values from .env
-import { PORT, SECRET, REDIS_PORT, REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD } from './config';
+import { PORT, SECRET } from './config';
 
 // Apollo Imports
 import Schema from './schema';
-import bodyParser from 'body-parser'
-import graphqlWhitelist, { QueryRepository, MemoryStore, RedisStore } from 'graphql-query-whitelist'
 
 /**
  * Import a custom route (non-GraphQL) like so:
@@ -36,45 +37,12 @@ const server = new ApolloServer({
 
 // Initiate express
 var app = express();
-const store = new RedisStore({
-  port: REDIS_PORT, // Redis port
-  host: REDIS_HOST, // Redis host
-  username: REDIS_USERNAME, // needs Redis >= 6
-  password: REDIS_PASSWORD,
-  db: 0, // Defaults to 0
-});
-const repository = new QueryRepository(store)
-const validationErrorFn = (req) => {
-  console.log(`Query '${req.operationName} (${req.queryId})' is not in the whitelist`)
-  console.log(`Unauthorized query: ${req.body.query}`)
-
-  // Uncomment these to add new queries to whitelist
-  // repository.put(req.body.query)
-  // console.log(store.entries().then(res => console.log(res)))
-}
 
 // Apply cors for dev purposes
 app.use(cors({
     // Set CORS options here
+    // origin: "*"
 }))
-app.use(bodyParser.json())
-// Set dryRun to try for adding queries to whitelist
-app.post('/graphql', graphqlWhitelist({ store, validationErrorFn, dryRun: true }))
-
-// ddos protection
-var ddos = new Ddos({burst:10, limit:15});
-app.use(ddos.express);
-
-app.use(function(req, res, next) {
-  if (req.headers.origin) {
-      res.header('Access-Control-Allow-Credentials', true)
-      res.header('Access-Control-Allow-Headers', '*')
-      res.header('Access-Control-Allow-Methods', '*')
-      res.header('Access-Control-Allow-Origin', 'https://carpool.riceapps.org')
-      if (req.method === 'OPTIONS') return res.sendStatus(200);
-  }
-  next()
-})
 
 // Add JWT so that it is AVAILABLE; does NOT protect all routes (nor do we want it to)
 // Inspiration from: https://www.apollographql.com/blog/setting-up-authentication-and-authorization-with-apollo-federation
@@ -117,5 +85,6 @@ app.use(function(err, req, res, next) {
 
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
 app.listen({ port: PORT }, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}`);
+    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
 });

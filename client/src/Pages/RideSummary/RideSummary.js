@@ -51,6 +51,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { SERVICE_URL } from '../../config'; 
 import LoadingDiv from '../../common/LoadingDiv.js'
 import { useToasts } from "react-toast-notifications";
+
 const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const confirmationText = "You will still need to contact your fellow riders and order an Uber or Lyft on the day of."
 

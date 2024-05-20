@@ -38,7 +38,7 @@ export const ShorterToast = ({ children, ...props }) => (
 render(
     <ThemeProvider theme = {theme}>
         <ApolloProvider client={client}>
-        <Router history={history} basename={process.env.PUBLIC_URL}>
+        <Router history={history}>
             <ToastProvider autoDismiss components = {{Toast: ShorterToast}}>
                 <Routes />
             </ToastProvider>
