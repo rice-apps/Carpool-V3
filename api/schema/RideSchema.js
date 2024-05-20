@@ -12,11 +12,6 @@ const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING
 
 agenda.define('send reminder', async (job) => {
   const ride = await Ride.findById(job.attrs.data.rideID)
-  console.log(job.attrs.data.rideID)
-  console.log(JSON.stringify(ride))
-  console.log(ride)
-  console.log(ride.riders)
-  console.log(ride == null)
   if (!ride || !ride.owner) {
     console.log("Ride not found")
     return
@@ -112,8 +107,7 @@ RideTC.addResolver({
       update,
       { new: true } // we want to return the updated ride
     )
-    console.log("Updated ride: ", updatedRide)
-    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID, sendAll: true})
+    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID, sendAll: false})
 
     return updatedRide
   },
@@ -153,69 +147,73 @@ const RideMutation = {
 }
 
 async function sendMail(updatedRide, args) {
-  console.log(JSON.stringify(updatedRide))
-  const owner = await User.findById(updatedRide.owner)
-  const user = await User.findById(args.actorID)
+  try {
+    const owner = await User.findById(updatedRide.owner)
+    const user = await User.findById(args.actorID)
 
-  const departure = await Location.findById(updatedRide.departureLocation)
-  const arrival = await Location.findById(updatedRide.arrivalLocation)
-  // We want a date in the format of "Day, Month Date, Time" (e.g. "Monday, January 1, 12:00 PM")
-  const date = new Date(updatedRide.departureDate)
-  const dateFormatted = date.toLocaleString('en-US', {
-    timeZone: 'America/Chicago',
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-  }) + " CST"
-  const templateData = {
-    "ride": {
-      "owner": {
+    const departure = await Location.findById(updatedRide.departureLocation)
+    const arrival = await Location.findById(updatedRide.arrivalLocation)
+    // We want a date in the format of "Day, Month Date, Time" (e.g. "Monday, January 1, 12:00 PM")
+    const date = new Date(updatedRide.departureDate)
+    const dateFormatted = date.toLocaleString('en-US', {
+      timeZone: 'America/Chicago',
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    }) + " CST"
+    const templateData = {
+      "ride": {
+        "owner": {
+          "firstName": owner.firstName,
+          "lastName": owner.lastName,
+          "netID": owner.netid
+        },
+        "departureLocation": {
+          "title": departure.title,
+          "address": departure.address
+        },
+        "arrivalLocation": {
+          "title": arrival.title,
+          "address": arrival.address
+        },
+        "notes": updatedRide.notes,
+        "riders": updatedRide.riders.filter(rider=>rider.id != owner._id.id).map(async rider => {
+          const user = await User.findById(rider)
+          return {
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "netID": user.netid
+          }
+        }),
+        "time": dateFormatted
+      },
+      "recipient": {
         "firstName": owner.firstName,
         "lastName": owner.lastName,
         "netID": owner.netid
       },
-      "departureLocation": {
-        "title": departure.title,
-        "address": departure.address
-      },
-      "arrivalLocation": {
-        "title": arrival.title,
-        "address": arrival.address
-      },
-      "notes": updatedRide.notes,
-      "riders": updatedRide.riders.filter(rider=>rider.netid != owner.netid).map(rider => {
-        return {
-          "firstName": rider.firstName,
-          "lastName": rider.lastName,
-          "netID": rider.netid
-        }
-      }),
-      "time": dateFormatted
-    },
-    "recipient": {
-      "firstName": owner.firstName,
-      "lastName": owner.lastName,
-      "netID": owner.netid
-    },
-    "join": args.push,
-    "actor": {
-      "firstName": user.firstName,
-      "lastName": user.lastName,
-      "netID": user.netid
+      "join": args.push,
+      "actor": {
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "netID": user.netid
+      }
     }
-  }
 
-  if (args.sendAll) {
-    for (const rider of updatedRide.riders) {
-      const user = await User.findById(rider)
+    if (args.sendAll) {
+      for (const rider of updatedRide.riders) {
+        const user = await User.findById(rider)
+        sendToNetId(user.netid, args.templateId, templateData);
+      }
+    } else {
+      const user = await User.findById(updatedRide.owner)
       sendToNetId(user.netid, args.templateId, templateData);
     }
-  } else {
-    const user = await User.findById(updatedRide.owner)
-    sendToNetId(user.netid, args.templateId, templateData);
+  } catch (error) {
+    console.error("Error sending email", error)
   }
 }
 
