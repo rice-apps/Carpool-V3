@@ -240,7 +240,6 @@ const NotesDiv = styled.div`
   width: 97%;
   padding: 10px;  
   color: rgba(128, 128, 128, 1);
-  background: #ffffff;
   
   font-family: Josefin Sans;
   border-radius: 5px;

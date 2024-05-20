@@ -68,7 +68,7 @@ const Search = () => {
 
   const { data: locations, loading: locsLoading, refetch: refetchLoc } = useQuery(GET_LOCATIONS);
 
-  const today = new Date().toDateString();
+  const today = new Date().toLocaleDateString("en-US", {timeZone: "America/Chicago"});
   const { refetch: refetchRide, loading: rideLoading } = useQuery(GET_RIDES, {
     variables: { after: today },
     notifyOnNetworkStatusChange: true,

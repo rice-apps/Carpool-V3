@@ -1,17 +1,25 @@
-import nodemailer from 'nodemailer'
 import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
+import sgMail from '@sendgrid/mail'
+import { Agenda } from 'agenda'
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    // TODO: Use OAuth instead 😳
-    user: process.env.SENDER_EMAIL,
-    pass: process.env.SENDER_EMAIL_PASSWORD,
-  },
-})
+const agenda = new Agenda({ db: { address: process.env.MONGODB_CONNECTION_STRING } });
+
+(async function () {
+	// IIFE to give access to async/await
+	await agenda.start();
+})();
+
+agenda.define('send reminder', async (job) => {
+  const ride = await Ride.findById(job.attrs.data.rideID)
+  if (!ride || !ride.owner) {
+    console.log("Ride not found")
+    return
+  }
+  await sendMail(ride, { actorID: ride.owner, push: true, templateId: process.env.REMINDER_MAIL_ID, sendAll: true})
+});
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 /**
  * Add relations since the Ride model has ObjectIds (references) for some fields
@@ -99,45 +107,7 @@ RideTC.addResolver({
       update,
       { new: true } // we want to return the updated ride
     )
-
-    const owner = await User.findById(updatedRide.owner)
-    const user = await User.findById(id)
-
-    const departure = await Location.findById(updatedRide.departureLocation)
-    const arrival = await Location.findById(updatedRide.arrivalLocation)
-
-    const joinedOrLeft = args.push ? 'joined' : 'left'
-    const dateFormatted = updatedRide.departureDate.toDateString()
-
-    const subject = `Rice Carpool: ${user.firstName} ${joinedOrLeft} your ride`
-    const plaintextBody = `
-      ${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.\n\nSee <https://carpool.riceapps.org/ridesummary/${updatedRide.id}> for details.
-    `.trim()
-
-    const htmlBody = `
-      <p>
-        <a href="https://carpool.riceapps.org/profile/${user.netid}">${user.firstName} ${user.lastName}</a> ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.
-      </p>
-
-      <p>
-        See <a href="https://carpool.riceapps.org/ridesummary/${updatedRide.id}">the ride page</a> for details.
-      </p>
-
-      <br /><br />
-
-      <p>
-        <a href="https://carpool.riceapps.org/">
-          <img src="https://carpool.riceapps.org/logo-with-wordmark.png" width="250" alt="Rice Carpool logo" />
-        </a>
-      </p>
-    `
-
-    transporter.sendMail({
-      to: `${owner.netid}@rice.edu`,
-      subject: subject,
-      text: plaintextBody,
-      html: htmlBody,
-    })
+    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID, sendAll: false})
 
     return updatedRide
   },
@@ -152,19 +122,115 @@ const RideQuery = {
 
 // TODO: Add [authMiddleware] back to all getResolver calls once login is implemented!
 const RideMutation = {
-  rideCreateOne: RideTC.getResolver('createOne'), // only a registered user can create a ride
+  rideCreateOne: RideTC.getResolver('createOne', [authMiddleware]).wrapResolve((next)=> async (rp) => {
+    const result = await next(rp)
+    Ride.findById(result.recordId).then((ride) => {
+      // Schedule using agenda
+      const date = (new Date(result.record.departureDate))
+      date.setHours(date.getHours() - 1)
+      agenda.schedule(date, 'send reminder', {rideID: result.recordId})
+    })
+    return result;
+  }), // only a registered user can create a ride
   rideUpdateOne: RideTC.getResolver('updateOne'), // only a registered user can edit the ride completely
-  rideDeleteOne: RideTC.getResolver('removeById'), // only the user who OWNS the ride can delete it
-  addRider: RideTC.getResolver('updateRiders').wrapResolve((next) => (rp) => {
+  rideDeleteOne: RideTC.getResolver('removeById', [authMiddleware]), // only the user who OWNS the ride can delete it
+  addRider: RideTC.getResolver('updateRiders', [authMiddleware]).wrapResolve((next) => (rp) => {
     rp.args.push = true // we want to add a rider
     return next(rp)
   }),
-  removeRider: RideTC.getResolver('updateRiders').wrapResolve(
+  removeRider: RideTC.getResolver('updateRiders', [authMiddleware]).wrapResolve(
     (next) => (rp) => {
       rp.args.push = false // we want to remove a rider
       return next(rp)
     }
   ),
+}
+
+async function sendMail(updatedRide, args) {
+  try {
+    const owner = await User.findById(updatedRide.owner)
+    const user = await User.findById(args.actorID)
+
+    const departure = await Location.findById(updatedRide.departureLocation)
+    const arrival = await Location.findById(updatedRide.arrivalLocation)
+    // We want a date in the format of "Day, Month Date, Time" (e.g. "Monday, January 1, 12:00 PM")
+    const date = new Date(updatedRide.departureDate)
+    const dateFormatted = date.toLocaleString('en-US', {
+      timeZone: 'America/Chicago',
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    }) + " CST"
+    const templateData = {
+      "ride": {
+        "owner": {
+          "firstName": owner.firstName,
+          "lastName": owner.lastName,
+          "netID": owner.netid
+        },
+        "departureLocation": {
+          "title": departure.title,
+          "address": departure.address
+        },
+        "arrivalLocation": {
+          "title": arrival.title,
+          "address": arrival.address
+        },
+        "notes": updatedRide.notes,
+        "riders": updatedRide.riders.filter(rider=>rider.id != owner._id.id).map(async rider => {
+          const user = await User.findById(rider)
+          return {
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "netID": user.netid
+          }
+        }),
+        "time": dateFormatted
+      },
+      "recipient": {
+        "firstName": owner.firstName,
+        "lastName": owner.lastName,
+        "netID": owner.netid
+      },
+      "join": args.push,
+      "actor": {
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "netID": user.netid
+      }
+    }
+
+    if (args.sendAll) {
+      for (const rider of updatedRide.riders) {
+        const user = await User.findById(rider)
+        sendToNetId(user.netid, args.templateId, templateData);
+      }
+    } else {
+      const user = await User.findById(updatedRide.owner)
+      sendToNetId(user.netid, args.templateId, templateData);
+    }
+  } catch (error) {
+    console.error("Error sending email", error)
+  }
+}
+
+function sendToNetId(netId, templateId, templateData) {
+  const msg = {
+    to: `${netId}@rice.edu`,
+    from: 'carpool@riceapps.org',
+    templateId: templateId,
+    dynamicTemplateData: templateData
+  };
+  sgMail.send(msg).then(() => { console.log("Sent mail to ", msg.to); }, error => {
+    console.error("Issue with sending email", error);
+
+    if (error.response) {
+      console.error(error.response.body);
+    }
+  });
 }
 
 async function authMiddleware(resolve, source, args, context, info) {

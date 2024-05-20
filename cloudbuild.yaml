@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/npm'
-  args: [ 'install' ]
+  args: [ 'install', '--legacy-peer-deps' ]
   dir: 'client'
 - name: 'gcr.io/cloud-builders/npm'
   args: ["run", "create-env"]
@@ -13,11 +13,15 @@ steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: [ 'run', 'build' ]
   dir: 'client'
+  env:
+      - 'NODE_OPTIONS=${_NODE_OPTIONS}'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
   dir: 'client'
+  env:
+    - 'NODE_OPTIONS=${_NODE_OPTIONS}'
 - name: 'gcr.io/cloud-builders/npm'
-  args: [ 'install' ]
+  args: [ 'install', '--force' ]
   dir: 'api'
 - name: 'gcr.io/cloud-builders/npm'
   args: ["run", "create-env"]
@@ -29,7 +33,16 @@ steps:
     - 'SERVICE_URL=${_SERVICE_URL}'
     - 'SECRET=${_SECRET}'
     - 'PORT=${_PORT}'
+    - 'SENDER_EMAIL=${_SENDER_EMAIL}'
+    - 'SENDER_EMAIL_PASSWORD=${_SENDER_EMAIL_PASSWORD}'
+    - 'REDIS_PORT=${_REDIS_PORT}'
+    - 'REDIS_HOST=${_REDIS_HOST}'
+    - 'REDIS_USERNAME=${_REDIS_USERNAME}'
+    - 'REDIS_PASSWORD=${_REDIS_PASSWORD}'
+    - 'NODE_OPTIONS=${_NODE_OPTIONS}'
   dir: 'api'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=1']
   dir: 'api'
+  env:
+    - 'NODE_OPTIONS=${_NODE_OPTIONS}'
