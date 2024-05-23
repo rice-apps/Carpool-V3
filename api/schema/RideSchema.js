@@ -107,7 +107,7 @@ RideTC.addResolver({
       update,
       { new: true } // we want to return the updated ride
     )
-    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID, sendAll: false})
+    await sendMail(updatedRide, {actorID: id, push: args.push, templateId: process.env.UPDATE_MAIL_ID, sendAll: true})
 
     return updatedRide
   },
