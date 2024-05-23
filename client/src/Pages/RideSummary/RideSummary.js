@@ -335,6 +335,17 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   const hour = time.format('hh:mm a')
 
   return (
+    <>
+    {/* Helmet for meta tags, which describes the ride summary page when shared over social media (i.e. iMessage, GroupMe, etc.)*/}
+    <Helmet>
+      <meta name='description' content={`Carpool ride from ${ride.departureLocation.title} to ${ride.arrivalLocation.title} at ${time} - ${ride.riders.length} / ${ride.spots} riders.`} />
+      { /* End standard metadata tags */ }
+      { /* OpenGraph tags */ }
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={`${ride.departureLocation.title} to ${ride.arrivalLocation.title}`} />
+      <meta property="og:description" content={`Carpool ride from ${ride.departureLocation.title} to ${ride.arrivalLocation.title} at ${time} - ${ride.riders.length} / ${ride.spots} riders.`} />
+      { /* End OpenGraph tags */ }
+    </Helmet>
     <AllDiv>
       <HeaderDiv>
         <BackArrowDiv onClick={() => goBack()}>
@@ -506,6 +517,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
             </Grid>
       </JoinRideDialog>
     </AllDiv>
+    </>
   )
 }
 export default RideSummary
