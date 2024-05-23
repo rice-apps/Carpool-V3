@@ -7,6 +7,7 @@ import {
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 import moment from 'moment'
+import { Helmet } from 'react-helmet-async';
 import { Redirect, useHistory } from 'react-router'
 import {
   HeaderDiv,
