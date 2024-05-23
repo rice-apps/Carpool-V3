@@ -20,12 +20,14 @@ import { ApolloProvider } from '@apollo/client'
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-
+import { HelmetProvider } from 'react-helmet-async';
 const theme = createTheme({
     typography: {
       fontFamily: "Josefin Sans"
     }
   });
+
+const helmetContext = {};
 
 export const history = createBrowserHistory();
 
@@ -36,6 +38,7 @@ export const ShorterToast = ({ children, ...props }) => (
 );
 
 render(
+    <HelmetProvider context={helmetContext}>
     <ThemeProvider theme = {theme}>
         <ApolloProvider client={client}>
         <Router history={history} basename={process.env.PUBLIC_URL}>
@@ -44,6 +47,7 @@ render(
             </ToastProvider>
         </Router>
     </ApolloProvider>
-    </ThemeProvider>, 
+    </ThemeProvider>
+    </HelmetProvider>, 
     document.querySelector('#app')
 );
