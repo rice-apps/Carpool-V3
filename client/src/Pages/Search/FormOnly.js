@@ -9,10 +9,11 @@ import { Grid } from "@material-ui/core";
 
 import "@fontsource/source-sans-pro";
 import { Form, SelectBox, MenuBox, InputBox } from "./FormOnly.styles";
+import TextField from '@material-ui/core/TextField';
 
 const FormOnly = (props) => {
   const PossibleLocations = props.testLocations;
-
+  
   const currentDate = moment();
 
   const [ridesPossibleForm, setRidesPossibleForm] = useState([]);
@@ -63,6 +64,9 @@ const FormOnly = (props) => {
   // state for filter date
   const [filterDate, setfilterDate] = useState(null);
 
+  //state for filter netID
+  const [NetID, setNetID] = useState(null);
+  
   // does actual filtering, produces resultDestArr
   useEffect(() => {
     let resultDestArr = null;
@@ -71,6 +75,7 @@ const FormOnly = (props) => {
       .then((res) => {
         resultDestArr = ridesPossibleForm;
         if (startLoc !== "") {
+          console.log(resultDestArr)
           resultDestArr = resultDestArr.filter((ele) => {
             return (
               ele.departureLocation.title === PossibleLocations[startLoc].title
@@ -90,12 +95,20 @@ const FormOnly = (props) => {
             return moment(ele.departureDate).isSame(moment(filterDate), 'day')
           });
         }
+        //add in one more filter based on NetID
+        if (NetID != null) {
+          resultDestArr = resultDestArr.filter((ele) => {
+            return (
+              ele.owner.netid === NetID
+            );
+          });
+        }
         props.setRides(resultDestArr);
       })
       .catch((err) => {
        });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startLoc, endLoc, filterDate]);
+  }, [startLoc, endLoc, filterDate, NetID]);
 
   const handleClickStartLoc = (locInd) => {
     setStartLoc(locInd);
@@ -109,6 +122,12 @@ const FormOnly = (props) => {
     localStorage.setItem("endLocation", locInd);
     console.log("handleClickEndLoc");
   };
+  const handleTypeNetID = (val) => {
+    setNetID(val);
+    //localStorage.setItem("netID", val);
+    console.log("handleTypeNetID");
+    console.log(val)
+  }
 
   return (
     <React.Fragment>
@@ -120,6 +139,7 @@ const FormOnly = (props) => {
           alignItems="center"
           spacing="4"
         >
+          
           <Grid item xs={12}>
             <InputBox id="StartLoc">Departure Location</InputBox>
             <SelectBox
@@ -183,6 +203,21 @@ const FormOnly = (props) => {
               ))}
             </SelectBox>
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              id="netID"
+              label="NetID"
+              
+              onChange={(ev) => {
+                handleTypeNetID(ev.target.value);
+              }}
+              
+            />
+          </Grid>
+
+          
+
           <Grid item xs={10}>
             <Grid
               container
