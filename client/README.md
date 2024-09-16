@@ -66,3 +66,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Updates (06/07/2023)
+
+Recently, some of the apps dependency are conflicted. Until further notice, we recommend using `npm install --forced` instead of `npm install` in the client folder. Furthermore, if you run into an error that states "digital envelope routines::unsupported" then please address the fix according to this [https://stackoverflow.com/questions/69665222/node-js-17-0-1-gatsby-error-digital-envelope-routinesunsupported-err-os](article). Specifically, you want to replace `start: cross-env PORT=3001 react-scripts start` in in `client/package.json` with ` "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && cross-env PORT=3001 react-scripts start` 

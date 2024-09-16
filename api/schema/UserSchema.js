@@ -84,14 +84,42 @@ UserTC.addResolver({
   },
 });
 
+UserTC.addResolver({
+  name: "updatePref",
+  type: UserTC,
+  args: {_id: "ID!"},
+  resolve: async({ args }) => {
+    let user;
+    console.log(args._id)
+    let exists = await User.exists({_id: args._id})
+    if(!exists){
+      throw Error("No user found")
+    }
+    else{
+      user = await User.findOne({_id: args._id})
+      console.log(user)
+    }
+    console.log("pref_is",user.notif_preference)
+    return await User.findByIdAndUpdate(
+      user._id,
+      { notif_preference: !(user.notif_preference)},
+      {new: true}
+    )
+
+}
+})
+
 // Using auth middleware for sensitive info: https://github.com/graphql-compose/graphql-compose-mongoose/issues/158
 const UserQuery = {
   // userOne: UserTC.getResolver('findOne', [authMiddleware]),
   userOne: UserTC.getResolver("findOne"), // later we'll customize authMiddleware so that a user can view SOME fields of another user, but not others (like phone #s)
+  
 };
 
 const UserMutation = {
   userUpdateOne: UserTC.getResolver("updateOne", [authMiddleware]),
+  updatePref: UserTC.getResolver("updatePref")
+  
 };
 
 async function authMiddleware(resolve, source, args, context, info) {

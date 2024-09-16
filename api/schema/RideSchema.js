@@ -1,7 +1,14 @@
+require('dotenv').config()
 import nodemailer from 'nodemailer'
 import { UserTC, RideTC, LocationTC, User, Ride, Location } from '../models'
 import { isRideFull } from '../utils/rideUtils'
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID
+const authToken = process.env.TWILIO_AUTH_TOKEN
+const phoneNum = process.env.TWILIO_PHONE_NUMBER
+const client = require('twilio')(accountSid, authToken)
+
+/** 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
@@ -12,6 +19,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SENDER_EMAIL_PASSWORD,
   },
 })
+
+*/
 
 /**
  * Add relations since the Ride model has ObjectIds (references) for some fields
@@ -113,7 +122,7 @@ RideTC.addResolver({
     const plaintextBody = `
       ${user.firstName} ${user.lastName} ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.\n\nSee <https://carpool.riceapps.org/ridesummary/${updatedRide.id}> for details.
     `.trim()
-
+    
     const htmlBody = `
       <p>
         <a href="https://carpool.riceapps.org/profile/${user.netid}">${user.firstName} ${user.lastName}</a> ${joinedOrLeft} your ${dateFormatted} ride from '${departure.title}' to '${arrival.title}'.
@@ -131,16 +140,34 @@ RideTC.addResolver({
         </a>
       </p>
     `
-
+    /** 
     transporter.sendMail({
       to: `${owner.netid}@rice.edu`,
       subject: subject,
       text: plaintextBody,
       html: htmlBody,
     })
+    */
+    console.log('testing')
+    /** 
+    if(owner.notif_preference){
+
+    
+      client.messages
+      .create({
+          body: plaintextBody,
+          from: phoneNum,
+          to: `${owner.phone}`,
+
+      })
+      .then(message => console.log(message.sid))
+    }
+    */
 
     return updatedRide
-  },
+  }
+  
+  
 })
 
 // Using auth middleware for sensitive info: https://github.com/graphql-compose/graphql-compose-mongoose/issues/158

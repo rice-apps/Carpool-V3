@@ -1,6 +1,12 @@
 var createError = require('http-errors');
 var express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const bodyParser = require('body-parser')
+const pino = require('express-pino-logger')
+const client = require('twilio')(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+)
 import http from 'http';
 
 // var path = require('path');
@@ -44,6 +50,9 @@ app.use(cors({
     // origin: "*"
 }))
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+//app.use(pino)
 // Add JWT so that it is AVAILABLE; does NOT protect all routes (nor do we want it to)
 // Inspiration from: https://www.apollographql.com/blog/setting-up-authentication-and-authorization-with-apollo-federation
 app.use(exjwt({
@@ -51,11 +60,13 @@ app.use(exjwt({
   credentialsRequired: false 
 }));
 
+
+
 // This connects apollo with express
 server.applyMiddleware({ app });
 
 // If we have custom routes, we need these to accept JSON input
-// app.use(express.json());
+app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 
@@ -66,7 +77,23 @@ server.applyMiddleware({ app });
 app.use(function(req, res, next) {
   next(createError(404));
 });
+app.post('/api/messages', (req, res) =>{
+  res.header('Content-Type','application/json');
 
+  client.messages
+    .create({
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: req.body.to,
+      from: req.body.body
+    })
+    .then(() =>{
+      res.send(JSON.stringify({success: true }))
+    })
+    .catch(err =>{
+      console.log(err)
+      res.send(JSON.stringify({ success: false }))
+    });
+});
 // Error handler
 app.use(function(err, req, res, next) {
   if (err.name === 'UnauthorizedError') { // Send the error rather than to show it on the console
@@ -83,6 +110,10 @@ app.use(function(err, req, res, next) {
   res.send('error');
 });
 
+app.post('/', (req, res) => {
+  res.send("POST Request Called")
+  console.log('callled')
+})
 // Need to call httpServer.listen instead of app.listen so that the WebSockets (subscriptions) server runs
 app.listen({ port: PORT }, () => {
     console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
