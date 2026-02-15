@@ -84,10 +84,10 @@ const YourRides = (paid) => {
                         return (
                             <UpcomingRideCard 
                                 id={ride._id}
-                                origin={ride.departureLocation.title} 
-                                destination={ride.arrivalLocation.title}
+                                origin={(ride.departureLocation || {}).title}
+                                destination={(ride.arrivalLocation || {}).title}
                                 datetime={ride.departureDate}
-                                num_riders={ride.riders.length}
+                                num_riders={(ride.riders || []).length}
                             />
                         )
                     })}
@@ -102,8 +102,8 @@ const YourRides = (paid) => {
                         return (
                             <PastRideCard 
                                 id={ride._id}
-                                origin={ride.departureLocation.title} 
-                                destination={ride.arrivalLocation.title}
+                                origin={(ride.departureLocation || {}).title}
+                                destination={(ride.arrivalLocation || {}).title}
                                 datetime={ride.departureDate}
                             />
                         

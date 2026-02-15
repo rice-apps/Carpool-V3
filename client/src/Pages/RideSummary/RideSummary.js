@@ -251,7 +251,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
   const leave = () => {
     let currentUser = localStorage.getItem('netid');
     leaveRide().then(async (result) => {
-      if (ride.riders.length === 1) {
+      if ((ride.riders || []).length === 1) {
         // DELETE ride - use result (MongoID) to delete
         deleteRide().then(() => {
           history.push('/search');
@@ -259,7 +259,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       }
       else if (ride.owner.netid === currentUser) {
         // Update owner of ride 
-        let newRiders = ride.riders.filter((key) => key.netid !== currentUser);
+        let newRiders = (ride.riders || []).filter((key) => key.netid !== currentUser);
         setNewOwner({owner:newRiders[0]});
       }
       else {
@@ -339,12 +339,12 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
     <>
     {/* Helmet for meta tags, which describes the ride summary page when shared over social media (i.e. iMessage, GroupMe, etc.)*/}
     <Helmet>
-      <meta name='description' content={`Carpool ride from ${ride.departureLocation.title} to ${ride.arrivalLocation.title} at ${time} - ${ride.riders.length} / ${ride.spots} riders.`} />
+      <meta name='description' content={`Carpool ride from ${(ride.departureLocation || {}).title} to ${(ride.arrivalLocation || {}).title} at ${time} - ${(ride.riders || []).length} / ${ride.spots} riders.`} />
       { /* End standard metadata tags */ }
       { /* OpenGraph tags */ }
       <meta property="og:type" content="website" />
-      <meta property="og:title" content={`${ride.departureLocation.title} to ${ride.arrivalLocation.title}`} />
-      <meta property="og:description" content={`Carpool ride from ${ride.departureLocation.title} to ${ride.arrivalLocation.title} at ${time} - ${ride.riders.length} / ${ride.spots} riders.`} />
+      <meta property="og:title" content={`${(ride.departureLocation || {}).title} to ${(ride.arrivalLocation || {}).title}`} />
+      <meta property="og:description" content={`Carpool ride from ${(ride.departureLocation || {}).title} to ${(ride.arrivalLocation || {}).title} at ${time} - ${(ride.riders || []).length} / ${ride.spots} riders.`} />
       { /* End OpenGraph tags */ }
     </Helmet>
     <AllDiv>
@@ -356,7 +356,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
         <RideSummaryDiv>
           <SeatsLeftDiv>
-            <SeatsLeftNum>{(ride.spots - ride.riders.length)}</SeatsLeftNum>
+            <SeatsLeftNum>{(ride.spots - (ride.riders || []).length)}</SeatsLeftNum>
             <SeatsLeftText>seat(s) left</SeatsLeftText>
           </SeatsLeftDiv>
         </RideSummaryDiv>
@@ -377,7 +377,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
             <LocationDepartureTitle>
                 <LocationTitleStyling>
-               {ride.departureLocation.title}
+               {(ride.departureLocation || {}).title}
                </LocationTitleStyling>
             </LocationDepartureTitle>
 
@@ -391,19 +391,19 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
 
             <LocationDepartureAddress>
               <LocationAddressStyling>
-                  {ride.departureLocation.address}
+                  {(ride.departureLocation || {}).address}
               </LocationAddressStyling>
             </LocationDepartureAddress>
             
             <LocationDestinationTitle>
               <LocationTitleStyling>
-                {ride.arrivalLocation.title}
+                {(ride.arrivalLocation || {}).title}
                 </LocationTitleStyling>
             </LocationDestinationTitle>
 
             <LocationDestinationAddress>
               <LocationAddressStyling>
-                  {ride.arrivalLocation.address}
+                  {(ride.arrivalLocation || {}).address}
               </LocationAddressStyling>
             </LocationDestinationAddress>
           </LocationDiv>
@@ -428,7 +428,7 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
           <LineDiv>
             <hr></hr>
           </LineDiv>
-          {ride.riders.filter((x) => x.netid !== ride.owner.netid).map((person) => (
+          {(ride.riders || []).filter((x) => x.netid !== ride.owner.netid).map((person) => (
             <div onClick={e => accessUserProfile(person.netid)}>
               <OneRiderContainer>
                 <div key={person.netid}>
@@ -450,11 +450,11 @@ const [deleteRide] = useMutation(DELETE_RIDE, {
       </RidersDiv>
             
       <ButtonContainer>
-        {ride.riders.map((person) => person.netid).includes(localStorage.getItem('netid')) ?
+        {(ride.riders || []).map((person) => person.netid).includes(localStorage.getItem('netid')) ?
         <ButtonDiv onClick={leave} leaveRide = {true}>
           Leave Ride
         </ButtonDiv>: 
-        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === ride.riders.length}>
+        <ButtonDiv onClick={handleClickOpen} disabled={ride.spots === (ride.riders || []).length}>
           Join Ride
         </ButtonDiv>}
       </ButtonContainer>

@@ -48,7 +48,7 @@ const Ride = ({ride}) => {
                     </span>
                 </Box>
                 <Box style={{display: 'flex', flexDirection: 'column', margin: '1em'}}>
-                    <span className={classes.midtext}>{(ride.spots - ride.riders.length)}</span>
+                    <span className={classes.midtext}>{(ride.spots - (ride.riders || []).length)}</span>
                     <span className={classes.subtext}>seats left</span>  
                 </Box>
             </Grid>
@@ -56,14 +56,14 @@ const Ride = ({ride}) => {
             <Grid item xs={12}>
                 <Box className = {classes.location}>
                         <span className={classes.fromtotext}>from &nbsp;</span>
-                        <span className={classes.midtext}>{ride.departureLocation.title} </span>  
+                        <span className={classes.midtext}>{(ride.departureLocation || {}).title}</span>  
                 </Box>
             </Grid>
 
             <Grid item xs={12}>
                 <Box className = {classes.location}>
                         <span className={classes.fromtotext}>&nbsp;&nbsp;&nbsp;&nbsp;to &nbsp;</span>
-                        <span className={classes.midtext}>{ride.arrivalLocation.title} </span>  
+                        <span className={classes.midtext}>{(ride.arrivalLocation || {}).title}</span>  
                 </Box>
             </Grid>
 
