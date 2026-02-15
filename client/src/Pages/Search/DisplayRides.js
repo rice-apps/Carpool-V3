@@ -137,7 +137,7 @@ const DisplayRides = (props) => {
             }
             {
                 props.ridesPossible.filter((ride) => { 
-                    return !ridesT.some(e => isEqualRides(ride, e))}).filter(ride => (ride.spots - ride.riders.length > 0)).map((ride, ind) => (<Ride ride={ride} />))
+                    return !ridesT.some(e => isEqualRides(ride, e))}).filter(ride => (ride.spots - (ride.riders || []).length > 0)).map((ride, ind) => (<Ride ride={ride} />))
             }
             <Grid item justify="center" align='center' style={{ display: 'flex', alignItems: 'center', fontFamily: "Josefin Sans", fontSize: "2vh", color: "#012E62"}}>
                 no more results
