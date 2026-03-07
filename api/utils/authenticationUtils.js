@@ -67,7 +67,12 @@ export const authenticateTicket = async (ticket) => {
         var url = `${config.CASValidateURL}?ticket=${ticket}&service=${SERVICE_URL}`;
 
         // First validate ticket against CAS, get a data object back
-        let { data } = await axios.get(url);
+        let resp = await axios.get(url);
+        // TODO: We seem to be getting bad auth here maybe
+        let data = resp.data;
+        console.log(resp.error);
+        console.log(data);
+        console.log(JSON.stringify(resp))
         
         // Parse returned XML data with xml2js parser
         return parser.parseStringPromise(data).then(
