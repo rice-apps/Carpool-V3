@@ -70,7 +70,9 @@ app.use(function(req, res, next) {
       res.header('Access-Control-Allow-Credentials', true)
       res.header('Access-Control-Allow-Headers', '*')
       res.header('Access-Control-Allow-Methods', '*')
-      res.header('Access-Control-Allow-Origin', 'https://carpool.riceapps.org')
+      const allowedOrigins = ['https://carpool.riceapps.org', 'http://localhost:3001'];
+      const origin = req.headers.origin;
+      if (allowedOrigins.includes(origin)) res.header('Access-Control-Allow-Origin', origin);
       if (req.method === 'OPTIONS') return res.sendStatus(200);
   }
   next()

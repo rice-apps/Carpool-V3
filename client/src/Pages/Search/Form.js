@@ -9,7 +9,7 @@ const Form = (props) => {
   const displayRef = props.displayRef;
   const locations = props.locationsAll;
 
-  const {locationMany : locationsArr} = locations
+  const { locationMany: locationsArr = [] } = locations
 
   // May cause 401 error if a request is made to the database before it's ready
   return (

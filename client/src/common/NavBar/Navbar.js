@@ -192,7 +192,7 @@ export default function ButtonAppBar (props) {
 
   const showLogin = (toggleDrawer) => (
       <ListItem className={classes.logInOutContainer} disableGutters = "true">
-        <LogInOutButton onClick = {() => {toggleDrawer(); login(); redirect();}}>Login</LogInOutButton>
+        <LogInOutButton onClick = {() => {toggleDrawer(); login(); window.open('/login', '_self');}}>Login</LogInOutButton>
       </ListItem>
   )
 

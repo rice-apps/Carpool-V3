@@ -8,6 +8,7 @@ import { UserQuery, UserMutation } from './UserSchema';
 import { RideQuery, RideMutation } from './RideSchema';
 import { LocationQuery, LocationMutation } from './LocationSchema';
 import { AuthQuery, AuthMutation } from './AuthSchema';
+import { GoogleAuthMutation } from './GoogleAuthSchema';
 
 schemaComposer.Query.addFields({
     ...UserQuery,
@@ -20,7 +21,8 @@ schemaComposer.Mutation.addFields({
     ...UserMutation,
     ...RideMutation,
     ...LocationMutation,
-    ...AuthMutation
+    ...AuthMutation,
+    ...GoogleAuthMutation
 });
 
 schemaComposer.Subscription.addFields({
