@@ -78,7 +78,7 @@ const Search = () => {
     <React.Fragment>
       <div><Header subtitle = "Find Rides"/></div>
       {locsLoading ? <div/> : 
-        <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} locationsAll = {locations} getLocsRefetch={() => refetchLoc()} />
+        <Form resultRides={resultDestArr} setResultRides={(rides) => {updateResultRides(rides)}} setRides={setRides} setRidesPossible={setRidesPossible} displayRef={displayRef} getRidesRefetch={() => refetchRide()} locationsAll = {locations || {}} getLocsRefetch={() => refetchLoc()} />
       }
       {rideLoading ? 
         <LoadingDiv height={'15vh'} /> : 

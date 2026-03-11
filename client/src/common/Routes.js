@@ -1,7 +1,8 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
-import Login from '../Pages/Auth/Login.js'
+// import Login from '../Pages/Auth/Login.js' // CAS login — kept for rollback
+import GoogleLoginPage from '../Pages/Auth/GoogleLogin.js'
 import Onboarding from '../Pages/Onboarding/Onboarding.js'
 import Alert from '../Pages/Onboarding/Alert.js'
 import Auth from '../Pages/Auth/Auth.js'
@@ -133,7 +134,7 @@ export const Routes = () => {
         <Switch>
           <CheckTokenRoute path={'/alert'} component={withRouter(Alert)} />
           <PrivateRoute path={'/userAuth'} component={withRouter(UserAuth)} />
-          <CheckTokenRoute path={'/login'} component={withRouter(Login)} />
+          <CheckTokenRoute path={'/login'} component={withRouter(GoogleLoginPage)} />
           <CheckTokenRoute path={'/onboarding'} component={withRouter(Onboarding)} />
           <PrivateRoute path={'/profile/:id'} component={withRouter(Profile)} />
           <CheckTokenRoute path={'/'} exact component={withRouter(Home)} />

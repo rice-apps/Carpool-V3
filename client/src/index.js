@@ -21,6 +21,7 @@ import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import { HelmetProvider } from 'react-helmet-async';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 const theme = createTheme({
     typography: {
       fontFamily: "Josefin Sans"
@@ -38,6 +39,7 @@ export const ShorterToast = ({ children, ...props }) => (
 );
 
 render(
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
     <HelmetProvider context={helmetContext}>
     <ThemeProvider theme = {theme}>
         <ApolloProvider client={client}>
@@ -48,6 +50,7 @@ render(
         </Router>
     </ApolloProvider>
     </ThemeProvider>
-    </HelmetProvider>, 
+    </HelmetProvider>
+    </GoogleOAuthProvider>,
     document.querySelector('#app')
 );
