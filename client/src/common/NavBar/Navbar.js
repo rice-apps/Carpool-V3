@@ -12,8 +12,6 @@ import { Link, useLocation } from 'react-router-dom'
 import { gql, useQuery} from "@apollo/client";
 import { useEffect } from 'react';
 // SSO imports
-import { SERVICE_URL } from '../../config'; 
-const casLoginURL = 'https://idp.rice.edu/idp/profile/cas/login'; 
 const feedbackURL = 'https://tinyurl.com/carpool-feedback'
 
 
@@ -166,11 +164,6 @@ export default function ButtonAppBar (props) {
 
   const login = () => {
     localStorage.setItem('nextPage', window.location.pathname); 
-  }
-
-  const redirect = () => {
-    let redirectURL = casLoginURL + '?service=' + SERVICE_URL;
-    window.open(redirectURL, '_self');
   }
 
   const routeToProfile = () => {
